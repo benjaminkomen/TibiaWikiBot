@@ -1,6 +1,8 @@
 import net.sourceforge.jwbf.core.contentRep.Article;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
 import net.sourceforge.jwbf.mediawiki.bots.MediaWikiBot;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.io.*;
 import java.util.ArrayList;
@@ -11,10 +13,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
+    private static final Logger log = LoggerFactory.getLogger(MediaWikiBot.class);
 	private static final String DEFAULT_WIKI_URI = "https://tibia.wikia.com/";
 	private static final String DEFAULT_EDIT_SUMMARY = "[bot] adding missing creatures to droppedby list";
-	private static final List FILTER_LOOT_ITEMS = Arrays.asList("Gold Coin");
+	private static final List FILTERED_LOOT_ITEMS = Arrays.asList("Gold Coin");
     private static MediaWikiBot wikiBot;
+
+    private Main() {
+        throw new IllegalAccessError("Do not instantiate this class.");
+    }
 
     public static void main(String[] args) {
         wikiBot = new MediaWikiBot(DEFAULT_WIKI_URI);
@@ -30,8 +37,7 @@ public class Main {
             props.load(is);
             return props.getProperty("password");
         } catch(Exception ex) {
-            System.out.println("An error occured while reading the properties file.");
-            System.out.println(ex.getMessage());
+            log.error(String.valueOf(ex));
         }
         return output;
     }
@@ -65,13 +71,15 @@ public class Main {
         Matcher matcherRough = patternRough.matcher(articleText);
         while (matcherRough.find()) {
             String lootItemNameRough = matcherRough.group(2);
-            int pipePosition = lootItemNameRough.indexOf("|");
+            int pipePosition = lootItemNameRough.indexOf('|');
             if (pipePosition > 0) {
                 lootItemNamePrecise = lootItemNameRough.substring(0, pipePosition);
             } else {
                 lootItemNamePrecise = lootItemNameRough;
             }
-            lootItems.add(lootItemNamePrecise);
+            if (!FILTERED_LOOT_ITEMS.contains(lootItemNamePrecise)) {
+                lootItems.add(lootItemNamePrecise);
+            }
         }
         return lootItems;
     }
@@ -88,7 +96,7 @@ public class Main {
                 addMissingCreatureNameToDroppedByList(article, newCreatureNames);
             }
         } else {
-            System.out.println("Oops, no DroppedBy template encountered on Item page.");
+            log.info("Oops, no DroppedBy template encountered on Item page.");
         }
     }
 

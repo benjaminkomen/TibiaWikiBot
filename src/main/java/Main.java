@@ -2,19 +2,38 @@ import net.sourceforge.jwbf.core.contentRep.Article;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
 import net.sourceforge.jwbf.mediawiki.bots.MediaWikiBot;
 
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Properties;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Main {
 	private static final String DEFAULT_WIKI_URI = "https://tibia.wikia.com/";
-	private static MediaWikiBot wikiBot;
+	private static final String DEFAULT_EDIT_SUMMARY = "[bot] adding missing creatures to droppedby list";
+	private static final List FILTER_LOOT_ITEMS = Arrays.asList("Gold Coin");
+    private static MediaWikiBot wikiBot;
 
     public static void main(String[] args) {
         wikiBot = new MediaWikiBot(DEFAULT_WIKI_URI);
-	    wikiBot.login("469Bot", "");
+	    wikiBot.login("469Bot", getPasswordFromProperties());
         checkCreaturesForLootItems();
+    }
+
+    private static String getPasswordFromProperties() {
+        String output = "";
+        try {
+            Properties props = new Properties();
+            InputStream is = props.getClass().getResourceAsStream("/credentials.properties");
+            props.load(is);
+            return props.getProperty("password");
+        } catch(Exception ex) {
+            System.out.println("An error occured while reading the properties file.");
+            System.out.println(ex.getMessage());
+        }
+        return output;
     }
 
     private static void checkCreaturesForLootItems() {
@@ -65,7 +84,7 @@ public class Main {
         if (m.find()) {
             String creatureNames = m.group(1);
             if (!creatureNames.contains(creaturePageName)) {
-                String newCreatureNames = creatureNames + "|" + creaturePageName;
+                String newCreatureNames = "{{Dropped By|" + creatureNames + "|" + creaturePageName + "}}";
                 addMissingCreatureNameToDroppedByList(article, newCreatureNames);
             }
         } else {
@@ -80,6 +99,7 @@ public class Main {
         if (m.find()) {
             String newArticleText = m.replaceAll(textToInsert);
             article.setText(newArticleText);
+            article.setEditSummary(DEFAULT_EDIT_SUMMARY);
             article.save();
         }
     }

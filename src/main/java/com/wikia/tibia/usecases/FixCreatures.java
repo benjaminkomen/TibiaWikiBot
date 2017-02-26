@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -33,14 +34,25 @@ public class FixCreatures {
     private static final String REGEX_LOOT_ITEM = "\\{\\{Loot Item";
     private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(.*?)([A-Z].*?)}}";
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
+    private static final String REGEX_DEPRECATED_OR_EVENT = "\\{\\{(Deprecated|Event)}}";
     private static final boolean DEBUG = false;
 
+    private HashMap<String, String> pluralItems = new HashMap<>();
     private MediaWikiBot mediaWikiBot;
     private WikiArticleRepository repository;
 
     public FixCreatures(MediaWikiBot mediaWikiBot) {
         this.mediaWikiBot = mediaWikiBot;
         this.repository = new WikiArticleRepository(mediaWikiBot);
+        pluralItems.put("Bowls of", "Bowl of");
+        pluralItems.put("Bunches of", "Bunch of");
+        pluralItems.put("Cookies", "Cookie");
+        pluralItems.put("Flasks of", "Flask of");
+        pluralItems.put("Gooey Masses", "Gooey Mass");
+        pluralItems.put("Haunches of", "Haunch of");
+        pluralItems.put("Mushroom Pies", "Mushroom Pie");
+        pluralItems.put("Pieces of", "Piece of");
+        pluralItems.put("Veins of", "Vein of");
     }
 
     public void checkCreatures() {
@@ -49,7 +61,7 @@ public class FixCreatures {
         for (String creaturePageName : categoryMembers) {
             Article article = repository.getArticle(creaturePageName);
             String articleText = article.getText();
-            if (checkIfArticleTextContainsLootItems(articleText)) {
+            if (!articleDeprecatedOrEvent(articleText) && articleTextContainsLootItems(articleText)) {
                 List<String> listOfLootItems = makeListOfLootItems(creaturePageName, articleText);
                 for (String lootItem : listOfLootItems) {
                     checkIfCreatureNameIsPresent(creaturePageName, lootItem);
@@ -58,7 +70,13 @@ public class FixCreatures {
         }
     }
 
-    private boolean checkIfArticleTextContainsLootItems(String articleText) {
+    private boolean articleDeprecatedOrEvent(String articleText) {
+        Pattern p = Pattern.compile(REGEX_DEPRECATED_OR_EVENT);
+        Matcher m = p.matcher(articleText);
+        return m.find();
+    }
+
+    private boolean articleTextContainsLootItems(String articleText) {
         Pattern p = Pattern.compile(REGEX_LOOT_ITEM);
         Matcher m = p.matcher(articleText);
         return m.find();
@@ -78,19 +96,24 @@ public class FixCreatures {
                 lootItemNamePrecise = lootItemNameRough;
             }
             if (itemShouldBeAdded(creaturePageName, lootItemNamePrecise)) {
-                lootItems.add(lootItemNamePrecise);
+                String lootItemNameSingular = changePluralToSingular(lootItemNamePrecise);
+                lootItems.add(lootItemNameSingular);
             }
         }
         return lootItems;
     }
 
+    private String changePluralToSingular(String lootItemNamePrecise) {
+        String lootItemNameSingular = lootItemNamePrecise;
+        if (pluralItems.containsKey(lootItemNamePrecise)) {
+            lootItemNameSingular = pluralItems.get(lootItemNamePrecise);
+        }
+        return lootItemNameSingular;
+    }
+
     private boolean itemShouldBeAdded(String creaturePageName, String lootItemNamePrecise) {
         if ("Snowball".equals(lootItemNamePrecise)) {
-            if (NON_EVENT_CREATURES_DROPPING_SNOWBALLS.contains(creaturePageName)) {
-                return true;
-            } else {
-                return false;
-            }
+            return NON_EVENT_CREATURES_DROPPING_SNOWBALLS.contains(creaturePageName);
         }
         if (ITEMS_WITH_NO_DROPPEDBY_LIST.contains(lootItemNamePrecise)) {
             return false;
@@ -110,14 +133,14 @@ public class FixCreatures {
             String creatureNames = m.group(1);
             if (!creatureNames.contains(creaturePageName)) {
                 String newCreatureNames = "{{Dropped By|" + creatureNames + "|" + creaturePageName + "}}";
-                addMissingCreatureNameToDroppedByList(article, newCreatureNames);
+                addMissingCreatureNameToDroppedByList(creaturePageName, article, newCreatureNames);
             }
         } else {
-            log.info("Oops, no DroppedBy template encountered on Item page.");
+            log.warn("No DroppedBy template encountered on item '{}' while trying to add creature '{}'.", lootItem, creaturePageName);
         }
     }
 
-    private void addMissingCreatureNameToDroppedByList(Article article, String textToInsert) {
+    private void addMissingCreatureNameToDroppedByList(String creaturePageName, Article article, String textToInsert) {
         String articleText = article.getText();
         Pattern p = Pattern.compile(REGEX_DROPPED_BY);
         Matcher m = p.matcher(articleText);
@@ -128,7 +151,7 @@ public class FixCreatures {
             if (DEBUG) {
                 article.save();
             } else {
-                log.info("[bot] adding creature '{}' to item '{}'.", textToInsert, article.getTitle());
+                log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, article.getTitle());
             }
         }
     }

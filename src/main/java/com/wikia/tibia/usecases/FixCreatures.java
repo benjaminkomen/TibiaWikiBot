@@ -30,7 +30,6 @@ public class FixCreatures {
             "Golden Raid Token"
             );
     private static final List NON_EVENT_CREATURES_DROPPING_SNOWBALLS = Arrays.asList("Yeti", "Grynch Clan Goblin");
-    private static final String DEFAULT_EDIT_SUMMARY = "[bot] adding missing creatures to droppedby list";
     private static final String REGEX_LOOT_ITEM = "\\{\\{Loot Item";
     private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(.*?)([A-Z].*?)}}";
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
@@ -173,7 +172,7 @@ public class FixCreatures {
         if (m.find()) {
             String newArticleText = m.replaceAll(textToInsert);
             article.setText(newArticleText);
-            article.setEditSummary(DEFAULT_EDIT_SUMMARY);
+            article.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, article.getTitle()));
             if (DEBUG) {
                 article.save();
             } else {

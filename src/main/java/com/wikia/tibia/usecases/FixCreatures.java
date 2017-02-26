@@ -18,12 +18,22 @@ public class FixCreatures {
 
     private static final Logger log = LoggerFactory.getLogger(FixCreatures.class);
 
-    private static final List FILTERED_LOOT_ITEMS = Arrays.asList("Gold Coin");
+    private static final List ITEMS_WITH_NO_DROPPEDBY_LIST = Arrays.asList("Gold Coin", "Platinum Coin");
+    private static final List EVENT_ITEMS = Arrays.asList(
+            "Bunch of Winterberries",
+            "Envelope from the Wizards",
+            "Fireworks Rocket",
+            "Party Trumpet",
+            "Party Hat",
+            "Silver Raid Token",
+            "Golden Raid Token"
+            );
+    private static final List NON_EVENT_CREATURES_DROPPING_SNOWBALLS = Arrays.asList("Yeti", "Grynch Clan Goblin");
     private static final String DEFAULT_EDIT_SUMMARY = "[bot] adding missing creatures to droppedby list";
     private static final String REGEX_LOOT_ITEM = "\\{\\{Loot Item";
     private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(.*?)([A-Z].*?)}}";
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
-    private static final boolean debug = false;
+    private static final boolean DEBUG = false;
 
     private MediaWikiBot mediaWikiBot;
     private WikiArticleRepository repository;
@@ -40,7 +50,7 @@ public class FixCreatures {
             Article article = repository.getArticle(creaturePageName);
             String articleText = article.getText();
             if (checkIfArticleTextContainsLootItems(articleText)) {
-                List<String> listOfLootItems = makeListOfLootItems(articleText);
+                List<String> listOfLootItems = makeListOfLootItems(creaturePageName, articleText);
                 for (String lootItem : listOfLootItems) {
                     checkIfCreatureNameIsPresent(creaturePageName, lootItem);
                 }
@@ -54,7 +64,7 @@ public class FixCreatures {
         return m.find();
     }
 
-    private List<String> makeListOfLootItems(String articleText) {
+    private List<String> makeListOfLootItems(String creaturePageName, String articleText) {
         List<String> lootItems = new ArrayList<>();
         String lootItemNamePrecise;
         Pattern patternRough = Pattern.compile(REGEX_LOOT_ITEM_NAME);
@@ -67,11 +77,28 @@ public class FixCreatures {
             } else {
                 lootItemNamePrecise = lootItemNameRough;
             }
-            if (!FILTERED_LOOT_ITEMS.contains(lootItemNamePrecise)) {
+            if (itemShouldBeAdded(creaturePageName, lootItemNamePrecise)) {
                 lootItems.add(lootItemNamePrecise);
             }
         }
         return lootItems;
+    }
+
+    private boolean itemShouldBeAdded(String creaturePageName, String lootItemNamePrecise) {
+        if ("Snowball".equals(lootItemNamePrecise)) {
+            if (NON_EVENT_CREATURES_DROPPING_SNOWBALLS.contains(creaturePageName)) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        if (ITEMS_WITH_NO_DROPPEDBY_LIST.contains(lootItemNamePrecise)) {
+            return false;
+        }
+        if (EVENT_ITEMS.contains(lootItemNamePrecise)) {
+            return false;
+        }
+        return true;
     }
 
     private void checkIfCreatureNameIsPresent(String creaturePageName, String lootItem) {
@@ -98,7 +125,7 @@ public class FixCreatures {
             String newArticleText = m.replaceAll(textToInsert);
             article.setText(newArticleText);
             article.setEditSummary(DEFAULT_EDIT_SUMMARY);
-            if (debug) {
+            if (DEBUG) {
                 article.save();
             } else {
                 log.info("[bot] adding creature '{}' to item '{}'.", textToInsert, article.getTitle());

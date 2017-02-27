@@ -9,7 +9,6 @@ import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -34,25 +33,14 @@ public class FixCreatures {
     private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(.*?)([A-Z].*?)}}";
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
     private static final String REGEX_DEPRECATED_OR_EVENT = "\\{\\{(Deprecated|Event)}}";
-    private static final boolean DEBUG = false;
+    private static final boolean DEBUG_MODE = true;
 
-    private HashMap<String, String> pluralItems = new HashMap<>();
     private MediaWikiBot mediaWikiBot;
     private WikiArticleRepository repository;
 
     public FixCreatures(MediaWikiBot mediaWikiBot) {
         this.mediaWikiBot = mediaWikiBot;
         this.repository = new WikiArticleRepository(mediaWikiBot);
-        pluralItems.put("Bowls of *", "Bowl of");
-        pluralItems.put("Bunches of", "Bunch of");
-        pluralItems.put("Cookies", "Cookie");
-        pluralItems.put("Flasks of *", "Flask of");
-        pluralItems.put("Gooey Masses", "Gooey Mass");
-        pluralItems.put("Haunches of *", "Haunch of");
-        pluralItems.put("Mushroom Pies", "Mushroom Pie");
-        pluralItems.put("Pieces of *", "Piece of");
-        pluralItems.put("Small Rubies", "Small Ruby");
-        pluralItems.put("Veins of *", "Vein of");
     }
 
     public void checkCreatures() {
@@ -96,44 +84,10 @@ public class FixCreatures {
                 lootItemNamePrecise = lootItemNameRough;
             }
             if (itemShouldBeAdded(creaturePageName, lootItemNamePrecise)) {
-                String lootItemNameSingular = changePluralToSingular(lootItemNamePrecise);
-                lootItems.add(lootItemNameSingular);
+                lootItems.add(lootItemNamePrecise);
             }
         }
         return lootItems;
-    }
-
-    // TODO implement something more general like:
-//    lootparser_p_ends = {'che': 'ch', 'she': 'sh', 'ie': 'y', 've': 'fe', 'oe': 'o', 'ze': 'z'}
-//    lootparser_to_singular = function (t) {
-//        var x, lastletter;
-//        for (x in lootparser_p_words) {
-//            if (lootparser_p_words.hasOwnProperty(x)) {
-//                if ((new RegExp('^' + x.replace(/\*/g, '.*?') + '$')).test(t)) {
-//                    return t.replace(x.replace(/\*/g, ''), lootparser_p_words[x]);
-//                }
-//            }
-//        }
-//        lastletter = t.slice(t.length - 1);
-//        if (lastletter === 's') {
-//            t = t.slice(0, t.length - 1); /*remove the s*/
-//            lastletter = t.slice(t.length - 3); /*check last 3 letters*/
-//            if (lootparser_p_ends[lastletter] !== undefined) {
-//                t = t.slice(0, t.length - 3) + lootparser_p_ends[lastletter];
-//            }
-//            lastletter = t.slice(t.length - 2); /*check last 2 letters*/
-//            if (lootparser_p_ends[lastletter] !== undefined) {
-//                t = t.slice(0, t.length - 2) + lootparser_p_ends[lastletter];
-//            }
-//        }
-//        return t;
-//    }
-    private String changePluralToSingular(String lootItemNamePrecise) {
-        String lootItemNameSingular = lootItemNamePrecise;
-        if (pluralItems.containsKey(lootItemNamePrecise)) {
-            lootItemNameSingular = pluralItems.get(lootItemNamePrecise);
-        }
-        return lootItemNameSingular;
     }
 
     private boolean itemShouldBeAdded(String creaturePageName, String lootItemNamePrecise) {
@@ -173,11 +127,10 @@ public class FixCreatures {
             String newArticleText = m.replaceAll(textToInsert);
             article.setText(newArticleText);
             article.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, article.getTitle()));
-            if (DEBUG) {
+            if (!DEBUG_MODE) {
                 article.save();
-            } else {
-                log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, article.getTitle());
             }
+            log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, article.getTitle());
         }
     }
 }

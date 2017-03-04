@@ -7,9 +7,7 @@ import net.sourceforge.jwbf.mediawiki.bots.MediaWikiBot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -30,7 +28,8 @@ public class FixCreatures {
             );
     private static final List NON_EVENT_CREATURES_DROPPING_SNOWBALLS = Arrays.asList("Yeti", "Grynch Clan Goblin");
     private static final String REGEX_LOOT_ITEM = "\\{\\{Loot Item";
-    private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(.*?)([A-Z].*?)}}";
+    private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(([^|}]+)(\\|([^|}]+))?(\\|([^|}]+))?)}}";
+
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
     private static final String REGEX_DEPRECATED_OR_EVENT = "\\{\\{(Deprecated|Event)}}";
     private static final boolean DEBUG_MODE = true;
@@ -47,8 +46,8 @@ public class FixCreatures {
         CategoryMembersSimple categoryMembers = repository.getMembersFromCategory("Creatures");
 
         for (String creaturePageName : categoryMembers) {
-            Article article = repository.getArticle(creaturePageName);
-            String articleText = article.getText();
+            Article creaturePage = repository.getArticle(creaturePageName);
+            String articleText = creaturePage.getText();
             if (!articleDeprecatedOrEvent(articleText) && articleTextContainsLootItems(articleText)) {
                 List<String> listOfLootItems = makeListOfLootItems(creaturePageName, articleText);
                 for (String lootItem : listOfLootItems) {
@@ -72,19 +71,21 @@ public class FixCreatures {
 
     private List<String> makeListOfLootItems(String creaturePageName, String articleText) {
         List<String> lootItems = new ArrayList<>();
-        String lootItemNamePrecise;
-        Pattern patternRough = Pattern.compile(REGEX_LOOT_ITEM_NAME);
-        Matcher matcherRough = patternRough.matcher(articleText);
-        while (matcherRough.find()) {
-            String lootItemNameRough = matcherRough.group(2);
-            int pipePosition = lootItemNameRough.indexOf('|');
-            if (pipePosition > 0) {
-                lootItemNamePrecise = lootItemNameRough.substring(0, pipePosition);
-            } else {
-                lootItemNamePrecise = lootItemNameRough;
+        String lootItemName;
+        Pattern pattern = Pattern.compile(REGEX_LOOT_ITEM_NAME);
+        Matcher matcher = pattern.matcher(articleText);
+        while (matcher.find()) {
+            if (matcher.group(6) != null) { // Match |{{Loot Item|0-4|Gold Coin|very rare}}
+                lootItemName = matcher.group(4);
+            } else if (matcher.group(3) == null) { // Match |{{Loot Item|Apple}}
+                lootItemName = matcher.group(2);
+            } else if (Character.isUpperCase(matcher.group(2).charAt(0))) { // Match |{{Loot Item|Apple|always}}
+                lootItemName = matcher.group(2);
+            } else {  // Match |{{Loot Item|0-4|Gold Coin}}
+                lootItemName = matcher.group(4);
             }
-            if (itemShouldBeAdded(creaturePageName, lootItemNamePrecise)) {
-                lootItems.add(lootItemNamePrecise);
+            if (itemShouldBeAdded(creaturePageName, lootItemName)) {
+                lootItems.add(lootItemName);
             }
         }
         return lootItems;
@@ -104,33 +105,41 @@ public class FixCreatures {
     }
 
     private void checkIfCreatureNameIsPresent(String creaturePageName, String lootItem) {
-        Article article = repository.getArticle(lootItem);
-        String articleText = article.getText();
+        Article itemPage = repository.getArticle(lootItem);
+        String itemPageText = itemPage.getText();
         Pattern p = Pattern.compile(REGEX_DROPPED_BY);
-        Matcher m = p.matcher(articleText);
+        Matcher m = p.matcher(itemPageText);
         if (m.find()) {
             String creatureNames = m.group(1);
             if (!creatureNames.contains(creaturePageName)) {
-                String newCreatureNames = "{{Dropped By|" + creatureNames + "|" + creaturePageName + "}}";
-                addMissingCreatureNameToDroppedByList(creaturePageName, article, newCreatureNames);
+                String newDroppedByList = updateCreatureToDroppedByList(creatureNames, creaturePageName);
+                addMissingCreatureNameToDroppedByList(creaturePageName, itemPage, newDroppedByList);
             }
         } else {
             log.warn("No DroppedBy template encountered on item '{}' while trying to add creature '{}'.", lootItem, creaturePageName);
         }
     }
 
-    private void addMissingCreatureNameToDroppedByList(String creaturePageName, Article article, String textToInsert) {
-        String articleText = article.getText();
+    private String updateCreatureToDroppedByList(String currentDroppedByList, String newCreature) {
+        List<String> creatureNames = new LinkedList<>(Arrays.asList(currentDroppedByList.split("\\|")));
+        creatureNames.add(newCreature);
+        Collections.sort(creatureNames);
+        String newDroppedByList = String.join("|", creatureNames);
+        return "{{Dropped By|" + newDroppedByList + "}}";
+    }
+
+    private void addMissingCreatureNameToDroppedByList(String creaturePageName, Article itemPage, String textToInsert) {
+        String itemPageText = itemPage.getText();
         Pattern p = Pattern.compile(REGEX_DROPPED_BY);
-        Matcher m = p.matcher(articleText);
+        Matcher m = p.matcher(itemPageText);
         if (m.find()) {
             String newArticleText = m.replaceAll(textToInsert);
-            article.setText(newArticleText);
-            article.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, article.getTitle()));
+            itemPage.setText(newArticleText);
+            itemPage.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, itemPage.getTitle()));
             if (!DEBUG_MODE) {
-                article.save();
+                itemPage.save();
             }
-            log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, article.getTitle());
+            log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
         }
     }
 }

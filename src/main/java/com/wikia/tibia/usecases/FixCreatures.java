@@ -36,6 +36,7 @@ public class FixCreatures {
 
     private MediaWikiBot mediaWikiBot;
     private WikiArticleRepository repository;
+    private Map<String, Article> itemPagesToUpdate = new HashMap<>();
 
     public FixCreatures(MediaWikiBot mediaWikiBot) {
         this.mediaWikiBot = mediaWikiBot;
@@ -53,6 +54,12 @@ public class FixCreatures {
                 for (String lootItem : listOfLootItems) {
                     checkIfCreatureNameIsPresent(creaturePageName, lootItem);
                 }
+            }
+        }
+        log.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());
+        if (!DEBUG_MODE) {
+            for (Map.Entry<String, Article> itemPage : itemPagesToUpdate.entrySet()) {
+                itemPage.getValue().save();
             }
         }
     }
@@ -105,7 +112,12 @@ public class FixCreatures {
     }
 
     private void checkIfCreatureNameIsPresent(String creaturePageName, String lootItem) {
-        Article itemPage = repository.getArticle(lootItem);
+        Article itemPage;
+        if (itemPagesToUpdate.containsKey(lootItem)) {
+            itemPage = itemPagesToUpdate.get(lootItem);
+        } else {
+            itemPage = repository.getArticle(lootItem);
+        }
         String itemPageText = itemPage.getText();
         Pattern p = Pattern.compile(REGEX_DROPPED_BY);
         Matcher m = p.matcher(itemPageText);
@@ -136,9 +148,7 @@ public class FixCreatures {
             String newArticleText = m.replaceAll(textToInsert);
             itemPage.setText(newArticleText);
             itemPage.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, itemPage.getTitle()));
-            if (!DEBUG_MODE) {
-                itemPage.save();
-            }
+            itemPagesToUpdate.put(itemPage.getTitle(), itemPage);
             log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
         }
     }

@@ -22,4 +22,8 @@ public class WikiArticleRepository {
 
         return mediaWikiBot.getArticle(creaturePageName);
     }
+
+    public void saveArticle(Article articleToSave) {
+        articleToSave.save();
+    }
 }

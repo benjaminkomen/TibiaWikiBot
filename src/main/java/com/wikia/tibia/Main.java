@@ -14,9 +14,10 @@ public class Main {
 
         // first usecase
         FixCreatures fixCreatures = new FixCreatures(tibiaWikiBot);
-        fixCreatures.checkCreatures();
+//        fixCreatures.checkCreatures();
 
         // second usecase
         FixItems fixItems = new FixItems(tibiaWikiBot);
+        fixItems.checkItems();
     }
 }

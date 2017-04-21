@@ -11,7 +11,6 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/** */
 public class FixCreatures {
 
     private static final Logger log = LoggerFactory.getLogger(FixCreatures.class);
@@ -56,12 +55,7 @@ public class FixCreatures {
                 }
             }
         }
-        log.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());
-        if (!DEBUG_MODE) {
-            for (Map.Entry<String, Article> itemPage : itemPagesToUpdate.entrySet()) {
-                itemPage.getValue().save();
-            }
-        }
+        saveItemArticles();
     }
 
     private boolean articleDeprecatedOrEvent(String articleText) {
@@ -150,6 +144,15 @@ public class FixCreatures {
             itemPage.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, itemPage.getTitle()));
             itemPagesToUpdate.put(itemPage.getTitle(), itemPage);
             log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
+        }
+    }
+
+    private void saveItemArticles() {
+        log.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());
+        if (!DEBUG_MODE) {
+            for (Map.Entry<String, Article> itemPage : itemPagesToUpdate.entrySet()) {
+                repository.saveArticle(itemPage.getValue());
+            }
         }
     }
 }

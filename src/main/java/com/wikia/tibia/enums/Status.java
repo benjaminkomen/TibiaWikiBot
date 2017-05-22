@@ -1,7 +1,15 @@
 package com.wikia.tibia.enums;
 
-/**
- * Created by benjamin on 21-5-2017.
- */
 public enum Status {
+
+    ACTIVE("Active"),
+    DEPRECATED("deprecated"),
+    UNOBTAINABLE("unobtainable"),
+    TS_ONLY("ts-only");
+
+    private String description;
+
+    Status(String description) {
+        this.description = description;
+    }
 }

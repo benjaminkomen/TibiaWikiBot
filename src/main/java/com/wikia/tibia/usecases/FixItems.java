@@ -17,7 +17,8 @@ public class FixItems {
 
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
     private static final String REGEX_FILLED_DROPPED_BY = "\\{\\{Dropped By\\|(.+?)}}";
-    private static final String REGEX_LOOT_ITEM = "\\{\\{Loot Item";
+    private static final String REGEX_LOOT_ITEM = "\\s*?\\|\\{\\{Loot Item";
+    private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(([^|}]+)(\\|([^|}]+))?(\\|([^|}]+))?)}}";
 
     private static final String REGEX_DEPRECATED_OR_EVENT = "\\{\\{(Deprecated|Event)}}";
     private static final boolean DEBUG_MODE = true;
@@ -40,7 +41,13 @@ public class FixItems {
             if (!articleDeprecatedOrEvent(articleText) && articleTextContainsFilledDroppedBy(articleText)) {
                 List<String> listOfDroppedByCreatures = makeListOfDroppedByCreatures(articleText);
                 for (String droppedByCreature : listOfDroppedByCreatures) {
-                    checkIfItemNameIsPresent(itemPageName, droppedByCreature);
+                    boolean itemNameIsPresent = checkIfItemNameIsPresent(itemPageName, droppedByCreature);
+                    if (itemNameIsPresent) {
+//                        String lootItems = extractLootItems(droppedByCreature);
+                        List<String> listOfLootItems = makeListOfLootItems(droppedByCreature, articleText);
+//                        String newLootItemList = updateItemToLootItemList(lootItems, itemPageName);
+//                        addMissingLootItemToLootItemList(itemPageName, droppedByCreature, newLootItemList);
+                    }
                 }
             }
         }
@@ -65,7 +72,52 @@ public class FixItems {
         if (m.find()) {
             return new ArrayList<>(Arrays.asList(m.group(1).split("\\|")));
         }
+        return new ArrayList<>();
+    }
+
+    private String extractLootItems(String droppedByCreature) {
+        Article creaturePage = getCreaturePage(droppedByCreature);
+        String creaturePageText = creaturePage.getText();
+        Pattern p = Pattern.compile(REGEX_LOOT_ITEM_NAME);
+        Matcher m = p.matcher(creaturePageText);
+        if (m.find()) {
+            return m.group(0);
+        }
+        log.warn("No LootItem template encountered on creature '{}'.", droppedByCreature);
         return null;
+    }
+
+    private List<String> makeListOfLootItems(String creaturePageName, String articleText) {
+        List<String> lootItems = new ArrayList<>();
+        String lootItemName;
+        Pattern pattern = Pattern.compile(REGEX_LOOT_ITEM_NAME);
+        Matcher matcher = pattern.matcher(articleText);
+        while (matcher.find()) {
+            if (matcher.group(6) != null) { // Match |{{Loot Item|0-4|Gold Coin|very rare}}
+                lootItemName = matcher.group(4);
+            } else if (matcher.group(3) == null) { // Match |{{Loot Item|Apple}}
+                lootItemName = matcher.group(2);
+            } else if (Character.isUpperCase(matcher.group(2).charAt(0))) { // Match |{{Loot Item|Apple|always}}
+                lootItemName = matcher.group(2);
+            } else {  // Match |{{Loot Item|0-4|Gold Coin}}
+                lootItemName = matcher.group(4);
+            }
+                lootItems.add(lootItemName);
+        }
+        return lootItems;
+    }
+
+    /**
+     * Get the Wiki Article from a specific creature, either the already updated cached version, or a fresh copy from the internet
+     */
+    Article getCreaturePage(String droppedByCreature) {
+        Article creaturePage;
+        if (creaturePagesToUpdate.containsKey(droppedByCreature)) {
+            creaturePage = creaturePagesToUpdate.get(droppedByCreature);
+        } else {
+            creaturePage = repository.getArticle(droppedByCreature);
+        }
+        return creaturePage;
     }
 
     private void saveCreatureArticles() {
@@ -74,28 +126,13 @@ public class FixItems {
     /**
      * Check if item (e.g. Abyss Hammer) is present in the Loot Item list of given creature (e.g. Ferumbras)
      */
-    private void checkIfItemNameIsPresent(String itemPageName, String droppedByCreature) {
-        Article creaturePage;
-        if (creaturePagesToUpdate.containsKey(droppedByCreature)) {
-            creaturePage = creaturePagesToUpdate.get(droppedByCreature);
-        } else {
-            creaturePage = repository.getArticle(droppedByCreature);
-        }
-        String creaturePageText = creaturePage.getText();
-        Pattern p = Pattern.compile(REGEX_LOOT_ITEM);
-        Matcher m = p.matcher(creaturePageText);
-        if (m.find()) {
-            String lootItems = m.group(1); //FIXME no group 1?
-            if (!lootItems.contains(itemPageName)) {
-                String newLootItemList = updateItemToLootItemList(lootItems, itemPageName);
-                addMissingLootItemToLootItemList(itemPageName, creaturePage, newLootItemList);
-            }
-        } else {
-            log.warn("No LootItem template encountered on creature '{}' while trying to add item '{}'.", droppedByCreature, itemPageName);
-        }
+    private boolean checkIfItemNameIsPresent(String itemPageName, String droppedByCreature) {
+        String lootItems = extractLootItems(droppedByCreature);
+        return lootItems != null && !lootItems.contains(itemPageName);
     }
 
-    private void addMissingLootItemToLootItemList(String itemPageName, Article creaturePage, String newLootItemList) {
+    private void addMissingLootItemToLootItemList(String itemPageName, String creaturePageName, String newLootItemList) {
+        Article creaturePage = getCreaturePage(creaturePageName);
     }
 
     private String updateItemToLootItemList(String lootItems, String itemPageName) {

@@ -1,63 +1,46 @@
 package com.wikia.tibia.factories;
 
+import com.wikia.tibia.utils.TemplateUtils;
 import net.sourceforge.jwbf.core.contentRep.Article;
 import org.json.JSONObject;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class ArticleFactory {
+
+    private static final Logger log = LoggerFactory.getLogger(ArticleFactory.class);
+    private static final String TEMPLATE_TYPE = "templateType";
+    private static final String TEMPLATE_TYPE_CREATURE = "Creature";
+    private static final String TEMPLATE_TYPE_ITEM = "Item";
+    private Article article;
 
     /**
      * Create a Json representation of a wiki article
      */
     public String create(Article article) {
+        this.article = article;
 
         String articleContent = article.getText();
 
-        String infoboxTemplatePartOfArticle = getInfoboxTemplatePartOfArticle(articleContent);
+        String infoboxTemplatePartOfArticle = TemplateUtils.getBetweenBalancedBrackets(articleContent, "{{Infobox");
         String jsonRepresentation = convertToJson(infoboxTemplatePartOfArticle);
 
         return jsonRepresentation;
     }
 
-    private String getInfoboxTemplatePartOfArticle(String articleContent) {
-        int startingCurlyBrackets = articleContent.indexOf("{{Infobox");
-        int endingCurlyBrackets = 0;
-        int openBracketsCounter = 0;
-        char currentChar;
-
-        for (int i=startingCurlyBrackets; i < articleContent.length(); i++) {
-            currentChar = articleContent.charAt(i);
-            if ('{' == currentChar) {
-                openBracketsCounter++;
-            }
-
-            if ('}' == currentChar) {
-                openBracketsCounter--;
-            }
-
-            if (openBracketsCounter == 0) {
-                endingCurlyBrackets = i+1;
-                break;
-            }
-        }
-        return articleContent.substring(startingCurlyBrackets, endingCurlyBrackets);
-    }
-
     private String convertToJson(String infoboxTemplatePartOfArticle) {
-
-        infoboxTemplatePartOfArticle = removeFirstAndLastLine(infoboxTemplatePartOfArticle);
-        Map<String, String> parametersAndValues = splitByParameter(infoboxTemplatePartOfArticle);
-        String jsonRepresentation = MapToJson(parametersAndValues);
-
-        return jsonRepresentation;
-    }
-
-    private String removeFirstAndLastLine(String infoboxTemplatePartOfArticle) {
-        String firstLineRemoved = infoboxTemplatePartOfArticle
-                .substring(infoboxTemplatePartOfArticle.indexOf('\n')+1);
-        return firstLineRemoved.substring(0, firstLineRemoved.lastIndexOf("}}"));
+        String templateType = getTemplateType(infoboxTemplatePartOfArticle);
+        String infoboxTemplatePartOfArticleSanitized = TemplateUtils.removeFirstAndLastLine(infoboxTemplatePartOfArticle);
+        Map<String, String> parametersAndValues = splitByParameter(infoboxTemplatePartOfArticleSanitized);
+        parametersAndValues.put("templateType", templateType);
+        JSONObject jsonRepresentation = MapToJson(parametersAndValues);
+        return jsonRepresentation.toString(2);
     }
 
     private Map<String, String> splitByParameter(String infoboxTemplatePartOfArticle) {
@@ -74,7 +57,35 @@ public class ArticleFactory {
         return keyValuePair;
     }
 
-    private String MapToJson(Map<String, String> parametersAndValues) {
-        return new JSONObject(parametersAndValues).toString(2);
+    private JSONObject MapToJson(Map<String, String> parametersAndValues) {
+        JSONObject jsonObject = new JSONObject(parametersAndValues);
+        return sanitizeJsonObject(jsonObject);
+    }
+
+    private String getTemplateType(String infoboxTemplatePartOfArticle) {
+        int startOfTemplateName = infoboxTemplatePartOfArticle.indexOf("{{Infobox") +9;
+        int endOfTemplateName = infoboxTemplatePartOfArticle.indexOf('|');
+        if (startOfTemplateName >= 0 && endOfTemplateName >= 0) {
+            return infoboxTemplatePartOfArticle.substring(startOfTemplateName, endOfTemplateName).trim();
+        }
+        log.warn("Template type for page {} could not be determined.", article.getTitle());
+        return "Unknown";
+    }
+
+    private JSONObject sanitizeJsonObject(JSONObject jsonObject) {
+        if (jsonObject.has(TEMPLATE_TYPE)) {
+            String templateType = jsonObject.getString(TEMPLATE_TYPE);
+            if (TEMPLATE_TYPE_CREATURE.equals(templateType)) {
+                CreatureFactory creatureFactory = new CreatureFactory();
+                return creatureFactory.create(jsonObject);
+            }
+            if (TEMPLATE_TYPE_ITEM.equals(templateType)) {
+                ItemFactory itemFactory = new ItemFactory();
+                return itemFactory.create(jsonObject);
+
+            }
+            log.warn("Template type {} is currently not supported.", templateType);
+        }
+        return jsonObject;
     }
 }

@@ -1,5 +1,7 @@
 package com.wikia.tibia.enums;
 
+import com.fasterxml.jackson.annotation.JsonValue;
+
 public enum Article {
 
     A("a"),
@@ -12,6 +14,7 @@ public enum Article {
         this.description = description;
     }
 
+    @JsonValue
     public String getDescription() {
         return description;
     }

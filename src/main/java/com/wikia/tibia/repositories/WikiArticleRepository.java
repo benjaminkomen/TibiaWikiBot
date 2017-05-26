@@ -1,6 +1,7 @@
 package com.wikia.tibia.repositories;
 
 import com.wikia.tibia.factories.ArticleFactory;
+import com.wikia.tibia.objects.WikiObject;
 import net.sourceforge.jwbf.core.contentRep.Article;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
 import net.sourceforge.jwbf.mediawiki.bots.MediaWikiBot;
@@ -23,10 +24,10 @@ public class WikiArticleRepository {
         return mediaWikiBot.getArticle(pageName);
     }
 
-    public String getArticleJson(String pageName) {
+    public WikiObject getWikiObject(String pageName) {
         Article article = getArticle(pageName);
         ArticleFactory articleFactory = new ArticleFactory();
-        return articleFactory.create(article);
+        return articleFactory.createWikiObject(article);
     }
 
     public void saveArticle(Article articleToSave) {

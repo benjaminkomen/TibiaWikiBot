@@ -1,4 +1,4 @@
 package com.wikia.tibia.objects;
 
-public class Item {
+public class Item extends WikiObject {
 }

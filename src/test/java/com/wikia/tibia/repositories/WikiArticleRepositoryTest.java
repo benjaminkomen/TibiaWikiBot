@@ -1,6 +1,7 @@
 package com.wikia.tibia.repositories;
 
 import com.wikia.tibia.objects.TibiaWikiBot;
+import com.wikia.tibia.objects.WikiObject;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,10 +18,10 @@ public class WikiArticleRepositoryTest {
     }
 
     @Test
-    public void testGetArticleJson() {
+    public void testGetWikiObject() {
         // given
         // when
-        String result = target.getArticleJson(CREATURE_PAGE_NAME);
+        WikiObject result = target.getWikiObject(CREATURE_PAGE_NAME);
         // then
     }
 

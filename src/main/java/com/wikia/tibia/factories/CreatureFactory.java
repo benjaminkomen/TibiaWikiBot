@@ -14,7 +14,6 @@ public class CreatureFactory {
     private static final Logger log = LoggerFactory.getLogger(CreatureFactory.class);
     private static final String SOUNDS = "sounds";
     private static final String SPAWN_TYPE = "spawntype";
-    private static final String WALKS_THROUGH = "walksthrough";
     private static final String LOOT = "loot";
 
     private String name;
@@ -35,12 +34,6 @@ public class CreatureFactory {
             jsonObject.put(SPAWN_TYPE, spawntypeArray);
         }
 
-        if (jsonObject.has(WALKS_THROUGH)) {
-            String walksthroughValue = jsonObject.getString(WALKS_THROUGH);
-            JSONArray walksthroughArray = new JSONArray(splitByCommaAndTrim(walksthroughValue));
-            jsonObject.put(WALKS_THROUGH, walksthroughArray);
-        }
-
         if (jsonObject.has(LOOT)) {
             String lootValue = jsonObject.getString(LOOT);
             JSONArray lootTableArray = makeLootTableArray(lootValue);
@@ -58,9 +51,19 @@ public class CreatureFactory {
 
     private JSONArray makeLootTableArray(String lootValue) {
         List<JSONObject> lootItemJsonObjects = new ArrayList<>();
+
+        if (lootValue.contains("{{Loot Table}}") || lootValue.contains("{{Loot Table|}}")) {
+            return new JSONArray();
+        }
+
         String lootItemsPartOfLootTable = TemplateUtils.getBetweenBalancedBrackets(lootValue, "{{Loot Table");
         lootItemsPartOfLootTable = TemplateUtils.removeFirstAndLastLine(lootItemsPartOfLootTable);
-        List<String> lootItemsList = Arrays.asList(Pattern.compile("(^|\n)\\s\\|").split(lootItemsPartOfLootTable));
+
+        if (lootItemsPartOfLootTable.length() < 3) {
+            return new JSONArray();
+        }
+
+        List<String> lootItemsList = Arrays.asList(Pattern.compile("(^|\n)(\\s|)\\|").split(lootItemsPartOfLootTable));
 
         for (String lootItemTemplate : lootItemsList) {
             if (lootItemTemplate.length() < 1) {

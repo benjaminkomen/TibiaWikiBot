@@ -1,60 +1,58 @@
 package com.wikia.tibia.factories;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wikia.tibia.mixins.CreatureMixIn;
+import com.wikia.tibia.objects.Creature;
+import com.wikia.tibia.objects.Item;
+import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.utils.TemplateUtils;
 import net.sourceforge.jwbf.core.contentRep.Article;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.io.IOException;
 import java.util.Map;
-import java.util.regex.Pattern;
 
 public class ArticleFactory {
 
     private static final Logger log = LoggerFactory.getLogger(ArticleFactory.class);
-    private static final String TEMPLATE_TYPE = "templateType";
-    private static final String TEMPLATE_TYPE_CREATURE = "Creature";
-    private static final String TEMPLATE_TYPE_ITEM = "Item";
+    private static final String OBJECT_TYPE = "objectType";
+    private static final String OBJECT_TYPE_CREATURE = "Creature";
+    private static final String OBJECT_TYPE_ITEM = "Item";
+    private static final String INFOBOX_HEADER = "{{Infobox";
     private Article article;
+    private String objectType;
 
-    /**
-     * Create a Json representation of a wiki article
-     */
-    public String create(Article article) {
+    public WikiObject createWikiObject(Article article) {
         this.article = article;
-
         String articleContent = article.getText();
 
-        String infoboxTemplatePartOfArticle = TemplateUtils.getBetweenBalancedBrackets(articleContent, "{{Infobox");
-        String jsonRepresentation = convertToJson(infoboxTemplatePartOfArticle);
+        if (!articleContent.contains(INFOBOX_HEADER)) {
+            return null;
+        }
 
-        return jsonRepresentation;
+        String wikiObjectPartOfArticle = TemplateUtils.getBetweenBalancedBrackets(articleContent, INFOBOX_HEADER);
+        String wikiObjectJson = convertToJson(wikiObjectPartOfArticle);
+
+        WikiObject wikiObject = new WikiObject();
+        if (OBJECT_TYPE_CREATURE.equals(objectType)) {
+            wikiObject = mapCreatureJsonToObject(wikiObjectJson);
+        }
+        if (OBJECT_TYPE_ITEM.equals(objectType)) {
+            wikiObject = mapItemJsonToObject(wikiObjectJson);
+        }
+
+        return wikiObject;
     }
 
-    private String convertToJson(String infoboxTemplatePartOfArticle) {
-        String templateType = getTemplateType(infoboxTemplatePartOfArticle);
-        String infoboxTemplatePartOfArticleSanitized = TemplateUtils.removeFirstAndLastLine(infoboxTemplatePartOfArticle);
-        Map<String, String> parametersAndValues = splitByParameter(infoboxTemplatePartOfArticleSanitized);
-        parametersAndValues.put("templateType", templateType);
+    private String convertToJson(String wikiObjectPartOfArticle) {
+        objectType = getTemplateType(wikiObjectPartOfArticle);
+        String infoboxTemplatePartOfArticleSanitized = TemplateUtils.removeFirstAndLastLine(wikiObjectPartOfArticle);
+        Map<String, String> parametersAndValues = TemplateUtils.splitByParameter(infoboxTemplatePartOfArticleSanitized);
+        parametersAndValues.put(OBJECT_TYPE, objectType);
         JSONObject jsonRepresentation = MapToJson(parametersAndValues);
         return jsonRepresentation.toString(2);
-    }
-
-    private Map<String, String> splitByParameter(String infoboxTemplatePartOfArticle) {
-        Map<String, String> keyValuePair = new HashMap<>();
-        List<String> splitLines = Arrays.asList(Pattern.compile("(^|\n)\\|").split(infoboxTemplatePartOfArticle));
-
-        for (String line : splitLines) {
-            if (line.indexOf('=') != -1) {
-                String key = line.substring(0, line.indexOf('=')).trim();
-                String value = line.substring(line.indexOf('=') + 1, line.length()).trim();
-                keyValuePair.put(key, value);
-            }
-        }
-        return keyValuePair;
     }
 
     private JSONObject MapToJson(Map<String, String> parametersAndValues) {
@@ -63,7 +61,7 @@ public class ArticleFactory {
     }
 
     private String getTemplateType(String infoboxTemplatePartOfArticle) {
-        int startOfTemplateName = infoboxTemplatePartOfArticle.indexOf("{{Infobox") +9;
+        int startOfTemplateName = infoboxTemplatePartOfArticle.indexOf("{{Infobox") + 9;
         int endOfTemplateName = infoboxTemplatePartOfArticle.indexOf('|');
         if (startOfTemplateName >= 0 && endOfTemplateName >= 0) {
             return infoboxTemplatePartOfArticle.substring(startOfTemplateName, endOfTemplateName).trim();
@@ -73,13 +71,13 @@ public class ArticleFactory {
     }
 
     private JSONObject sanitizeJsonObject(JSONObject jsonObject) {
-        if (jsonObject.has(TEMPLATE_TYPE)) {
-            String templateType = jsonObject.getString(TEMPLATE_TYPE);
-            if (TEMPLATE_TYPE_CREATURE.equals(templateType)) {
+        if (jsonObject.has(OBJECT_TYPE)) {
+            String templateType = jsonObject.getString(OBJECT_TYPE);
+            if (OBJECT_TYPE_CREATURE.equals(templateType)) {
                 CreatureFactory creatureFactory = new CreatureFactory();
                 return creatureFactory.create(jsonObject);
             }
-            if (TEMPLATE_TYPE_ITEM.equals(templateType)) {
+            if (OBJECT_TYPE_ITEM.equals(templateType)) {
                 ItemFactory itemFactory = new ItemFactory();
                 return itemFactory.create(jsonObject);
 
@@ -87,5 +85,30 @@ public class ArticleFactory {
             log.warn("Template type {} is currently not supported.", templateType);
         }
         return jsonObject;
+    }
+
+    private WikiObject mapCreatureJsonToObject(String wikiObjectJson) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.addMixInAnnotations(Creature.class, CreatureMixIn.class);
+//        SimpleModule module = new SimpleModule();
+//        module.addDeserializer(Creature.class, new CreatureDeserializer(Creature.class));
+//        objectMapper.registerModule(module);
+
+        try {
+            return objectMapper.readValue(wikiObjectJson, Creature.class);
+        } catch (IOException e) {
+            log.error("Unable to convert json to Creature object.", e);
+        }
+        return null;
+    }
+
+    private WikiObject mapItemJsonToObject(String wikiObjectJson) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(wikiObjectJson, Item.class);
+        } catch (IOException e) {
+            log.error("Unable to convert json to Item object.", e);
+        }
+        return null;
     }
 }

@@ -1,5 +1,6 @@
 package com.wikia.tibia.usecases;
 
+import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.repositories.WikiArticleRepository;
 import net.sourceforge.jwbf.core.contentRep.Article;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
@@ -47,6 +48,7 @@ public class FixCreatures {
 
         for (String creaturePageName : categoryMembers) {
             Article creaturePage = repository.getArticle(creaturePageName);
+            Creature creature = (Creature) repository.getWikiObject(creaturePageName);
             String articleText = creaturePage.getText();
             if (!articleDeprecatedOrEvent(articleText) && articleTextContainsLootItems(articleText)) {
                 List<String> listOfLootItems = makeListOfLootItems(creaturePageName, articleText);

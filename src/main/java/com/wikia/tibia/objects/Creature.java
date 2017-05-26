@@ -1,20 +1,24 @@
 package com.wikia.tibia.objects;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonSetter;
 import com.wikia.tibia.enums.*;
 
 import java.util.List;
 
-public class Creature {
+@JsonIgnoreProperties({ "objectType" })
+public class Creature extends WikiObject {
 
     private String name;
     private Article article;
     private String actualname;
     private String plural;
-    private Integer hitPoints;
-    private Integer experiencePoints;
-    private Integer armor;
-    private Integer summon;
-    private Integer convince;
+    private String hitPoints;
+    private String experiencePoints;
+    private String armor;
+    private String summon;
+    private String convince;
     private YesNo illusionable;
     private String creatureclass;
     private String primarytype;
@@ -24,12 +28,12 @@ public class Creature {
     private YesNo isarenaboss;
     private YesNo isevent;
     private String abilities;
-    private List<DamageElement> usedelements;
-    private Integer maxdmg;
+    private String usedelements;
+    private String maxdmg;
     private YesNo pushable;
     private YesNo pushobjects;
-    private List<DamageElement> walksaround;
-    private List<DamageElement> walksthrough;
+    private String walksaround;
+    private String walksthrough;
     private YesNo paraimmune;
     private YesNo senseinvis;
     private Percentage physicalDmgMod;
@@ -44,11 +48,11 @@ public class Creature {
     private String bestiaryname;
     private String bestiarytext;
     private List<Sound> sounds;
-    private Double implemented;
+    private String implemented;
     private String notes;
     private String behaviour;
-    private Integer runsat;
-    private Integer speed;
+    private String runsat;
+    private String speed;
     private String strategy;
     private String location;
     private List<LootItem> loot;
@@ -57,6 +61,11 @@ public class Creature {
 
     public Creature() {
         // constructor for Jackson
+    }
+
+    public Creature(Boolean illusionable) {
+        this();
+//        this.illusionable = illusionable;
     }
 
     public String getName() {
@@ -91,43 +100,47 @@ public class Creature {
         this.plural = plural;
     }
 
-    public Integer getHitPoints() {
+    @JsonGetter("hp")
+    public String getHitPoints() {
         return hitPoints;
     }
 
-    public void setHitPoints(Integer hitPoints) {
+    @JsonSetter("hp")
+    public void setHitPoints(String hitPoints) {
         this.hitPoints = hitPoints;
     }
 
-    public Integer getExperiencePoints() {
+    @JsonGetter("exp")
+    public String getExperiencePoints() {
         return experiencePoints;
     }
 
-    public void setExperiencePoints(Integer experiencePoints) {
+    @JsonSetter("exp")
+    public void setExperiencePoints(String experiencePoints) {
         this.experiencePoints = experiencePoints;
     }
 
-    public Integer getArmor() {
+    public String getArmor() {
         return armor;
     }
 
-    public void setArmor(Integer armor) {
+    public void setArmor(String armor) {
         this.armor = armor;
     }
 
-    public Integer getSummon() {
+    public String getSummon() {
         return summon;
     }
 
-    public void setSummon(Integer summon) {
+    public void setSummon(String summon) {
         this.summon = summon;
     }
 
-    public Integer getConvince() {
+    public String getConvince() {
         return convince;
     }
 
-    public void setConvince(Integer convince) {
+    public void setConvince(String convince) {
         this.convince = convince;
     }
 
@@ -203,19 +216,19 @@ public class Creature {
         this.abilities = abilities;
     }
 
-    public List<DamageElement> getUsedelements() {
+    public String getUsedelements() {
         return usedelements;
     }
 
-    public void setUsedelements(List<DamageElement> usedelements) {
+    public void setUsedelements(String usedelements) {
         this.usedelements = usedelements;
     }
 
-    public Integer getMaxdmg() {
+    public String getMaxdmg() {
         return maxdmg;
     }
 
-    public void setMaxdmg(Integer maxdmg) {
+    public void setMaxdmg(String maxdmg) {
         this.maxdmg = maxdmg;
     }
 
@@ -235,19 +248,19 @@ public class Creature {
         this.pushobjects = pushobjects;
     }
 
-    public List<DamageElement> getWalksaround() {
+    public String getWalksaround() {
         return walksaround;
     }
 
-    public void setWalksaround(List<DamageElement> walksaround) {
+    public void setWalksaround(String walksaround) {
         this.walksaround = walksaround;
     }
 
-    public List<DamageElement> getWalksthrough() {
+    public String getWalksthrough() {
         return walksthrough;
     }
 
-    public void setWalksthrough(List<DamageElement> walksthrough) {
+    public void setWalksthrough(String walksthrough) {
         this.walksthrough = walksthrough;
     }
 
@@ -363,11 +376,11 @@ public class Creature {
         this.sounds = sounds;
     }
 
-    public Double getImplemented() {
+    public String getImplemented() {
         return implemented;
     }
 
-    public void setImplemented(Double implemented) {
+    public void setImplemented(String implemented) {
         this.implemented = implemented;
     }
 
@@ -387,19 +400,19 @@ public class Creature {
         this.behaviour = behaviour;
     }
 
-    public Integer getRunsat() {
+    public String getRunsat() {
         return runsat;
     }
 
-    public void setRunsat(Integer runsat) {
+    public void setRunsat(String runsat) {
         this.runsat = runsat;
     }
 
-    public Integer getSpeed() {
+    public String getSpeed() {
         return speed;
     }
 
-    public void setSpeed(Integer speed) {
+    public void setSpeed(String speed) {
         this.speed = speed;
     }
 

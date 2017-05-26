@@ -2,35 +2,35 @@ package com.wikia.tibia.objects;
 
 public class LootItem {
 
-    private String quantity;
-    private String name;
-    private String rariry;
+    private String item;
+    private String amount;
+    private String rarity;
 
     private LootItem() {
         // no args constructor for Jackson
     }
 
-    public String getQuantity() {
-        return quantity;
+    public String getItem() {
+        return item;
     }
 
-    public void setQuantity(String quantity) {
-        this.quantity = quantity;
+    public void setItem(String item) {
+        this.item = item;
     }
 
-    public String getName() {
-        return name;
+    public String getAmount() {
+        return amount;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setAmount(String amount) {
+        this.amount = amount;
     }
 
-    public String getRariry() {
-        return rariry;
+    public String getRarity() {
+        return rarity;
     }
 
-    public void setRariry(String rariry) {
-        this.rariry = rariry;
+    public void setRarity(String rarity) {
+        this.rarity = rarity;
     }
 }

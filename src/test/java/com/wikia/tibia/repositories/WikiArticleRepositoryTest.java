@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class WikiArticleRepositoryTest {
 
-    private static final String CREATURE_PAGE_NAME = "Demon";
+    private static final String CREATURE_PAGE_NAME = "Dragon";
     private WikiArticleRepository target;
 
     @Before

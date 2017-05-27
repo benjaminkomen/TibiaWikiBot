@@ -51,11 +51,11 @@ public class ArticleFactory {
         String infoboxTemplatePartOfArticleSanitized = TemplateUtils.removeFirstAndLastLine(wikiObjectPartOfArticle);
         Map<String, String> parametersAndValues = TemplateUtils.splitByParameter(infoboxTemplatePartOfArticleSanitized);
         parametersAndValues.put(OBJECT_TYPE, objectType);
-        JSONObject jsonRepresentation = MapToJson(parametersAndValues);
+        JSONObject jsonRepresentation = mapToJson(parametersAndValues);
         return jsonRepresentation.toString(2);
     }
 
-    private JSONObject MapToJson(Map<String, String> parametersAndValues) {
+    private JSONObject mapToJson(Map<String, String> parametersAndValues) {
         JSONObject jsonObject = new JSONObject(parametersAndValues);
         return sanitizeJsonObject(jsonObject);
     }

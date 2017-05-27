@@ -6,9 +6,11 @@ public enum YesNo {
 
     YES_LOWERCASE("yes"),
     YES_UPPERCASE("Yes"),
+    YES_DOT("Yes."),
     YES_UNKNOWN("yes?"),
     NO_LOWERCASE("no"),
     NO_UPPERCASE("No"),
+    NO_DOT("No."),
     NO_UNKNOWN("no?"),
     UNKNOWN("?"),
     EMPTY("");

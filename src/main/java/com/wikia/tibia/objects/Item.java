@@ -5,10 +5,10 @@ import com.wikia.tibia.enums.*;
 
 import java.util.List;
 
-@JsonIgnoreProperties({ "objectType" })
+@JsonIgnoreProperties({ "objectType", "type" })
 public class Item extends WikiObject {
 
-    private Integer itemid;
+    private List<Integer> itemid;
     private YesNo marketable;
     private YesNo usable;
     private String sprites;
@@ -56,8 +56,8 @@ public class Item extends WikiObject {
     private Integer mapcolor;
     private YesNo consumable;
     private Integer regenseconds;
-    private List<Sound> sounds;
-    private YesNo writeable;
+    private List<String> sounds;
+    private YesNo writable;
     private YesNo rewritable;
     private Integer writechars;
     private YesNo hangable;
@@ -68,10 +68,10 @@ public class Item extends WikiObject {
     private Integer volume;
     private String duration;
     private YesNo destructable;
-    private List<Creature> droppedby;
+    private List<String> droppedby;
     private String value;
-    private Integer npcvalue;
-    private Integer npcprice;
+    private String npcvalue;
+    private String npcprice;
     private Integer npcvaluerook;
     private Integer npcpricerook;
     private String buyfrom;
@@ -81,11 +81,11 @@ public class Item extends WikiObject {
         // constructor for Jackson
     }
 
-    public Integer getItemid() {
+    public List<Integer> getItemid() {
         return itemid;
     }
 
-    public void setItemid(Integer itemid) {
+    public void setItemid(List<Integer> itemid) {
         this.itemid = itemid;
     }
 
@@ -465,20 +465,20 @@ public class Item extends WikiObject {
         this.regenseconds = regenseconds;
     }
 
-    public List<Sound> getSounds() {
+    public List<String> getSounds() {
         return sounds;
     }
 
-    public void setSounds(List<Sound> sounds) {
+    public void setSounds(List<String> sounds) {
         this.sounds = sounds;
     }
 
-    public YesNo getWriteable() {
-        return writeable;
+    public YesNo getWritable() {
+        return writable;
     }
 
-    public void setWriteable(YesNo writeable) {
-        this.writeable = writeable;
+    public void setWritable(YesNo writable) {
+        this.writable = writable;
     }
 
     public YesNo getRewritable() {
@@ -561,11 +561,11 @@ public class Item extends WikiObject {
         this.destructable = destructable;
     }
 
-    public List<Creature> getDroppedby() {
+    public List<String> getDroppedby() {
         return droppedby;
     }
 
-    public void setDroppedby(List<Creature> droppedby) {
+    public void setDroppedby(List<String> droppedby) {
         this.droppedby = droppedby;
     }
 
@@ -577,19 +577,19 @@ public class Item extends WikiObject {
         this.value = value;
     }
 
-    public Integer getNpcvalue() {
+    public String getNpcvalue() {
         return npcvalue;
     }
 
-    public void setNpcvalue(Integer npcvalue) {
+    public void setNpcvalue(String npcvalue) {
         this.npcvalue = npcvalue;
     }
 
-    public Integer getNpcprice() {
+    public String getNpcprice() {
         return npcprice;
     }
 
-    public void setNpcprice(Integer npcprice) {
+    public void setNpcprice(String npcprice) {
         this.npcprice = npcprice;
     }
 

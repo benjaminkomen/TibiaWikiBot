@@ -43,7 +43,7 @@ public class Creature extends WikiObject {
     private Percentage hpDrainDmgMod;
     private String bestiaryname;
     private String bestiarytext;
-    private List<Sound> sounds;
+    private List<String> sounds;
     private String behaviour;
     private String runsat;
     private String speed;
@@ -328,11 +328,11 @@ public class Creature extends WikiObject {
         this.bestiarytext = bestiarytext;
     }
 
-    public List<Sound> getSounds() {
+    public List<String> getSounds() {
         return sounds;
     }
 
-    public void setSounds(List<Sound> sounds) {
+    public void setSounds(List<String> sounds) {
         this.sounds = sounds;
     }
 

@@ -1,6 +1,6 @@
 package com.wikia.tibia.usecases;
 
-import com.wikia.tibia.objects.Creature;
+import com.wikia.tibia.objects.Item;
 import com.wikia.tibia.objects.TibiaWikiBot;
 import com.wikia.tibia.repositories.WikiArticleRepository;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
@@ -14,35 +14,27 @@ import java.util.stream.Collectors;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
-public class FixCreaturesTest {
+public class FixItemsTest {
 
-    private FixCreatures target;
+    private FixItems target;
     private WikiArticleRepository repository;
 
     @Before
     public void setup() {
         TibiaWikiBot tibiaWikiBot = new TibiaWikiBot();
         tibiaWikiBot.login();
-        target = new FixCreatures(tibiaWikiBot);
+        target = new FixItems(tibiaWikiBot);
         this.repository = new WikiArticleRepository(tibiaWikiBot);
     }
 
     @Test
-    public void testFixCreatures() {
-        // given
-        // when
-        target.checkCreatures();
-        // then
-    }
-
-    @Test
-    public void testGetAllCreatures() {
-        CategoryMembersSimple pagesInCreaturesCategory = repository.getMembersFromCategory("Creatures");
+    public void testGetAllItems() {
+        CategoryMembersSimple pagesInItemsCategory = repository.getMembersFromCategory("Items");
         CategoryMembersSimple pagesInListsCategory = repository.getMembersFromCategory("Lists");
 
-        List<String> creaturesCategory = new ArrayList<>();
-        for (String pageName : pagesInCreaturesCategory) {
-            creaturesCategory.add(pageName);
+        List<String> itemsCategory = new ArrayList<>();
+        for (String pageName : pagesInItemsCategory) {
+            itemsCategory.add(pageName);
         }
 
         List<String> listsCategory = new ArrayList<>();
@@ -50,17 +42,17 @@ public class FixCreaturesTest {
             listsCategory.add(pageName);
         }
 
-        List<String> pagesInCreaturesCategoryButNotLists = creaturesCategory.stream()
+        List<String> pagesInItemsCategoryButNotLists = itemsCategory.stream()
                 .filter(page -> !listsCategory.contains(page))
                 .collect(Collectors.toList());
 
-        List<Creature> creatures = pagesInCreaturesCategoryButNotLists.stream()
+        List<Item> items = pagesInItemsCategoryButNotLists.stream()
                 .map(pageName -> repository.getWikiObject(pageName))
-                .filter(Creature.class::isInstance)
-                .map(Creature.class::cast)
+                .filter(Item.class::isInstance)
+                .map(Item.class::cast)
                 .collect(Collectors.toList());
 
         // then
-        assertThat(creatures.size(), is(pagesInCreaturesCategoryButNotLists.size()));
+        assertThat(items.size(), is(pagesInItemsCategoryButNotLists.size()));
     }
 }

@@ -91,4 +91,15 @@ public class TemplateUtils {
 
         return keyValuePair;
     }
+
+    public static List<String> splitByCommaAndTrim(String input) {
+        List<String> result = new ArrayList<>();
+        String[] arrayFromSplitInput = input.split(",");
+
+        for (String arrayElement : arrayFromSplitInput) {
+            result.add(arrayElement.trim());
+        }
+
+        return result;
+    }
 }

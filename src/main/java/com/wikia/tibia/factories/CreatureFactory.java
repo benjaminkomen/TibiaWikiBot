@@ -30,7 +30,7 @@ public class CreatureFactory {
 
         if (jsonObject.has(SPAWN_TYPE)) {
             String spawntypeValue = jsonObject.getString(SPAWN_TYPE);
-            JSONArray spawntypeArray = new JSONArray(splitByCommaAndTrim(spawntypeValue));
+            JSONArray spawntypeArray = new JSONArray(TemplateUtils.splitByCommaAndTrim(spawntypeValue));
             jsonObject.put(SPAWN_TYPE, spawntypeArray);
         }
 
@@ -47,7 +47,8 @@ public class CreatureFactory {
         if (soundsValue.length() < 2) {
             return new JSONArray();
         }
-        assert (soundsValue.contains("{{Sound List")) : "soundsValue " + soundsValue + " does not contain Template:Sound List";
+        assert (soundsValue.contains("{{Sound List")) : "soundsValue '" + soundsValue + "' from creature '" + name +
+                "' does not contain Template:Sound List";
         String sounds = TemplateUtils.removeStartAndEndOfTemplate(soundsValue);
         List<String> splitLines = Arrays.asList(Pattern.compile("\\|").split(sounds));
         return new JSONArray(splitLines);
@@ -101,16 +102,5 @@ public class CreatureFactory {
             }
         }
         return new JSONObject(lootItemMap);
-    }
-
-    private List<String> splitByCommaAndTrim(String input) {
-        List<String> result = new ArrayList<>();
-        String[] arrayFromSplitInput = input.split(",");
-
-        for (String arrayElement : arrayFromSplitInput) {
-            result.add(arrayElement.trim());
-        }
-
-        return result;
     }
 }

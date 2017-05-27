@@ -59,7 +59,7 @@ public class Creature extends WikiObject {
     private String history;
     private Status status;
 
-    public Creature() {
+    private Creature() {
         // constructor for Jackson
     }
 

@@ -12,7 +12,7 @@ public class TemplateUtils {
 
     private static final Logger log = LoggerFactory.getLogger(TemplateUtils.class);
     public static final String REGEX_PARAMETER_OLD = "(^|\n)\\|(\\s|[a-z])";
-    public static final String REGEX_PARAMETER_NEW = "\\|\\s*?([A-Za-z0-9]+)\\s*?=";
+    public static final String REGEX_PARAMETER_NEW = "\\|\\s*?([A-Za-z0-9_]+)\\s*?=";
 
     private TemplateUtils() {}
 

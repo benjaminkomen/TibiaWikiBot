@@ -10,10 +10,6 @@ import java.util.List;
 @JsonIgnoreProperties({ "objectType", "type", "text" })
 public class Creature extends WikiObject {
 
-    private String name;
-    private Article article;
-    private String actualname;
-    private String plural;
     private String hitPoints;
     private String experiencePoints;
     private String armor;
@@ -48,56 +44,20 @@ public class Creature extends WikiObject {
     private String bestiaryname;
     private String bestiarytext;
     private List<Sound> sounds;
-    private String implemented;
-    private String notes;
     private String behaviour;
     private String runsat;
     private String speed;
     private String strategy;
     private String location;
     private List<LootItem> loot;
-    private String history;
-    private Status status;
 
-    private Creature() {
+    public Creature() {
         // constructor for Jackson
     }
 
     public Creature(Boolean illusionable) {
         this();
 //        this.illusionable = illusionable;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Article getArticle() {
-        return article;
-    }
-
-    public void setArticle(Article article) {
-        this.article = article;
-    }
-
-    public String getActualname() {
-        return actualname;
-    }
-
-    public void setActualname(String actualname) {
-        this.actualname = actualname;
-    }
-
-    public String getPlural() {
-        return plural;
-    }
-
-    public void setPlural(String plural) {
-        this.plural = plural;
     }
 
     @JsonGetter("hp")
@@ -376,22 +336,6 @@ public class Creature extends WikiObject {
         this.sounds = sounds;
     }
 
-    public String getImplemented() {
-        return implemented;
-    }
-
-    public void setImplemented(String implemented) {
-        this.implemented = implemented;
-    }
-
-    public String getNotes() {
-        return notes;
-    }
-
-    public void setNotes(String notes) {
-        this.notes = notes;
-    }
-
     public String getBehaviour() {
         return behaviour;
     }
@@ -438,21 +382,5 @@ public class Creature extends WikiObject {
 
     public void setLoot(List<LootItem> loot) {
         this.loot = loot;
-    }
-
-    public String getHistory() {
-        return history;
-    }
-
-    public void setHistory(String history) {
-        this.history = history;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
     }
 }

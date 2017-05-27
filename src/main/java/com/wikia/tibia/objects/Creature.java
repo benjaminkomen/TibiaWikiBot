@@ -7,7 +7,7 @@ import com.wikia.tibia.enums.*;
 
 import java.util.List;
 
-@JsonIgnoreProperties({ "objectType" })
+@JsonIgnoreProperties({ "objectType", "type", "text" })
 public class Creature extends WikiObject {
 
     private String name;

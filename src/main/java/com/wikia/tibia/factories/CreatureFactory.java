@@ -44,6 +44,10 @@ public class CreatureFactory {
     }
 
     private JSONArray makeSoundsArray(String soundsValue) {
+        if (soundsValue.length() < 2) {
+            return new JSONArray();
+        }
+        assert (soundsValue.contains("{{Sound List")) : "soundsValue " + soundsValue + " does not contain Template:Sound List";
         String sounds = TemplateUtils.removeStartAndEndOfTemplate(soundsValue);
         List<String> splitLines = Arrays.asList(Pattern.compile("\\|").split(sounds));
         return new JSONArray(splitLines);
@@ -52,7 +56,7 @@ public class CreatureFactory {
     private JSONArray makeLootTableArray(String lootValue) {
         List<JSONObject> lootItemJsonObjects = new ArrayList<>();
 
-        if (lootValue.contains("{{Loot Table}}") || lootValue.contains("{{Loot Table|}}")) {
+        if (lootValue.matches("\\{\\{Loot Table(\\||\\s|)}}")) {
             return new JSONArray();
         }
 
@@ -70,6 +74,10 @@ public class CreatureFactory {
                 continue;
             }
             String lootItem = TemplateUtils.removeStartAndEndOfTemplate(lootItemTemplate);
+            if (lootItem == null) {
+                log.error("Unable to create lootTableArray from lootValue: {}", lootValue);
+                return new JSONArray();
+            }
             List<String> splitLootItem = Arrays.asList(Pattern.compile("\\|").split(lootItem));
             JSONObject lootItemJsonObject = makeLootItemJsonObject(splitLootItem);
             lootItemJsonObjects.add(lootItemJsonObject);

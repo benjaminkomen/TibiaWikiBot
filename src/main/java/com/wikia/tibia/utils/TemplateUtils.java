@@ -48,7 +48,7 @@ public class TemplateUtils {
 
     public static String removeStartAndEndOfTemplate(String text) {
         if (text.length() < 2) {
-            return "";
+            return null;
         }
         int startOfTemplate = text.indexOf('|') + 1;
         int endOfTemplate = text.indexOf("}}");
@@ -56,7 +56,7 @@ public class TemplateUtils {
             return text.substring(startOfTemplate, endOfTemplate).trim();
         }
         log.error("Could not remove start and end of template.");
-        return "";
+        return null;
     }
 
     public static Map<String, String> splitByParameter(String infoboxTemplatePartOfArticle) {

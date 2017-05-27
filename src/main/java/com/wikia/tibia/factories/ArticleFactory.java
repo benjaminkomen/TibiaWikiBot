@@ -82,7 +82,7 @@ public class ArticleFactory {
                 return itemFactory.create(jsonObject);
 
             }
-            log.warn("Template type {} is currently not supported.", templateType);
+            log.warn("Template type {} is currently not supported. Encountered at jsonObject: {}", templateType, jsonObject.toString(2));
         }
         return jsonObject;
     }

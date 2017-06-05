@@ -11,12 +11,11 @@ import java.util.stream.Collectors;
 public class TemplateUtils {
 
     private static final Logger log = LoggerFactory.getLogger(TemplateUtils.class);
-    public static final String REGEX_PARAMETER_OLD = "(^|\n)\\|(\\s|[a-z])";
-    public static final String REGEX_PARAMETER_NEW = "\\|\\s*?([A-Za-z0-9_]+)\\s*?=";
+    public static final String REGEX_PARAMETER_NEW = "\\|\\s+?([A-Za-z0-9_]+)\\s*?=";
 
     private TemplateUtils() {}
 
-    public static String getBetweenBalancedBrackets(String text, String start) {
+    public static String getBetweenOuterBalancedBrackets(String text, String start) {
         int startingCurlyBrackets = text.indexOf(start);
         assert (startingCurlyBrackets >=0) : "text: " + text + " start: " + start;
         int endingCurlyBrackets = 0;

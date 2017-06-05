@@ -32,7 +32,7 @@ public class ArticleFactory {
             return null;
         }
 
-        String wikiObjectPartOfArticle = TemplateUtils.getBetweenBalancedBrackets(articleContent, INFOBOX_HEADER);
+        String wikiObjectPartOfArticle = TemplateUtils.getBetweenOuterBalancedBrackets(articleContent, INFOBOX_HEADER);
         String wikiObjectJson = convertToJson(wikiObjectPartOfArticle);
 
         WikiObject wikiObject = new WikiObject();

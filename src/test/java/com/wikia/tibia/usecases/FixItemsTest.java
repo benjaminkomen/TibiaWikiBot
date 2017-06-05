@@ -2,6 +2,7 @@ package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.objects.Item;
 import com.wikia.tibia.objects.TibiaWikiBot;
+import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.repositories.WikiArticleRepository;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
 import org.junit.Before;
@@ -13,6 +14,9 @@ import java.util.stream.Collectors;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
+import static org.hamcrest.Matchers.nullValue;
+
 
 public class FixItemsTest {
 
@@ -47,6 +51,7 @@ public class FixItemsTest {
                 .collect(Collectors.toList());
 
         List<Item> items = pagesInItemsCategoryButNotLists.stream()
+                .skip(0)
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(Item.class::isInstance)
                 .map(Item.class::cast)
@@ -54,5 +59,15 @@ public class FixItemsTest {
 
         // then
         assertThat(items.size(), is(pagesInItemsCategoryButNotLists.size()));
+    }
+
+    @Test
+    public void testGetSpecificItem() {
+        // given
+        String itemName = "Emerald Sword";
+        // when
+        WikiObject result = repository.getWikiObject(itemName);
+        // then
+        assertThat(result, not(nullValue()));
     }
 }

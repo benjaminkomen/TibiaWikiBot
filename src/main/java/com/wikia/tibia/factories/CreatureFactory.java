@@ -61,7 +61,7 @@ public class CreatureFactory {
             return new JSONArray();
         }
 
-        String lootItemsPartOfLootTable = TemplateUtils.getBetweenBalancedBrackets(lootValue, "{{Loot Table");
+        String lootItemsPartOfLootTable = TemplateUtils.getBetweenOuterBalancedBrackets(lootValue, "{{Loot Table");
         lootItemsPartOfLootTable = TemplateUtils.removeFirstAndLastLine(lootItemsPartOfLootTable);
 
         if (lootItemsPartOfLootTable.length() < 3) {

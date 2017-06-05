@@ -5,7 +5,7 @@ import com.wikia.tibia.enums.*;
 
 import java.util.List;
 
-@JsonIgnoreProperties({ "objectType", "type" })
+@JsonIgnoreProperties({ "objectType" })
 public class Item extends WikiObject {
 
     private List<Integer> itemid;
@@ -25,7 +25,7 @@ public class Item extends WikiObject {
     private Integer mlrequired;
     private Hands hands;
     private WeaponType type;
-    private Integer attack;
+    private String attack;
     private String elementattack;
     private Integer defense;
     private String defensemod;
@@ -38,6 +38,7 @@ public class Item extends WikiObject {
     private String hit_mod;
     private Integer armor;
     private String resist;
+    private Integer charges;
     private Percentage crithit_ch;
     private Percentage critextra_dmg;
     private Percentage manaleech_ch;
@@ -67,13 +68,13 @@ public class Item extends WikiObject {
     private String damage;
     private Integer volume;
     private String duration;
-    private YesNo destructable;
+    private YesNo destructible;
     private List<String> droppedby;
     private String value;
     private String npcvalue;
     private String npcprice;
-    private Integer npcvaluerook;
-    private Integer npcpricerook;
+    private Double npcvaluerook;
+    private Double npcpricerook;
     private String buyfrom;
     private String sellto;
 
@@ -217,11 +218,11 @@ public class Item extends WikiObject {
         this.type = type;
     }
 
-    public Integer getAttack() {
+    public String getAttack() {
         return attack;
     }
 
-    public void setAttack(Integer attack) {
+    public void setAttack(String attack) {
         this.attack = attack;
     }
 
@@ -319,6 +320,14 @@ public class Item extends WikiObject {
 
     public void setResist(String resist) {
         this.resist = resist;
+    }
+
+    public Integer getCharges() {
+        return charges;
+    }
+
+    public void setCharges(Integer charges) {
+        this.charges = charges;
     }
 
     public Percentage getCrithit_ch() {
@@ -553,12 +562,12 @@ public class Item extends WikiObject {
         this.duration = duration;
     }
 
-    public YesNo getDestructable() {
-        return destructable;
+    public YesNo getDestructible() {
+        return destructible;
     }
 
-    public void setDestructable(YesNo destructable) {
-        this.destructable = destructable;
+    public void setDestructible(YesNo destructible) {
+        this.destructible = destructible;
     }
 
     public List<String> getDroppedby() {
@@ -593,19 +602,19 @@ public class Item extends WikiObject {
         this.npcprice = npcprice;
     }
 
-    public Integer getNpcvaluerook() {
+    public Double getNpcvaluerook() {
         return npcvaluerook;
     }
 
-    public void setNpcvaluerook(Integer npcvaluerook) {
+    public void setNpcvaluerook(Double npcvaluerook) {
         this.npcvaluerook = npcvaluerook;
     }
 
-    public Integer getNpcpricerook() {
+    public Double getNpcpricerook() {
         return npcpricerook;
     }
 
-    public void setNpcpricerook(Integer npcpricerook) {
+    public void setNpcpricerook(Double npcpricerook) {
         this.npcpricerook = npcpricerook;
     }
 

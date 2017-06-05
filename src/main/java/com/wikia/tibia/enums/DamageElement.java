@@ -10,5 +10,6 @@ public enum DamageElement {
     Earth,
     Drown,
     Lifedrain,
-    Poison;
+    Poison,
+    Unknown;
 }

@@ -15,12 +15,12 @@ public class ItemFactory {
     private static final String DROPPED_BY = "droppedby";
     private static final String ITEM_ID = "itemid";
 
-    private String name;
+    private String itemName;
 
     public JSONObject create(JSONObject jsonObject) {
 
         assert(jsonObject.has("name")) : "parameter name not found in jsonObject:" + jsonObject.toString(2);
-        this.name = jsonObject.getString("name");
+        this.itemName = jsonObject.getString("name");
 
         if (jsonObject.has(SOUNDS)) {
             String soundsValue = jsonObject.getString(SOUNDS);
@@ -47,7 +47,7 @@ public class ItemFactory {
         if (soundsValue.length() < 2) {
             return new JSONArray();
         }
-        assert (soundsValue.contains("{{Sound List")) : "soundsValue " + soundsValue + "' from item '" + name +
+        assert (soundsValue.contains("{{Sound List")) : "soundsValue " + soundsValue + "' from item '" + itemName +
                 "' does not contain Template:Sound List";
         String sounds = TemplateUtils.removeStartAndEndOfTemplate(soundsValue);
         List<String> splitLines = Arrays.asList(Pattern.compile("\\|").split(sounds));
@@ -55,11 +55,11 @@ public class ItemFactory {
     }
 
     private JSONArray makeDroppedByArray(String droppedbyValue) {
-        if (droppedbyValue.length() < 2 || droppedbyValue.matches("(N|n)one(\\.|)") || legallyHasNoDroppedByTemplate(name)) {
+        if (droppedbyValue.length() < 2 || droppedbyValue.matches("(N|n)one(\\.|)") || legallyHasNoDroppedByTemplate(itemName)) {
             return new JSONArray();
         }
         assert (droppedbyValue.contains("{{Dropped By")) : "droppedbyValue " +
-                droppedbyValue + "' from item '" + name + "' does not contain Template:Dropped By";
+                droppedbyValue + "' from item '" + itemName + "' does not contain Template:Dropped By";
         String creatures = TemplateUtils.removeStartAndEndOfTemplate(droppedbyValue);
         List<String> splitLines = Arrays.asList(Pattern.compile("\\|").split(creatures));
         return new JSONArray(splitLines);

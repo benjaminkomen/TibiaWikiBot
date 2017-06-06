@@ -77,4 +77,11 @@ public class WikiObject {
     public void setStatus(Status status) {
         this.status = status;
     }
+
+    public boolean isDeprecatedOrEvent() {
+        if (Status.DEPRECATED.equals(status) || Status.EVENT.equals(status)) {
+            return true;
+        }
+        return false;
+    }
 }

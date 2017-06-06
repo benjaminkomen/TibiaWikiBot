@@ -1,6 +1,9 @@
 package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.objects.Creature;
+import com.wikia.tibia.objects.Item;
+import com.wikia.tibia.objects.LootItem;
+import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.repositories.WikiArticleRepository;
 import net.sourceforge.jwbf.core.contentRep.Article;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
@@ -27,19 +30,13 @@ public class FixCreatures {
             "Golden Raid Token"
             );
     private static final List NON_EVENT_CREATURES_DROPPING_SNOWBALLS = Arrays.asList("Yeti", "Grynch Clan Goblin");
-    private static final String REGEX_LOOT_ITEM = "\\{\\{Loot Item";
-    private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(([^|}]+)(\\|([^|}]+))?(\\|([^|}]+))?)}}";
-
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
-    private static final String REGEX_DEPRECATED_OR_EVENT = "\\{\\{(Deprecated|Event)}}";
     private static final boolean DEBUG_MODE = true;
 
-    private MediaWikiBot mediaWikiBot;
     private WikiArticleRepository repository;
-    private Map<String, Article> itemPagesToUpdate = new HashMap<>();
+    private Map<String, Item> itemPagesToUpdate = new HashMap<>();
 
     public FixCreatures(MediaWikiBot mediaWikiBot) {
-        this.mediaWikiBot = mediaWikiBot;
         this.repository = new WikiArticleRepository(mediaWikiBot);
     }
 
@@ -47,51 +44,14 @@ public class FixCreatures {
         CategoryMembersSimple categoryMembers = repository.getMembersFromCategory("Creatures");
 
         for (String creaturePageName : categoryMembers) {
-            Article creaturePage = repository.getArticle(creaturePageName);
             Creature creature = (Creature) repository.getWikiObject(creaturePageName);
-            String articleText = creaturePage.getText();
-            if (!articleDeprecatedOrEvent(articleText) && articleTextContainsLootItems(articleText)) {
-                List<String> listOfLootItems = makeListOfLootItems(creaturePageName, articleText);
-                for (String lootItem : listOfLootItems) {
-                    checkIfCreatureNameIsPresent(creaturePageName, lootItem);
+            if (creature != null && !creature.isDeprecatedOrEvent() && !creature.getLoot().isEmpty()) {
+                for (LootItem lootItem : creature.getLoot()) {
+                    checkIfCreatureNameIsPresent(creaturePageName, lootItem.getItemName());
                 }
             }
         }
         saveItemArticles();
-    }
-
-    private boolean articleDeprecatedOrEvent(String articleText) {
-        Pattern p = Pattern.compile(REGEX_DEPRECATED_OR_EVENT);
-        Matcher m = p.matcher(articleText);
-        return m.find();
-    }
-
-    private boolean articleTextContainsLootItems(String articleText) {
-        Pattern p = Pattern.compile(REGEX_LOOT_ITEM);
-        Matcher m = p.matcher(articleText);
-        return m.find();
-    }
-
-    private List<String> makeListOfLootItems(String creaturePageName, String articleText) {
-        List<String> lootItems = new ArrayList<>();
-        String lootItemName;
-        Pattern pattern = Pattern.compile(REGEX_LOOT_ITEM_NAME);
-        Matcher matcher = pattern.matcher(articleText);
-        while (matcher.find()) {
-            if (matcher.group(6) != null) { // Match |{{Loot Item|0-4|Gold Coin|very rare}}
-                lootItemName = matcher.group(4);
-            } else if (matcher.group(3) == null) { // Match |{{Loot Item|Apple}}
-                lootItemName = matcher.group(2);
-            } else if (Character.isUpperCase(matcher.group(2).charAt(0))) { // Match |{{Loot Item|Apple|always}}
-                lootItemName = matcher.group(2);
-            } else {  // Match |{{Loot Item|0-4|Gold Coin}}
-                lootItemName = matcher.group(4);
-            }
-            if (itemShouldBeAdded(creaturePageName, lootItemName)) {
-                lootItems.add(lootItemName);
-            }
-        }
-        return lootItems;
     }
 
     private boolean itemShouldBeAdded(String creaturePageName, String lootItemNamePrecise) {
@@ -108,28 +68,32 @@ public class FixCreatures {
     }
 
     private void checkIfCreatureNameIsPresent(String creaturePageName, String lootItem) {
-        Article itemPage;
+        Item item = null;
+
         if (itemPagesToUpdate.containsKey(lootItem)) {
-            itemPage = itemPagesToUpdate.get(lootItem);
+            item = itemPagesToUpdate.get(lootItem);
         } else {
-            itemPage = repository.getArticle(lootItem);
-        }
-        String itemPageText = itemPage.getText();
-        Pattern p = Pattern.compile(REGEX_DROPPED_BY);
-        Matcher m = p.matcher(itemPageText);
-        if (m.find()) {
-            String creatureNames = m.group(1);
-            if (!creatureNames.contains(creaturePageName)) {
-                String newDroppedByList = updateCreatureToDroppedByList(creatureNames, creaturePageName);
-                addMissingCreatureNameToDroppedByList(creaturePageName, itemPage, newDroppedByList);
+            WikiObject wikiObject = repository.getWikiObject(lootItem);
+            if (wikiObject instanceof Item) {
+                item = (Item) wikiObject;
             }
-        } else {
-            log.warn("No DroppedBy template encountered on item '{}' while trying to add creature '{}'.", lootItem, creaturePageName);
+        }
+
+        if (item == null) {
+            return;
+        }
+
+        List<String> creatureNames = item.getDroppedby();
+
+        if (!creatureNames.contains(creaturePageName)) {
+            creatureNames.add(creaturePageName);
+            item.setDroppedby(creatureNames);
+            itemPagesToUpdate.put(item.getName(), item);
+            log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, item.getName());
         }
     }
 
-    private String updateCreatureToDroppedByList(String currentDroppedByList, String newCreature) {
-        List<String> creatureNames = new LinkedList<>(Arrays.asList(currentDroppedByList.split("\\|")));
+    private String updateCreatureToDroppedByList(List<String> creatureNames, String newCreature) {
         creatureNames.add(newCreature);
         Collections.sort(creatureNames);
         String newDroppedByList = String.join("|", creatureNames);
@@ -144,7 +108,7 @@ public class FixCreatures {
             String newArticleText = m.replaceAll(textToInsert);
             itemPage.setText(newArticleText);
             itemPage.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, itemPage.getTitle()));
-            itemPagesToUpdate.put(itemPage.getTitle(), itemPage);
+            //itemPagesToUpdate.put(itemPage.getTitle(), itemPage);
             log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
         }
     }
@@ -152,8 +116,8 @@ public class FixCreatures {
     private void saveItemArticles() {
         log.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());
         if (!DEBUG_MODE) {
-            for (Map.Entry<String, Article> itemPage : itemPagesToUpdate.entrySet()) {
-                repository.saveArticle(itemPage.getValue());
+            for (Map.Entry<String, Item> itemPage : itemPagesToUpdate.entrySet()) {
+                //repository.saveArticle(itemPage.getValue()); // TODO fix the saving process, wikiObject -> json -> Article
             }
         }
     }

@@ -8,7 +8,8 @@ public enum Status {
     DEPRECATED("deprecated"),
     UNOBTAINABLE("unobtainable"),
     TS_ONLY_LOWERCASE("ts-only"),
-    TS_ONLY_UPPERCASE("TS-only");
+    TS_ONLY_UPPERCASE("TS-only"),
+    EVENT("event");
 
     private String description;
 

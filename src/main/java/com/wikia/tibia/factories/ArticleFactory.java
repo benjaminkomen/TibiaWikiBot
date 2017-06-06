@@ -1,6 +1,7 @@
 package com.wikia.tibia.factories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.mixins.CreatureMixIn;
 import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Item;
@@ -21,6 +22,9 @@ public class ArticleFactory {
     private static final String OBJECT_TYPE_CREATURE = "Creature";
     private static final String OBJECT_TYPE_ITEM = "Item";
     private static final String INFOBOX_HEADER = "{{Infobox";
+    private static final String REGEX_EVENT = "\\{\\{(E|e)vent";
+    private static final String REGEX_DEPRECATED = "\\{\\{(D|d)eprecated";
+
     private Article article;
     private String objectType;
 
@@ -43,7 +47,19 @@ public class ArticleFactory {
             wikiObject = mapItemJsonToObject(wikiObjectJson);
         }
 
+        wikiObject.setStatus(setStatusEventOrDeprecated(articleContent));
+
         return wikiObject;
+    }
+
+    private Status setStatusEventOrDeprecated(String articleContent) {
+        if (articleContent.matches(REGEX_EVENT)) {
+            return Status.EVENT;
+        }
+        if (articleContent.matches(REGEX_DEPRECATED)) {
+            return Status.DEPRECATED;
+        }
+        return null;
     }
 
     private String convertToJson(String wikiObjectPartOfArticle) {

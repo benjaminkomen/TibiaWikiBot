@@ -16,11 +16,12 @@ public class CreatureFactory {
     private static final String SPAWN_TYPE = "spawntype";
     private static final String LOOT = "loot";
 
-    private String name;
+    private String creatureName;
 
     public JSONObject create(JSONObject jsonObject) {
 
-        this.name = jsonObject.getString("name");
+        assert(jsonObject.has("name")) : "parameter name not found in jsonObject:" + jsonObject.toString(2);
+        this.creatureName = jsonObject.getString("name");
 
         if (jsonObject.has(SOUNDS)) {
             String soundsValue = jsonObject.getString(SOUNDS);
@@ -47,7 +48,7 @@ public class CreatureFactory {
         if (soundsValue.length() < 2) {
             return new JSONArray();
         }
-        assert (soundsValue.contains("{{Sound List")) : "soundsValue '" + soundsValue + "' from creature '" + name +
+        assert (soundsValue.contains("{{Sound List")) : "soundsValue '" + soundsValue + "' from creature '" + creatureName +
                 "' does not contain Template:Sound List";
         String sounds = TemplateUtils.removeStartAndEndOfTemplate(soundsValue);
         List<String> splitLines = Arrays.asList(Pattern.compile("\\|").split(sounds));
@@ -92,7 +93,7 @@ public class CreatureFactory {
 
         for (String lootItemPart : splitLootItem) {
             if (Character.isUpperCase(lootItemPart.charAt(0))) {
-                lootItemMap.put("item", lootItemPart);
+                lootItemMap.put("itemName", lootItemPart);
             } else if (Character.isDigit(lootItemPart.charAt(0))) {
                 lootItemMap.put("amount", lootItemPart);
             } else if (Character.isLowerCase(lootItemPart.charAt(0))) {

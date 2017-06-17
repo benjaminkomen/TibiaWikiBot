@@ -3,9 +3,7 @@ package com.wikia.tibia.factories;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.mixins.CreatureMixIn;
-import com.wikia.tibia.objects.Creature;
-import com.wikia.tibia.objects.Item;
-import com.wikia.tibia.objects.WikiObject;
+import com.wikia.tibia.objects.*;
 import com.wikia.tibia.utils.TemplateUtils;
 import net.sourceforge.jwbf.core.contentRep.Article;
 import org.json.JSONObject;
@@ -19,6 +17,8 @@ public class ArticleFactory {
 
     private static final Logger log = LoggerFactory.getLogger(ArticleFactory.class);
     private static final String OBJECT_TYPE = "objectType";
+    private static final String OBJECT_TYPE_ACHIEVEMENT = "Achievement";
+    private static final String OBJECT_TYPE_BOOK = "Book";
     private static final String OBJECT_TYPE_CREATURE = "Creature";
     private static final String OBJECT_TYPE_ITEM = "Item";
     private static final String INFOBOX_HEADER = "{{Infobox";
@@ -39,12 +39,24 @@ public class ArticleFactory {
         String wikiObjectPartOfArticle = TemplateUtils.getBetweenOuterBalancedBrackets(articleContent, INFOBOX_HEADER);
         String wikiObjectJson = convertToJson(wikiObjectPartOfArticle);
 
-        WikiObject wikiObject = new WikiObject();
-        if (OBJECT_TYPE_CREATURE.equals(objectType)) {
-            wikiObject = mapCreatureJsonToObject(wikiObjectJson);
-        }
-        if (OBJECT_TYPE_ITEM.equals(objectType)) {
-            wikiObject = mapItemJsonToObject(wikiObjectJson);
+        WikiObject wikiObject;
+
+        switch (objectType) {
+            case OBJECT_TYPE_ACHIEVEMENT :
+                wikiObject = mapJsonToObject(wikiObjectJson, Achievement.class);
+                break;
+            case OBJECT_TYPE_BOOK :
+                wikiObject = mapJsonToObject(wikiObjectJson, Book.class);
+                break;
+            case OBJECT_TYPE_CREATURE :
+                wikiObject = mapJsonToObject(wikiObjectJson, Creature.class);
+                break;
+            case OBJECT_TYPE_ITEM :
+                wikiObject = mapJsonToObject(wikiObjectJson, Item.class);
+                break;
+            default:
+                log.warn("object type '{}' not supported, terminating..", objectType);
+                return null;
         }
 
         wikiObject.setStatus(setStatusEventOrDeprecated(articleContent));
@@ -89,41 +101,29 @@ public class ArticleFactory {
     private JSONObject sanitizeJsonObject(JSONObject jsonObject) {
         if (jsonObject.has(OBJECT_TYPE)) {
             String templateType = jsonObject.getString(OBJECT_TYPE);
-            if (OBJECT_TYPE_CREATURE.equals(templateType)) {
-                CreatureFactory creatureFactory = new CreatureFactory();
-                return creatureFactory.create(jsonObject);
-            }
-            if (OBJECT_TYPE_ITEM.equals(templateType)) {
-                ItemFactory itemFactory = new ItemFactory();
-                return itemFactory.create(jsonObject);
 
+            switch (templateType) {
+                case OBJECT_TYPE_CREATURE:
+                    CreatureFactory creatureFactory = new CreatureFactory();
+                    return creatureFactory.create(jsonObject);
+                case OBJECT_TYPE_ITEM:
+                    ItemFactory itemFactory = new ItemFactory();
+                    return itemFactory.create(jsonObject);
             }
-            log.warn("Template type {} is currently not supported. Encountered at jsonObject: {}", templateType, jsonObject.toString(2));
         }
         return jsonObject;
     }
 
-    private WikiObject mapCreatureJsonToObject(String wikiObjectJson) {
+    private <T> T mapJsonToObject(String wikiObjectJson, Class<T> clazz) {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.addMixInAnnotations(Creature.class, CreatureMixIn.class);
 //        SimpleModule module = new SimpleModule();
 //        module.addDeserializer(Creature.class, new CreatureDeserializer(Creature.class));
 //        objectMapper.registerModule(module);
-
         try {
-            return objectMapper.readValue(wikiObjectJson, Creature.class);
+            return objectMapper.readValue(wikiObjectJson, clazz);
         } catch (IOException e) {
-            log.error("Unable to convert json to Creature object.", e);
-        }
-        return null;
-    }
-
-    private WikiObject mapItemJsonToObject(String wikiObjectJson) {
-        ObjectMapper objectMapper = new ObjectMapper();
-        try {
-            return objectMapper.readValue(wikiObjectJson, Item.class);
-        } catch (IOException e) {
-            log.error("Unable to convert json to Item object.", e);
+            log.error("Unable to convert json to {} object.", clazz.toString(), e);
         }
         return null;
     }

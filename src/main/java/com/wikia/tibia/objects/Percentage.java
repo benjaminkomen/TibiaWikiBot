@@ -1,13 +1,17 @@
 package com.wikia.tibia.objects;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
 public class Percentage {
 
     private String originalValue;
     private Integer value;
 
-    public Percentage() {
-        // constructor for Jackson
-    }
 
     public Percentage(String value) {
         this.originalValue = value;
@@ -25,19 +29,4 @@ public class Percentage {
         return new Integer(value);
     }
 
-    public Integer getValue() {
-        return value;
-    }
-
-    public void setValue(Integer value) {
-        this.value = value;
-    }
-
-    public String getOriginalValue() {
-        return originalValue;
-    }
-
-    public void setOriginalValue(String originalValue) {
-        this.originalValue = originalValue;
-    }
 }

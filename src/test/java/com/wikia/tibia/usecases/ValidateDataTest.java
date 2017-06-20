@@ -104,6 +104,36 @@ public class ValidateDataTest {
     }
 
     @Test
+    public void testGetAllBuildings() {
+        CategoryMembersSimple pagesInBuildingsCategory = repository.getMembersFromCategory(CATEGORY_BUILDINGS);
+        CategoryMembersSimple pagesInListsCategory = repository.getMembersFromCategory(CATEGORY_LISTS);
+
+        List<String> buildingsCategory = new ArrayList<>();
+        for (String pageName : pagesInBuildingsCategory) {
+            buildingsCategory.add(pageName);
+        }
+
+        List<String> listsCategory = new ArrayList<>();
+        for (String pageName : pagesInListsCategory) {
+            listsCategory.add(pageName);
+        }
+
+        List<String> pagesInBuildingsCategoryButNotLists = buildingsCategory.stream()
+                .filter(page -> !listsCategory.contains(page))
+                .collect(Collectors.toList());
+
+        List<Building> buildings = pagesInBuildingsCategoryButNotLists.stream()
+                .skip(850)
+                .map(pageName -> repository.getWikiObject(pageName))
+                .filter(Building.class::isInstance)
+                .map(Building.class::cast)
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(buildings.size(), is(pagesInBuildingsCategoryButNotLists.size()));
+    }
+
+    @Test
     public void testGetAllCreatures() {
         CategoryMembersSimple pagesInCreaturesCategory = repository.getMembersFromCategory(CATEGORY_CREATURES);
         CategoryMembersSimple pagesInListsCategory = repository.getMembersFromCategory(CATEGORY_LISTS);

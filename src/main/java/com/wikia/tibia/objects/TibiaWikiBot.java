@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.io.InputStream;
 import java.util.Properties;
 
-/** */
 public class TibiaWikiBot extends MediaWikiBot {
 
     private static final Logger log = LoggerFactory.getLogger(TibiaWikiBot.class);

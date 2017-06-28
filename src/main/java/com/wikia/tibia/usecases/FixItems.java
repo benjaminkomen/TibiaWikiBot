@@ -17,7 +17,6 @@ public class FixItems {
 
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
     private static final String REGEX_FILLED_DROPPED_BY = "\\{\\{Dropped By\\|(.+?)}}";
-    private static final String REGEX_LOOT_ITEM = "\\s*?\\|\\{\\{Loot Item";
     private static final String REGEX_LOOT_ITEM_NAME = "\\{\\{Loot Item\\|(([^|}]+)(\\|([^|}]+))?(\\|([^|}]+))?)}}";
 
     private static final String REGEX_DEPRECATED_OR_EVENT = "\\{\\{(Deprecated|Event)}}";
@@ -121,6 +120,7 @@ public class FixItems {
     }
 
     private void saveCreatureArticles() {
+        // TODO implement this method
     }
 
     /**

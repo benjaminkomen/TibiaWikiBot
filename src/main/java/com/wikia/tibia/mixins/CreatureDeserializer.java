@@ -29,6 +29,7 @@ public class CreatureDeserializer extends StdDeserializer<Creature> {
         if ("no".equalsIgnoreCase(illusionableString)) {
             illusionable = false;
         }
-        return new Creature(illusionable);
+//        return new Creature(illusionable);
+        return new Creature();
     }
 }

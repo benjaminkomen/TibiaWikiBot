@@ -76,7 +76,7 @@ public class TemplateUtils {
         // sanitize values to get rid of empty Strings
         List<String> sanitizedValue = values.stream()
                 .filter(s -> !s.isEmpty())
-                .map(s -> s.trim())
+                .map(String::trim)
                 .map(s -> s.replaceAll("\n$", ""))
                 .collect(Collectors.toList());
 

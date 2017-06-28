@@ -123,7 +123,6 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         List<Building> buildings = pagesInBuildingsCategoryButNotLists.stream()
-                .skip(850)
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(Building.class::isInstance)
                 .map(Building.class::cast)

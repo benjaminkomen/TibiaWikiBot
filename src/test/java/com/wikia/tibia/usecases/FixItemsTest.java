@@ -3,6 +3,7 @@ package com.wikia.tibia.usecases;
 import com.wikia.tibia.objects.TibiaWikiBot;
 import com.wikia.tibia.repositories.WikiArticleRepository;
 import org.junit.Before;
+import org.junit.Test;
 
 
 public class FixItemsTest {
@@ -18,5 +19,9 @@ public class FixItemsTest {
         this.repository = new WikiArticleRepository(tibiaWikiBot);
     }
 
+    @Test
+    public void testCheckItems() {
+        target.checkItems();
+    }
 
 }

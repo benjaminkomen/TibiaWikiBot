@@ -113,6 +113,8 @@ public class ArticleFactory {
                 case OBJECT_TYPE_ITEM:
                     ItemFactory itemFactory = new ItemFactory();
                     return itemFactory.create(jsonObject);
+                default:
+                    return jsonObject;
             }
         }
         return jsonObject;

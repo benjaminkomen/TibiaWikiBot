@@ -66,9 +66,6 @@ public class ItemFactory {
     }
 
     private boolean legallyHasNoDroppedByTemplate(String name) {
-        if (ITEMS_WITH_NO_DROPPEDBY_LIST.contains(name)) {
-            return true;
-        }
-        return false;
+        return ITEMS_WITH_NO_DROPPEDBY_LIST.contains(name);
     }
 }

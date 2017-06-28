@@ -21,9 +21,6 @@ public class WikiObject {
     private Status status;
 
     public boolean isDeprecatedOrEvent() {
-        if (Status.DEPRECATED.equals(status) || Status.EVENT.equals(status)) {
-            return true;
-        }
-        return false;
+        return (Status.DEPRECATED.equals(status) || Status.EVENT.equals(status));
     }
 }

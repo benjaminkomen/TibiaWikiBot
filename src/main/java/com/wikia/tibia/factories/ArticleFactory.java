@@ -21,6 +21,7 @@ public class ArticleFactory {
     private static final String OBJECT_TYPE_BOOK = "Book";
     private static final String OBJECT_TYPE_BUILDING = "Building";
     private static final String OBJECT_TYPE_CREATURE = "Creature";
+    private static final String OBJECT_TYPE_KEY = "Key";
     private static final String OBJECT_TYPE_ITEM = "Item";
     private static final String INFOBOX_HEADER = "{{Infobox";
     private static final String REGEX_EVENT = "\\{\\{(E|e)vent";
@@ -54,6 +55,9 @@ public class ArticleFactory {
                 break;
             case OBJECT_TYPE_CREATURE :
                 wikiObject = mapJsonToObject(wikiObjectJson, Creature.class);
+                break;
+            case OBJECT_TYPE_KEY :
+                wikiObject = mapJsonToObject(wikiObjectJson, Key.class);
                 break;
             case OBJECT_TYPE_ITEM :
                 wikiObject = mapJsonToObject(wikiObjectJson, Item.class);

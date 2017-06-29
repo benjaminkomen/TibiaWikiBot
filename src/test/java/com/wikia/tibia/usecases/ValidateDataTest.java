@@ -192,6 +192,35 @@ public class ValidateDataTest {
     }
 
     @Test
+    public void testGetAllKeys() {
+        CategoryMembersSimple pagesInKeysCategory = repository.getMembersFromCategory(CATEGORY_KEYS);
+        CategoryMembersSimple pagesInListsCategory = repository.getMembersFromCategory(CATEGORY_LISTS);
+
+        List<String> keysCategory = new ArrayList<>();
+        for (String pageName : pagesInKeysCategory) {
+            keysCategory.add(pageName);
+        }
+
+        List<String> listsCategory = new ArrayList<>();
+        for (String pageName : pagesInListsCategory) {
+            listsCategory.add(pageName);
+        }
+
+        List<String> pagesInKeysCategoryButNotLists = keysCategory.stream()
+                .filter(page -> !listsCategory.contains(page))
+                .collect(Collectors.toList());
+
+        List<Key> keys = pagesInKeysCategoryButNotLists.stream()
+                .map(pageName -> repository.getWikiObject(pageName))
+                .filter(Key.class::isInstance)
+                .map(Key.class::cast)
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(keys.size(), is(93));
+    }
+
+    @Test
     public void testGetSpecificItem() {
         // given
         String itemName = "Emerald Sword";

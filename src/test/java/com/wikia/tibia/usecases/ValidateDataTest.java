@@ -129,7 +129,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         // then
-        assertThat(buildings.size(), is(pagesInBuildingsCategoryButNotLists.size()));
+        assertThat(buildings.size(), is(1084));
     }
 
     @Test
@@ -218,6 +218,38 @@ public class ValidateDataTest {
 
         // then
         assertThat(keys.size(), is(93));
+    }
+
+    @Test
+    public void testGetAllNPCs() {
+        CategoryMembersSimple pagesInNPCsCategory = repository.getMembersFromCategory(CATEGORY_NPCS);
+        CategoryMembersSimple pagesInListsCategory = repository.getMembersFromCategory(CATEGORY_LISTS);
+
+        List<String> nPCsCategory = new ArrayList<>();
+        for (String pageName : pagesInNPCsCategory) {
+            nPCsCategory.add(pageName);
+        }
+
+        List<String> listsCategory = new ArrayList<>();
+        for (String pageName : pagesInListsCategory) {
+            listsCategory.add(pageName);
+        }
+
+        List<String> pagesInNPCsCategoryButNotLists = nPCsCategory.stream()
+                .filter(page -> !listsCategory.contains(page))
+                .collect(Collectors.toList());
+
+        List<NPC> npcs = pagesInNPCsCategoryButNotLists.stream()
+//                .filter(pageName -> !"Helor".equals(pageName))
+//                .filter(pageName -> !"Mugruu".equals(pageName))
+//                .filter(pageName -> !"Oressa".equals(pageName))
+                .map(pageName -> repository.getWikiObject(pageName))
+                .filter(NPC.class::isInstance)
+                .map(NPC.class::cast)
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(npcs.size(), is(pagesInNPCsCategoryButNotLists.size()));
     }
 
     @Test

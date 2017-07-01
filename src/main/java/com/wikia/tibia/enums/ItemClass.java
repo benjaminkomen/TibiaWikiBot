@@ -1,8 +1,9 @@
 package com.wikia.tibia.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.wikia.tibia.interfaces.Description;
 
-public enum ItemClass {
+public enum ItemClass implements Description {
     BODY_EQUIPMENT("Body Equipment"),
     WEAPONS("Weapons"),
     RUNES("Runes"),

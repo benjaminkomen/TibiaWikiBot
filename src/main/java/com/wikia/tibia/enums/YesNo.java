@@ -1,8 +1,9 @@
 package com.wikia.tibia.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.wikia.tibia.interfaces.Description;
 
-public enum YesNo {
+public enum YesNo implements Description {
 
     YES_LOWERCASE("yes"),
     YES_UPPERCASE("Yes"),

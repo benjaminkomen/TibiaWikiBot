@@ -23,9 +23,10 @@ public class ArticleFactory {
     private static final String OBJECT_TYPE_CREATURE = "Creature";
     private static final String OBJECT_TYPE_KEY = "Key";
     private static final String OBJECT_TYPE_ITEM = "Item";
+    private static final String OBJECT_TYPE_NPC = "NPC";
     private static final String INFOBOX_HEADER = "{{Infobox";
-    private static final String REGEX_EVENT = "\\{\\{(E|e)vent";
-    private static final String REGEX_DEPRECATED = "\\{\\{(D|d)eprecated";
+    private static final String REGEX_EVENT = "\\{\\{[E|e]vent";
+    private static final String REGEX_DEPRECATED = "\\{\\{[D|d]eprecated";
 
     private Article article;
     private String objectType;
@@ -62,6 +63,9 @@ public class ArticleFactory {
             case OBJECT_TYPE_ITEM :
                 wikiObject = mapJsonToObject(wikiObjectJson, Item.class);
                 break;
+            case OBJECT_TYPE_NPC :
+                wikiObject = mapJsonToObject(wikiObjectJson, NPC.class);
+                break;
             default:
                 log.warn("object type '{}' not supported, terminating..", objectType);
                 return null;
@@ -73,7 +77,7 @@ public class ArticleFactory {
     }
 
     private Status setStatusEventOrDeprecated(String articleContent) {
-        if (articleContent.matches(REGEX_EVENT)) {
+        if (articleContent.matches(REGEX_EVENT)) { // FIXME doesn't work properly yet
             return Status.EVENT;
         }
         if (articleContent.matches(REGEX_DEPRECATED)) {
@@ -111,12 +115,15 @@ public class ArticleFactory {
             String templateType = jsonObject.getString(OBJECT_TYPE);
 
             switch (templateType) {
-                case OBJECT_TYPE_CREATURE:
+                case OBJECT_TYPE_CREATURE :
                     CreatureFactory creatureFactory = new CreatureFactory();
                     return creatureFactory.create(jsonObject);
-                case OBJECT_TYPE_ITEM:
+                case OBJECT_TYPE_ITEM :
                     ItemFactory itemFactory = new ItemFactory();
                     return itemFactory.create(jsonObject);
+                case OBJECT_TYPE_NPC :
+                    NPCFactory nPCFactory = new NPCFactory();
+                    return nPCFactory.create(jsonObject);
                 default:
                     return jsonObject;
             }

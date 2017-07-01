@@ -3,15 +3,16 @@ package com.wikia.tibia.enums;
 import com.fasterxml.jackson.annotation.JsonValue;
 import com.wikia.tibia.interfaces.Description;
 
-public enum Article implements Description {
+public enum Gender implements Description {
 
-    A("a"),
-    AN("an"),
+    FEMALE("Female"),
+    MALE("Male"),
+    UNKNOWN("Unknown"),
     EMPTY("");
 
     private String description;
 
-    Article(String description) {
+    Gender(String description) {
         this.description = description;
     }
 

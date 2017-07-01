@@ -1,8 +1,9 @@
 package com.wikia.tibia.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.wikia.tibia.interfaces.Description;
 
-public enum Status {
+public enum Status implements Description {
 
     ACTIVE("Active"),
     DEPRECATED("deprecated"),

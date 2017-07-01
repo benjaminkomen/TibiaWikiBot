@@ -1,8 +1,9 @@
 package com.wikia.tibia.enums;
 
 import com.fasterxml.jackson.annotation.JsonValue;
+import com.wikia.tibia.interfaces.Description;
 
-public enum BookType {
+public enum BookType implements Description {
 
     BOOK_ATLAS("Book (Atlas)"),
     BOOK_BLACK("Book (Black)"),

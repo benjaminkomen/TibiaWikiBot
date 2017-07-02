@@ -7,6 +7,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,6 +35,7 @@ public class ValidateDataTest {
     private static final String CATEGORY_SPELLS = "Spells";
     private static final String CATEGORY_STREETS = "Streets";
     private static final String CATEGORY_WORLDS = "Worlds";
+    private static final List<String> TEMPORARILY_SKIP_PAGES = Arrays.asList();
 
     private WikiArticleRepository repository;
 
@@ -65,6 +67,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         List<Achievement> achievements = pagesInAchievementsCategoryButNotLists.stream()
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(Achievement.class::isInstance)
                 .map(Achievement.class::cast)
@@ -94,6 +97,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         List<Book> books = pagesInBooksCategoryButNotLists.stream()
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(Book.class::isInstance)
                 .map(Book.class::cast)
@@ -123,6 +127,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         List<Building> buildings = pagesInBuildingsCategoryButNotLists.stream()
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(Building.class::isInstance)
                 .map(Building.class::cast)
@@ -152,6 +157,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         List<Creature> creatures = pagesInCreaturesCategoryButNotLists.stream()
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(Creature.class::isInstance)
                 .map(Creature.class::cast)
@@ -181,7 +187,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         List<Item> items = pagesInItemsCategoryButNotLists.stream()
-                .skip(0)
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(Item.class::isInstance)
                 .map(Item.class::cast)
@@ -211,6 +217,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         List<Key> keys = pagesInKeysCategoryButNotLists.stream()
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(Key.class::isInstance)
                 .map(Key.class::cast)
@@ -240,9 +247,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         List<NPC> npcs = pagesInNPCsCategoryButNotLists.stream()
-//                .filter(pageName -> !"Helor".equals(pageName))
-//                .filter(pageName -> !"Mugruu".equals(pageName))
-//                .filter(pageName -> !"Oressa".equals(pageName))
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
                 .map(pageName -> repository.getWikiObject(pageName))
                 .filter(NPC.class::isInstance)
                 .map(NPC.class::cast)
@@ -250,6 +255,36 @@ public class ValidateDataTest {
 
         // then
         assertThat(npcs.size(), is(pagesInNPCsCategoryButNotLists.size()));
+    }
+
+    @Test
+    public void testGetAllObjects() {
+        CategoryMembersSimple pagesInObjectsCategory = repository.getMembersFromCategory(CATEGORY_OBJECTS);
+        CategoryMembersSimple pagesInListsCategory = repository.getMembersFromCategory(CATEGORY_LISTS);
+
+        List<String> objectsCategory = new ArrayList<>();
+        for (String pageName : pagesInObjectsCategory) {
+            objectsCategory.add(pageName);
+        }
+
+        List<String> listsCategory = new ArrayList<>();
+        for (String pageName : pagesInListsCategory) {
+            listsCategory.add(pageName);
+        }
+
+        List<String> pagesInObjectsCategoryButNotLists = objectsCategory.stream()
+                .filter(page -> !listsCategory.contains(page))
+                .collect(Collectors.toList());
+
+        List<TibiaObject> objects = pagesInObjectsCategoryButNotLists.stream()
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
+                .map(pageName -> repository.getWikiObject(pageName))
+                .filter(TibiaObject.class::isInstance)
+                .map(TibiaObject.class::cast)
+                .collect(Collectors.toList());
+
+        // then
+        assertThat(objects.size(), is(pagesInObjectsCategoryButNotLists.size()));
     }
 
     @Test

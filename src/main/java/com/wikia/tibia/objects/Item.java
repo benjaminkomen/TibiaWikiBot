@@ -31,7 +31,7 @@ public class Item extends WikiObject {
     private Integer mlrequired;
     private Hands hands;
     private WeaponType type;
-    private String attack;
+    private String attack; // FIXME should be Integer
     private String elementattack;
     private Integer defense;
     private String defensemod;
@@ -39,9 +39,9 @@ public class Item extends WikiObject {
     private String imbuements;
     private YesNo enchantable;
     private YesNo enchanted;
-    private String range;
-    private String atk_mod;
-    private String hit_mod;
+    private String range; // FIXME should be Integer
+    private String atk_mod; // FIXME should be Integer
+    private String hit_mod; // FIXME should be Integer
     private Integer armor;
     private String resist;
     private Integer charges;
@@ -71,9 +71,9 @@ public class Item extends WikiObject {
     private YesNo holdsliquid;
     private Integer mana;
     private DamageElement damagetype;
-    private String damage;
+    private String damage; // FIXME should be Integer
     private Integer volume;
-    private String duration;
+    private String duration; // FIXME should be Integer
     private YesNo destructible;
     private List<String> droppedby;
     private String value;
@@ -83,5 +83,4 @@ public class Item extends WikiObject {
     private Double npcpricerook;
     private String buyfrom;
     private String sellto;
-
 }

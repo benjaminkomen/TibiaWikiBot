@@ -16,11 +16,11 @@ import java.util.List;
 @NoArgsConstructor
 public class Creature extends WikiObject {
 
-    private String hitPoints;
-    private String experiencePoints;
-    private String armor;
-    private String summon;
-    private String convince;
+    private String hitPoints; // FIXME should be Integer
+    private String experiencePoints; // FIXME should be Integer
+    private String armor; // FIXME should be Integer
+    private String summon; // FIXME should be Integer
+    private String convince; // FIXME should be Integer
     private YesNo illusionable;
     private String creatureclass;
     private String primarytype;
@@ -30,12 +30,12 @@ public class Creature extends WikiObject {
     private YesNo isarenaboss;
     private YesNo isevent;
     private String abilities;
-    private String usedelements;
-    private String maxdmg;
+    private String usedelements; // FIXME should be List<DamageElement>
+    private String maxdmg; // FIXME should be Integer
     private YesNo pushable;
     private YesNo pushobjects;
-    private String walksaround;
-    private String walksthrough;
+    private String walksaround; // FIXME should be List<Field>
+    private String walksthrough; // FIXME should be List<Field>
     private YesNo paraimmune;
     private YesNo senseinvis;
     private Percentage physicalDmgMod;
@@ -51,8 +51,8 @@ public class Creature extends WikiObject {
     private String bestiarytext;
     private List<String> sounds;
     private String behaviour;
-    private String runsat;
-    private String speed;
+    private String runsat; // FIXME should be Integer
+    private String speed; // FIXME should be Integer
     private String strategy;
     private String location;
     private List<LootItem> loot;

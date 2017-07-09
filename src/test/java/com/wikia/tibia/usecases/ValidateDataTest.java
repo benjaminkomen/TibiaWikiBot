@@ -35,7 +35,7 @@ public class ValidateDataTest {
     private static final String CATEGORY_SPELLS = "Spells";
     private static final String CATEGORY_STREETS = "Streets";
     private static final String CATEGORY_WORLDS = "Worlds";
-    private static final List<String> TEMPORARILY_SKIP_PAGES = Arrays.asList();
+    private static final List<String> TEMPORARILY_SKIP_PAGES = Arrays.asList("Crystal Column", "Desertfire Plant", "Earth (Tile)", "Earth Ground");
 
     private WikiArticleRepository repository;
 
@@ -135,6 +135,36 @@ public class ValidateDataTest {
 
         // then
         assertThat(buildings.size(), is(pagesInBuildingsCategoryButNotLists.size())); // 1084 ?
+    }
+
+    @Test
+    public void testGetAllCorpses() {
+        CategoryMembersSimple pagesInCorpsesCategory = repository.getMembersFromCategory(CATEGORY_CORPSES);
+        CategoryMembersSimple pagesInListsCategory = repository.getMembersFromCategory(CATEGORY_LISTS);
+
+        List<String> corpsesCategory = new ArrayList<>();
+        for (String pageName : pagesInCorpsesCategory) {
+            corpsesCategory.add(pageName);
+        }
+
+        List<String> listsCategory = new ArrayList<>();
+        for (String pageName : pagesInListsCategory) {
+            listsCategory.add(pageName);
+        }
+
+        List<String> pagesInCorpsesCategoryButNotLists = corpsesCategory.stream()
+                .filter(page -> !listsCategory.contains(page))
+                .collect(Collectors.toList());
+
+        List<Corpse> corpses = pagesInCorpsesCategoryButNotLists.stream()
+                .filter(pageName -> !TEMPORARILY_SKIP_PAGES.contains(pageName))
+                .map(pageName -> repository.getWikiObject(pageName))
+                .filter(Corpse.class::isInstance)
+                .map(Corpse.class::cast)
+                .collect(Collectors.toList());
+
+        // then
+            assertThat(corpses.size(), is(pagesInCorpsesCategoryButNotLists.size()));
     }
 
     @Test

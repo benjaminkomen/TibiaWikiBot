@@ -134,7 +134,7 @@ public class ValidateDataTest {
                 .collect(Collectors.toList());
 
         // then
-        assertThat(buildings.size(), is(1084));
+        assertThat(buildings.size(), is(pagesInBuildingsCategoryButNotLists.size())); // 1084 ?
     }
 
     @Test

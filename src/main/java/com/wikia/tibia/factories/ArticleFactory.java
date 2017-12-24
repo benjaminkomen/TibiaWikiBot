@@ -85,19 +85,7 @@ public class ArticleFactory {
                 return null;
         }
 
-        wikiObject.setStatus(setStatusEventOrDeprecated(articleContent));
-
         return wikiObject;
-    }
-
-    private Status setStatusEventOrDeprecated(String articleContent) {
-        if (articleContent.matches(REGEX_EVENT)) { // FIXME doesn't work properly yet
-            return Status.EVENT;
-        }
-        if (articleContent.matches(REGEX_DEPRECATED)) {
-            return Status.DEPRECATED;
-        }
-        return null;
     }
 
     private String convertToJson(String wikiObjectPartOfArticle) {

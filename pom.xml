@@ -26,6 +26,17 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>sonatype-nexus-snapshots</id>
+            <name>Sonatype Nexus Snapshots</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <dependencies>
         <!-- Test -->
         <dependency>
@@ -60,10 +71,15 @@
         </dependency>
 
         <!-- MediaWiki -->
+        <!--<dependency>-->
+            <!--<groupId>net.sourceforge</groupId>-->
+            <!--<artifactId>jwbf</artifactId>-->
+            <!--<version>3.1.1</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>net.sourceforge</groupId>
-            <artifactId>jwbf</artifactId>
-            <version>3.1.1</version>
+            <artifactId>jwbf-benjamin</artifactId>
+            <version>4.0.1</version>
         </dependency>
 
         <!-- Logging -->
@@ -86,6 +102,13 @@
             <artifactId>lombok</artifactId>
             <version>1.16.16</version>
             <scope>provided</scope>
+        </dependency>
+
+        <!-- StreamEx -->
+        <dependency>
+            <groupId>one.util</groupId>
+            <artifactId>streamex</artifactId>
+            <version>0.6.6</version>
         </dependency>
 
 

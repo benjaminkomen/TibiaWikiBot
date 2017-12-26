@@ -1,17 +1,20 @@
 package com.wikia.tibia.factories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wikia.tibia.enums.Status;
+import com.google.common.base.Strings;
 import com.wikia.tibia.mixins.CreatureMixIn;
 import com.wikia.tibia.objects.*;
 import com.wikia.tibia.utils.TemplateUtils;
+import net.sourceforge.jwbf.core.bots.WikiBot;
 import net.sourceforge.jwbf.core.contentRep.Article;
+import net.sourceforge.jwbf.core.contentRep.SimpleArticle;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.time.ZonedDateTime;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -28,8 +31,6 @@ public class ArticleFactory {
     private static final String OBJECT_TYPE_NPC = "NPC";
     private static final String OBJECT_TYPE_OBJECT = "Object";
     private static final String INFOBOX_HEADER = "{{Infobox";
-    private static final String REGEX_EVENT = "\\{\\{[E|e]vent";
-    private static final String REGEX_DEPRECATED = "\\{\\{[D|d]eprecated";
     private static final String SOUNDS = "sounds";
     private static final String SPAWN_TYPE = "spawntype";
     private static final String LOOT = "loot";
@@ -42,6 +43,10 @@ public class ArticleFactory {
     private String articleName;
     private String objectType;
 
+    /**
+     * Creates a WikiObject from an Article, when reading from the wiki.
+     * The reverse is achieved by {@link #createArticle} when saving the JSON back to the wiki.
+     */
     public WikiObject createWikiObject(Article article) {
         this.article = article;
         String articleContent = article.getText();
@@ -56,28 +61,28 @@ public class ArticleFactory {
         WikiObject wikiObject;
 
         switch (objectType) {
-            case OBJECT_TYPE_ACHIEVEMENT :
+            case OBJECT_TYPE_ACHIEVEMENT:
                 wikiObject = mapJsonToObject(wikiObjectJson, Achievement.class);
                 break;
-            case OBJECT_TYPE_BOOK :
+            case OBJECT_TYPE_BOOK:
                 wikiObject = mapJsonToObject(wikiObjectJson, Book.class);
                 break;
-            case OBJECT_TYPE_BUILDING :
+            case OBJECT_TYPE_BUILDING:
                 wikiObject = mapJsonToObject(wikiObjectJson, Building.class);
                 break;
-            case OBJECT_TYPE_CREATURE :
+            case OBJECT_TYPE_CREATURE:
                 wikiObject = mapJsonToObject(wikiObjectJson, Creature.class);
                 break;
-            case OBJECT_TYPE_KEY :
+            case OBJECT_TYPE_KEY:
                 wikiObject = mapJsonToObject(wikiObjectJson, Key.class);
                 break;
-            case OBJECT_TYPE_ITEM :
+            case OBJECT_TYPE_ITEM:
                 wikiObject = mapJsonToObject(wikiObjectJson, Item.class);
                 break;
-            case OBJECT_TYPE_NPC :
+            case OBJECT_TYPE_NPC:
                 wikiObject = mapJsonToObject(wikiObjectJson, NPC.class);
                 break;
-            case OBJECT_TYPE_OBJECT :
+            case OBJECT_TYPE_OBJECT:
                 wikiObject = mapJsonToObject(wikiObjectJson, TibiaObject.class);
                 break;
             default:
@@ -86,6 +91,46 @@ public class ArticleFactory {
         }
 
         return wikiObject;
+    }
+
+    /**
+     * Creates an Article from a JSON string, for saving to the wiki.
+     * The reverse is achieved by {@link #createWikiObject(Article)} when reading from the wiki.
+     */
+    public Article createArticle(WikiBot wikiBot, JSONObject json) {
+        return new Article(wikiBot, createSimpleArticle(wikiBot, json));
+    }
+
+    private SimpleArticle createSimpleArticle(WikiBot wikiBot, JSONObject json) {
+        SimpleArticle simpleArticle = new SimpleArticle();
+        simpleArticle.setEditor(wikiBot.getUserinfo().getUsername());
+        simpleArticle.setEditTimestamp(new Date(ZonedDateTime.now().toEpochSecond()));
+        simpleArticle.setTitle(json.get("name").toString());
+        simpleArticle.setText(createArticleText(json));
+        return simpleArticle;
+    }
+
+    private String createArticleText(JSONObject json) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("{{Infobox Building|List={{{1|}}}|GetValue={{{GetValue|}}}").append("\n");
+
+        int maxKeyLength = json.keySet().stream().mapToInt(String::length).max().orElse(0);
+
+        for (String key : json.keySet()) {
+            int keyLength = key.length();
+            int padding = maxKeyLength - keyLength; // ammount of spaces to pad
+            Object value = json.get(key);
+//            String paddedKey = key + new String(new char[padding - key.length()]).replace('\0', ' ');
+            String paddedKey = Strings.padEnd(key, padding, ' ');
+            sb.append("| ")
+                    .append(paddedKey)
+                    .append(" = ")
+                    .append(value)
+                    .append("\n");
+        }
+
+        sb.append("}}").append("\n");
+        return sb.toString();
     }
 
     private String convertToJson(String wikiObjectPartOfArticle) {
@@ -115,7 +160,7 @@ public class ArticleFactory {
     private JSONObject enhanceJsonObject(JSONObject jsonObject) {
         if (jsonObject.has(OBJECT_TYPE)) {
 
-            assert(jsonObject.has("name")) : "parameter name not found in jsonObject:" + jsonObject.toString(2);
+            assert (jsonObject.has("name")) : "parameter name not found in jsonObject:" + jsonObject.toString(2);
             this.articleName = jsonObject.getString("name");
 
             if (jsonObject.has(SOUNDS)) {
@@ -153,7 +198,7 @@ public class ArticleFactory {
 
     private <T> T mapJsonToObject(String wikiObjectJson, Class<T> clazz) {
         ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.addMixInAnnotations(Creature.class, CreatureMixIn.class);
+        objectMapper.addMixIn(Creature.class, CreatureMixIn.class);
 //        SimpleModule module = new SimpleModule();
 //        module.addDeserializer(Creature.class, new CreatureDeserializer(Creature.class));
 //        objectMapper.registerModule(module);

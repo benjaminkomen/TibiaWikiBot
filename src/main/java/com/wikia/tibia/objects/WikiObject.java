@@ -1,5 +1,6 @@
 package com.wikia.tibia.objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wikia.tibia.enums.Article;
 import com.wikia.tibia.enums.Status;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class WikiObject {
     private String history;
     private Status status;
 
+    @JsonIgnore
     public boolean isDeprecatedOrEvent() {
         return (Status.DEPRECATED.equals(status) || Status.EVENT.equals(status));
     }

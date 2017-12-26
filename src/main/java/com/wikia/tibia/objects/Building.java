@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@JsonIgnoreProperties({ "objectType" })
+@JsonIgnoreProperties({ "objectType" }) // value = {"objectType"}, ignoreUnknown = true
 @Getter
 @Setter
 @NoArgsConstructor
@@ -16,6 +16,9 @@ public class Building extends WikiObject {
 
     private BuildingType type;
     private String location;
+    private String posx;
+    private String posy;
+    private String posz;
     private String street;
     private String street2;
     private String street3;
@@ -32,5 +35,4 @@ public class Building extends WikiObject {
     private Integer rooms;
     private String furnishings;
     private String image;
-
 }

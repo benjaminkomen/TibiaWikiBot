@@ -1,6 +1,5 @@
 package com.wikia.tibia.usecases;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.wikia.tibia.factories.ArticleFactory;
@@ -8,10 +7,8 @@ import com.wikia.tibia.objects.Building;
 import com.wikia.tibia.objects.TibiaWikiBot;
 import com.wikia.tibia.repositories.InputRepository;
 import com.wikia.tibia.repositories.WikiArticleRepository;
-import net.sourceforge.jwbf.core.contentRep.Article;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
 import one.util.streamex.StreamEx;
-import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.*;
@@ -46,8 +43,14 @@ public class BuildingCoordinates {
 
         // now all the buildings are modified, we can convert them back to Articles and save them
         buildings.stream()
-                .map(this::mapToJson)
-                .map(jsonObject -> new ArticleFactory().createArticle(tibiaWikiBot, jsonObject))
+                .map(building -> ArticleFactory.createArticle(tibiaWikiBot, building))
+                .peek(a -> {
+                    try {
+                        Thread.sleep(500);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
                 .forEach(a -> a.save("[bot] Removing mapper link from location and" +
                         " adding posx, posy, posz attributes."));
     }
@@ -85,10 +88,6 @@ public class BuildingCoordinates {
             // blah
         }
         return Collections.emptyMap();
-    }
-
-    protected JSONObject mapToJson(Building building) {
-        return new JSONObject(building);
     }
 
     public List<Building> getAllBuildings() {

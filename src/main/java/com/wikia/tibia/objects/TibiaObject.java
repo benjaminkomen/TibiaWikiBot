@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
 @JsonIgnoreProperties({ "objectType" })
@@ -39,4 +40,9 @@ public class TibiaObject extends WikiObject {
     private Integer mapcolor;
     private String location;
     private String notes2;
+
+    @Override
+    public List<String> fieldOrder() {
+        return Collections.emptyList();
+    }
 }

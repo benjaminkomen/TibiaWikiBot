@@ -98,34 +98,35 @@ public class ArticleFactory {
     }
 
     /**
-     * Creates an Article from a JSON string, for saving to the wiki.
+     * Creates an Article from a WikiObject, for saving to the wiki.
      * The reverse is achieved by {@link #createWikiObject(Article)} when reading from the wiki.
      */
-    public Article createArticle(WikiBot wikiBot, JSONObject json) {
-        return new Article(wikiBot, createSimpleArticle(wikiBot, json));
+    public static Article createArticle(WikiBot wikiBot, WikiObject wikiObject) {
+        return new Article(wikiBot, createSimpleArticle(wikiBot, wikiObject));
     }
 
-    private SimpleArticle createSimpleArticle(WikiBot wikiBot, JSONObject json) {
+    private static SimpleArticle createSimpleArticle(WikiBot wikiBot, WikiObject wikiObject) {
         SimpleArticle simpleArticle = new SimpleArticle();
         simpleArticle.setEditor(wikiBot.getUserinfo().getUsername());
         simpleArticle.setEditTimestamp(new Date(ZonedDateTime.now().toEpochSecond()));
-        simpleArticle.setTitle(json.get("name").toString());
-        simpleArticle.setText(createArticleText(json));
+        simpleArticle.setTitle(wikiObject.getName());
+        simpleArticle.setText(createArticleText(wikiObject));
         return simpleArticle;
     }
 
-    private String createArticleText(JSONObject json) {
+    protected static String createArticleText(WikiObject wikiObject) {
         StringBuilder sb = new StringBuilder();
-        sb.append("{{Infobox Building|List={{{1|}}}|GetValue={{{GetValue|}}}").append("\n");
+        sb.append("{{Infobox ");
+        sb.append(wikiObject.getClassName());
+        sb.append("|List={{{1|}}}|GetValue={{{GetValue|}}}").append("\n");
 
-        int maxKeyLength = json.keySet().stream().mapToInt(String::length).max().orElse(0);
+        int maxKeyLength = wikiObject.maxFieldSize() + 2;
 
-        for (String key : json.keySet()) {
+        for (String key : wikiObject.getFieldNames()) {
             int keyLength = key.length();
-            int padding = maxKeyLength - keyLength; // ammount of spaces to pad
-            Object value = json.get(key);
-//            String paddedKey = key + new String(new char[padding - key.length()]).replace('\0', ' ');
-            String paddedKey = Strings.padEnd(key, padding, ' ');
+//            int padding = maxKeyLength - keyLength + 2; // ammount of spaces to pad
+            Object value = wikiObject.getValue(key);
+            String paddedKey = Strings.padEnd(key, maxKeyLength, ' ');
             sb.append("| ")
                     .append(paddedKey)
                     .append(" = ")

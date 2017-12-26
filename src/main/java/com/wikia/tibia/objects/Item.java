@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
 @JsonIgnoreProperties({ "objectType" })
@@ -83,4 +84,9 @@ public class Item extends WikiObject {
     private Double npcpricerook;
     private String buyfrom;
     private String sellto;
+
+    @Override
+    public List<String> fieldOrder() {
+        return Collections.emptyList();
+    }
 }

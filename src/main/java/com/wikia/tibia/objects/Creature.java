@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
 @JsonIgnoreProperties({ "objectType" })
@@ -77,4 +78,8 @@ public class Creature extends WikiObject {
         this.experiencePoints = experiencePoints;
     }
 
+    @Override
+    public List<String> fieldOrder() {
+        return Collections.emptyList();
+    }
 }

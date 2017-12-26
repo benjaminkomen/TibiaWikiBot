@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
+import java.util.List;
+
 @JsonIgnoreProperties({ "objectType" })
 @Getter
 @Setter
@@ -22,4 +25,8 @@ public class Achievement extends WikiObject {
     private Integer coincideswith;
     private String relatedpages;
 
+    @Override
+    public List<String> fieldOrder() {
+        return Collections.emptyList();
+    }
 }

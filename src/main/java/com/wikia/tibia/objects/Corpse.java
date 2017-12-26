@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
+import java.util.List;
+
 @JsonIgnoreProperties({ "objectType" })
 @Getter
 @Setter
@@ -73,5 +76,10 @@ public class Corpse extends WikiObject {
     @JsonGetter("3weight")
     public Double getThirdWeight() {
         return thirdWeight;
+    }
+
+    @Override
+    public List<String> fieldOrder() {
+        return Collections.emptyList();
     }
 }

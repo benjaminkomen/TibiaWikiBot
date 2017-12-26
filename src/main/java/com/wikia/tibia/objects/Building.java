@@ -8,6 +8,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Arrays;
+import java.util.List;
+
 @JsonIgnoreProperties({ "objectType" }) // value = {"objectType"}, ignoreUnknown = true
 @Getter
 @Setter
@@ -35,4 +38,11 @@ public class Building extends WikiObject {
     private Integer rooms;
     private String furnishings;
     private String image;
+
+    @Override
+    public List<String> fieldOrder() {
+        return Arrays.asList("name", "implemented", "type", "location", "posx", "posy", "posz", "street", "street2",
+                "street3", "street4", "street5", "houseid", "size", "beds", "rent", "ownable", "city", "openwindows",
+                "floors", "rooms", "furnishings", "notes", "history", "image", "status");
+    }
 }

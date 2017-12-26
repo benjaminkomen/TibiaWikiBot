@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
+import java.util.List;
+
 @JsonIgnoreProperties({ "objectType" })
 @Getter
 @Setter
@@ -67,4 +70,8 @@ public class Book extends WikiObject {
     private String implemented7;
     private String implemented8;
 
+    @Override
+    public List<String> fieldOrder() {
+        return Collections.emptyList();
+    }
 }

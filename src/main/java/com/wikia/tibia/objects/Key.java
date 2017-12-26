@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
+import java.util.List;
+
 @JsonIgnoreProperties({ "objectType" })
 @Getter
 @Setter
@@ -25,4 +28,9 @@ public class Key extends WikiObject {
     private String origin;
     private String shortnotes;
     private String longnotes;
+
+    @Override
+    public List<String> fieldOrder() {
+        return Collections.emptyList();
+    }
 }

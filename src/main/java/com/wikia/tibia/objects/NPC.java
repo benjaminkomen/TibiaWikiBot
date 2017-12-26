@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Collections;
 import java.util.List;
 
 @JsonIgnoreProperties({ "objectType" })
@@ -47,4 +48,9 @@ public class NPC extends WikiObject {
     private String buys;
     private String sells;
     private List<String> sounds;
+
+    @Override
+    public List<String> fieldOrder() {
+        return Collections.emptyList();
+    }
 }

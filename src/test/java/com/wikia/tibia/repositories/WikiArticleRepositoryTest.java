@@ -14,8 +14,8 @@ import static org.hamcrest.Matchers.*;
 
 public class WikiArticleRepositoryTest {
 
-    private static final String CREATURE_PAGE_NAME = "Dragon";
-    private static final List<String> CREATURE_PAGE_NAMES = Arrays.asList("Dragon", "Bear", "Ferumbras", "Santa Claus");
+    private static final String PAGE_NAME = "Dragon";
+    private static final List<String> PAGE_NAMES = Arrays.asList("Dragon", "Bear", "Ferumbras", "Santa Claus");
     private WikiArticleRepository target;
 
     @Before
@@ -27,29 +27,30 @@ public class WikiArticleRepositoryTest {
 
     @Test
     public void testGetArticle() {
-        Article result = target.getArticle(CREATURE_PAGE_NAME);
+        Article result = target.getArticle(PAGE_NAME);
 
-        assertThat(result.getTitle(), is(CREATURE_PAGE_NAME));
+        assertThat(result.getTitle(), is(PAGE_NAME));
     }
 
     @Test
     public void testGetArticles() {
-        List<Article> result = target.getArticles(CREATURE_PAGE_NAMES);
+        List<String> PAGE_NAMES = Arrays.asList("Dragon", "Bear", "Ferumbras", "Santa Claus");
+        List<Article> result = target.getArticles(PAGE_NAMES);
 
-        assertThat(result, hasSize(CREATURE_PAGE_NAMES.size()));
+        assertThat(result, hasSize(PAGE_NAMES.size()));
     }
 
     @Test
     public void testGetWikiObject() {
-        WikiObject result = target.getWikiObject(CREATURE_PAGE_NAME);
+        WikiObject result = target.getWikiObject(PAGE_NAME);
 
-        assertThat(result.getName(), is(CREATURE_PAGE_NAME));
+        assertThat(result.getName(), is(PAGE_NAME));
     }
 
     @Test
     public void testGetWikiObjects() {
-        List<WikiObject> result = target.getWikiObjects(CREATURE_PAGE_NAMES);
+        List<WikiObject> result = target.getWikiObjects(PAGE_NAMES);
 
-        assertThat(result, hasSize(CREATURE_PAGE_NAMES.size()));
+        assertThat(result, hasSize(PAGE_NAMES.size()));
     }
 }

@@ -2,10 +2,16 @@ package com.wikia.tibia.repositories;
 
 import com.wikia.tibia.factories.ArticleFactory;
 import com.wikia.tibia.objects.WikiObject;
+import net.sourceforge.jwbf.core.actions.util.ProcessException;
 import net.sourceforge.jwbf.core.contentRep.Article;
+import net.sourceforge.jwbf.mediawiki.actions.editing.FileUpload;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
+import net.sourceforge.jwbf.mediawiki.actions.queries.ImageInfo;
 import net.sourceforge.jwbf.mediawiki.bots.MediaWikiBot;
+import net.sourceforge.jwbf.mediawiki.contentRep.SimpleFile;
 
+import java.net.URL;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -62,5 +68,33 @@ public class WikiArticleRepository {
 
     public void saveArticle(Article articleToSave, String summary) {
         articleToSave.save(summary);
+    }
+
+    public URL getImageInfo(String title) {
+        final ImageInfo imageInfo = new ImageInfo(mediaWikiBot, title);
+        return imageInfo.getUrl();
+    }
+
+    public String uploadFile(String title, String editSummary, Path fileLocation) {
+        // check if file already exists
+        final String filePage = "File:" + title + ".png";
+        boolean imageAlreadyExists = true;
+
+        // check if image already exists
+        try {
+            getImageInfo(filePage);
+        } catch (ProcessException e) {
+            imageAlreadyExists = false;
+        }
+
+        if (imageAlreadyExists) {
+            return "File not uploaded. File page " + filePage + " already exists.";
+        }
+
+        SimpleFile simpleFile = new SimpleFile(filePage, fileLocation.toFile());
+        simpleFile.setEditSummary(editSummary);
+        final FileUpload fileUpload = new FileUpload(simpleFile, mediaWikiBot);
+        mediaWikiBot.getPerformedAction(fileUpload);
+        return "Probably succesfully uploaded file " + fileUpload;
     }
 }

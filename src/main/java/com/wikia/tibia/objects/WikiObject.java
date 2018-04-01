@@ -35,6 +35,11 @@ public abstract class WikiObject {
 
     public abstract List<String> fieldOrder();
 
+    @Override
+    public String toString() {
+        return getName();
+    }
+
     public List<String> getFieldNames() {
         List<String> existingFieldNames = getFields().stream()
                 .map(Field::getName)

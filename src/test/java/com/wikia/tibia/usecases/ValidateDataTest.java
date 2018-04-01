@@ -4,6 +4,7 @@ import com.wikia.tibia.objects.*;
 import com.wikia.tibia.repositories.WikiArticleRepository;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.stream.Collectors;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@Ignore
 public class ValidateDataTest {
 
     private static final String CATEGORY_LISTS = "Lists";

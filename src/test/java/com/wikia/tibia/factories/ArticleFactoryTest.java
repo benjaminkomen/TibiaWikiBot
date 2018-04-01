@@ -3,11 +3,13 @@ package com.wikia.tibia.factories;
 import com.wikia.tibia.enums.BuildingType;
 import com.wikia.tibia.enums.City;
 import com.wikia.tibia.objects.Building;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
+@Ignore
 public class ArticleFactoryTest {
 
     private static final String BUILDING_COASTWOOD_4 =

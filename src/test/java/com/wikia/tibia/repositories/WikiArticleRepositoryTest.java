@@ -4,6 +4,7 @@ import com.wikia.tibia.objects.TibiaWikiBot;
 import com.wikia.tibia.objects.WikiObject;
 import net.sourceforge.jwbf.core.contentRep.Article;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -12,6 +13,7 @@ import java.util.List;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
+@Ignore
 public class WikiArticleRepositoryTest {
 
     private static final String PAGE_NAME = "Dragon";

@@ -67,8 +67,9 @@ public class BuildingImages {
         if (!DEBUG_ENABLED) {
             article.save("[bot] Adding link to new house image, made by User:Vapaus.");
             log.info("Article {} is modified.", building.getName());
+        } else {
+            log.info("Article {} not modified, debug is enabled.", building.getName());
         }
-        log.info("Article {} not modified, debug is enabled.", building.getName());
     }
 
     private Map<Integer, Path> extractHouseImageIds(List<Path> pathsToHouseImages) {
@@ -82,8 +83,9 @@ public class BuildingImages {
         if (!DEBUG_ENABLED) {
             final String response = wikiArticleRepository.uploadFile(building.getName(), FILE_UPLOAD_EDIT_SUMMARY, path);
             log.info("After attempting to upload image the following response was recorded: {}", response);
+        } else {
+            log.info("File {} not uploaded, debug is enabled.", building.getName());
         }
-        log.info("File {} not uploaded, debug is enabled.", building.getName());
     }
 
     private Building modifyBuilding(Building building) {

@@ -27,7 +27,8 @@ public class TibiaWikiBot extends MediaWikiBot {
         String output = "";
         try {
             Properties props = new Properties();
-            InputStream is = props.getClass().getResourceAsStream("/credentials.properties");
+            ClassLoader classloader = Thread.currentThread().getContextClassLoader();
+            InputStream is = classloader.getResourceAsStream("credentials.properties");
             props.load(is);
             return props.getProperty(propertyName);
         } catch(Exception ex) {

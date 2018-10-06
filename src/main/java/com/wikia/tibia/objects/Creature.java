@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 import java.util.Arrays;
 import java.util.List;
 
-@JsonIgnoreProperties({"type"})
+@JsonIgnoreProperties({"type", "runast", "runstat"})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC) // TODO make this private and add builder
 public class Creature extends WikiObject {
@@ -50,7 +50,7 @@ public class Creature extends WikiObject {
     private Percentage earthDmgMod;
     private Percentage drownDmgMod;
     private Percentage hpDrainDmgMod;
-    private Percentage healmod;
+    private Percentage healMod;
     private String bestiaryname;
     private String bestiarytext;
     private List<String> sounds;
@@ -81,14 +81,44 @@ public class Creature extends WikiObject {
         this.experiencePoints = experiencePoints;
     }
 
+    @JsonGetter("healmod")
+    public Percentage gethealmod() {
+        return healMod;
+    }
+
+    @JsonSetter("healmod")
+    public void sethealmod(Percentage healmod) {
+        this.healMod = healmod;
+    }
+
+    @JsonGetter("healingMod")
+    public Percentage gethealingMod() {
+        return healMod;
+    }
+
+    @JsonSetter("healingMod")
+    public void sethealingMod(Percentage healingMod) {
+        this.healMod = healingMod;
+    }
+
+    @JsonGetter("healMod")
+    public Percentage gethealMod() {
+        return healMod;
+    }
+
+    @JsonSetter("healMod")
+    public void sethealMod(Percentage healMod) {
+        this.healMod = healMod;
+    }
+
     @Override
     public List<String> fieldOrder() {
         return Arrays.asList("name", "article", "actualname", "plural", "hp", "exp", "armor", "summon", "convince",
                 "illusionable", "creatureclass", "primarytype", "secondarytype", "bestiaryclass", "bestiarylevel",
-                "spawntype", "isboss", "isarenaboss", "isevent", "abilities", "usedelements", "maxdmg", "pushable",
-                "pushobjects", "walksaround", "walksthrough", "paraimmune", "senseinvis", "physicalDmgMod", "holyDmgMod",
-                "deathDmgMod", "fireDmgMod", "energyDmgMod", "iceDmgMod", "earthDmgMod", "drownDmgMod", "hpDrainDmgMod",
-                "healmod", "bestiaryname", "bestiarytext", "sounds", "implemented", "notes", "behaviour", "runsat",
-                "speed", "strategy", "location", "loot", "history", "status");
+                "occurrence", "spawntype", "isboss", "isarenaboss", "isevent", "abilities", "usedelements", "maxdmg",
+                "pushable", "pushobjects", "walksaround", "walksthrough", "paraimmune", "senseinvis", "physicalDmgMod",
+                "holyDmgMod", "deathDmgMod", "fireDmgMod", "energyDmgMod", "iceDmgMod", "earthDmgMod", "drownDmgMod",
+                "hpDrainDmgMod", "healMod", "bestiaryname", "bestiarytext", "sounds", "implemented", "notes", "behaviour",
+                "runsat", "speed", "strategy", "location", "loot", "history", "status");
     }
 }

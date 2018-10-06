@@ -1,4 +1,4 @@
-package com.wikia.tibia.mixins;
+package com.wikia.tibia.jackson;
 
 import com.wikia.tibia.objects.Creature;
 

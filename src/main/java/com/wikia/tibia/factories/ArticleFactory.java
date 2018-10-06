@@ -2,7 +2,7 @@ package com.wikia.tibia.factories;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Strings;
-import com.wikia.tibia.mixins.CreatureMixIn;
+import com.wikia.tibia.jackson.CreatureMixIn;
 import com.wikia.tibia.objects.*;
 import com.wikia.tibia.utils.TemplateUtils;
 import net.sourceforge.jwbf.core.bots.WikiBot;

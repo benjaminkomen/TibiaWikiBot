@@ -4,17 +4,16 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
 import com.wikia.tibia.enums.*;
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 
-@JsonIgnoreProperties({ "objectType" })
+@JsonIgnoreProperties({"type"})
 @Getter
-@Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PUBLIC) // TODO make this private and add builder
 public class Creature extends WikiObject {
 
     private String hitPoints; // FIXME should be Integer
@@ -26,6 +25,9 @@ public class Creature extends WikiObject {
     private String creatureclass;
     private String primarytype;
     private String secondarytype;
+    private BestiaryClass bestiaryclass;
+    private BestiaryLevel bestiarylevel;
+    private BestiaryOccurrence occurrence;
     private List<Spawntype> spawntype;
     private YesNo isboss;
     private YesNo isarenaboss;
@@ -48,6 +50,7 @@ public class Creature extends WikiObject {
     private Percentage earthDmgMod;
     private Percentage drownDmgMod;
     private Percentage hpDrainDmgMod;
+    private Percentage healmod;
     private String bestiaryname;
     private String bestiarytext;
     private List<String> sounds;
@@ -80,6 +83,12 @@ public class Creature extends WikiObject {
 
     @Override
     public List<String> fieldOrder() {
-        return Collections.emptyList();
+        return Arrays.asList("name", "article", "actualname", "plural", "hp", "exp", "armor", "summon", "convince",
+                "illusionable", "creatureclass", "primarytype", "secondarytype", "bestiaryclass", "bestiarylevel",
+                "spawntype", "isboss", "isarenaboss", "isevent", "abilities", "usedelements", "maxdmg", "pushable",
+                "pushobjects", "walksaround", "walksthrough", "paraimmune", "senseinvis", "physicalDmgMod", "holyDmgMod",
+                "deathDmgMod", "fireDmgMod", "energyDmgMod", "iceDmgMod", "earthDmgMod", "drownDmgMod", "hpDrainDmgMod",
+                "healmod", "bestiaryname", "bestiarytext", "sounds", "implemented", "notes", "behaviour", "runsat",
+                "speed", "strategy", "location", "loot", "history", "status");
     }
 }

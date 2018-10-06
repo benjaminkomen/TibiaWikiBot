@@ -4,6 +4,7 @@ import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Item;
 import com.wikia.tibia.objects.LootItem;
 import com.wikia.tibia.objects.WikiObject;
+import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.WikiArticleRepository;
 import net.sourceforge.jwbf.core.contentRep.Article;
 import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
@@ -33,25 +34,35 @@ public class FixCreatures {
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
     private static final boolean DEBUG_MODE = true;
 
-    private WikiArticleRepository repository;
+    private WikiArticleRepository wikiArticleRepository;
+    private CreatureRepository creatureRepository;
     private Map<String, Item> itemPagesToUpdate = new HashMap<>();
 
     public FixCreatures(MediaWikiBot mediaWikiBot) {
-        this.repository = new WikiArticleRepository(mediaWikiBot);
+        this.wikiArticleRepository = new WikiArticleRepository(mediaWikiBot);
+        this.creatureRepository = new CreatureRepository();
     }
 
     public void checkCreatures() {
-        CategoryMembersSimple categoryMembers = repository.getMembersFromCategory("Creatures");
+//        CategoryMembersSimple categoryMembers = wikiArticleRepository.getMembersFromCategory("Creatures");
 
-        for (String creaturePageName : categoryMembers) {
-            Creature creature = (Creature) repository.getWikiObject(creaturePageName);
+//        for (String creaturePageName : categoryMembers) {
+//            Creature creature = (Creature) wikiArticleRepository.getWikiObject(creaturePageName);
+//            if (creature != null && !creature.isDeprecatedOrEvent() && !creature.getLoot().isEmpty()) {
+//                for (LootItem lootItem : creature.getLoot()) {
+//                    checkIfCreatureNameIsPresent(creaturePageName, lootItem.getItemName());
+//                }
+//            }
+//        }
+//        saveItemArticles();
+
+        List<Creature> creatures = creatureRepository.getCreatures();
+
+        for (Creature creature: creatures) {
             if (creature != null && !creature.isDeprecatedOrEvent() && !creature.getLoot().isEmpty()) {
-                for (LootItem lootItem : creature.getLoot()) {
-                    checkIfCreatureNameIsPresent(creaturePageName, lootItem.getItemName());
-                }
+                log.info("Processing creature: " + creature.getName());
             }
         }
-        saveItemArticles();
     }
 
     private boolean itemShouldBeAdded(String creaturePageName, String lootItemNamePrecise) {
@@ -73,7 +84,7 @@ public class FixCreatures {
         if (itemPagesToUpdate.containsKey(lootItem)) {
             item = itemPagesToUpdate.get(lootItem);
         } else {
-            WikiObject wikiObject = repository.getWikiObject(lootItem);
+            WikiObject wikiObject = wikiArticleRepository.getWikiObject(lootItem);
             if (wikiObject instanceof Item) {
                 item = (Item) wikiObject;
             }

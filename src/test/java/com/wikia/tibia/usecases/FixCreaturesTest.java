@@ -1,6 +1,5 @@
 package com.wikia.tibia.usecases;
 
-import com.wikia.tibia.objects.TibiaWikiBot;
 import com.wikia.tibia.repositories.WikiArticleRepository;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -13,10 +12,7 @@ public class FixCreaturesTest {
 
     @Before
     public void setup() {
-        TibiaWikiBot tibiaWikiBot = new TibiaWikiBot();
-        tibiaWikiBot.login();
-        target = new FixCreatures(tibiaWikiBot);
-        this.repository = new WikiArticleRepository(tibiaWikiBot);
+        target = new FixCreatures();
     }
 
     @Ignore

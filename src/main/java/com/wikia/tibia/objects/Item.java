@@ -1,7 +1,12 @@
 package com.wikia.tibia.objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.wikia.tibia.enums.*;
+import com.wikia.tibia.enums.DamageElement;
+import com.wikia.tibia.enums.Hands;
+import com.wikia.tibia.enums.ItemClass;
+import com.wikia.tibia.enums.Status;
+import com.wikia.tibia.enums.WeaponType;
+import com.wikia.tibia.enums.YesNo;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +14,10 @@ import lombok.Setter;
 import java.util.Collections;
 import java.util.List;
 
-@JsonIgnoreProperties({ "objectType" })
+/**
+ * wrappable is not used in the template, but present on 5 pages (e.g. Rolled-up Colourful Carpet)
+ */
+@JsonIgnoreProperties({"templateType", "wrappable"})
 @Getter
 @Setter
 @NoArgsConstructor

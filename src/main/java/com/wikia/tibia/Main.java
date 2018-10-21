@@ -17,7 +17,7 @@ public class Main {
         tibiaWikiBot.login();
 
         // first usecase
-        FixCreatures fixCreatures = new FixCreatures(tibiaWikiBot);
+        FixCreatures fixCreatures = new FixCreatures();
         fixCreatures.checkCreatures();
 
         // second usecase

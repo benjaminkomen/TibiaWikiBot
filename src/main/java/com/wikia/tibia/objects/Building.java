@@ -11,7 +11,7 @@ import lombok.Setter;
 import java.util.Arrays;
 import java.util.List;
 
-@JsonIgnoreProperties({ "objectType" }) // value = {"objectType"}, ignoreUnknown = true
+@JsonIgnoreProperties({"templateType"})
 @Getter
 @Setter
 @NoArgsConstructor

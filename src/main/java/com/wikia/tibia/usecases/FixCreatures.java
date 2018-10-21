@@ -2,17 +2,20 @@ package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Item;
-import com.wikia.tibia.objects.LootItem;
-import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.repositories.CreatureRepository;
-import com.wikia.tibia.repositories.WikiArticleRepository;
+import com.wikia.tibia.repositories.ItemRepository;
 import net.sourceforge.jwbf.core.contentRep.Article;
-import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
-import net.sourceforge.jwbf.mediawiki.bots.MediaWikiBot;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -29,20 +32,29 @@ public class FixCreatures {
             "Party Hat",
             "Silver Raid Token",
             "Golden Raid Token"
-            );
+    );
     private static final List NON_EVENT_CREATURES_DROPPING_SNOWBALLS = Arrays.asList("Yeti", "Grynch Clan Goblin");
     private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
     private static final boolean DEBUG_MODE = true;
 
-    private WikiArticleRepository wikiArticleRepository;
     private CreatureRepository creatureRepository;
     private Map<String, Item> itemPagesToUpdate = new HashMap<>();
+    private ItemRepository itemRepository;
+    private List<Item> items = new ArrayList<>();
+    private List<Creature> creatures = new ArrayList<>();
 
-    public FixCreatures(MediaWikiBot mediaWikiBot) {
-        this.wikiArticleRepository = new WikiArticleRepository(mediaWikiBot);
+    public FixCreatures() {
         this.creatureRepository = new CreatureRepository();
+        this.itemRepository = new ItemRepository();
     }
 
+    /**
+     * 1. Get a list of Creatures and sort it.
+     * 2. Filter out deprecated or event creatures.
+     * 3. Filter out creatures with no loot listed.
+     * 4. For every creature, go over all its loot items.
+     * 5. For every loot item, make sure it has a backreference to the creature.
+     */
     public void checkCreatures() {
 //        CategoryMembersSimple categoryMembers = wikiArticleRepository.getMembersFromCategory("Creatures");
 
@@ -56,14 +68,42 @@ public class FixCreatures {
 //        }
 //        saveItemArticles();
 
-        List<Creature> creatures = creatureRepository.getCreatures();
-        creatures.sort(Comparator.comparing(Creature::getName));
+        getCreatures().stream()
+                .sorted(Comparator.comparing(Creature::getName))
+                .filter(creature -> !creature.isDeprecatedOrEvent())
+                .filter(creature -> !creature.getLoot().isEmpty())
+                .peek(c -> log.info("Processing creature: " + c.getName()))
+                .forEach(creature -> creature.getLoot().stream()
+                        .map(lootItem -> getItem(lootItem.getItemName()))
+                        .forEach(item -> {
+                            if (!item.getDroppedby().contains(creature.getName())) {
+                                item.getDroppedby().add(creature.getName());
+                                log.info("[bot] adding creature '{}' to item '{}'.", creature.getName(), item.getName());
+                            }
+                        })
+                );
 
-        for (Creature creature: creatures) {
-            if (creature != null && !creature.isDeprecatedOrEvent() && !creature.getLoot().isEmpty()) {
-                log.info("Processing creature: " + creature.getName());
-            }
+    }
+
+    private List<Creature> getCreatures() {
+        if (creatures == null || creatures.isEmpty()) {
+            creatures = creatureRepository.getCreatures();
         }
+        return creatures;
+    }
+
+    private List<Item> getItems() {
+        if (items == null || items.isEmpty()) {
+            items = itemRepository.getItems();
+        }
+        return items;
+    }
+
+    private Item getItem(String itemName) {
+        return getItems().stream()
+                .filter(i -> Objects.equals(i.getName(), itemName))
+                .findAny()
+                .orElse(null);
     }
 
     private boolean itemShouldBeAdded(String creaturePageName, String lootItemNamePrecise) {
@@ -77,32 +117,6 @@ public class FixCreatures {
             return false;
         }
         return true;
-    }
-
-    private void checkIfCreatureNameIsPresent(String creaturePageName, String lootItem) {
-        Item item = null;
-
-        if (itemPagesToUpdate.containsKey(lootItem)) {
-            item = itemPagesToUpdate.get(lootItem);
-        } else {
-            WikiObject wikiObject = wikiArticleRepository.getWikiObject(lootItem);
-            if (wikiObject instanceof Item) {
-                item = (Item) wikiObject;
-            }
-        }
-
-        if (item == null) {
-            return;
-        }
-
-        List<String> creatureNames = item.getDroppedby();
-
-        if (!creatureNames.contains(creaturePageName)) {
-            creatureNames.add(creaturePageName);
-            item.setDroppedby(creatureNames);
-            itemPagesToUpdate.put(item.getName(), item);
-            log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, item.getName());
-        }
     }
 
     private String updateCreatureToDroppedByList(List<String> creatureNames, String newCreature) {

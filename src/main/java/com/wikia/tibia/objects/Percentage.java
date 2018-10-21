@@ -20,13 +20,13 @@ public class Percentage {
 
     private Integer sanitize(String value) {
 
-        String sanitizedValue = value.replaceAll("\\D+","");
+        final String sanitizedValue = value.replaceAll("\\D+", "");
 
         if (sanitizedValue.length() < 1) {
             return null;
         }
 
-        return new Integer(sanitizedValue);
+        return Integer.valueOf(sanitizedValue);
     }
 
 }

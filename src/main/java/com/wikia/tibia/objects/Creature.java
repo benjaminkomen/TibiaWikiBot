@@ -3,7 +3,11 @@ package com.wikia.tibia.objects;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonSetter;
-import com.wikia.tibia.enums.*;
+import com.wikia.tibia.enums.BestiaryClass;
+import com.wikia.tibia.enums.BestiaryLevel;
+import com.wikia.tibia.enums.BestiaryOccurrence;
+import com.wikia.tibia.enums.Spawntype;
+import com.wikia.tibia.enums.YesNo;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +16,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-@JsonIgnoreProperties({"type", "runast", "runstat"})
+@JsonIgnoreProperties({"templateType"})
 @Getter
 @NoArgsConstructor(access = AccessLevel.PUBLIC) // TODO make this private and add builder
 public class Creature extends WikiObject {
@@ -90,16 +94,6 @@ public class Creature extends WikiObject {
     @JsonSetter("healmod")
     public void sethealmod(Percentage healmod) {
         this.healMod = healmod;
-    }
-
-    @JsonGetter("healingMod")
-    public Percentage gethealingMod() {
-        return healMod;
-    }
-
-    @JsonSetter("healingMod")
-    public void sethealingMod(Percentage healingMod) {
-        this.healMod = healingMod;
     }
 
     @JsonGetter("healMod")

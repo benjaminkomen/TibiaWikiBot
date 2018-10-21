@@ -10,7 +10,7 @@ import lombok.Setter;
 import java.util.Collections;
 import java.util.List;
 
-@JsonIgnoreProperties({ "objectType" })
+@JsonIgnoreProperties({"templateType"})
 @Getter
 @Setter
 @NoArgsConstructor

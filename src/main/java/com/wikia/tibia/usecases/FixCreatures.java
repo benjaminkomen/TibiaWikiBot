@@ -57,6 +57,7 @@ public class FixCreatures {
 //        saveItemArticles();
 
         List<Creature> creatures = creatureRepository.getCreatures();
+        creatures.sort(Comparator.comparing(Creature::getName));
 
         for (Creature creature: creatures) {
             if (creature != null && !creature.isDeprecatedOrEvent() && !creature.getLoot().isEmpty()) {

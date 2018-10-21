@@ -8,6 +8,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -28,7 +29,7 @@ public class Creature extends WikiObject {
     private BestiaryClass bestiaryclass;
     private BestiaryLevel bestiarylevel;
     private BestiaryOccurrence occurrence;
-    private List<Spawntype> spawntype;
+    private List<Spawntype> spawntype = new ArrayList<>();
     private YesNo isboss;
     private YesNo isarenaboss;
     private YesNo isevent;
@@ -53,13 +54,13 @@ public class Creature extends WikiObject {
     private Percentage healMod;
     private String bestiaryname;
     private String bestiarytext;
-    private List<String> sounds;
+    private List<String> sounds = new ArrayList<>();
     private String behaviour;
     private String runsat; // FIXME should be Integer
     private String speed; // FIXME should be Integer
     private String strategy;
     private String location;
-    private List<LootItem> loot;
+    private List<LootItem> loot = new ArrayList<>();
 
     @JsonGetter("hp")
     public String getHitPoints() {

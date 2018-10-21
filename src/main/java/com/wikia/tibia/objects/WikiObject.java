@@ -12,6 +12,7 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @Getter
@@ -30,7 +31,7 @@ public abstract class WikiObject {
 
     @JsonIgnore
     public boolean isDeprecatedOrEvent() {
-        return (Status.DEPRECATED.equals(status) || Status.EVENT.equals(status));
+        return Objects.equals(Status.DEPRECATED, status) || Objects.equals(Status.EVENT, status);
     }
 
     public abstract List<String> fieldOrder();
@@ -71,24 +72,24 @@ public abstract class WikiObject {
     }
 
     public Object getValue(String fieldName) {
-       return getFields().stream()
-               .filter(this::fieldHasValue)
-               .filter(f -> f.getName().equals(fieldName))
-               .map(f -> {
-                   try {
-                       Object fieldValue = f.get(this);
+        return getFields().stream()
+                .filter(this::fieldHasValue)
+                .filter(f -> f.getName().equals(fieldName))
+                .map(f -> {
+                    try {
+                        Object fieldValue = f.get(this);
 
-                       if (fieldValue instanceof Description) {
-                           return ((Description) fieldValue).getDescription();
-                       } else {
-                           return fieldValue;
-                       }
-                   } catch (IllegalAccessException e) {
-                       throw new RuntimeException(e);
-                   }
-               })
-               .findAny()
-               .orElse(null);
+                        if (fieldValue instanceof Description) {
+                            return ((Description) fieldValue).getDescription();
+                        } else {
+                            return fieldValue;
+                        }
+                    } catch (IllegalAccessException e) {
+                        throw new RuntimeException(e);
+                    }
+                })
+                .findAny()
+                .orElse(null);
     }
 
     private boolean fieldHasValue(Field f) {

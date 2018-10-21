@@ -2,6 +2,7 @@ package com.wikia.tibia.jackson;
 
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.type.CollectionType;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -45,10 +46,15 @@ public class Parser {
     }
 
     public static <T> List<T> list(Class<T> type, ObjectMapper mapper, String json) {
+
+        if (json == null || "".equals(json)) {
+            return Collections.emptyList();
+        }
+
         List<T> infos;
-        JavaType javaType = mapper.getTypeFactory().constructCollectionType(List.class, type);
+        CollectionType collectionType = mapper.getTypeFactory().constructCollectionType(List.class, type);
         try {
-            infos = mapper.readValue(json, javaType);
+            infos = mapper.readValue(json, collectionType);
         } catch (IOException e) {
             throw new JacksonParsingException(e);
         }

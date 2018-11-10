@@ -15,7 +15,7 @@ public class ItemRepository {
     }
 
     public List<Item> getItems() {
-        return Parser.list(Item.class, itemGateway.getItems(true));
+        return Parser.listOneByOne(Item.class, itemGateway.getItems(true));
     }
 
     public List<String> getItemsList() {

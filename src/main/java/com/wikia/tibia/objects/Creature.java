@@ -86,16 +86,6 @@ public class Creature extends WikiObject {
         this.experiencePoints = experiencePoints;
     }
 
-    @JsonGetter("healmod")
-    public Percentage gethealmod() {
-        return healMod;
-    }
-
-    @JsonSetter("healmod")
-    public void sethealmod(Percentage healmod) {
-        this.healMod = healmod;
-    }
-
     @JsonGetter("healMod")
     public Percentage gethealMod() {
         return healMod;

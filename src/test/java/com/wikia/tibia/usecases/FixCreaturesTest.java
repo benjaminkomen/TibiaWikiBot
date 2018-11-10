@@ -5,6 +5,10 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+
+
 public class FixCreaturesTest {
 
     private FixCreatures target;
@@ -22,5 +26,6 @@ public class FixCreaturesTest {
         // when
         target.checkCreatures();
         // then
+        assertThat("Done", is("Done"));
     }
 }

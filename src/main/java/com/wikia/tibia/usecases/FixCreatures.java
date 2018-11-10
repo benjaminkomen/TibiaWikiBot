@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
 
 public class FixCreatures {
 
-    private static final Logger log = LoggerFactory.getLogger(FixCreatures.class);
+    private static final Logger LOG = LoggerFactory.getLogger(FixCreatures.class);
 
     private static final List ITEMS_WITH_NO_DROPPEDBY_LIST = Arrays.asList("Gold Coin", "Platinum Coin");
     private static final List EVENT_ITEMS = Arrays.asList(
@@ -72,13 +72,21 @@ public class FixCreatures {
                 .sorted(Comparator.comparing(Creature::getName))
                 .filter(creature -> !creature.isDeprecatedOrEvent())
                 .filter(creature -> !creature.getLoot().isEmpty())
-                .peek(c -> log.info("Processing creature: " + c.getName()))
+                .peek(c -> LOG.info("Processing creature: {}", c.getName()))
                 .forEach(creature -> creature.getLoot().stream()
-                        .map(lootItem -> getItem(lootItem.getItemName()))
+                        .map(lootItem -> {
+                            final Item item = getItem(lootItem.getItemName());
+                            if (item == null) {
+                                LOG.error("Could not find loot item with name '{}' from creature '{}' in collection" +
+                                        " of items.", lootItem.getItemName(), creature.getName());
+                            }
+                            return item;
+                        })
+                        .filter(Objects::nonNull)
                         .forEach(item -> {
-                            if (!item.getDroppedby().contains(creature.getName())) {
+                            if (!item.getDroppedby().contains(creature.getName()) && itemShouldBeAdded(creature.getName(), item.getName())) {
                                 item.getDroppedby().add(creature.getName());
-                                log.info("[bot] adding creature '{}' to item '{}'.", creature.getName(), item.getName());
+                                LOG.info("[bot] adding creature '{}' to item '{}'.", creature.getName(), item.getName());
                             }
                         })
                 );
@@ -135,12 +143,12 @@ public class FixCreatures {
             itemPage.setText(newArticleText);
             itemPage.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, itemPage.getTitle()));
             //itemPagesToUpdate.put(itemPage.getTitle(), itemPage);
-            log.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
+            LOG.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
         }
     }
 
     private void saveItemArticles() {
-        log.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());
+        LOG.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());
         if (!DEBUG_MODE) {
             for (Map.Entry<String, Item> itemPage : itemPagesToUpdate.entrySet()) {
                 //repository.saveArticle(itemPage.getValue()); // TODO fix the saving process, wikiObject -> json -> Article

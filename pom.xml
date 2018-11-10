@@ -18,7 +18,7 @@
         <slf4j.version>1.8.0-beta2</slf4j.version>
         <json.version>20180813</json.version>
         <lombok.version>1.18.2</lombok.version>
-        <jetbrains.version>16.0.2</jetbrains.version>
+        <jetbrains.version>16.0.3</jetbrains.version>
         <streamex.version>0.6.7</streamex.version>
         <commons.io.version>2.6</commons.io.version>
         <ow2.asm.version>6.2.1</ow2.asm.version>

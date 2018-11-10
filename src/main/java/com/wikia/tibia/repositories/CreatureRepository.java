@@ -15,7 +15,7 @@ public class CreatureRepository {
     }
 
     public List<Creature> getCreatures() {
-        return Parser.list(Creature.class, creatureGateway.getCreatures(true));
+        return Parser.listOneByOne(Creature.class, creatureGateway.getCreatures(true));
     }
 
     public List<String> getCreaturesList() {

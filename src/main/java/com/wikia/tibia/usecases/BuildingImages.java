@@ -1,12 +1,7 @@
 package com.wikia.tibia.usecases;
 
-import com.wikia.tibia.factories.ArticleFactory;
 import com.wikia.tibia.objects.Building;
-import com.wikia.tibia.objects.TibiaWikiBot;
 import com.wikia.tibia.repositories.InputRepository;
-import com.wikia.tibia.repositories.WikiArticleRepository;
-import net.sourceforge.jwbf.core.contentRep.Article;
-import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
 import one.util.streamex.StreamEx;
 import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
@@ -29,16 +24,13 @@ public class BuildingImages {
     private static final String FILE_UPLOAD_EDIT_SUMMARY = "House image made by [[User:Vapaus|Vapaus]] using the TibiaML map.";
 
     private InputRepository inputRepository = new InputRepository();
-    private WikiArticleRepository wikiArticleRepository;
-    private TibiaWikiBot tibiaWikiBot = new TibiaWikiBot();
 
     private static final String CATEGORY_LISTS = "Lists";
     private static final String CATEGORY_BUILDINGS = "Player-Ownable Buildings";
     private static final boolean DEBUG_ENABLED = true;
 
     public void uploadBuildingImagesAndAddImageLink() {
-        tibiaWikiBot.login();
-        wikiArticleRepository = new WikiArticleRepository(tibiaWikiBot);
+//        wikiArticleRepository = new WikiArticleRepository();
 
         final List<Path> pathsToHouseImages = inputRepository.getFolderContents("temp/house_images");
         final Map<Integer, Path> pathsByHouseImageIds = extractHouseImageIds(pathsToHouseImages);
@@ -62,10 +54,10 @@ public class BuildingImages {
     }
 
     private void editWikiWithModifiedBuilding(Building building) {
-        final Article article = ArticleFactory.createArticle(tibiaWikiBot, building);
+//        final Article article = ArticleFactory.createArticle(tibiaWikiBot, building);
 
         if (!DEBUG_ENABLED) {
-            article.save("[bot] Adding link to new house image, made by User:Vapaus.");
+//            article.save("[bot] Adding link to new house image, made by User:Vapaus.");
             log.info("Article {} is modified.", building.getName());
         } else {
             log.info("Article {} not modified, debug is enabled.", building.getName());
@@ -81,8 +73,8 @@ public class BuildingImages {
 
     private void uploadHouseImage(Building building, Path path) {
         if (!DEBUG_ENABLED) {
-            final String response = wikiArticleRepository.uploadFile(building.getName(), FILE_UPLOAD_EDIT_SUMMARY, path);
-            log.info("After attempting to upload image the following response was recorded: {}", response);
+//            final String response = wikiArticleRepository.uploadFile(building.getName(), FILE_UPLOAD_EDIT_SUMMARY, path);
+//            log.info("After attempting to upload image the following response was recorded: {}", response);
         } else {
             log.info("File {} not uploaded, debug is enabled.", building.getName());
         }
@@ -90,7 +82,7 @@ public class BuildingImages {
 
     private Building modifyBuilding(Building building) {
         if (building.getImage() == null || "".equals(building.getImage())) {
-            building.setImage("<gallery>\nFile:" + building.getName() + ".png\n</gallery>");
+//            return building.toBuilder().image("<gallery>\nFile:" + building.getName() + ".png\n</gallery>").build();
         } else {
             log.error("Building {} does not have an empty image parameter!", building.getName());
         }
@@ -98,19 +90,19 @@ public class BuildingImages {
     }
 
     private List<Building> getAllBuildings() {
-        CategoryMembersSimple pagesInBuildingsCategory = wikiArticleRepository.getMembersFromCategory(CATEGORY_BUILDINGS);
-        CategoryMembersSimple pagesInListsCategory = wikiArticleRepository.getMembersFromCategory(CATEGORY_LISTS);
+//        CategoryMembersSimple pagesInBuildingsCategory = wikiArticleRepository.getMembersFromCategory(CATEGORY_BUILDINGS);
+//        CategoryMembersSimple pagesInListsCategory = wikiArticleRepository.getMembersFromCategory(CATEGORY_LISTS);
 
         long startTime = System.nanoTime();
         List<String> buildingsCategory = new ArrayList<>();
-        for (String pageName : pagesInBuildingsCategory) {
-            buildingsCategory.add(pageName);
-        }
+//        for (String pageName : pagesInBuildingsCategory) {
+//            buildingsCategory.add(pageName);
+//        }
 
         List<String> listsCategory = new ArrayList<>();
-        for (String pageName : pagesInListsCategory) {
-            listsCategory.add(pageName);
-        }
+//        for (String pageName : pagesInListsCategory) {
+//            listsCategory.add(pageName);
+//        }
 
         List<String> pagesInBuildingsCategoryButNotLists = buildingsCategory.stream()
                 .filter(page -> !listsCategory.contains(page))
@@ -118,7 +110,7 @@ public class BuildingImages {
 
         try {
             return StreamEx.ofSubLists(pagesInBuildingsCategoryButNotLists, 250)
-                    .flatMap(pageNames -> wikiArticleRepository.getWikiObjects(pageNames).stream())
+//                    .flatMap(pageNames -> wikiArticleRepository.getWikiObjects(pageNames).stream())
                     .filter(Building.class::isInstance)
                     .map(Building.class::cast)
                     .collect(Collectors.toList());

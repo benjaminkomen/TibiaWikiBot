@@ -23,18 +23,8 @@
         <commons.io.version>2.6</commons.io.version>
         <ow2.asm.version>6.2.1</ow2.asm.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+        <jackson.version>2.9.7</jackson.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <dependencies>
         <!-- Test -->
@@ -61,24 +51,6 @@
             <artifactId>hamcrest-library</artifactId>
             <version>${hamcrest.version}</version>
             <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.objenesis</groupId>
-            <artifactId>objenesis</artifactId>
-            <version>${objenesis.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- MediaWiki -->
-        <!--<dependency>-->
-            <!--<groupId>net.sourceforge</groupId>-->
-            <!--<artifactId>jwbf</artifactId>-->
-            <!--<version>3.1.1</version>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>net.sourceforge</groupId>
-            <artifactId>jwbf-benjamin</artifactId>
-            <version>4.0.1</version>
         </dependency>
 
         <!-- Logging -->
@@ -122,6 +94,20 @@
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
         </dependency>
+
+        <!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>

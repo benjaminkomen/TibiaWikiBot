@@ -4,7 +4,6 @@ import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Item;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.ItemRepository;
-import net.sourceforge.jwbf.core.contentRep.Article;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +15,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class FixCreatures {
 
@@ -134,18 +131,18 @@ public class FixCreatures {
         return "{{Dropped By|" + newDroppedByList + "}}";
     }
 
-    private void addMissingCreatureNameToDroppedByList(String creaturePageName, Article itemPage, String textToInsert) {
-        String itemPageText = itemPage.getText();
-        Pattern p = Pattern.compile(REGEX_DROPPED_BY);
-        Matcher m = p.matcher(itemPageText);
-        if (m.find()) {
-            String newArticleText = m.replaceAll(textToInsert);
-            itemPage.setText(newArticleText);
-            itemPage.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, itemPage.getTitle()));
-            //itemPagesToUpdate.put(itemPage.getTitle(), itemPage);
-            LOG.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
-        }
-    }
+//    private void addMissingCreatureNameToDroppedByList(String creaturePageName, Article itemPage, String textToInsert) {
+//        String itemPageText = itemPage.getText();
+//        Pattern p = Pattern.compile(REGEX_DROPPED_BY);
+//        Matcher m = p.matcher(itemPageText);
+//        if (m.find()) {
+//            String newArticleText = m.replaceAll(textToInsert);
+//            itemPage.setText(newArticleText);
+//            itemPage.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, itemPage.getTitle()));
+//            //itemPagesToUpdate.put(itemPage.getTitle(), itemPage);
+//            LOG.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
+//        }
+//    }
 
     private void saveItemArticles() {
         LOG.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());

@@ -60,7 +60,7 @@ public class FixCreatures {
                 .sorted(Comparator.comparing(Creature::getName))
                 .filter(creature -> !creature.isDeprecatedOrEvent())
                 .filter(creature -> creature.getLoot() != null && !creature.getLoot().isEmpty())
-                .peek(c -> LOG.info("Processing creature: {}", c.getName()))
+                .peek(c -> LOG.debug("Processing creature: {}", c.getName()))
                 .forEach(creature -> creature.getLoot().stream()
                         .map(lootItem -> {
                             final Optional<Item> item = getItem(lootItem.getItemName());
@@ -116,7 +116,7 @@ public class FixCreatures {
      */
     private void addCreatureToDroppedByListOfItem(Creature creature, Item item) {
         if (!item.getDroppedby().contains(creature.getName()) && itemShouldBeAdded(creature.getName(), item.getName())) {
-            LOG.info("[bot] adding creature '{}' to item '{}'.", creature.getName(), item.getName());
+            LOG.info("Adding creature '{}' to droppedby list of item '{}'.", creature.getName(), item.getName());
 
             if (!itemPagesToUpdate.keySet().contains(item.getName())) {
                 // item not already in itemPages cache, add it
@@ -133,10 +133,10 @@ public class FixCreatures {
     }
 
     private void saveItemArticles() {
-        LOG.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());
+        LOG.info("If debug mode is disabled, {} item articles are being edited NOW.", itemPagesToUpdate.size());
         if (!DEBUG_MODE) {
             itemPagesToUpdate.forEach((key, value) -> {
-                        itemRepository.saveItem(value, "[bot] adding missing creature(s) to droppedby list'.");
+                itemRepository.saveItem(value, "[bot] adding missing creature(s) to droppedby list.");
                         pauseForABit();
                     }
             );

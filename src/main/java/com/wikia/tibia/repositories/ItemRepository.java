@@ -21,4 +21,8 @@ public class ItemRepository {
     public List<String> getItemsList() {
         return Parser.list(String.class, itemGateway.getItems(false));
     }
+
+    public String saveItem(Item item, String editSummary) {
+        return itemGateway.saveItem(item, editSummary);
+    }
 }

@@ -11,10 +11,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class FixCreatures {
 
@@ -31,11 +32,10 @@ public class FixCreatures {
             "Golden Raid Token"
     );
     private static final List NON_EVENT_CREATURES_DROPPING_SNOWBALLS = Arrays.asList("Yeti", "Grynch Clan Goblin");
-    private static final String REGEX_DROPPED_BY = "\\{\\{Dropped By\\|(.*?)}}";
-    private static final boolean DEBUG_MODE = true;
+    private static final boolean DEBUG_MODE = false;
 
     private CreatureRepository creatureRepository;
-    private Map<String, Item> itemPagesToUpdate = new HashMap<>();
+    private Map<String, Item> itemPagesToUpdate = new ConcurrentHashMap<>(); // item name, actual item (for easy lookup)
     private ItemRepository itemRepository;
     private List<Item> items = new ArrayList<>();
     private List<Creature> creatures = new ArrayList<>();
@@ -50,44 +50,31 @@ public class FixCreatures {
      * 2. Filter out deprecated or event creatures.
      * 3. Filter out creatures with no loot listed.
      * 4. For every creature, go over all its loot items.
-     * 5. For every loot item, make sure it has a backreference to the creature.
+     * 5. For every loot item, add a backreference to the creature, unless already present.
+     * 6. Save all the changes.
+     * <p>
+     * The end result is a list of Items with their droppedby list extended.
      */
     public void checkCreatures() {
-//        CategoryMembersSimple categoryMembers = wikiArticleRepository.getMembersFromCategory("Creatures");
-
-//        for (String creaturePageName : categoryMembers) {
-//            Creature creature = (Creature) wikiArticleRepository.getWikiObject(creaturePageName);
-//            if (creature != null && !creature.isDeprecatedOrEvent() && !creature.getLoot().isEmpty()) {
-//                for (LootItem lootItem : creature.getLoot()) {
-//                    checkIfCreatureNameIsPresent(creaturePageName, lootItem.getItemName());
-//                }
-//            }
-//        }
-//        saveItemArticles();
-
         getCreatures().stream()
                 .sorted(Comparator.comparing(Creature::getName))
                 .filter(creature -> !creature.isDeprecatedOrEvent())
-                .filter(creature -> !creature.getLoot().isEmpty())
+                .filter(creature -> creature.getLoot() != null && !creature.getLoot().isEmpty())
                 .peek(c -> LOG.info("Processing creature: {}", c.getName()))
                 .forEach(creature -> creature.getLoot().stream()
                         .map(lootItem -> {
-                            final Item item = getItem(lootItem.getItemName());
-                            if (item == null) {
+                            final Optional<Item> item = getItem(lootItem.getItemName());
+                            if (item.isEmpty()) {
                                 LOG.error("Could not find loot item with name '{}' from creature '{}' in collection" +
                                         " of items.", lootItem.getItemName(), creature.getName());
                             }
-                            return item;
+                            return item.orElse(null);
                         })
                         .filter(Objects::nonNull)
-                        .forEach(item -> {
-                            if (!item.getDroppedby().contains(creature.getName()) && itemShouldBeAdded(creature.getName(), item.getName())) {
-                                item.getDroppedby().add(creature.getName());
-                                LOG.info("[bot] adding creature '{}' to item '{}'.", creature.getName(), item.getName());
-                            }
-                        })
+                        .forEach(item -> addCreatureToDroppedByListOfItem(creature, item))
                 );
 
+        saveItemArticles();
     }
 
     private List<Creature> getCreatures() {
@@ -104,11 +91,10 @@ public class FixCreatures {
         return items;
     }
 
-    private Item getItem(String itemName) {
+    private Optional<Item> getItem(String itemName) {
         return getItems().stream()
                 .filter(i -> Objects.equals(i.getName(), itemName))
-                .findAny()
-                .orElse(null);
+                .findAny();
     }
 
     private boolean itemShouldBeAdded(String creaturePageName, String lootItemNamePrecise) {
@@ -124,32 +110,44 @@ public class FixCreatures {
         return true;
     }
 
-    private String updateCreatureToDroppedByList(List<String> creatureNames, String newCreature) {
-        creatureNames.add(newCreature);
-        Collections.sort(creatureNames);
-        String newDroppedByList = String.join("|", creatureNames);
-        return "{{Dropped By|" + newDroppedByList + "}}";
-    }
+    /**
+     * If the creature is not already on the droppedby list of the item and the item is eligible for adding, add it.
+     * Also sort it.
+     */
+    private void addCreatureToDroppedByListOfItem(Creature creature, Item item) {
+        if (!item.getDroppedby().contains(creature.getName()) && itemShouldBeAdded(creature.getName(), item.getName())) {
+            LOG.info("[bot] adding creature '{}' to item '{}'.", creature.getName(), item.getName());
 
-//    private void addMissingCreatureNameToDroppedByList(String creaturePageName, Article itemPage, String textToInsert) {
-//        String itemPageText = itemPage.getText();
-//        Pattern p = Pattern.compile(REGEX_DROPPED_BY);
-//        Matcher m = p.matcher(itemPageText);
-//        if (m.find()) {
-//            String newArticleText = m.replaceAll(textToInsert);
-//            itemPage.setText(newArticleText);
-//            itemPage.setEditSummary(String.format("[bot] adding creature '%s' to item '%s'.", creaturePageName, itemPage.getTitle()));
-//            //itemPagesToUpdate.put(itemPage.getTitle(), itemPage);
-//            LOG.info("[bot] adding creature '{}' to item '{}'.", creaturePageName, itemPage.getTitle());
-//        }
-//    }
+            if (!itemPagesToUpdate.keySet().contains(item.getName())) {
+                // item not already in itemPages cache, add it
+                item.getDroppedby().add(creature.getName());
+                Collections.sort(item.getDroppedby());
+                itemPagesToUpdate.put(item.getName(), item);
+            } else {
+                // item already presetn in itemPages cache, get the existing item and add the new creature name
+                final Item existingItem = itemPagesToUpdate.get(item.getName());
+                existingItem.getDroppedby().add(creature.getName());
+                Collections.sort(existingItem.getDroppedby());
+            }
+        }
+    }
 
     private void saveItemArticles() {
         LOG.info("If debug mode is disabled I am going to update {} item articles with missing creatures.", itemPagesToUpdate.size());
         if (!DEBUG_MODE) {
-            for (Map.Entry<String, Item> itemPage : itemPagesToUpdate.entrySet()) {
-                //repository.saveArticle(itemPage.getValue()); // TODO fix the saving process, wikiObject -> json -> Article
-            }
+            itemPagesToUpdate.forEach((key, value) -> {
+                        itemRepository.saveItem(value, "[bot] adding missing creature(s) to droppedby list'.");
+                        pauseForABit();
+                    }
+            );
+        }
+    }
+
+    private void pauseForABit() {
+        try {
+            Thread.sleep(200);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
         }
     }
 }

@@ -110,6 +110,19 @@ public class Parser {
         }
     }
 
+    public static String json(Object object) {
+        return json(object, getDefaultObjectMapper());
+    }
+
+    public static String json(Object object, ObjectMapper mapper) {
+        try {
+            return mapper.writeValueAsString(object);
+        } catch (JsonProcessingException e) {
+            LOG.error("Unable to serialise object to json", e);
+            return "";
+        }
+    }
+
     private static ObjectMapper getDefaultObjectMapper() {
         if (defaultObjectMapper == null) {
             defaultObjectMapper = new ObjectMapper();

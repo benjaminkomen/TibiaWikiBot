@@ -35,8 +35,8 @@ public class FixCreatures {
     private static final boolean DEBUG_MODE = false;
 
     private CreatureRepository creatureRepository;
-    private Map<String, Item> itemPagesToUpdate = new ConcurrentHashMap<>(); // item name, actual item (for easy lookup)
     private ItemRepository itemRepository;
+    private Map<String, Item> itemPagesToUpdate = new ConcurrentHashMap<>(); // item name, actual item (for easy lookup)
     private List<Item> items = new ArrayList<>();
     private List<Creature> creatures = new ArrayList<>();
 
@@ -58,7 +58,7 @@ public class FixCreatures {
     public void checkCreatures() {
         getCreatures().stream()
                 .sorted(Comparator.comparing(Creature::getName))
-                .filter(creature -> !creature.isDeprecatedOrEvent())
+                .filter(Creature::notDeprecatedOrEvent)
                 .filter(creature -> creature.getLoot() != null && !creature.getLoot().isEmpty())
                 .peek(c -> LOG.debug("Processing creature: {}", c.getName()))
                 .forEach(creature -> creature.getLoot().stream()
@@ -111,11 +111,12 @@ public class FixCreatures {
     }
 
     /**
-     * If the creature is not already on the droppedby list of the item and the item is eligible for adding, add it.
-     * Also sort it.
+     * If the creature is not already on the droppedby list of the item (compare ignoring case!) and the item is
+     * eligible for adding, add it. Also sort it.
      */
     private void addCreatureToDroppedByListOfItem(Creature creature, Item item) {
-        if (!item.getDroppedby().contains(creature.getName()) && itemShouldBeAdded(creature.getName(), item.getName())) {
+        if (item.getDroppedby().stream().noneMatch(s -> s.equalsIgnoreCase(creature.getName())) &&
+                itemShouldBeAdded(creature.getName(), item.getName())) {
             LOG.info("Adding creature '{}' to droppedby list of item '{}'.", creature.getName(), item.getName());
 
             if (!itemPagesToUpdate.keySet().contains(item.getName())) {

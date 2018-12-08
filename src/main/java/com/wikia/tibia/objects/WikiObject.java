@@ -44,8 +44,8 @@ public abstract class WikiObject {
     }
 
     @JsonIgnore
-    public boolean isDeprecatedOrEvent() {
-        return (Status.DEPRECATED.equals(status) || Status.EVENT.equals(status));
+    public boolean notDeprecatedOrEvent() {
+        return status == null || status.notDeprecatedTsOrEvent();
     }
 
     @JsonIgnore

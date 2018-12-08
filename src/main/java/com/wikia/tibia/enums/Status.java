@@ -22,4 +22,8 @@ public enum Status implements Description {
     public String getDescription() {
         return description;
     }
+
+    public boolean notDeprecatedTsOrEvent() {
+        return this != DEPRECATED && this != TS_ONLY_LOWERCASE && this != TS_ONLY_UPPERCASE && this != EVENT;
+    }
 }

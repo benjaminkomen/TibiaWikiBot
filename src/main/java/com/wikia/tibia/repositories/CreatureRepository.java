@@ -21,4 +21,8 @@ public class CreatureRepository {
     public List<String> getCreaturesList() {
         return Parser.list(String.class, creatureGateway.getCreatures(false));
     }
+
+    public String saveCreature(Creature creature, String editSummary) {
+        return creatureGateway.saveCreature(creature, editSummary);
+    }
 }

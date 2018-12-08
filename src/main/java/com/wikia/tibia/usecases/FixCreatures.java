@@ -115,8 +115,7 @@ public class FixCreatures {
      * eligible for adding, add it. Also sort it.
      */
     private void addCreatureToDroppedByListOfItem(Creature creature, Item item) {
-        if (item.getDroppedby().stream().noneMatch(s -> s.equalsIgnoreCase(creature.getName())) &&
-                itemShouldBeAdded(creature.getName(), item.getName())) {
+        if (item.getDroppedby().contains(creature.getName()) && itemShouldBeAdded(creature.getName(), item.getName())) {
             LOG.info("Adding creature '{}' to droppedby list of item '{}'.", creature.getName(), item.getName());
 
             if (!itemPagesToUpdate.keySet().contains(item.getName())) {

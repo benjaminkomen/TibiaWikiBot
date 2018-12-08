@@ -20,7 +20,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class FixItems {
 
     private static final Logger LOG = LoggerFactory.getLogger(FixItems.class);
-    private static final boolean DEBUG_MODE = true;
+    private static final boolean DEBUG_MODE = false;
     private static final List<String> ORC_RAID_ITEMS = Arrays.asList("Amazon Armor", "Amazon Helmet", "Amazon Shield");
 
     private CreatureRepository creatureRepository;

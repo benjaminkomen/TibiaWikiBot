@@ -2,16 +2,16 @@ package com.wikia.tibia.usecases;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.wikia.tibia.factories.ArticleFactory;
 import com.wikia.tibia.objects.Building;
-import com.wikia.tibia.objects.TibiaWikiBot;
 import com.wikia.tibia.repositories.InputRepository;
-import com.wikia.tibia.repositories.WikiArticleRepository;
-import net.sourceforge.jwbf.mediawiki.actions.queries.CategoryMembersSimple;
 import one.util.streamex.StreamEx;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -22,15 +22,12 @@ public class BuildingCoordinates {
 
     private InputRepository inputRepository = new InputRepository();
     private ObjectMapper objectMapper = new ObjectMapper();
-    private WikiArticleRepository wikiArticleRepository;
-    private TibiaWikiBot tibiaWikiBot = new TibiaWikiBot();
 
     private static final String CATEGORY_LISTS = "Lists";
     private static final String CATEGORY_BUILDINGS = "Player-Ownable Buildings";
 
     public void addBuildingCoordinatesToAllBuildings() {
-        tibiaWikiBot.login();
-        wikiArticleRepository = new WikiArticleRepository(tibiaWikiBot);
+//        wikiArticleRepository = new WikiArticleRepository();
         List<Building> buildings = getAllBuildings();
 
         String json = inputRepository.getInput("json/house_positions.json");
@@ -43,16 +40,16 @@ public class BuildingCoordinates {
 
         // now all the buildings are modified, we can convert them back to Articles and save them
         buildings.stream()
-                .map(building -> ArticleFactory.createArticle(tibiaWikiBot, building))
+//                .map(building -> ArticleFactory.createArticle(tibiaWikiBot, building))
                 .peek(a -> {
                     try {
                         Thread.sleep(500);
                     } catch (InterruptedException e) {
                         throw new RuntimeException(e);
                     }
-                })
-                .forEach(a -> a.save("[bot] Removing mapper link from location and" +
-                        " adding posx, posy, posz attributes."));
+                });
+//                .forEach(a -> a.save("[bot] Removing mapper link from location and" +
+//                        " adding posx, posy, posz attributes."));
     }
 
     @SuppressWarnings("unchecked")
@@ -60,9 +57,11 @@ public class BuildingCoordinates {
 
         if (mapValue instanceof Map) {
             Map<String, String> map = (Map) mapValue;
-            building.setPosx(map.get("posx"));
-            building.setPosy(map.get("posy"));
-            building.setPosz(map.get("posz"));
+//            building.toBuilder()
+//                    .posx(map.get("posx"))
+//                    .posy(map.get("posy"))
+//                    .posz(map.get("posz"))
+//                    .build();
 
             removeMapperLink(building);
         } else {
@@ -74,7 +73,7 @@ public class BuildingCoordinates {
         if (building.getLocation() != null && !"".equals(building.getLocation())) {
             String locationWithoutMapperLink = building.getLocation()
                     .replaceAll("(, |)\\[http:(.*?) here]", "");
-            building.setLocation(locationWithoutMapperLink);
+//            building.toBuilder().location(locationWithoutMapperLink);
         }
     }
 
@@ -91,19 +90,19 @@ public class BuildingCoordinates {
     }
 
     public List<Building> getAllBuildings() {
-        CategoryMembersSimple pagesInBuildingsCategory = wikiArticleRepository.getMembersFromCategory(CATEGORY_BUILDINGS);
-        CategoryMembersSimple pagesInListsCategory = wikiArticleRepository.getMembersFromCategory(CATEGORY_LISTS);
+//        CategoryMembersSimple pagesInBuildingsCategory = wikiArticleRepository.getMembersFromCategory(CATEGORY_BUILDINGS);
+//        CategoryMembersSimple pagesInListsCategory = wikiArticleRepository.getMembersFromCategory(CATEGORY_LISTS);
 
         long startTime = System.nanoTime();
         List<String> buildingsCategory = new ArrayList<>();
-        for (String pageName : pagesInBuildingsCategory) {
-            buildingsCategory.add(pageName);
-        }
+//        for (String pageName : pagesInBuildingsCategory) {
+//            buildingsCategory.add(pageName);
+//        }
 
         List<String> listsCategory = new ArrayList<>();
-        for (String pageName : pagesInListsCategory) {
-            listsCategory.add(pageName);
-        }
+//        for (String pageName : pagesInListsCategory) {
+//            listsCategory.add(pageName);
+//        }
 
         List<String> pagesInBuildingsCategoryButNotLists = buildingsCategory.stream()
                 .filter(page -> !listsCategory.contains(page))
@@ -111,7 +110,7 @@ public class BuildingCoordinates {
 
         try {
             return StreamEx.ofSubLists(pagesInBuildingsCategoryButNotLists, 250)
-                    .flatMap(pageNames -> wikiArticleRepository.getWikiObjects(pageNames).stream())
+//                    .flatMap(pageNames -> wikiArticleRepository.getWikiObjects(pageNames).stream())
                     .filter(Building.class::isInstance)
                     .map(Building.class::cast)
                     .collect(Collectors.toList());

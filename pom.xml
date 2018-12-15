@@ -18,23 +18,13 @@
         <slf4j.version>1.8.0-beta2</slf4j.version>
         <json.version>20180813</json.version>
         <lombok.version>1.18.2</lombok.version>
-        <jetbrains.version>16.0.2</jetbrains.version>
+        <jetbrains.version>16.0.3</jetbrains.version>
         <streamex.version>0.6.7</streamex.version>
         <commons.io.version>2.6</commons.io.version>
         <ow2.asm.version>6.2.1</ow2.asm.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
+        <jackson.version>2.9.7</jackson.version>
     </properties>
-
-    <repositories>
-        <repository>
-            <id>sonatype-nexus-snapshots</id>
-            <name>Sonatype Nexus Snapshots</name>
-            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 
     <dependencies>
         <!-- Test -->
@@ -62,26 +52,14 @@
             <version>${hamcrest.version}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.objenesis</groupId>
-            <artifactId>objenesis</artifactId>
-            <version>${objenesis.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- MediaWiki -->
-        <!--<dependency>-->
-            <!--<groupId>net.sourceforge</groupId>-->
-            <!--<artifactId>jwbf</artifactId>-->
-            <!--<version>3.1.1</version>-->
-        <!--</dependency>-->
-        <dependency>
-            <groupId>net.sourceforge</groupId>
-            <artifactId>jwbf-benjamin</artifactId>
-            <version>4.0.1</version>
-        </dependency>
 
         <!-- Logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
@@ -116,6 +94,20 @@
             <artifactId>commons-io</artifactId>
             <version>${commons.io.version}</version>
         </dependency>
+
+        <!-- Jackson -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson.version}</version>
+        </dependency>
+
+
     </dependencies>
 
     <build>
@@ -126,8 +118,8 @@
                 <version>${maven.compiler.plugin.version}</version>
                 <!-- The source and target entries make sure you can run the app from IntelliJ while using java 9+ methods-->
                 <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
+                    <source>11</source>
+                    <target>11</target>
                 </configuration>
                 <dependencies>
                     <dependency>

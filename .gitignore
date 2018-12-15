@@ -15,5 +15,7 @@ hs_err_pid*
 .idea/
 *.properties
 target
-
+!maven-wrapper.properties
+!maven-wrapper.jar
+!system.properties
 src/main/resources/temp

@@ -17,7 +17,10 @@ import java.util.stream.Collectors;
 
 /**
  * Update 266 building pages with images.
+ *
+ * @deprecated This usecase was used once, but can't be used anymore in its current structure.
  */
+@Deprecated
 public class BuildingImages {
 
     private static final Logger log = LoggerFactory.getLogger(BuildingImages.class);

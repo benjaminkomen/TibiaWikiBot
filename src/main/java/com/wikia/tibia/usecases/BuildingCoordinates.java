@@ -17,7 +17,9 @@ import java.util.stream.Collectors;
 
 /**
  * Update all building pages with their coordinates.
+ * @deprecated This usecase was used once, but can't be used anymore in its current structure.
  */
+@Deprecated
 public class BuildingCoordinates {
 
     private InputRepository inputRepository = new InputRepository();

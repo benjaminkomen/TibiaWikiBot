@@ -35,7 +35,10 @@ public class Item extends WikiObject {
     private final Hands hands;
     private final WeaponType type;
     private final String attack;
-    private final String elementattack;
+    private final Integer fireAttack;
+    private final Integer earthAttack;
+    private final Integer iceAttack;
+    private final Integer energyAttack;
     private final Integer defense;
     private final String defensemod;
     private final Integer imbueslots;
@@ -106,7 +109,10 @@ public class Item extends WikiObject {
         this.hands = null;
         this.type = null;
         this.attack = null;
-        this.elementattack = null;
+        this.fireAttack = null;
+        this.earthAttack = null;
+        this.iceAttack = null;
+        this.energyAttack = null;
         this.defense = null;
         this.defensemod = null;
         this.imbueslots = null;
@@ -165,7 +171,8 @@ public class Item extends WikiObject {
                  String flavortext, Status ingamestatus, String words, ItemClass itemclass, String primarytype,
                  String secondarytype, Integer lightcolor, Integer lightradius, Integer levelrequired,
                  String vocrequired, Integer mlrequired, Hands hands, WeaponType type, String attack,
-                 String elementattack, Integer defense, String defensemod, Integer imbueslots, String imbuements,
+                 Integer fireAttack, Integer earthAttack, Integer iceAttack, Integer energyAttack, Integer defense,
+                 String defensemod, Integer imbueslots, String imbuements,
                  YesNo enchantable, YesNo enchanted, String range, String attackModification, String hitpointModification,
                  Integer armor, String resist, Integer charges, Percentage criticalHitChance,
                  Percentage criticalHitExtraDamage, Percentage manaleechChance, Percentage manaleechAmount,
@@ -195,7 +202,10 @@ public class Item extends WikiObject {
         this.hands = hands;
         this.type = type;
         this.attack = attack;
-        this.elementattack = elementattack;
+        this.fireAttack = fireAttack;
+        this.earthAttack = earthAttack;
+        this.iceAttack = iceAttack;
+        this.energyAttack = energyAttack;
         this.defense = defense;
         this.defensemod = defensemod;
         this.imbueslots = imbueslots;
@@ -286,5 +296,25 @@ public class Item extends WikiObject {
     @JsonGetter("hpleech_am")
     public Percentage getHitpointLeechAmount() {
         return hitpointLeechAmount;
+    }
+
+    @JsonGetter("fire_attack")
+    public Integer getFireAttack() {
+        return fireAttack;
+    }
+
+    @JsonGetter("earth_attack")
+    public Integer getEarthAttack() {
+        return earthAttack;
+    }
+
+    @JsonGetter("ice_attack")
+    public Integer getIceAttack() {
+        return iceAttack;
+    }
+
+    @JsonGetter("energy_attack")
+    public Integer getEnergyAttack() {
+        return energyAttack;
     }
 }

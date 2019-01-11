@@ -1,6 +1,5 @@
 package com.wikia.tibia.objects;
 
-import com.wikia.tibia.enums.Grade;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
 import lombok.Builder;
@@ -9,7 +8,7 @@ import lombok.Getter;
 @Getter
 public class Achievement extends WikiObject {
 
-    private final Grade grade;
+    private final Integer grade;
     private final String description;
     private final String spoiler;
     private final YesNo premium;
@@ -32,7 +31,7 @@ public class Achievement extends WikiObject {
     }
 
     @Builder
-    public Achievement(String name, String implemented, String history, Status status, Grade grade, String description,
+    public Achievement(String name, String implemented, String history, Status status, Integer grade, String description,
                        String spoiler, YesNo premium, Integer points, YesNo secret, Integer coincideswith,
                        Integer achievementid, String relatedpages) {
         super(name, null, null, null, implemented, null, history, status);

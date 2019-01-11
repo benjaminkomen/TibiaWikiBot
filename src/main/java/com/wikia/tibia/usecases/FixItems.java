@@ -69,7 +69,7 @@ public class FixItems {
 
     private List<Creature> getCreatures() {
         if (creatures == null || creatures.isEmpty()) {
-            creatures = creatureRepository.getCreatures();
+            creatures = creatureRepository.getWikiObjects();
         }
         return creatures;
     }
@@ -83,7 +83,7 @@ public class FixItems {
 
     private List<Item> getItems() {
         if (items == null || items.isEmpty()) {
-            items = itemRepository.getItems();
+            items = itemRepository.getWikiObjects();
         }
         return items;
     }
@@ -126,7 +126,7 @@ public class FixItems {
         LOG.info("If debug mode is disabled, {} creature articles are being edited NOW.", creaturePagesToUpdate.size());
         if (!DEBUG_MODE) {
             creaturePagesToUpdate.forEach((key, value) -> {
-                        creatureRepository.saveCreature(value, "[bot] adding missing item(s) to loot list.");
+                creatureRepository.saveWikiObject(value, "[bot] adding missing item(s) to loot list.");
                         pauseForABit();
                     }
             );

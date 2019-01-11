@@ -79,14 +79,14 @@ public class FixCreatures {
 
     private List<Creature> getCreatures() {
         if (creatures == null || creatures.isEmpty()) {
-            creatures = creatureRepository.getCreatures();
+            creatures = creatureRepository.getWikiObjects();
         }
         return creatures;
     }
 
     private List<Item> getItems() {
         if (items == null || items.isEmpty()) {
-            items = itemRepository.getItems();
+            items = itemRepository.getWikiObjects();
         }
         return items;
     }
@@ -136,7 +136,7 @@ public class FixCreatures {
         LOG.info("If debug mode is disabled, {} item articles are being edited NOW.", itemPagesToUpdate.size());
         if (!DEBUG_MODE) {
             itemPagesToUpdate.forEach((key, value) -> {
-                itemRepository.saveItem(value, "[bot] adding missing creature(s) to droppedby list.");
+                itemRepository.saveWikiObject(value, "[bot] adding missing creature(s) to droppedby list.");
                         pauseForABit();
                     }
             );

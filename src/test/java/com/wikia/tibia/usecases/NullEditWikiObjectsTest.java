@@ -20,8 +20,33 @@ public class NullEditWikiObjectsTest {
     }
 
     @Test
+    public void testCheckBooks() {
+        target.checkBooks();
+    }
+
+    @Test
+    public void testCheckBuildings() {
+        target.checkBuildings();
+    }
+
+    @Test
+    public void testCheckCorpses() {
+        target.checkCorpses();
+    }
+
+    @Test
     public void testCheckCreatures() {
         target.checkCreatures();
+    }
+
+    @Test
+    public void testCheckEffects() {
+        target.checkEffects();
+    }
+
+    @Test
+    public void testCheckHuntingPlaces() {
+        target.checkHuntingPlaces();
     }
 
     @Test
@@ -29,4 +54,53 @@ public class NullEditWikiObjectsTest {
         target.checkItems();
     }
 
+    @Test
+    public void testCheckKeys() {
+        target.checkKeys();
+    }
+
+    @Test
+    public void testCheckLocations() {
+        target.checkLocations();
+    }
+
+    @Test
+    public void testCheckMissiles() {
+        target.checkMissiles();
+    }
+
+    @Test
+    public void testCheckMounts() {
+        target.checkMounts();
+    }
+
+    @Test
+    public void testCheckNPCs() {
+        target.checkNPCs();
+    }
+
+    @Test
+    public void testCheckObjects() {
+        target.checkObjects();
+    }
+
+    @Test
+    public void testCheckOutfits() {
+        target.checkOutfits();
+    }
+
+    @Test
+    public void testCheckQuests() {
+        target.checkQuests();
+    }
+
+    @Test
+    public void testCheckSpells() {
+        target.checkSpells();
+    }
+
+    @Test
+    public void testCheckStreets() {
+        target.checkStreets();
+    }
 }

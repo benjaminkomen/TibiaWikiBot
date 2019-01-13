@@ -14,21 +14,33 @@ public class NullEditWikiObjectsTest {
         target = new NullEditWikiObjects();
     }
 
+    /**
+     * Successfully run on 2019-01-11
+     */
     @Test
     public void testCheckAchievements() {
         target.checkAchievements();
     }
 
+    /**
+     * Still mistakes
+     */
     @Test
     public void testCheckBooks() {
         target.checkBooks();
     }
 
+    /**
+     * Still mistakes
+     */
     @Test
     public void testCheckBuildings() {
         target.checkBuildings();
     }
 
+    /**
+     * Still mistakes
+     */
     @Test
     public void testCheckCorpses() {
         target.checkCorpses();

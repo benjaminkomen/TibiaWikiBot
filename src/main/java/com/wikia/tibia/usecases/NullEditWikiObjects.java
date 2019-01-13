@@ -132,7 +132,8 @@ public class NullEditWikiObjects {
     }
 
     public void checkBuildings() {
-        getBuildings()
+        getBuildings().stream()
+                .limit(10)
                 .forEach(wikiObject -> {
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName());
                             saveArticle(wikiObject);
@@ -142,7 +143,8 @@ public class NullEditWikiObjects {
     }
 
     public void checkCorpses() {
-        getCorpses()
+        getCorpses().stream()
+                .limit(10)
                 .forEach(wikiObject -> {
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName());
                             saveArticle(wikiObject);

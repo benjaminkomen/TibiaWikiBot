@@ -111,14 +111,32 @@ public class FixItems {
      * Exclude certain items/creatures.
      */
     private boolean itemShouldBeAdded(String creaturePageName, String lootItemNamePrecise) {
+        return addOrcWarlordLootIfNotOrcRaidItem(creaturePageName, lootItemNamePrecise) &&
+                addOldAndUsedBackpackIfNotOrc(creaturePageName, lootItemNamePrecise) &&
+                addOrcTuskIfNotOrc(creaturePageName, lootItemNamePrecise);
+    }
+
+    private boolean addOrcWarlordLootIfNotOrcRaidItem(String creaturePageName, String lootItemNamePrecise) {
         if ("Orc Warlord".equals(creaturePageName)) {
             return !ORC_RAID_ITEMS.contains(lootItemNamePrecise);
         }
+        return true;
+    }
 
+    /**
+     * Do not add this item to the loot table of Orcs, only a specific Orc in Orc Fortress drops this item
+     */
+    private boolean addOldAndUsedBackpackIfNotOrc(String creaturePageName, String lootItemNamePrecise) {
+        if ("Old and Used Backpack".equals(lootItemNamePrecise)) {
+            return !creaturePageName.equals("Orc");
+        }
+        return true;
+    }
+
+    private boolean addOrcTuskIfNotOrc(String creaturePageName, String lootItemNamePrecise) {
         if ("Orc Tusk".equals(lootItemNamePrecise)) {
             return !creaturePageName.contains("Orc");
         }
-
         return true;
     }
 

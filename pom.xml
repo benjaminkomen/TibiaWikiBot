@@ -27,6 +27,7 @@
         <ow2.asm.version>7.0</ow2.asm.version>
         <maven.compiler.plugin.version>3.8.0</maven.compiler.plugin.version>
         <jackson.version>2.9.8</jackson.version>
+        <jsonassert.version>1.5.0</jsonassert.version>
     </properties>
 
     <dependencies>
@@ -110,6 +111,12 @@
             <version>${jackson.version}</version>
         </dependency>
 
+        <!-- JSON assert -->
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>${jsonassert.version}</version>
+        </dependency>
 
     </dependencies>
 

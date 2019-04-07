@@ -142,13 +142,12 @@ public class FixItems {
 
     private void saveCreatureArticles() {
         LOG.info("If debug mode is disabled, {} creature articles are being edited NOW.", creaturePagesToUpdate.size());
-        if (!DEBUG_MODE) {
-            creaturePagesToUpdate.forEach((key, value) -> {
-                creatureRepository.saveWikiObject(value, "[bot] adding missing item(s) to loot list.");
-                        pauseForABit();
-                    }
-            );
-        }
+        creaturePagesToUpdate.forEach((key, value) -> {
+                    creatureRepository.saveWikiObject(value, "[bot] adding missing item(s) to loot list.", DEBUG_MODE);
+                    pauseForABit();
+                }
+        );
+
     }
 
     private void pauseForABit() {

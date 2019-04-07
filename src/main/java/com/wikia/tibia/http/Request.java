@@ -47,19 +47,19 @@ public class Request {
         }
     }
 
-    public String put(String location, Object body, Header header) {
-        return this.put(location, Parser.json(body), header);
+    public String put(String location, Object body, Header header, boolean dryRun) {
+        return this.put(location, Parser.json(body), header, dryRun);
     }
 
-    public String put(String location, Object body) {
-        return this.put(location, Parser.json(body), null);
+    public String put(String location, Object body, boolean dryRun) {
+        return this.put(location, Parser.json(body), null, dryRun);
     }
 
-    public String put(String location, String jsonBody, Header header) {
-        return this.put(URI.create(location), jsonBody, header);
+    public String put(String location, String jsonBody, Header header, boolean dryRun) {
+        return this.put(URI.create(location), jsonBody, header, dryRun);
     }
 
-    public String put(URI location, String jsonBody, Header header) {
+    public String put(URI location, String jsonBody, Header header, boolean dryRun) {
         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(location)
                 .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -70,6 +70,11 @@ public class Request {
         }
 
         final HttpRequest request = requestBuilder.build();
+
+        if (dryRun) {
+            LOG.info("Not actually doing request due to dry run.");
+            return "";
+        }
 
         final HttpResponse<String> response = invoke(request);
 

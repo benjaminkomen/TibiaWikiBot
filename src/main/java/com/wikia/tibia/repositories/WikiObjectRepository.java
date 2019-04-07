@@ -17,14 +17,18 @@ public abstract class WikiObjectRepository<T extends Class<? extends WikiObject>
     }
 
     public List<T> getWikiObjects() {
-        return Parser.listOneByOne(wikiObjectClass, wikiObjectGateway.getWikiObjects(true));
+        return Parser.listOneByOne(wikiObjectClass, wikiObjectGateway.getWikiObjects(true), -1);
+    }
+
+    public List<T> getWikiObjects(long limit) {
+        return Parser.listOneByOne(wikiObjectClass, wikiObjectGateway.getWikiObjects(true), limit);
     }
 
     public List<String> getWikiObjectsList() {
         return Parser.list(String.class, wikiObjectGateway.getWikiObjects(false));
     }
 
-    public String saveWikiObject(WikiObject wikiObject, String editSummary) {
-        return wikiObjectGateway.saveWikiObject(wikiObject, editSummary);
+    public String saveWikiObject(WikiObject wikiObject, String editSummary, boolean dryRun) {
+        return wikiObjectGateway.saveWikiObject(wikiObject, editSummary, dryRun);
     }
 }

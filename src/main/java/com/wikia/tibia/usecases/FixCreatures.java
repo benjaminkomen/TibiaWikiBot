@@ -134,13 +134,12 @@ public class FixCreatures {
 
     private void saveItemArticles() {
         LOG.info("If debug mode is disabled, {} item articles are being edited NOW.", itemPagesToUpdate.size());
-        if (!DEBUG_MODE) {
-            itemPagesToUpdate.forEach((key, value) -> {
-                itemRepository.saveWikiObject(value, "[bot] adding missing creature(s) to droppedby list.");
-                        pauseForABit();
-                    }
-            );
-        }
+        itemPagesToUpdate.forEach((key, value) -> {
+                    itemRepository.saveWikiObject(value, "[bot] adding missing creature(s) to droppedby list.", DEBUG_MODE);
+                    pauseForABit();
+                }
+        );
+
     }
 
     private void pauseForABit() {

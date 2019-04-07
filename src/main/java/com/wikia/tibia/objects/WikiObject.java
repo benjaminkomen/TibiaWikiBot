@@ -6,7 +6,7 @@ import com.wikia.tibia.enums.Status;
 import lombok.Getter;
 
 @Getter
-public abstract class WikiObject {
+public abstract class WikiObject extends WrappedWikiObject {
 
     private final String templateType;
     private final String name;

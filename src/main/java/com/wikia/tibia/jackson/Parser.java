@@ -1,10 +1,12 @@
 package com.wikia.tibia.jackson;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
+import com.wikia.tibia.objects.WrappedWikiObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -76,14 +78,18 @@ public class Parser {
      * Alternative implementation to {@link #list(Class, String)} where the json list is read one-by-one, which makes
      * it more robust against jsonparsingexceptions
      */
-    public static <T> List<T> listOneByOne(Class<T> type, String json) {
-        return listOneByOne(type, getDefaultObjectMapper(), json);
+    public static <T> List<T> listOneByOne(Class<T> type, String json, long limit) {
+        return listOneByOne(type, getDefaultObjectMapper(), json, limit);
     }
 
-    private static <T> List<T> listOneByOne(Class<T> type, ObjectMapper mapper, String json) {
+    private static <T> List<T> listOneByOne(Class<T> type, ObjectMapper mapper, String json, long limit) {
         if (json == null || "".equals(json)) {
             return Collections.emptyList();
         }
+
+        limit = limit != -1
+                ? limit
+                : Long.MAX_VALUE;
 
         try {
             JsonNode jsonAsNode = mapper.readTree(json);
@@ -93,13 +99,18 @@ public class Parser {
                         .mapToObj(jsonAsNode::get)
                         .map(jn -> {
                             try {
-                                return mapper.treeToValue(jn, type);
+                                T value = mapper.treeToValue(jn, type);
+                                if (value instanceof WrappedWikiObject) {
+                                    ((WrappedWikiObject) value).withOriginalJson(jn.toString());
+                                }
+                                return value;
                             } catch (JsonProcessingException e) {
                                 LOG.error("Unable to construct object of type '{}' from the following json: {} because of error: {}", type, jn, e);
                                 return null;
                             }
                         })
                         .filter(Objects::nonNull)
+                        .limit(limit)
                         .collect(Collectors.toList());
             } else {
                 LOG.error("Retrieved json is not a json array, cannot parse to list.");
@@ -126,6 +137,7 @@ public class Parser {
     private static ObjectMapper getDefaultObjectMapper() {
         if (defaultObjectMapper == null) {
             defaultObjectMapper = new ObjectMapper();
+            defaultObjectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL); // Value that indicates that only properties with non-null values are to be included.
         }
         return defaultObjectMapper;
     }

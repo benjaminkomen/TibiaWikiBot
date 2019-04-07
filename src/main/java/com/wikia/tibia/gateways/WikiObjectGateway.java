@@ -23,12 +23,12 @@ public abstract class WikiObjectGateway<T extends WikiObject> {
         return request.get(contracts.getDescription() + "?expand=" + expand);
     }
 
-    public String saveWikiObject(T wikiObject, String editSummary) {
+    public String saveWikiObject(T wikiObject, String editSummary, boolean dryRun) {
         final Header header = Header.builder()
                 .name("X-WIKI-Edit-Summary")
                 .value(editSummary)
                 .build();
 
-        return request.put(contracts.getDescription(), wikiObject, header);
+        return request.put(contracts.getDescription(), wikiObject, header, dryRun);
     }
 }

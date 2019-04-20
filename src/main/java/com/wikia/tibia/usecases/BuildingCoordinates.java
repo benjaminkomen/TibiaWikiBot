@@ -32,7 +32,7 @@ public class BuildingCoordinates {
 //        wikiArticleRepository = new WikiArticleRepository();
         List<Building> buildings = getAllBuildings();
 
-        String json = inputRepository.getInput("json/house_positions.json");
+        String json = inputRepository.getInput("data/house_positions.json");
         Map<String, Object> map = mapJsonToObject(json);
 
         map.forEach((key, value) -> {

@@ -15,7 +15,7 @@ public abstract class WikiObject extends WrappedWikiObject {
     private final String plural;
     private final String implemented;
     private final String notes;
-    private final String history;
+    private String history;
     private final Status status;
 
     protected WikiObject() {
@@ -56,6 +56,10 @@ public abstract class WikiObject extends WrappedWikiObject {
     @Override
     public String toString() {
         return "Class: " + getClassName() + ", name: " + getName();
+    }
+
+    public void withHistory(String newHistory) {
+        this.history = newHistory;
     }
 
     public static class WikiObjectImpl extends WikiObject {

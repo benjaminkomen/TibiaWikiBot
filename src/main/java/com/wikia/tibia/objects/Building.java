@@ -23,7 +23,7 @@ public class Building extends WikiObject {
     private final Integer houseid;
     private final Integer size;
     private final Integer beds;
-    private final Integer rent;
+    private Integer rent;
     private final YesNo ownable;
     private final City city;
     private final Integer openwindows;
@@ -83,5 +83,9 @@ public class Building extends WikiObject {
         this.rooms = rooms;
         this.furnishings = furnishings;
         this.image = image;
+    }
+
+    public void withRent(Integer newRent) {
+        this.rent = newRent;
     }
 }

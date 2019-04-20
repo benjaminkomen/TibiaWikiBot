@@ -1,5 +1,9 @@
 package com.wikia.tibia.repositories;
 
+import com.fasterxml.jackson.databind.MappingIterator;
+import com.fasterxml.jackson.databind.ObjectReader;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,6 +16,7 @@ import java.nio.file.Files;
 import java.nio.file.NoSuchFileException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Scanner;
@@ -21,10 +26,15 @@ import java.util.stream.Stream;
 public class InputRepository {
 
     private static final Logger log = LoggerFactory.getLogger(InputRepository.class);
+    private static final String DEFAULT_CHARSET = "UTF-8";
 
     public String getInput(String fileName) {
+        return getInput(fileName, DEFAULT_CHARSET);
+    }
+
+    public String getInput(String fileName, String charsetName) {
         try {
-            return getFileContents(fileName);
+            return getFileContents(fileName, charsetName);
         } catch (NoSuchFileException e) {
             throw new InputFileNotFoundException(String.format("The requested file %s could not be located.", fileName));
         }
@@ -51,8 +61,8 @@ public class InputRepository {
         return Collections.emptyList();
     }
 
-    private String getFileContents(String fileName) throws NoSuchFileException {
-        final StringBuilder result = new StringBuilder("");
+    private String getFileContents(String fileName, String charsetName) throws NoSuchFileException {
+        final StringBuilder result = new StringBuilder();
         final ClassLoader classLoader = getClass().getClassLoader();
         final URL resource = classLoader.getResource(fileName);
         final File inputFile = resource != null ? new File(resource.getFile()) : null;
@@ -61,7 +71,7 @@ public class InputRepository {
             throw new NoSuchFileException("There is no file with the provided name.");
         }
 
-        try (Scanner scanner = new Scanner(inputFile)) {
+        try (Scanner scanner = new Scanner(inputFile, charsetName)) {
 
             while (scanner.hasNextLine()) {
 
@@ -77,6 +87,34 @@ public class InputRepository {
             log.error("An error occured when reading the file {}.", fileName, e);
         }
         return result.toString();
+    }
+
+    public <T> List<T> getCSVFile(String fileName, Class<T> clazz) {
+        return getCSVFile(fileName, DEFAULT_CHARSET, clazz);
+    }
+
+    public <T> List<T> getCSVFile(String fileName, String charsetName, Class<T> clazz) {
+
+        List<T> result = new ArrayList<>();
+
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper
+                .typedSchemaFor(clazz)
+                .withHeader();
+
+        ObjectReader reader = new CsvMapper().readerFor(clazz).with(schema);
+
+        final String fileToRead = getInput(fileName, charsetName);
+
+        try {
+            MappingIterator<T> iterator = reader.readValues(fileToRead);
+            while (iterator.hasNext()) {
+                result.add(iterator.next());
+            }
+        } catch (IOException e) {
+            log.error("Unable to deserialize CSV to Java", e);
+        }
+        return result;
     }
 
     public static class InputFileNotFoundException extends RuntimeException {

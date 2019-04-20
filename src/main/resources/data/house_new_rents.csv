@@ -1,0 +1,1043 @@
+house_id,house_name                        ,new_rent_in_kk,new_rent_in_gps
+40501   ,Coastwood 1                       ,50            ,50000
+40510   ,Coastwood 10                      ,80            ,80000
+40502   ,Coastwood 2                       ,50            ,50000
+40503   ,Coastwood 3                       ,50            ,50000
+40504   ,Coastwood 4                       ,50            ,50000
+40505   ,Coastwood 5                       ,50            ,50000
+40506   ,Coastwood 6 (Shop)                ,80            ,80000
+40507   ,Coastwood 7                       ,25            ,25000
+40508   ,Coastwood 8                       ,50            ,50000
+40509   ,Coastwood 9                       ,50            ,50000
+40211   ,Great Willow 1a                   ,25            ,25000
+40212   ,Great Willow 1b                   ,25            ,25000
+40213   ,Great Willow 1c                   ,25            ,25000
+40221   ,Great Willow 2a                   ,25            ,25000
+40222   ,Great Willow 2b                   ,25            ,25000
+40223   ,Great Willow 2c                   ,80            ,80000
+40224   ,Great Willow 2d                   ,25            ,25000
+40231   ,Great Willow 3a                   ,50            ,50000
+40232   ,Great Willow 3b                   ,80            ,80000
+40233   ,Great Willow 3c                   ,50            ,50000
+40234   ,Great Willow 3d                   ,50            ,50000
+40241   ,Great Willow 4a                   ,25            ,25000
+40242   ,Great Willow 4b                   ,25            ,25000
+40243   ,Great Willow 4c                   ,25            ,25000
+40244   ,Great Willow 4d                   ,50            ,50000
+40301   ,Mangrove 1                        ,80            ,80000
+40302   ,Mangrove 2                        ,50            ,50000
+40303   ,Mangrove 3                        ,80            ,80000
+40304   ,Mangrove 4                        ,50            ,50000
+40611   ,Shadow Caves 1                    ,25            ,25000
+40621   ,Shadow Caves 11                   ,50            ,50000
+40622   ,Shadow Caves 12                   ,50            ,50000
+40623   ,Shadow Caves 13                   ,80            ,80000
+40624   ,Shadow Caves 14                   ,80            ,80000
+40625   ,Shadow Caves 15                   ,50            ,50000
+40626   ,Shadow Caves 16                   ,50            ,50000
+40627   ,Shadow Caves 17                   ,80            ,80000
+40628   ,Shadow Caves 18                   ,80            ,80000
+40612   ,Shadow Caves 2                    ,25            ,25000
+40631   ,Shadow Caves 21                   ,50            ,50000
+40632   ,Shadow Caves 22                   ,50            ,50000
+40633   ,Shadow Caves 23                   ,50            ,50000
+40634   ,Shadow Caves 24                   ,50            ,50000
+40635   ,Shadow Caves 25                   ,80            ,80000
+40636   ,Shadow Caves 26                   ,80            ,80000
+40637   ,Shadow Caves 27                   ,80            ,80000
+40638   ,Shadow Caves 28                   ,50            ,50000
+40613   ,Shadow Caves 3                    ,80            ,80000
+40614   ,Shadow Caves 4                    ,25            ,25000
+40401   ,Treetop 1                         ,25            ,25000
+40410   ,Treetop 10                        ,80            ,80000
+40411   ,Treetop 11                        ,50            ,50000
+40412   ,Treetop 12 (Shop)                 ,100           ,100000
+40413   ,Treetop 13                        ,100           ,100000
+40402   ,Treetop 2                         ,25            ,25000
+40403   ,Treetop 3 (Shop)                  ,80            ,80000
+40404   ,Treetop 4 (Shop)                  ,80            ,80000
+40405   ,Treetop 5 (Shop)                  ,80            ,80000
+40406   ,Treetop 6                         ,25            ,25000
+40407   ,Treetop 7                         ,50            ,50000
+40408   ,Treetop 8                         ,25            ,25000
+40409   ,Treetop 9                         ,50            ,50000
+40101   ,Underwood 1                       ,100           ,100000
+40110   ,Underwood 10                      ,25            ,25000
+40102   ,Underwood 2                       ,100           ,100000
+40103   ,Underwood 3                       ,100           ,100000
+40104   ,Underwood 4                       ,100           ,100000
+40105   ,Underwood 5                       ,80            ,80000
+40106   ,Underwood 6                       ,100           ,100000
+40107   ,Underwood 7                       ,200           ,200000
+40108   ,Underwood 8                       ,50            ,50000
+40109   ,Underwood 9                       ,50            ,50000
+59036   ,Arakmehn I                        ,100           ,100000
+59037   ,Arakmehn II                       ,80            ,80000
+59038   ,Arakmehn III                      ,100           ,100000
+59039   ,Arakmehn IV                       ,100           ,100000
+58018   ,Botham I a                        ,50            ,50000
+58019   ,Botham I b                        ,150           ,150000
+58020   ,Botham I c                        ,150           ,150000
+58021   ,Botham I d                        ,150           ,150000
+58022   ,Botham I e                        ,80            ,80000
+58023   ,Botham II a                       ,25            ,25000
+58024   ,Botham II b                       ,100           ,100000
+58025   ,Botham II c                       ,100           ,100000
+58026   ,Botham II d                       ,100           ,100000
+58027   ,Botham II e                       ,100           ,100000
+58028   ,Botham II f                       ,80            ,80000
+58029   ,Botham II g                       ,80            ,80000
+58030   ,Botham III a                      ,80            ,80000
+58031   ,Botham III b                      ,50            ,50000
+58032   ,Botham III c                      ,25            ,25000
+58033   ,Botham III d                      ,50            ,50000
+58034   ,Botham III e                      ,80            ,80000
+58035   ,Botham III f                      ,150           ,150000
+58036   ,Botham III g                      ,100           ,100000
+58037   ,Botham III h                      ,200           ,200000
+58038   ,Botham IV a                       ,100           ,100000
+58039   ,Botham IV b                       ,50            ,50000
+58040   ,Botham IV c                       ,80            ,80000
+58041   ,Botham IV d                       ,50            ,50000
+58042   ,Botham IV e                       ,50            ,50000
+58043   ,Botham IV f                       ,100           ,100000
+58044   ,Botham IV g                       ,100           ,100000
+58045   ,Botham IV h                       ,100           ,100000
+58046   ,Botham IV i                       ,150           ,150000
+58000   ,Chameken I                        ,100           ,100000
+58001   ,Chameken II                       ,80            ,80000
+59000   ,Charsirakh I a                    ,25            ,25000
+59001   ,Charsirakh I b                    ,150           ,150000
+59002   ,Charsirakh II                     ,100           ,100000
+59003   ,Charsirakh III                    ,50            ,50000
+59067   ,Esuph I                           ,50            ,50000
+59068   ,Esuph II a                        ,25            ,25000
+59069   ,Esuph II b                        ,100           ,100000
+59070   ,Esuph III a                       ,25            ,25000
+59071   ,Esuph III b                       ,100           ,100000
+59072   ,Esuph IV a                        ,25            ,25000
+59073   ,Esuph IV b                        ,25            ,25000
+59074   ,Esuph IV c                        ,25            ,25000
+59075   ,Esuph IV d                        ,25            ,25000
+57001   ,Low Waters Observatory            ,400           ,400000
+59035   ,Mothrem I                         ,80            ,80000
+59021   ,Murkhol I a                       ,25            ,25000
+59022   ,Murkhol I b                       ,50            ,50000
+59023   ,Murkhol I c                       ,50            ,50000
+59024   ,Murkhol I d                       ,50            ,50000
+59025   ,Oskahl I a                        ,150           ,150000
+59026   ,Oskahl I b                        ,80            ,80000
+59027   ,Oskahl I c                        ,80            ,80000
+59028   ,Oskahl I d                        ,100           ,100000
+59029   ,Oskahl I e                        ,80            ,80000
+59030   ,Oskahl I f                        ,100           ,100000
+59031   ,Oskahl I g                        ,100           ,100000
+59032   ,Oskahl I h                        ,150           ,150000
+59033   ,Oskahl I i                        ,80            ,80000
+59034   ,Oskahl I j                        ,80            ,80000
+59004   ,Othehothep I a                    ,25            ,25000
+59005   ,Othehothep I b                    ,100           ,100000
+59006   ,Othehothep I c                    ,150           ,150000
+59007   ,Othehothep I d                    ,150           ,150000
+59008   ,Othehothep II a                   ,25            ,25000
+59009   ,Othehothep II b                   ,150           ,150000
+59010   ,Othehothep II c                   ,80            ,80000
+59011   ,Othehothep II d                   ,80            ,80000
+59012   ,Othehothep II e                   ,150           ,150000
+59013   ,Othehothep II f                   ,100           ,100000
+59014   ,Othehothep III a                  ,25            ,25000
+59015   ,Othehothep III b                  ,80            ,80000
+59016   ,Othehothep III c                  ,80            ,80000
+59017   ,Othehothep III d                  ,80            ,80000
+59018   ,Othehothep III e                  ,50            ,50000
+59019   ,Othehothep III f                  ,50            ,50000
+59051   ,Rathal I a                        ,80            ,80000
+59052   ,Rathal I b                        ,50            ,50000
+59053   ,Rathal I c                        ,25            ,25000
+59054   ,Rathal I d                        ,50            ,50000
+59055   ,Rathal I e                        ,50            ,50000
+59056   ,Rathal II a                       ,80            ,80000
+59057   ,Rathal II b                       ,50            ,50000
+59058   ,Rathal II c                       ,50            ,50000
+59059   ,Rathal II d                       ,100           ,100000
+58002   ,Thanah I a                        ,25            ,25000
+58003   ,Thanah I b                        ,150           ,150000
+58004   ,Thanah I c                        ,200           ,200000
+58005   ,Thanah I d                        ,200           ,200000
+58006   ,Thanah II a                       ,25            ,25000
+58007   ,Thanah II b                       ,50            ,50000
+58008   ,Thanah II c                       ,25            ,25000
+58009   ,Thanah II d                       ,50            ,50000
+58010   ,Thanah II e                       ,25            ,25000
+58011   ,Thanah II f                       ,150           ,150000
+58012   ,Thanah II g                       ,100           ,100000
+58013   ,Thanah II h                       ,100           ,100000
+58014   ,Thrarhor I a (Shop)               ,50            ,50000
+58015   ,Thrarhor I b (Shop)               ,50            ,50000
+58016   ,Thrarhor I c (Shop)               ,50            ,50000
+58017   ,Thrarhor I d (Shop)               ,80            ,80000
+59040   ,Unklath I a                       ,100           ,100000
+59041   ,Unklath I b                       ,100           ,100000
+59042   ,Unklath I c                       ,100           ,100000
+59043   ,Unklath I d                       ,150           ,150000
+59044   ,Unklath I e                       ,150           ,150000
+59045   ,Unklath I f                       ,100           ,100000
+59046   ,Unklath I g                       ,100           ,100000
+59047   ,Unklath II a                      ,50            ,50000
+59048   ,Unklath II b                      ,50            ,50000
+59049   ,Unklath II c                      ,50            ,50000
+59050   ,Unklath II d                      ,100           ,100000
+59060   ,Uthemath I a                      ,25            ,25000
+59061   ,Uthemath I b                      ,50            ,50000
+59062   ,Uthemath I c                      ,80            ,80000
+59063   ,Uthemath I d                      ,80            ,80000
+59064   ,Uthemath I e                      ,80            ,80000
+59065   ,Uthemath I f                      ,150           ,150000
+20104   ,Central Plaza 1                   ,50            ,50000
+20103   ,Central Plaza 2                   ,25            ,25000
+20102   ,Central Plaza 3                   ,50            ,50000
+20004   ,Druids Retreat A                  ,50            ,50000
+20005   ,Druids Retreat B                  ,50            ,50000
+20006   ,Druids Retreat C                  ,50            ,50000
+20007   ,Druids Retreat D                  ,80            ,80000
+20801   ,East Lane 1a                      ,200           ,200000
+20802   ,East Lane 1b                      ,150           ,150000
+20803   ,East Lane 2                       ,300           ,300000
+20705   ,"Harbour Flats, Flat 11"          ,25            ,25000
+20706   ,"Harbour Flats, Flat 12"          ,25            ,25000
+20707   ,"Harbour Flats, Flat 13"          ,25            ,25000
+20708   ,"Harbour Flats, Flat 14"          ,25            ,25000
+20709   ,"Harbour Flats, Flat 15"          ,25            ,25000
+20710   ,"Harbour Flats, Flat 16"          ,25            ,25000
+20711   ,"Harbour Flats, Flat 17"          ,25            ,25000
+20712   ,"Harbour Flats, Flat 18"          ,25            ,25000
+20713   ,"Harbour Flats, Flat 21"          ,50            ,50000
+20714   ,"Harbour Flats, Flat 22"          ,80            ,80000
+20715   ,"Harbour Flats, Flat 23"          ,25            ,25000
+20701   ,Harbour Lane 1 (Shop)             ,100           ,100000
+20703   ,Harbour Lane 2a (Shop)            ,80            ,80000
+20704   ,Harbour Lane 2b (Shop)            ,80            ,80000
+20702   ,Harbour Lane 3                    ,400           ,400000
+20902   ,Lonely Sea Side Hostel            ,400           ,400000
+20501   ,Magician's Alley 1                ,100           ,100000
+20502   ,Magician's Alley 1a               ,25            ,25000
+20503   ,Magician's Alley 1b               ,25            ,25000
+20504   ,Magician's Alley 1c               ,25            ,25000
+20505   ,Magician's Alley 1d               ,25            ,25000
+20513   ,Magician's Alley 4                ,200           ,200000
+20507   ,Magician's Alley 5a               ,25            ,25000
+20508   ,Magician's Alley 5b               ,25            ,25000
+20509   ,Magician's Alley 5c               ,100           ,100000
+20510   ,Magician's Alley 5d               ,25            ,25000
+20511   ,Magician's Alley 5e               ,25            ,25000
+20512   ,Magician's Alley 5f               ,80            ,80000
+20514   ,Magician's Alley 8                ,150           ,150000
+20011   ,Nautic Observer                   ,200           ,200000
+20601   ,Northern Street 1a                ,100           ,100000
+20602   ,Northern Street 1b                ,80            ,80000
+20603   ,Northern Street 1c                ,80            ,80000
+20604   ,Northern Street 3a                ,80            ,80000
+20605   ,Northern Street 3b                ,80            ,80000
+20606   ,Northern Street 5                 ,200           ,200000
+20607   ,Northern Street 7                 ,150           ,150000
+22001   ,Northport Village 1               ,50            ,50000
+22002   ,Northport Village 2               ,50            ,50000
+22003   ,Northport Village 3               ,150           ,150000
+22004   ,Northport Village 4               ,100           ,100000
+22006   ,Northport Village 5               ,80            ,80000
+22007   ,Northport Village 6               ,80            ,80000
+20201   ,Park Lane 1a                      ,150           ,150000
+20202   ,Park Lane 1b                      ,200           ,200000
+20206   ,Park Lane 2                       ,150           ,150000
+20204   ,Park Lane 3a                      ,100           ,100000
+20203   ,Park Lane 3b                      ,100           ,100000
+20205   ,Park Lane 4                       ,150           ,150000
+20008   ,Rosebud A                         ,50            ,50000
+20009   ,Rosebud B                         ,80            ,80000
+20010   ,Rosebud C                         ,100           ,100000
+24012   ,Senja Village 10                  ,50            ,50000
+24013   ,Senja Village 11                  ,80            ,80000
+24001   ,Senja Village 1a                  ,25            ,25000
+24002   ,Senja Village 1b                  ,50            ,50000
+24003   ,Senja Village 2                   ,25            ,25000
+24004   ,Senja Village 3                   ,50            ,50000
+24005   ,Senja Village 4                   ,25            ,25000
+24006   ,Senja Village 5                   ,50            ,50000
+24007   ,Senja Village 6a                  ,50            ,50000
+24008   ,Senja Village 6b                  ,25            ,25000
+24009   ,Senja Village 7                   ,25            ,25000
+24010   ,Senja Village 8                   ,50            ,50000
+24011   ,Senja Village 9                   ,80            ,80000
+20401   ,Theater Avenue 10                 ,100           ,100000
+20404   ,Theater Avenue 11a                ,100           ,100000
+20405   ,Theater Avenue 11b                ,25            ,25000
+20406   ,Theater Avenue 11c                ,50            ,50000
+20402   ,Theater Avenue 12                 ,80            ,80000
+20403   ,Theater Avenue 14 (Shop)          ,200           ,200000
+20310   ,Theater Avenue 5a                 ,25            ,25000
+20311   ,Theater Avenue 5b                 ,25            ,25000
+20312   ,Theater Avenue 5c                 ,50            ,50000
+20313   ,Theater Avenue 5d                 ,25            ,25000
+20304   ,Theater Avenue 6a                 ,80            ,80000
+20305   ,Theater Avenue 6b                 ,50            ,50000
+20306   ,Theater Avenue 6c                 ,25            ,25000
+20307   ,Theater Avenue 6d                 ,25            ,25000
+20308   ,Theater Avenue 6e                 ,80            ,80000
+20309   ,Theater Avenue 6f                 ,80            ,80000
+20316   ,"Theater Avenue 7, Flat 01"       ,25            ,25000
+20317   ,"Theater Avenue 7, Flat 02"       ,25            ,25000
+20318   ,"Theater Avenue 7, Flat 03"       ,25            ,25000
+20319   ,"Theater Avenue 7, Flat 04"       ,50            ,50000
+20320   ,"Theater Avenue 7, Flat 05"       ,50            ,50000
+20321   ,"Theater Avenue 7, Flat 06"       ,25            ,25000
+20322   ,"Theater Avenue 7, Flat 11"       ,50            ,50000
+20323   ,"Theater Avenue 7, Flat 12"       ,25            ,25000
+20324   ,"Theater Avenue 7, Flat 13"       ,25            ,25000
+20325   ,"Theater Avenue 7, Flat 14"       ,25            ,25000
+20326   ,"Theater Avenue 7, Flat 15"       ,25            ,25000
+20327   ,"Theater Avenue 7, Flat 16"       ,25            ,25000
+20314   ,Theater Avenue 8a                 ,100           ,100000
+20315   ,Theater Avenue 8b                 ,100           ,100000
+61000   ,"Darashia 1, Flat 01"             ,100           ,100000
+61001   ,"Darashia 1, Flat 02"             ,100           ,100000
+61002   ,"Darashia 1, Flat 03"             ,300           ,300000
+61003   ,"Darashia 1, Flat 04"             ,100           ,100000
+61004   ,"Darashia 1, Flat 05"             ,100           ,100000
+61005   ,"Darashia 1, Flat 11"             ,100           ,100000
+61006   ,"Darashia 1, Flat 12"             ,150           ,150000
+61007   ,"Darashia 1, Flat 13"             ,150           ,150000
+61008   ,"Darashia 1, Flat 14"             ,200           ,200000
+61009   ,"Darashia 2, Flat 01"             ,150           ,150000
+61010   ,"Darashia 2, Flat 02"             ,100           ,100000
+61011   ,"Darashia 2, Flat 03"             ,100           ,100000
+61012   ,"Darashia 2, Flat 04"             ,80            ,80000
+61013   ,"Darashia 2, Flat 05"             ,150           ,150000
+61014   ,"Darashia 2, Flat 06"             ,80            ,80000
+61015   ,"Darashia 2, Flat 07"             ,150           ,150000
+61016   ,"Darashia 2, Flat 11"             ,100           ,100000
+61017   ,"Darashia 2, Flat 12"             ,80            ,80000
+61018   ,"Darashia 2, Flat 13"             ,100           ,100000
+61019   ,"Darashia 2, Flat 14"             ,50            ,50000
+61020   ,"Darashia 2, Flat 15"             ,100           ,100000
+61021   ,"Darashia 2, Flat 16"             ,80            ,80000
+61022   ,"Darashia 2, Flat 17"             ,100           ,100000
+61023   ,"Darashia 2, Flat 18"             ,100           ,100000
+61024   ,"Darashia 3, Flat 01"             ,150           ,150000
+61025   ,"Darashia 3, Flat 02"             ,200           ,200000
+61026   ,"Darashia 3, Flat 03"             ,150           ,150000
+61027   ,"Darashia 3, Flat 04"             ,150           ,150000
+61028   ,"Darashia 3, Flat 05"             ,150           ,150000
+61029   ,"Darashia 3, Flat 11"             ,100           ,100000
+61030   ,"Darashia 3, Flat 12"             ,200           ,200000
+61031   ,"Darashia 3, Flat 13"             ,100           ,100000
+61032   ,"Darashia 3, Flat 14"             ,200           ,200000
+61033   ,"Darashia 4, Flat 01"             ,100           ,100000
+61034   ,"Darashia 4, Flat 02"             ,200           ,200000
+61035   ,"Darashia 4, Flat 03"             ,150           ,150000
+61036   ,"Darashia 4, Flat 04"             ,200           ,200000
+61037   ,"Darashia 4, Flat 05"             ,150           ,150000
+61038   ,"Darashia 4, Flat 11"             ,100           ,100000
+61039   ,"Darashia 4, Flat 12"             ,200           ,200000
+61040   ,"Darashia 4, Flat 13"             ,200           ,200000
+61041   ,"Darashia 4, Flat 14"             ,150           ,150000
+61042   ,"Darashia 5, Flat 01"             ,150           ,150000
+61043   ,"Darashia 5, Flat 02"             ,150           ,150000
+61044   ,"Darashia 5, Flat 03"             ,150           ,150000
+61045   ,"Darashia 5, Flat 04"             ,150           ,150000
+61046   ,"Darashia 5, Flat 05"             ,100           ,100000
+61047   ,"Darashia 5, Flat 11"             ,150           ,150000
+61048   ,"Darashia 5, Flat 12"             ,150           ,150000
+61049   ,"Darashia 5, Flat 13"             ,150           ,150000
+61050   ,"Darashia 5, Flat 14"             ,150           ,150000
+62000   ,Darashia 6a                       ,300           ,300000
+62001   ,Darashia 6b                       ,300           ,300000
+62002   ,"Darashia 7, Flat 01"             ,100           ,100000
+62003   ,"Darashia 7, Flat 02"             ,100           ,100000
+62004   ,"Darashia 7, Flat 03"             ,200           ,200000
+62005   ,"Darashia 7, Flat 04"             ,150           ,150000
+62006   ,"Darashia 7, Flat 05"             ,150           ,150000
+62007   ,"Darashia 7, Flat 11"             ,100           ,100000
+62008   ,"Darashia 7, Flat 12"             ,200           ,200000
+62009   ,"Darashia 7, Flat 13"             ,100           ,100000
+62010   ,"Darashia 7, Flat 14"             ,200           ,200000
+62011   ,"Darashia 8, Flat 01"             ,300           ,300000
+62012   ,"Darashia 8, Flat 02"             ,300           ,300000
+62013   ,"Darashia 8, Flat 03"             ,300           ,300000
+62014   ,"Darashia 8, Flat 04"             ,200           ,200000
+62015   ,"Darashia 8, Flat 05"             ,300           ,300000
+62019   ,"Darashia 8, Flat 11"             ,200           ,200000
+62020   ,"Darashia 8, Flat 12"             ,150           ,150000
+62021   ,"Darashia 8, Flat 13"             ,150           ,150000
+62022   ,"Darashia 8, Flat 14"             ,150           ,150000
+62016   ,"Darashia, Villa"                 ,800           ,800000
+50101   ,Castle Shop 1                     ,400           ,400000
+50102   ,Castle Shop 2                     ,400           ,400000
+50103   ,Castle Shop 3                     ,300           ,300000
+50201   ,Castle Street 1                   ,300           ,300000
+50202   ,Castle Street 2                   ,150           ,150000
+50203   ,Castle Street 3                   ,150           ,150000
+50204   ,Castle Street 4                   ,150           ,150000
+50205   ,Castle Street 5                   ,150           ,150000
+50104   ,"Castle, 3rd Floor, Flat 01"      ,50            ,50000
+50105   ,"Castle, 3rd Floor, Flat 02"      ,80            ,80000
+50106   ,"Castle, 3rd Floor, Flat 03"      ,50            ,50000
+50107   ,"Castle, 3rd Floor, Flat 04"      ,25            ,25000
+50108   ,"Castle, 3rd Floor, Flat 05"      ,80            ,80000
+50109   ,"Castle, 3rd Floor, Flat 06"      ,100           ,100000
+50110   ,"Castle, 3rd Floor, Flat 07"      ,80            ,80000
+50111   ,"Castle, 4th Floor, Flat 01"      ,50            ,50000
+50112   ,"Castle, 4th Floor, Flat 02"      ,80            ,80000
+50113   ,"Castle, 4th Floor, Flat 03"      ,50            ,50000
+50114   ,"Castle, 4th Floor, Flat 04"      ,50            ,50000
+50115   ,"Castle, 4th Floor, Flat 05"      ,80            ,80000
+50116   ,"Castle, 4th Floor, Flat 06"      ,100           ,100000
+50117   ,"Castle, 4th Floor, Flat 07"      ,80            ,80000
+50118   ,"Castle, 4th Floor, Flat 08"      ,80            ,80000
+50119   ,"Castle, 4th Floor, Flat 09"      ,50            ,50000
+50120   ,"Castle, Basement, Flat 01"       ,50            ,50000
+50121   ,"Castle, Basement, Flat 02"       ,50            ,50000
+50122   ,"Castle, Basement, Flat 03"       ,50            ,50000
+50123   ,"Castle, Basement, Flat 04"       ,50            ,50000
+50124   ,"Castle, Basement, Flat 05"       ,50            ,50000
+50125   ,"Castle, Basement, Flat 06"       ,50            ,50000
+50126   ,"Castle, Basement, Flat 07"       ,50            ,50000
+50127   ,"Castle, Basement, Flat 08"       ,50            ,50000
+50128   ,"Castle, Basement, Flat 09"       ,25            ,25000
+50401   ,Central Circle 1                  ,800           ,800000
+50402   ,Central Circle 2                  ,800           ,800000
+50403   ,Central Circle 3                  ,800           ,800000
+50404   ,Central Circle 4                  ,800           ,800000
+50405   ,Central Circle 5                  ,800           ,800000
+50406   ,Central Circle 6 (Shop)           ,400           ,400000
+50407   ,Central Circle 7 (Shop)           ,400           ,400000
+50408   ,Central Circle 8 (Shop)           ,400           ,400000
+50409   ,Central Circle 9a                 ,150           ,150000
+50410   ,Central Circle 9b                 ,150           ,150000
+54013   ,Cormaya 1                         ,150           ,150000
+54025   ,Cormaya 10                        ,300           ,300000
+54026   ,Cormaya 11                        ,150           ,150000
+54014   ,Cormaya 2                         ,300           ,300000
+54015   ,Cormaya 3                         ,200           ,200000
+54016   ,Cormaya 4                         ,150           ,150000
+54017   ,Cormaya 5                         ,300           ,300000
+54018   ,Cormaya 6                         ,200           ,200000
+54019   ,Cormaya 7                         ,200           ,200000
+54020   ,Cormaya 8                         ,200           ,200000
+54021   ,Cormaya 9a                        ,80            ,80000
+54022   ,Cormaya 9b                        ,150           ,150000
+54023   ,Cormaya 9c                        ,80            ,80000
+54024   ,Cormaya 9d                        ,150           ,150000
+54001   ,"Cormaya Flats, Flat 01"          ,25            ,25000
+54002   ,"Cormaya Flats, Flat 02"          ,25            ,25000
+54003   ,"Cormaya Flats, Flat 03"          ,50            ,50000
+54004   ,"Cormaya Flats, Flat 04"          ,50            ,50000
+54005   ,"Cormaya Flats, Flat 05"          ,25            ,25000
+54006   ,"Cormaya Flats, Flat 06"          ,25            ,25000
+54007   ,"Cormaya Flats, Flat 11"          ,25            ,25000
+54008   ,"Cormaya Flats, Flat 12"          ,25            ,25000
+54009   ,"Cormaya Flats, Flat 13"          ,25            ,25000
+54010   ,"Cormaya Flats, Flat 14"          ,25            ,25000
+54011   ,"Cormaya Flats, Flat 15"          ,25            ,25000
+54012   ,"Cormaya Flats, Flat 16"          ,25            ,25000
+50325   ,"Edron Flats, Basement Flat 1"    ,100           ,100000
+50326   ,"Edron Flats, Basement Flat 2"    ,100           ,100000
+50301   ,"Edron Flats, Flat 01"            ,50            ,50000
+50302   ,"Edron Flats, Flat 02"            ,100           ,100000
+50303   ,"Edron Flats, Flat 03"            ,25            ,25000
+50304   ,"Edron Flats, Flat 04"            ,25            ,25000
+50305   ,"Edron Flats, Flat 05"            ,25            ,25000
+50306   ,"Edron Flats, Flat 06"            ,25            ,25000
+50307   ,"Edron Flats, Flat 07"            ,25            ,25000
+50308   ,"Edron Flats, Flat 08"            ,25            ,25000
+50309   ,"Edron Flats, Flat 11"            ,25            ,25000
+50310   ,"Edron Flats, Flat 12"            ,25            ,25000
+50311   ,"Edron Flats, Flat 13"            ,25            ,25000
+50312   ,"Edron Flats, Flat 14"            ,25            ,25000
+50313   ,"Edron Flats, Flat 15"            ,50            ,50000
+50314   ,"Edron Flats, Flat 16"            ,25            ,25000
+50315   ,"Edron Flats, Flat 17"            ,50            ,50000
+50316   ,"Edron Flats, Flat 18"            ,25            ,25000
+50317   ,"Edron Flats, Flat 21"            ,80            ,80000
+50318   ,"Edron Flats, Flat 22"            ,50            ,50000
+50319   ,"Edron Flats, Flat 23"            ,50            ,50000
+50320   ,"Edron Flats, Flat 24"            ,50            ,50000
+50321   ,"Edron Flats, Flat 25"            ,25            ,25000
+50322   ,"Edron Flats, Flat 26"            ,50            ,50000
+50323   ,"Edron Flats, Flat 27"            ,25            ,25000
+50324   ,"Edron Flats, Flat 28"            ,25            ,25000
+50703   ,"Magic Academy, Flat 1"           ,100           ,100000
+50704   ,"Magic Academy, Flat 2"           ,80            ,80000
+50705   ,"Magic Academy, Flat 3"           ,100           ,100000
+50706   ,"Magic Academy, Flat 4"           ,100           ,100000
+50707   ,"Magic Academy, Flat 5"           ,80            ,80000
+50702   ,"Magic Academy, Shop"             ,150           ,150000
+50604   ,"Sky Lane, Sea Tower"             ,300           ,300000
+52010   ,"Stonehome Flats, Flat 01"        ,25            ,25000
+52011   ,"Stonehome Flats, Flat 02"        ,25            ,25000
+52012   ,"Stonehome Flats, Flat 03"        ,25            ,25000
+52013   ,"Stonehome Flats, Flat 04"        ,50            ,50000
+52014   ,"Stonehome Flats, Flat 05"        ,25            ,25000
+52015   ,"Stonehome Flats, Flat 06"        ,50            ,50000
+52016   ,"Stonehome Flats, Flat 11"        ,50            ,50000
+52017   ,"Stonehome Flats, Flat 12"        ,50            ,50000
+52018   ,"Stonehome Flats, Flat 13"        ,50            ,50000
+52019   ,"Stonehome Flats, Flat 14"        ,50            ,50000
+52020   ,"Stonehome Flats, Flat 15"        ,25            ,25000
+52021   ,"Stonehome Flats, Flat 16"        ,25            ,25000
+52001   ,Stonehome Village 1               ,150           ,150000
+52002   ,Stonehome Village 2               ,50            ,50000
+52003   ,Stonehome Village 3               ,50            ,50000
+52004   ,Stonehome Village 4               ,80            ,80000
+52005   ,Stonehome Village 5               ,80            ,80000
+52006   ,Stonehome Village 6               ,100           ,100000
+52007   ,Stonehome Village 7               ,100           ,100000
+52008   ,Stonehome Village 8               ,25            ,25000
+52009   ,Stonehome Village 9               ,50            ,50000
+50501   ,Wood Avenue 1                     ,200           ,200000
+50512   ,Wood Avenue 10a                   ,200           ,200000
+50513   ,Wood Avenue 10b                   ,200           ,200000
+50514   ,Wood Avenue 11                    ,600           ,600000
+50502   ,Wood Avenue 2                     ,200           ,200000
+50503   ,Wood Avenue 3                     ,200           ,200000
+50504   ,Wood Avenue 4                     ,200           ,200000
+50515   ,Wood Avenue 4a                    ,150           ,150000
+50516   ,Wood Avenue 4b                    ,150           ,150000
+50517   ,Wood Avenue 4c                    ,200           ,200000
+50505   ,Wood Avenue 5                     ,300           ,300000
+50506   ,Wood Avenue 6a                    ,300           ,300000
+50507   ,Wood Avenue 6b                    ,200           ,200000
+50508   ,Wood Avenue 7                     ,800           ,800000
+50509   ,Wood Avenue 8                     ,800           ,800000
+50510   ,Wood Avenue 9a                    ,200           ,200000
+50511   ,Wood Avenue 9b                    ,200           ,200000
+15001   ,Caveman Shelter                   ,150           ,150000
+15002   ,Eastern House of Tranquility      ,200           ,200000
+17001   ,Old Sanctuary of God King Qjell   ,300           ,300000
+32016   ,Hare's Den                        ,150           ,150000
+33001   ,Lost Cavern                       ,200           ,200000
+30501   ,Lower Barracks 1                  ,50            ,50000
+30510   ,Lower Barracks 10                 ,25            ,25000
+30511   ,Lower Barracks 11                 ,25            ,25000
+30512   ,Lower Barracks 12                 ,50            ,50000
+30513   ,Lower Barracks 13                 ,80            ,80000
+30514   ,Lower Barracks 14                 ,50            ,50000
+30515   ,Lower Barracks 15                 ,80            ,80000
+30516   ,Lower Barracks 16                 ,50            ,50000
+30517   ,Lower Barracks 17                 ,80            ,80000
+30518   ,Lower Barracks 18                 ,80            ,80000
+30519   ,Lower Barracks 19                 ,50            ,50000
+30502   ,Lower Barracks 2                  ,25            ,25000
+30520   ,Lower Barracks 20                 ,50            ,50000
+30521   ,Lower Barracks 21                 ,80            ,80000
+30522   ,Lower Barracks 22                 ,50            ,50000
+30523   ,Lower Barracks 23                 ,50            ,50000
+30524   ,Lower Barracks 24                 ,50            ,50000
+30503   ,Lower Barracks 3                  ,50            ,50000
+30504   ,Lower Barracks 4                  ,80            ,80000
+30505   ,Lower Barracks 5                  ,80            ,80000
+30506   ,Lower Barracks 6                  ,80            ,80000
+30507   ,Lower Barracks 7                  ,80            ,80000
+30508   ,Lower Barracks 8                  ,80            ,80000
+30509   ,Lower Barracks 9                  ,80            ,80000
+30201   ,Nobility Quarter 1                ,80            ,80000
+30202   ,Nobility Quarter 2                ,50            ,50000
+30203   ,Nobility Quarter 3                ,80            ,80000
+30204   ,Nobility Quarter 4                ,25            ,25000
+30205   ,Nobility Quarter 5                ,25            ,25000
+30206   ,Nobility Quarter 6                ,25            ,25000
+30207   ,Nobility Quarter 7                ,50            ,50000
+30208   ,Nobility Quarter 8                ,25            ,25000
+30209   ,Nobility Quarter 9                ,25            ,25000
+32001   ,Outlaw Camp 1                     ,80            ,80000
+32010   ,Outlaw Camp 10                    ,25            ,25000
+32011   ,Outlaw Camp 11                    ,50            ,50000
+32012   ,Outlaw Camp 12 (Shop)             ,25            ,25000
+32013   ,Outlaw Camp 13 (Shop)             ,25            ,25000
+32014   ,Outlaw Camp 14 (Shop)             ,25            ,25000
+32002   ,Outlaw Camp 2                     ,25            ,25000
+32003   ,Outlaw Camp 3                     ,50            ,50000
+32004   ,Outlaw Camp 4                     ,25            ,25000
+32005   ,Outlaw Camp 5                     ,50            ,50000
+32006   ,Outlaw Camp 6                     ,25            ,25000
+32007   ,Outlaw Camp 7                     ,25            ,25000
+32008   ,Outlaw Camp 8                     ,25            ,25000
+32009   ,Outlaw Camp 9                     ,50            ,50000
+30101   ,The Farms 1                       ,80            ,80000
+30102   ,The Farms 2                       ,50            ,50000
+30103   ,The Farms 3                       ,80            ,80000
+30104   ,The Farms 4                       ,25            ,25000
+30105   ,The Farms 5                       ,50            ,50000
+30106   ,"The Farms 6, Fishing Hut"        ,50            ,50000
+30401   ,The Market 1 (Shop)               ,25            ,25000
+30402   ,The Market 2 (Shop)               ,50            ,50000
+30403   ,The Market 3 (Shop)               ,80            ,80000
+30404   ,The Market 4 (Shop)               ,80            ,80000
+30601   ,Tunnel Gardens 1                  ,80            ,80000
+30610   ,Tunnel Gardens 10                 ,25            ,25000
+30611   ,Tunnel Gardens 11                 ,50            ,50000
+30612   ,Tunnel Gardens 12                 ,50            ,50000
+30602   ,Tunnel Gardens 2                  ,80            ,80000
+30603   ,Tunnel Gardens 3                  ,80            ,80000
+30604   ,Tunnel Gardens 4                  ,80            ,80000
+30605   ,Tunnel Gardens 5                  ,25            ,25000
+30606   ,Tunnel Gardens 6                  ,25            ,25000
+30607   ,Tunnel Gardens 7                  ,50            ,50000
+30608   ,Tunnel Gardens 8                  ,25            ,25000
+30609   ,Tunnel Gardens 9                  ,50            ,50000
+30301   ,Upper Barracks 1                  ,50            ,50000
+30310   ,Upper Barracks 10                 ,80            ,80000
+30311   ,Upper Barracks 11                 ,80            ,80000
+30312   ,Upper Barracks 12                 ,50            ,50000
+30313   ,Upper Barracks 13                 ,25            ,25000
+30302   ,Upper Barracks 2                  ,80            ,80000
+30303   ,Upper Barracks 3                  ,80            ,80000
+30304   ,Upper Barracks 4                  ,50            ,50000
+30305   ,Upper Barracks 5                  ,50            ,50000
+30306   ,Upper Barracks 6                  ,80            ,80000
+30307   ,Upper Barracks 7                  ,80            ,80000
+30308   ,Upper Barracks 8                  ,50            ,50000
+30309   ,Upper Barracks 9                  ,50            ,50000
+63005   ,Admiral's Avenue 1                ,400           ,400000
+63006   ,Admiral's Avenue 2                ,400           ,400000
+63007   ,Admiral's Avenue 3                ,300           ,300000
+64001   ,Freedom Street 1                  ,200           ,200000
+64002   ,Freedom Street 2                  ,400           ,400000
+64014   ,"Harvester's Haven, Flat 01"      ,50            ,50000
+64015   ,"Harvester's Haven, Flat 02"      ,50            ,50000
+64016   ,"Harvester's Haven, Flat 03"      ,50            ,50000
+64017   ,"Harvester's Haven, Flat 04"      ,50            ,50000
+64018   ,"Harvester's Haven, Flat 05"      ,50            ,50000
+64019   ,"Harvester's Haven, Flat 06"      ,50            ,50000
+64020   ,"Harvester's Haven, Flat 07"      ,80            ,80000
+64021   ,"Harvester's Haven, Flat 08"      ,50            ,50000
+64022   ,"Harvester's Haven, Flat 09"      ,50            ,50000
+64023   ,"Harvester's Haven, Flat 10"      ,50            ,50000
+64024   ,"Harvester's Haven, Flat 11"      ,25            ,25000
+64025   ,"Harvester's Haven, Flat 12"      ,25            ,25000
+63008   ,Ivory Circle 1                    ,400           ,400000
+63009   ,Ivory Circle 2                    ,400           ,400000
+65018   ,Litter Promenade 1                ,25            ,25000
+65019   ,Litter Promenade 2                ,50            ,50000
+65020   ,Litter Promenade 3                ,25            ,25000
+65021   ,Litter Promenade 4                ,25            ,25000
+65022   ,Litter Promenade 5                ,25            ,25000
+63001   ,Marble Lane 1                     ,600           ,600000
+63002   ,Marble Lane 2                     ,400           ,400000
+63003   ,Marble Lane 3                     ,600           ,600000
+63004   ,Marble Lane 4                     ,400           ,400000
+63010   ,Meriana Beach                     ,150           ,150000
+65009   ,Rum Alley 1                       ,25            ,25000
+65010   ,Rum Alley 2                       ,25            ,25000
+65011   ,Rum Alley 3                       ,25            ,25000
+65006   ,Shady Trail 1                     ,100           ,100000
+65007   ,Shady Trail 2                     ,25            ,25000
+65008   ,Shady Trail 3                     ,25            ,25000
+65001   ,Smuggler Backyard 1               ,25            ,25000
+65002   ,Smuggler Backyard 2               ,25            ,25000
+65003   ,Smuggler Backyard 3               ,50            ,50000
+65004   ,Smuggler Backyard 4               ,25            ,25000
+65005   ,Smuggler Backyard 5               ,25            ,25000
+65012   ,Straycat's Corner 1               ,25            ,25000
+65013   ,Straycat's Corner 2               ,50            ,50000
+65014   ,Straycat's Corner 3               ,25            ,25000
+65015   ,Straycat's Corner 4               ,25            ,25000
+65016   ,Straycat's Corner 5               ,80            ,80000
+65017   ,Straycat's Corner 6               ,25            ,25000
+64006   ,Sugar Street 1                    ,200           ,200000
+64007   ,Sugar Street 2                    ,150           ,150000
+64008   ,Sugar Street 3a                   ,100           ,100000
+64009   ,Sugar Street 3b                   ,150           ,150000
+64010   ,Sugar Street 4a                   ,80            ,80000
+64011   ,Sugar Street 4b                   ,100           ,100000
+64012   ,Sugar Street 4c                   ,25            ,25000
+64013   ,Sugar Street 4d                   ,50            ,50000
+64027   ,Sugar Street 5                    ,150           ,150000
+64029   ,The Tavern 1a                     ,150           ,150000
+64030   ,The Tavern 1b                     ,100           ,100000
+64031   ,The Tavern 1c                     ,200           ,200000
+64032   ,The Tavern 1d                     ,100           ,100000
+64033   ,The Tavern 2a                     ,300           ,300000
+64034   ,The Tavern 2b                     ,100           ,100000
+64035   ,The Tavern 2c                     ,50            ,50000
+64036   ,The Tavern 2d                     ,100           ,100000
+63011   ,The Yeah Beach Project            ,150           ,150000
+64003   ,Trader's Point 1                  ,200           ,200000
+64004   ,Trader's Point 2 (Shop)           ,600           ,600000
+64005   ,Trader's Point 3 (Shop)           ,600           ,600000
+46019   ,Bamboo Garden 1                   ,100           ,100000
+46020   ,Bamboo Garden 2                   ,80            ,80000
+46021   ,Bamboo Garden 3                   ,150           ,150000
+46001   ,Banana Bay 1                      ,25            ,25000
+46002   ,Banana Bay 2                      ,50            ,50000
+46003   ,Banana Bay 3                      ,50            ,50000
+46004   ,Banana Bay 4                      ,25            ,25000
+46022   ,Coconut Quay 1                    ,150           ,150000
+46023   ,Coconut Quay 2                    ,100           ,100000
+46024   ,Coconut Quay 3                    ,200           ,200000
+46025   ,Coconut Quay 4                    ,150           ,150000
+46005   ,Crocodile Bridge 1                ,80            ,80000
+46006   ,Crocodile Bridge 2                ,80            ,80000
+46007   ,Crocodile Bridge 3                ,100           ,100000
+46008   ,Crocodile Bridge 4                ,300           ,300000
+46009   ,Crocodile Bridge 5                ,200           ,200000
+46014   ,Flamingo Flats 1                  ,50            ,50000
+46015   ,Flamingo Flats 2                  ,80            ,80000
+46016   ,Flamingo Flats 3                  ,50            ,50000
+46017   ,Flamingo Flats 4                  ,80            ,80000
+46018   ,Flamingo Flats 5                  ,150           ,150000
+45001   ,Haggler's Hangout 1               ,100           ,100000
+45002   ,Haggler's Hangout 2               ,100           ,100000
+45003   ,Haggler's Hangout 3               ,300           ,300000
+45004   ,Haggler's Hangout 4a (Shop)       ,200           ,200000
+45005   ,Haggler's Hangout 4b (Shop)       ,150           ,150000
+45006   ,Haggler's Hangout 5 (Shop)        ,200           ,200000
+45007   ,Haggler's Hangout 6               ,400           ,400000
+46030   ,Jungle Edge 1                     ,200           ,200000
+46031   ,Jungle Edge 2                     ,200           ,200000
+46032   ,Jungle Edge 3                     ,80            ,80000
+46033   ,Jungle Edge 4                     ,80            ,80000
+46034   ,Jungle Edge 5                     ,80            ,80000
+46035   ,Jungle Edge 6                     ,25            ,25000
+46026   ,River Homes 1                     ,300           ,300000
+46027   ,River Homes 2a                    ,100           ,100000
+46028   ,River Homes 2b                    ,150           ,150000
+46029   ,River Homes 3                     ,200           ,200000
+46010   ,Woodway 1                         ,80            ,80000
+46011   ,Woodway 2                         ,50            ,50000
+46012   ,Woodway 3                         ,150           ,150000
+46013   ,Woodway 4                         ,25            ,25000
+19014   ,Antimony Lane 1                   ,400           ,400000
+19015   ,Antimony Lane 2                   ,400           ,400000
+19016   ,Antimony Lane 3                   ,400           ,400000
+19017   ,Antimony Lane 4                   ,400           ,400000
+19008   ,Cistern Ave                       ,300           ,300000
+19009   ,Old Heritage Estate               ,600           ,600000
+19003   ,Rathleton Hills Residence         ,400           ,400000
+19004   ,Rathleton Plaza 1                 ,300           ,300000
+19005   ,Rathleton Plaza 2                 ,400           ,400000
+19006   ,Rathleton Plaza 3                 ,400           ,400000
+19018   ,Rathleton Plaza 4                 ,400           ,400000
+19012   ,Vanward Flats A                   ,400           ,400000
+19013   ,Vanward Flats B                   ,400           ,400000
+19010   ,Wallside Lane 1                   ,800           ,800000
+19011   ,Wallside Lane 2                   ,600           ,600000
+19001   ,Wallside Residence                ,400           ,400000
+55011   ,Arena Walk 1                      ,300           ,300000
+55012   ,Arena Walk 2                      ,150           ,150000
+55013   ,Arena Walk 3                      ,300           ,300000
+55101   ,Bears Paw 1                       ,200           ,200000
+55102   ,Bears Paw 2                       ,300           ,300000
+55103   ,Bears Paw 3                       ,200           ,200000
+55104   ,Bears Paw 4                       ,400           ,400000
+55105   ,Bears Paw 5                       ,200           ,200000
+55131   ,Corner Shop (Shop)                ,200           ,200000
+55207   ,Fimbul Shelf 1                    ,80            ,80000
+55208   ,Fimbul Shelf 2                    ,100           ,100000
+55209   ,Fimbul Shelf 3                    ,100           ,100000
+55210   ,Fimbul Shelf 4                    ,100           ,100000
+55211   ,Furrier Quarter 1                 ,150           ,150000
+55212   ,Furrier Quarter 2                 ,80            ,80000
+55213   ,Furrier Quarter 3                 ,100           ,100000
+55002   ,Glacier Side 1                    ,150           ,150000
+55003   ,Glacier Side 2                    ,300           ,300000
+55004   ,Glacier Side 3                    ,150           ,150000
+55005   ,Glacier Side 4                    ,150           ,150000
+55014   ,Mammoth House                     ,300           ,300000
+55116   ,Pilchard Bin 1                    ,80            ,80000
+55125   ,Pilchard Bin 10                   ,50            ,50000
+55117   ,Pilchard Bin 2                    ,50            ,50000
+55118   ,Pilchard Bin 3                    ,50            ,50000
+55119   ,Pilchard Bin 4                    ,50            ,50000
+55120   ,Pilchard Bin 5                    ,80            ,80000
+55121   ,Pilchard Bin 6                    ,25            ,25000
+55122   ,Pilchard Bin 7                    ,25            ,25000
+55123   ,Pilchard Bin 8                    ,25            ,25000
+55124   ,Pilchard Bin 9                    ,50            ,50000
+55106   ,Raven Corner 1                    ,80            ,80000
+55107   ,Raven Corner 2                    ,150           ,150000
+55108   ,Raven Corner 3                    ,100           ,100000
+55126   ,Shady Rocks 1                     ,300           ,300000
+55127   ,Shady Rocks 2                     ,200           ,200000
+55128   ,Shady Rocks 3                     ,300           ,300000
+55129   ,Shady Rocks 4 (Shop)              ,200           ,200000
+55130   ,Shady Rocks 5                     ,300           ,300000
+55001   ,Shelf Site                        ,300           ,300000
+55109   ,Skiffs End 1                      ,100           ,100000
+55110   ,Skiffs End 2                      ,80            ,80000
+55006   ,Spirit Homes 1                    ,150           ,150000
+55007   ,Spirit Homes 2                    ,150           ,150000
+55008   ,Spirit Homes 3                    ,300           ,300000
+55009   ,Spirit Homes 4                    ,80            ,80000
+55010   ,Spirit Homes 5                    ,150           ,150000
+55111   ,Trout Plaza 1                     ,200           ,200000
+55112   ,Trout Plaza 2                     ,150           ,150000
+55113   ,Trout Plaza 3                     ,80            ,80000
+55114   ,Trout Plaza 4                     ,80            ,80000
+55115   ,Trout Plaza 5 (Shop)              ,300           ,300000
+55201   ,Tusk Flats 1                      ,80            ,80000
+55202   ,Tusk Flats 2                      ,80            ,80000
+55203   ,Tusk Flats 3                      ,80            ,80000
+55204   ,Tusk Flats 4                      ,25            ,25000
+55205   ,Tusk Flats 5                      ,25            ,25000
+55206   ,Tusk Flats 6                      ,50            ,50000
+10301   ,"Alai Flats, Flat 01"             ,50            ,50000
+10302   ,"Alai Flats, Flat 02"             ,50            ,50000
+10303   ,"Alai Flats, Flat 03"             ,50            ,50000
+10304   ,"Alai Flats, Flat 04"             ,80            ,80000
+10305   ,"Alai Flats, Flat 05"             ,100           ,100000
+10306   ,"Alai Flats, Flat 06"             ,100           ,100000
+10307   ,"Alai Flats, Flat 07"             ,25            ,25000
+10308   ,"Alai Flats, Flat 08"             ,50            ,50000
+10311   ,"Alai Flats, Flat 11"             ,80            ,80000
+10312   ,"Alai Flats, Flat 12"             ,25            ,25000
+10313   ,"Alai Flats, Flat 13"             ,50            ,50000
+10314   ,"Alai Flats, Flat 14"             ,80            ,80000
+10315   ,"Alai Flats, Flat 15"             ,100           ,100000
+10316   ,"Alai Flats, Flat 16"             ,100           ,100000
+10317   ,"Alai Flats, Flat 17"             ,80            ,80000
+10318   ,"Alai Flats, Flat 18"             ,50            ,50000
+10320   ,"Alai Flats, Flat 21"             ,50            ,50000
+10319   ,"Alai Flats, Flat 22"             ,50            ,50000
+10321   ,"Alai Flats, Flat 23"             ,25            ,25000
+10322   ,"Alai Flats, Flat 24"             ,80            ,80000
+10323   ,"Alai Flats, Flat 25"             ,100           ,100000
+10324   ,"Alai Flats, Flat 26"             ,100           ,100000
+10325   ,"Alai Flats, Flat 27"             ,80            ,80000
+10326   ,"Alai Flats, Flat 28"             ,80            ,80000
+10201   ,"Beach Home Apartments, Flat 01"  ,50            ,50000
+10202   ,"Beach Home Apartments, Flat 02"  ,80            ,80000
+10203   ,"Beach Home Apartments, Flat 03"  ,80            ,80000
+10204   ,"Beach Home Apartments, Flat 04"  ,50            ,50000
+10205   ,"Beach Home Apartments, Flat 05"  ,80            ,80000
+10206   ,"Beach Home Apartments, Flat 06"  ,100           ,100000
+10211   ,"Beach Home Apartments, Flat 11"  ,25            ,25000
+10212   ,"Beach Home Apartments, Flat 12"  ,50            ,50000
+10213   ,"Beach Home Apartments, Flat 13"  ,80            ,80000
+10214   ,"Beach Home Apartments, Flat 14"  ,25            ,25000
+10215   ,"Beach Home Apartments, Flat 15"  ,25            ,25000
+10216   ,"Beach Home Apartments, Flat 16"  ,80            ,80000
+10006   ,Demon Tower                       ,100           ,100000
+10702   ,"Farm Lane, 1st floor (Shop)"     ,80            ,80000
+10703   ,"Farm Lane, 2nd Floor (Shop)"     ,50            ,50000
+10701   ,"Farm Lane, Basement (Shop)"      ,50            ,50000
+12003   ,Fibula Village 1                  ,25            ,25000
+12004   ,Fibula Village 2                  ,25            ,25000
+12005   ,Fibula Village 3                  ,80            ,80000
+12006   ,Fibula Village 4                  ,25            ,25000
+12007   ,Fibula Village 5                  ,50            ,50000
+12009   ,"Fibula Village, Bar"             ,100           ,100000
+12008   ,"Fibula Village, Tower Flat"      ,100           ,100000
+12100   ,"Fibula Village, Villa"           ,200           ,200000
+14005   ,Greenshore Village 1              ,80            ,80000
+14006   ,Greenshore Village 2              ,25            ,25000
+14007   ,Greenshore Village 3              ,25            ,25000
+14008   ,Greenshore Village 4              ,25            ,25000
+14009   ,Greenshore Village 5              ,25            ,25000
+14010   ,Greenshore Village 6              ,150           ,150000
+14011   ,Greenshore Village 7              ,25            ,25000
+14004   ,"Greenshore Village, Shop"        ,80            ,80000
+14003   ,"Greenshore Village, Villa"       ,300           ,300000
+11404   ,Harbour Place 1 (Shop)            ,800           ,800000
+11401   ,Harbour Place 2 (Shop)            ,600           ,600000
+10602   ,Harbour Street 4                  ,80            ,80000
+10403   ,Lower Swamp Lane 1                ,400           ,400000
+10404   ,Lower Swamp Lane 3                ,400           ,400000
+10802   ,"Main Street 9, 1st floor (Shop)" ,200           ,200000
+10803   ,"Main Street 9a, 2nd floor (Shop)",100           ,100000
+10804   ,"Main Street 9b, 2nd floor (Shop)",150           ,150000
+10901   ,Mill Avenue 1 (Shop)              ,200           ,200000
+10902   ,Mill Avenue 2 (Shop)              ,200           ,200000
+10903   ,Mill Avenue 3                     ,100           ,100000
+10904   ,Mill Avenue 4                     ,100           ,100000
+10905   ,Mill Avenue 5                     ,300           ,300000
+10007   ,Open-Air Theatre                  ,150           ,150000
+10501   ,Sorcerer's Avenue 1a              ,100           ,100000
+10502   ,Sorcerer's Avenue 1b              ,80            ,80000
+10503   ,Sorcerer's Avenue 1c              ,100           ,100000
+10504   ,Sorcerer's Avenue 5               ,150           ,150000
+10505   ,Sorcerer's Avenue Labs 2a         ,25            ,25000
+10506   ,Sorcerer's Avenue Labs 2b         ,25            ,25000
+10507   ,Sorcerer's Avenue Labs 2c         ,25            ,25000
+10508   ,Sorcerer's Avenue Labs 2d         ,25            ,25000
+10509   ,Sorcerer's Avenue Labs 2e         ,25            ,25000
+10510   ,Sorcerer's Avenue Labs 2f         ,25            ,25000
+10101   ,"Sunset Homes, Flat 01"           ,100           ,100000
+10102   ,"Sunset Homes, Flat 02"           ,80            ,80000
+10103   ,"Sunset Homes, Flat 03"           ,80            ,80000
+10104   ,"Sunset Homes, Flat 11"           ,80            ,80000
+10112   ,"Sunset Homes, Flat 12"           ,50            ,50000
+10113   ,"Sunset Homes, Flat 13"           ,100           ,100000
+10114   ,"Sunset Homes, Flat 14"           ,50            ,50000
+10121   ,"Sunset Homes, Flat 21"           ,50            ,50000
+10122   ,"Sunset Homes, Flat 22"           ,50            ,50000
+10123   ,"Sunset Homes, Flat 23"           ,80            ,80000
+10124   ,"Sunset Homes, Flat 24"           ,50            ,50000
+10603   ,Thais Hostel                      ,200           ,200000
+11022   ,The City Wall 1a                  ,150           ,150000
+11023   ,The City Wall 1b                  ,100           ,100000
+11016   ,The City Wall 3a                  ,100           ,100000
+11017   ,The City Wall 3b                  ,100           ,100000
+11018   ,The City Wall 3c                  ,100           ,100000
+11019   ,The City Wall 3d                  ,100           ,100000
+11020   ,The City Wall 3e                  ,100           ,100000
+11021   ,The City Wall 3f                  ,100           ,100000
+11001   ,The City Wall 5a                  ,50            ,50000
+11002   ,The City Wall 5b                  ,50            ,50000
+11003   ,The City Wall 5c                  ,50            ,50000
+11004   ,The City Wall 5d                  ,50            ,50000
+11005   ,The City Wall 5e                  ,50            ,50000
+11006   ,The City Wall 5f                  ,25            ,25000
+11007   ,The City Wall 7a                  ,80            ,80000
+11008   ,The City Wall 7b                  ,25            ,25000
+11009   ,The City Wall 7c                  ,80            ,80000
+11010   ,The City Wall 7d                  ,50            ,50000
+11011   ,The City Wall 7e                  ,80            ,80000
+11012   ,The City Wall 7f                  ,80            ,80000
+11013   ,The City Wall 7g                  ,50            ,50000
+11014   ,The City Wall 7h                  ,50            ,50000
+11015   ,The City Wall 9                   ,80            ,80000
+10407   ,Upper Swamp Lane 10               ,150           ,150000
+10408   ,Upper Swamp Lane 12               ,300           ,300000
+10401   ,Upper Swamp Lane 2                ,600           ,600000
+10402   ,Upper Swamp Lane 4                ,600           ,600000
+10405   ,Upper Swamp Lane 8                ,600           ,600000
+35006   ,Dagger Alley 1                    ,200           ,200000
+35009   ,Dream Street 1 (Shop)             ,600           ,600000
+35010   ,Dream Street 2                    ,400           ,400000
+35011   ,Dream Street 3                    ,300           ,300000
+35012   ,Dream Street 4                    ,400           ,400000
+35013   ,Elm Street 1                      ,300           ,300000
+35014   ,Elm Street 2                      ,300           ,300000
+35015   ,Elm Street 3                      ,300           ,300000
+35016   ,Elm Street 4                      ,300           ,300000
+35007   ,Iron Alley 1                      ,300           ,300000
+35008   ,Iron Alley 2                      ,300           ,300000
+35056   ,Loot Lane 1 (Shop)                ,600           ,600000
+35019   ,Lucky Lane 1 (Shop)               ,800           ,800000
+35058   ,Market Street 1                   ,600           ,600000
+35059   ,Market Street 2                   ,600           ,600000
+35060   ,Market Street 3                   ,600           ,600000
+35061   ,Market Street 4 (Shop)            ,800           ,800000
+35062   ,Market Street 5 (Shop)            ,800           ,800000
+35063   ,Market Street 6                   ,600           ,600000
+35064   ,Market Street 7                   ,200           ,200000
+35050   ,Mystic Lane 1                     ,300           ,300000
+35051   ,Mystic Lane 2                     ,200           ,200000
+35057   ,Old Lighthouse                    ,200           ,200000
+35020   ,"Paupers Palace, Flat 01"         ,25            ,25000
+35021   ,"Paupers Palace, Flat 02"         ,25            ,25000
+35022   ,"Paupers Palace, Flat 03"         ,25            ,25000
+35023   ,"Paupers Palace, Flat 04"         ,25            ,25000
+35024   ,"Paupers Palace, Flat 05"         ,25            ,25000
+35025   ,"Paupers Palace, Flat 06"         ,25            ,25000
+35026   ,"Paupers Palace, Flat 07"         ,50            ,50000
+35027   ,"Paupers Palace, Flat 11"         ,25            ,25000
+35028   ,"Paupers Palace, Flat 12"         ,50            ,50000
+35029   ,"Paupers Palace, Flat 13"         ,50            ,50000
+35030   ,"Paupers Palace, Flat 14"         ,50            ,50000
+35031   ,"Paupers Palace, Flat 15"         ,50            ,50000
+35032   ,"Paupers Palace, Flat 16"         ,50            ,50000
+35033   ,"Paupers Palace, Flat 17"         ,25            ,25000
+35034   ,"Paupers Palace, Flat 18"         ,25            ,25000
+35035   ,"Paupers Palace, Flat 21"         ,25            ,25000
+35036   ,"Paupers Palace, Flat 22"         ,25            ,25000
+35037   ,"Paupers Palace, Flat 23"         ,50            ,50000
+35038   ,"Paupers Palace, Flat 24"         ,25            ,25000
+35039   ,"Paupers Palace, Flat 25"         ,50            ,50000
+35040   ,"Paupers Palace, Flat 26"         ,25            ,25000
+35041   ,"Paupers Palace, Flat 27"         ,50            ,50000
+35042   ,"Paupers Palace, Flat 28"         ,25            ,25000
+35043   ,"Paupers Palace, Flat 31"         ,80            ,80000
+35044   ,"Paupers Palace, Flat 32"         ,100           ,100000
+35045   ,"Paupers Palace, Flat 33"         ,50            ,50000
+35046   ,"Paupers Palace, Flat 34"         ,100           ,100000
+35047   ,Salvation Street 1 (Shop)         ,600           ,600000
+35048   ,Salvation Street 2                ,300           ,300000
+35049   ,Salvation Street 3                ,300           ,300000
+35017   ,Seagull Walk 1                    ,800           ,800000
+35018   ,Seagull Walk 2                    ,300           ,300000
+35052   ,Silver Street 1                   ,200           ,200000
+35053   ,Silver Street 2                   ,200           ,200000
+35054   ,Silver Street 3                   ,200           ,200000
+35055   ,Silver Street 4                   ,300           ,300000
+35065   ,The Lair                          ,200           ,200000
+37001   ,Aureate Court 1                   ,600           ,600000
+37002   ,Aureate Court 2                   ,400           ,400000
+37003   ,Aureate Court 3                   ,400           ,400000
+37004   ,Aureate Court 4                   ,400           ,400000
+37005   ,Fortune Wing 1                    ,800           ,800000
+37006   ,Fortune Wing 2                    ,600           ,600000
+37007   ,Fortune Wing 3                    ,600           ,600000
+37008   ,Fortune Wing 4                    ,600           ,600000
+37009   ,Luminous Arc 1                    ,800           ,800000
+37010   ,Luminous Arc 2                    ,600           ,600000
+37011   ,Luminous Arc 3                    ,600           ,600000
+37012   ,Luminous Arc 4                    ,800           ,800000
+37013   ,Radiant Plaza 1                   ,800           ,800000
+37014   ,Radiant Plaza 2                   ,600           ,600000
+37015   ,Radiant Plaza 3                   ,800           ,800000
+37016   ,Radiant Plaza 4                   ,800           ,800000
+40111   ,Ab'Dendriel Clanhall              ,250           ,250000
+40112   ,Castle of the Winds               ,500           ,500000
+40001   ,Shadow Towers                     ,250           ,250000
+40002   ,The Hideout                       ,250           ,250000
+59020   ,Harrah I                          ,250           ,250000
+59076   ,Horakhal                          ,250           ,250000
+58047   ,Ramen Tah                         ,250           ,250000
+59066   ,Uthemath II                       ,250           ,250000
+20515   ,Carlin Clanhall                   ,250           ,250000
+20002   ,House of Recreation               ,500           ,500000
+20001   ,Moonkeep                          ,250           ,250000
+20003   ,Nordic Stronghold                 ,250           ,250000
+22008   ,Northport Clanhall                ,250           ,250000
+22005   ,Seawatch                          ,250           ,250000
+24014   ,Senja Clanhall                    ,250           ,250000
+20901   ,Suntower                          ,500           ,500000
+62018   ,"Darashia, Eastern Guildhall"     ,1000          ,1000000
+62017   ,"Darashia, Western Guildhall"     ,500           ,500000
+54027   ,Castle of the White Dragon        ,1000          ,1000000
+50701   ,"Magic Academy, Guild"            ,500           ,500000
+50601   ,"Sky Lane, Guild 1"               ,1000          ,1000000
+50602   ,"Sky Lane, Guild 2"               ,1000          ,1000000
+50603   ,"Sky Lane, Guild 3"               ,1000          ,1000000
+52022   ,Stonehome Clanhall                ,250           ,250000
+30703   ,Granite Guildhall                 ,250           ,250000
+30002   ,Hill Hideout                      ,250           ,250000
+30702   ,Iron Guildhall                    ,250           ,250000
+30701   ,Marble Guildhall                  ,250           ,250000
+32015   ,Outlaw Castle                     ,250           ,250000
+30003   ,Riverspring                       ,250           ,250000
+30001   ,Wolftower                         ,500           ,500000
+64026   ,Ivy Cottage                       ,500           ,500000
+64028   ,Mountain Hideout                  ,500           ,500000
+65023   ,The Shelter                       ,250           ,250000
+46041   ,Bamboo Fortress                   ,500           ,500000
+46040   ,Shark Manor                       ,250           ,250000
+47001   ,The Treehouse                     ,250           ,250000
+19007   ,Bronze Brothers Bastion           ,5000          ,5000000
+19002   ,Rathleton Hills Estate            ,1000          ,1000000
+55302   ,Crystal Glance                    ,1000          ,1000000
+55303   ,Frost Manor                       ,500           ,500000
+55301   ,Mammoth Belly                     ,1000          ,1000000
+10005   ,Bloodhall                         ,500           ,500000
+14002   ,Castle of Greenshore              ,250           ,250000
+10004   ,Dark Mansion                      ,1000          ,1000000
+12010   ,Fibula Clanhall                   ,250           ,250000
+14012   ,Greenshore Clanhall               ,250           ,250000
+12002   ,Guildhall of the Red Rose         ,250           ,250000
+10003   ,Halls of the Adventurers          ,250           ,250000
+12001   ,Mercenary Tower                   ,250           ,250000
+10002   ,Snake Tower                       ,500           ,500000
+10406   ,Southern Thais Guildhall          ,1000          ,1000000
+10001   ,Spiritkeep                        ,500           ,500000
+10601   ,Thais Clanhall                    ,500           ,500000
+14001   ,The Tibianic                      ,500           ,500000
+10801   ,Warriors' Guildhall               ,5000          ,5000000
+35001   ,Blessed Shield Guildhall          ,500           ,500000
+35004   ,Golden Axe Guildhall              ,500           ,500000
+35002   ,Steel Home                        ,500           ,500000
+35003   ,Swamp Watch                       ,500           ,500000
+35005   ,Valorous Venore                   ,500           ,500000
+38002   ,Cascade Towers                    ,5000          ,5000000
+38001   ,Halls of Serenity                 ,5000          ,5000000
+38003   ,Sun Palace                        ,5000          ,5000000

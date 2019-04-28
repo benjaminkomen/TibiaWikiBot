@@ -3,67 +3,44 @@ package com.wikia.tibia.objects;
 import com.wikia.tibia.enums.Article;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TibiaObject extends WikiObject {
 
-    private final List<Integer> itemid;
-    private final String objectclass;
-    private final String secondarytype;
-    private final String tertiarytype;
-    private final String flavortext;
-    private final Integer lightradius;
-    private final Integer lightcolor;
-    private final Integer volume;
-    private final YesNo destructable;
-    private final YesNo immobile;
-    private final String attrib;
-    private final YesNo walkable;
-    private final Integer walkingspeed;
-    private final YesNo unshootable;
-    private final YesNo blockspath;
-    private final YesNo pickupable;
-    private final YesNo holdsliquid;
-    private final YesNo usable;
-    private final YesNo writable;
-    private final YesNo rewritable;
-    private final Integer writechars;
-    private final YesNo rotatable;
-    private final Integer mapcolor;
-    private final String location;
-    private final String notes2;
-
-    private TibiaObject() {
-        this.itemid = null;
-        this.objectclass = null;
-        this.secondarytype = null;
-        this.tertiarytype = null;
-        this.flavortext = null;
-        this.lightradius = null;
-        this.lightcolor = null;
-        this.volume = null;
-        this.destructable = null;
-        this.immobile = null;
-        this.attrib = null;
-        this.walkable = null;
-        this.walkingspeed = null;
-        this.unshootable = null;
-        this.blockspath = null;
-        this.pickupable = null;
-        this.holdsliquid = null;
-        this.usable = null;
-        this.writable = null;
-        this.rewritable = null;
-        this.writechars = null;
-        this.rotatable = null;
-        this.mapcolor = null;
-        this.location = null;
-        this.notes2 = null;
-    }
+    private List<Integer> itemid;
+    private String objectclass;
+    private String secondarytype;
+    private String tertiarytype;
+    private String flavortext;
+    private Integer lightradius;
+    private Integer lightcolor;
+    private Integer volume;
+    private YesNo destructable;
+    private YesNo immobile;
+    private String attrib;
+    private YesNo walkable;
+    private Integer walkingspeed;
+    private YesNo unshootable;
+    private YesNo blockspath;
+    private YesNo pickupable;
+    private YesNo holdsliquid;
+    private YesNo usable;
+    private YesNo writable;
+    private YesNo rewritable;
+    private Integer writechars;
+    private YesNo rotatable;
+    private Integer mapcolor;
+    private String location;
+    private String notes2;
 
     @Builder
     private TibiaObject(String name, Article article, String actualname, String implemented, String notes, String history,
@@ -99,5 +76,10 @@ public class TibiaObject extends WikiObject {
         this.mapcolor = mapcolor;
         this.location = location;
         this.notes2 = notes2;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

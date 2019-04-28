@@ -3,32 +3,25 @@ package com.wikia.tibia.objects;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.wikia.tibia.enums.Article;
 import com.wikia.tibia.enums.Status;
+import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class WikiObject extends WrappedWikiObject {
 
-    private final String templateType;
-    private final String name;
-    private final Article article;
-    private final String actualname;
-    private final String plural;
-    private final String implemented;
-    private final String notes;
+    private String templateType;
+    private String name;
+    private Article article;
+    private String actualname;
+    private String plural;
+    private String implemented;
+    private String notes;
     private String history;
-    private final Status status;
-
-    protected WikiObject() {
-        templateType = null;
-        name = null;
-        article = null;
-        actualname = null;
-        plural = null;
-        implemented = null;
-        notes = null;
-        history = null;
-        status = null;
-    }
+    private Status status;
 
     public WikiObject(String name, Article article, String actualname, String plural, String implemented, String notes,
                       String history, Status status) {
@@ -58,14 +51,17 @@ public abstract class WikiObject extends WrappedWikiObject {
         return "Class: " + getClassName() + ", name: " + getName();
     }
 
-    public void withHistory(String newHistory) {
-        this.history = newHistory;
-    }
+    public abstract void setDefaultValues();
 
     public static class WikiObjectImpl extends WikiObject {
 
         public WikiObjectImpl() {
             super();
+        }
+
+        @Override
+        public void setDefaultValues() {
+            // Do nothing
         }
     }
 }

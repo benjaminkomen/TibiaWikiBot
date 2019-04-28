@@ -4,57 +4,38 @@ import com.wikia.tibia.enums.BuildingType;
 import com.wikia.tibia.enums.City;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Building extends WikiObject {
 
-    private final BuildingType type;
-    private final String location;
-    private final String posx;
-    private final String posy;
-    private final String posz;
-    private final String street;
-    private final String street2;
-    private final String street3;
-    private final String street4;
-    private final String street5;
-    private final Integer houseid;
-    private final Integer size;
-    private final Integer beds;
+    private BuildingType type;
+    private String location;
+    private String posx;
+    private String posy;
+    private String posz;
+    private String street;
+    private String street2;
+    private String street3;
+    private String street4;
+    private String street5;
+    private Integer houseid;
+    private Integer size;
+    private Integer beds;
     private Integer rent;
-    private final YesNo ownable;
-    private final City city;
-    private final Integer openwindows;
-    private final Integer floors;
-    private final Integer rooms;
-    private final String furnishings;
-    private final String image;
-
-    private Building() {
-        this.type = null;
-        this.location = null;
-        this.posx = null;
-        this.posy = null;
-        this.posz = null;
-        this.street = null;
-        this.street2 = null;
-        this.street3 = null;
-        this.street4 = null;
-        this.street5 = null;
-        this.houseid = null;
-        this.size = null;
-        this.beds = null;
-        this.rent = null;
-        this.ownable = null;
-        this.city = null;
-        this.openwindows = null;
-        this.floors = null;
-        this.rooms = null;
-        this.furnishings = null;
-        this.image = null;
-    }
+    private YesNo ownable;
+    private City city;
+    private Integer openwindows;
+    private Integer floors;
+    private Integer rooms;
+    private String furnishings;
+    private String image;
 
     @Builder
     private Building(String name, String implemented, String notes, String history, Status status, BuildingType type, String location,
@@ -85,7 +66,8 @@ public class Building extends WikiObject {
         this.image = image;
     }
 
-    public void withRent(Integer newRent) {
-        this.rent = newRent;
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

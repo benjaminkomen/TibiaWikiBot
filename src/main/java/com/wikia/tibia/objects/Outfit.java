@@ -3,34 +3,27 @@ package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Outfit extends WikiObject {
 
-    private final String primarytype;
-    private final String secondarytype;
-    private final YesNo premium;
+    private String primarytype;
+    private String secondarytype;
+    private YesNo premium;
     @SuppressWarnings("squid:S1700") // class and field name are the same, but that's understandable
-    private final String outfit;
-    private final String addons;
-    private final YesNo bought;
-    private final Integer fulloutfitprice;
-    private final String achievement;
-    private final String artwork;
-
-    private Outfit() {
-        this.primarytype = null;
-        this.secondarytype = null;
-        this.premium = null;
-        this.outfit = null;
-        this.addons = null;
-        this.bought = null;
-        this.fulloutfitprice = null;
-        this.achievement = null;
-        this.artwork = null;
-    }
+    private String outfit;
+    private String addons;
+    private YesNo bought;
+    private Integer fulloutfitprice;
+    private String achievement;
+    private String artwork;
 
     @Builder
     private Outfit(String name, String implemented, String notes, String history, Status status, String primarytype,
@@ -46,5 +39,10 @@ public class Outfit extends WikiObject {
         this.fulloutfitprice = fulloutfitprice;
         this.achievement = achievement;
         this.artwork = artwork;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

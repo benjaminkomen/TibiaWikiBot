@@ -8,105 +8,69 @@ import com.wikia.tibia.enums.BestiaryOccurrence;
 import com.wikia.tibia.enums.Spawntype;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
+import java.util.Collections;
 import java.util.List;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Creature extends WikiObject {
 
-    private final String hitPoints;
-    private final String experiencePoints;
-    private final String armor;
-    private final String summon;
-    private final String convince;
-    private final YesNo illusionable;
-    private final String creatureclass;
-    private final String primarytype;
-    private final String secondarytype;
-    private final BestiaryClass bestiaryclass;
-    private final BestiaryLevel bestiarylevel;
-    private final BestiaryOccurrence occurrence;
-    private final List<Spawntype> spawntype;
-    private final YesNo isboss;
-    private final YesNo isarenaboss;
-    private final YesNo isevent;
-    private final String abilities;
-    private final String usedelements;
-    private final String maxdmg;
-    private final YesNo pushable;
-    private final YesNo pushobjects;
-    private final String walksaround;
-    private final String walksthrough;
-    private final YesNo paraimmune;
-    private final YesNo senseinvis;
-    private final Percentage physicalDmgMod;
-    private final Percentage holyDmgMod;
-    private final Percentage deathDmgMod;
-    private final Percentage fireDmgMod;
-    private final Percentage energyDmgMod;
-    private final Percentage iceDmgMod;
-    private final Percentage earthDmgMod;
-    private final Percentage drownDmgMod;
-    private final Percentage hpDrainDmgMod;
-    private final Percentage healMod;
-    private final String bestiaryname;
-    private final String bestiarytext;
-    private final List<String> sounds;
-    private final String behaviour;
-    private final String runsat;
-    private final String speed;
-    private final String strategy;
-    private final String location;
-    private final List<LootItem> loot;
+    private static final Logger LOG = LoggerFactory.getLogger(Creature.class);
 
-    private Creature() {
-        this.hitPoints = null;
-        this.experiencePoints = null;
-        this.armor = null;
-        this.summon = null;
-        this.convince = null;
-        this.illusionable = null;
-        this.creatureclass = null;
-        this.primarytype = null;
-        this.secondarytype = null;
-        this.bestiaryclass = null;
-        this.bestiarylevel = null;
-        this.occurrence = null;
-        this.spawntype = null;
-        this.isboss = null;
-        this.isarenaboss = null;
-        this.isevent = null;
-        this.abilities = null;
-        this.usedelements = null;
-        this.maxdmg = null;
-        this.pushable = null;
-        this.pushobjects = null;
-        this.walksaround = null;
-        this.walksthrough = null;
-        this.paraimmune = null;
-        this.senseinvis = null;
-        this.physicalDmgMod = null;
-        this.holyDmgMod = null;
-        this.deathDmgMod = null;
-        this.fireDmgMod = null;
-        this.energyDmgMod = null;
-        this.iceDmgMod = null;
-        this.earthDmgMod = null;
-        this.drownDmgMod = null;
-        this.hpDrainDmgMod = null;
-        this.healMod = null;
-        this.bestiaryname = null;
-        this.bestiarytext = null;
-        this.sounds = null;
-        this.behaviour = null;
-        this.runsat = null;
-        this.speed = null;
-        this.strategy = null;
-        this.location = null;
-        this.loot = null;
-    }
+    private String hitPoints;
+    private String experiencePoints;
+    private String armor;
+    private String summon;
+    private String convince;
+    private YesNo illusionable;
+    private String creatureclass;
+    private String primarytype;
+    private String secondarytype;
+    private BestiaryClass bestiaryclass;
+    private BestiaryLevel bestiarylevel;
+    private BestiaryOccurrence occurrence;
+    private List<Spawntype> spawntype;
+    private YesNo isboss;
+    private YesNo isarenaboss;
+    private YesNo isevent;
+    private String abilities;
+    private String usedelements;
+    private String maxdmg;
+    private YesNo pushable;
+    private YesNo pushobjects;
+    private String walksaround;
+    private String walksthrough;
+    private YesNo paraimmune;
+    private YesNo senseinvis;
+    private Percentage physicalDmgMod;
+    private Percentage earthDmgMod;
+    private Percentage fireDmgMod;
+    private Percentage deathDmgMod;
+    private Percentage energyDmgMod;
+    private Percentage holyDmgMod;
+    private Percentage iceDmgMod;
+    private Percentage healMod;
+    private Percentage hpDrainDmgMod;
+    private Percentage drownDmgMod;
+    private String bestiaryname;
+    private String bestiarytext;
+    private List<String> sounds;
+    private String behaviour;
+    private String runsat;
+    private String speed;
+    private String strategy;
+    private String location;
+    private List<LootItem> loot;
 
     @Builder
     public Creature(String name, Article article, String actualname, String plural, String implemented, String notes,
@@ -148,15 +112,15 @@ public class Creature extends WikiObject {
         this.paraimmune = paraimmune;
         this.senseinvis = senseinvis;
         this.physicalDmgMod = physicalDmgMod;
-        this.holyDmgMod = holyDmgMod;
-        this.deathDmgMod = deathDmgMod;
-        this.fireDmgMod = fireDmgMod;
-        this.energyDmgMod = energyDmgMod;
-        this.iceDmgMod = iceDmgMod;
         this.earthDmgMod = earthDmgMod;
-        this.drownDmgMod = drownDmgMod;
-        this.hpDrainDmgMod = hpDrainDmgMod;
+        this.fireDmgMod = fireDmgMod;
+        this.deathDmgMod = deathDmgMod;
+        this.energyDmgMod = energyDmgMod;
+        this.holyDmgMod = holyDmgMod;
+        this.iceDmgMod = iceDmgMod;
         this.healMod = healMod;
+        this.hpDrainDmgMod = hpDrainDmgMod;
+        this.drownDmgMod = drownDmgMod;
         this.bestiaryname = bestiaryname;
         this.bestiarytext = bestiarytext;
         this.sounds = sounds;
@@ -176,5 +140,147 @@ public class Creature extends WikiObject {
     @JsonGetter("exp")
     public String getExperiencePoints() {
         return experiencePoints;
+    }
+
+    @Override
+    public void setDefaultValues() {
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(hitPoints)) {
+            hitPoints = "?";
+        }
+
+        if (ObjectUtils.isEmpty(experiencePoints)) {
+            experiencePoints = "?";
+        }
+
+        if (ObjectUtils.isEmpty(armor)) {
+            armor = "?";
+        }
+
+        if (ObjectUtils.isEmpty(summon)) {
+            summon = "?";
+        }
+
+        if (ObjectUtils.isEmpty(convince)) {
+            convince = "?";
+        }
+
+        if (ObjectUtils.isEmpty(illusionable)) {
+            illusionable = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(creatureclass)) {
+            creatureclass = "";
+            LOG.warn("Creature '{}' has no creatureclass set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(primarytype)) {
+            primarytype = "";
+            LOG.warn("Creature '{}' has no primarytype set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(isboss)) {
+            isboss = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(abilities)) {
+            abilities = "Unknown";
+        }
+
+        if (ObjectUtils.isEmpty(maxdmg)) {
+            maxdmg = "?";
+        }
+
+        if (ObjectUtils.isEmpty(pushable)) {
+            pushable = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(pushobjects)) {
+            pushobjects = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(walksaround)) {
+            walksaround = "?";
+        }
+
+        if (ObjectUtils.isEmpty(walksthrough)) {
+            walksthrough = "?";
+        }
+
+        if (ObjectUtils.isEmpty(paraimmune)) {
+            paraimmune = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(senseinvis)) {
+            senseinvis = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(physicalDmgMod)) {
+            physicalDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(earthDmgMod)) {
+            earthDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(fireDmgMod)) {
+            fireDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(deathDmgMod)) {
+            deathDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(energyDmgMod)) {
+            energyDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(holyDmgMod)) {
+            holyDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(iceDmgMod)) {
+            iceDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(healMod)) {
+            healMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(hpDrainDmgMod)) {
+            hpDrainDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(drownDmgMod)) {
+            drownDmgMod = Percentage.UNKNOWN;
+        }
+
+        if (sounds == null) {
+            sounds = Collections.emptyList();
+        }
+
+        if (ObjectUtils.isEmpty(behaviour)) {
+            behaviour = "Unknown";
+        }
+
+        if (ObjectUtils.isEmpty(speed)) {
+            speed = "?";
+        }
+
+        if (ObjectUtils.isEmpty(strategy)) {
+            strategy = "Unknown";
+        }
+
+        if (ObjectUtils.isEmpty(location)) {
+            location = "Unknown";
+        }
+
+        if (loot == null) {
+            loot = Collections.emptyList();
+        }
     }
 }

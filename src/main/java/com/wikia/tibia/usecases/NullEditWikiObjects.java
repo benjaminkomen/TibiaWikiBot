@@ -19,7 +19,6 @@ import com.wikia.tibia.objects.Quest;
 import com.wikia.tibia.objects.Spell;
 import com.wikia.tibia.objects.Street;
 import com.wikia.tibia.objects.TibiaObject;
-import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.repositories.AchievementRepository;
 import com.wikia.tibia.repositories.BookRepository;
 import com.wikia.tibia.repositories.BuildingRepository;
@@ -51,8 +50,9 @@ import java.util.List;
 public class NullEditWikiObjects {
 
     private static final Logger LOG = LoggerFactory.getLogger(NullEditWikiObjects.class);
-    private static final boolean DEBUG_MODE = true;
+    private static final boolean DEBUG_MODE = false;
     private static final String LOG_SAVE_ARTICLE = "Saving article {} with JSON difference:\n {}";
+    private final static String EDIT_SUMMARY = "[bot] formatting parameters in standardised way.";
 
     private AchievementRepository achievementRepository;
     private BookRepository bookRepository;
@@ -115,9 +115,10 @@ public class NullEditWikiObjects {
     public void checkAchievements() {
         getAchievements()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    saveArticle(wikiObject);
+                    achievementRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -126,9 +127,10 @@ public class NullEditWikiObjects {
     public void checkBooks() {
         getBooks()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    bookRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -137,21 +139,22 @@ public class NullEditWikiObjects {
     public void checkBuildings() {
         getBuildings()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    buildingRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
     }
 
     public void checkCorpses() {
-        getCorpses().stream()
-                .limit(10)
+        getCorpses()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    corpseRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -161,9 +164,10 @@ public class NullEditWikiObjects {
     public void checkCreatures() {
         getCreatures()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    saveArticle(wikiObject);
+                    creatureRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -172,9 +176,10 @@ public class NullEditWikiObjects {
     public void checkEffects() {
         getEffects()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    effectRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -183,9 +188,9 @@ public class NullEditWikiObjects {
     public void checkHuntingPlaces() {
         getHuntingPlaces()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    huntingPlaceRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -194,9 +199,10 @@ public class NullEditWikiObjects {
     public void checkItems() {
         getItems()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    saveArticle(wikiObject);
+                    itemRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -205,8 +211,10 @@ public class NullEditWikiObjects {
     public void checkKeys() {
         getKeys()
                 .forEach(wikiObject -> {
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    keyRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -215,9 +223,10 @@ public class NullEditWikiObjects {
     public void checkLocations() {
         getLocations()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    locationRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -226,9 +235,10 @@ public class NullEditWikiObjects {
     public void checkMissiles() {
         getMissiles()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    missileRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -237,9 +247,10 @@ public class NullEditWikiObjects {
     public void checkMounts() {
         getMounts()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    mountRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -248,9 +259,10 @@ public class NullEditWikiObjects {
     public void checkNPCs() {
         getNPCs()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    npcRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -259,9 +271,10 @@ public class NullEditWikiObjects {
     public void checkObjects() {
         getObjects()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    objectRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -270,9 +283,10 @@ public class NullEditWikiObjects {
     public void checkOutfits() {
         getOutfits()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    outfitRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -281,9 +295,10 @@ public class NullEditWikiObjects {
     public void checkQuests() {
         getQuests()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    questRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -292,9 +307,10 @@ public class NullEditWikiObjects {
     public void checkSpells() {
         getSpells()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    spellRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -303,9 +319,10 @@ public class NullEditWikiObjects {
     public void checkStreets() {
         getStreets()
                 .forEach(wikiObject -> {
-                    wikiObject.withTargetJson(Parser.json(wikiObject));
+                    wikiObject.setTargetJson(Parser.json(wikiObject));
+                    wikiObject.setDefaultValues();
                     LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                            saveArticle(wikiObject);
+                    streetRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -435,10 +452,6 @@ public class NullEditWikiObjects {
             streets = streetRepository.getWikiObjects();
         }
         return streets;
-    }
-
-    private void saveArticle(WikiObject wikiObject) {
-        achievementRepository.saveWikiObject(wikiObject, "[bot] formatting parameters in standardised way.", DEBUG_MODE);
     }
 
     private void pauseForABit() {

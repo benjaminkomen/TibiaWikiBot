@@ -2,37 +2,28 @@ package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Location extends WikiObject {
 
-    private final String ruler;
-    private final String population;
-    private final String near;
-    private final String organization;
-    private final String map;
-    private final String map2;
-    private final String map3;
-    private final String map4;
-    private final String map5;
-    private final String map6;
-    private final YesNo links;
-
-    private Location() {
-        this.ruler = null;
-        this.population = null;
-        this.near = null;
-        this.organization = null;
-        this.map = null;
-        this.map2 = null;
-        this.map3 = null;
-        this.map4 = null;
-        this.map5 = null;
-        this.map6 = null;
-        this.links = null;
-    }
+    private String ruler;
+    private String population;
+    private String near;
+    private String organization;
+    private String map;
+    private String map2;
+    private String map3;
+    private String map4;
+    private String map5;
+    private String map6;
+    private YesNo links;
 
     @Builder
     private Location(String name, String implemented, Status status, String ruler, String population, String near,
@@ -50,5 +41,10 @@ public class Location extends WikiObject {
         this.map5 = map5;
         this.map6 = map6;
         this.links = links;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

@@ -3,31 +3,25 @@ package com.wikia.tibia.objects;
 import com.fasterxml.jackson.annotation.JsonGetter;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Mount extends WikiObject {
 
-    private final Integer speed;
-    private final String tamingMethod;
-    private final YesNo bought;
-    private final Integer price; // unit is Tibia Coins
-    private final String achievement; // this could link to Achievement
-    private final Integer lightradius;
-    private final Integer lightcolor;
-    private final String artwork;
-
-    private Mount() {
-        this.speed = null;
-        this.tamingMethod = null;
-        this.bought = null;
-        this.price = null;
-        this.achievement = null;
-        this.lightradius = null;
-        this.lightcolor = null;
-        this.artwork = null;
-    }
+    private Integer speed;
+    private String tamingMethod;
+    private YesNo bought;
+    private Integer price; // unit is Tibia Coins
+    private String achievement; // this could link to Achievement
+    private Integer lightradius;
+    private Integer lightcolor;
+    private String artwork;
 
     @Builder
     private Mount(String name, String implemented, String notes, String history, Status status, Integer speed,
@@ -47,5 +41,10 @@ public class Mount extends WikiObject {
     @JsonGetter("taming_method")
     private String getTamingMethod() {
         return tamingMethod;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

@@ -2,123 +2,71 @@ package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.BookType;
 import com.wikia.tibia.enums.Status;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Book extends WikiObject {
 
-    private final BookType booktype;
-    private final BookType booktype2;
-    private final BookType booktype3;
-    private final BookType booktype4;
-    private final BookType booktype5;
-    private final BookType booktype6;
-    private final BookType booktype7;
-    private final BookType booktype8;
-    private final String title;
-    private final String pagename;
-    private final String location;
-    private final String location2;
-    private final String location3;
-    private final String location4;
-    private final String location5;
-    private final String location6;
-    private final String location7;
-    private final String location8;
-    private final String blurb;
-    private final String author;
-    private final String returnpage;
-    private final String returnpage2;
-    private final String returnpage3;
-    private final String returnpage4;
-    private final String returnpage5;
-    private final String returnpage6;
-    private final String returnpage7;
-    private final String returnpage8;
-    private final String returnpage9;
-    private final String returnpage10;
-    private final String returnpage11;
-    private final String returnpage12;
-    private final String returnpage13;
-    private final String returnpage14;
-    private final String returnpage15;
-    private final String returnpage16;
-    private final String prevbook;
-    private final String nextbook;
-    private final String relatedpages;
-    private final String text;
-    private final String text2;
-    private final String text3;
-    private final String text4;
-    private final String text5;
-    private final String text6;
-    private final String text7;
-    private final String text8;
-    private final String implemented2;
-    private final String implemented3;
-    private final String implemented4;
-    private final String implemented5;
-    private final String implemented6;
-    private final String implemented7;
-    private final String implemented8;
-
-    private Book() {
-        this.booktype = null;
-        this.booktype2 = null;
-        this.booktype3 = null;
-        this.booktype4 = null;
-        this.booktype5 = null;
-        this.booktype6 = null;
-        this.booktype7 = null;
-        this.booktype8 = null;
-        this.title = null;
-        this.pagename = null;
-        this.location = null;
-        this.location2 = null;
-        this.location3 = null;
-        this.location4 = null;
-        this.location5 = null;
-        this.location6 = null;
-        this.location7 = null;
-        this.location8 = null;
-        this.blurb = null;
-        this.author = null;
-        this.returnpage = null;
-        this.returnpage2 = null;
-        this.returnpage3 = null;
-        this.returnpage4 = null;
-        this.returnpage5 = null;
-        this.returnpage6 = null;
-        this.returnpage7 = null;
-        this.returnpage8 = null;
-        this.returnpage9 = null;
-        this.returnpage10 = null;
-        this.returnpage11 = null;
-        this.returnpage12 = null;
-        this.returnpage13 = null;
-        this.returnpage14 = null;
-        this.returnpage15 = null;
-        this.returnpage16 = null;
-        this.prevbook = null;
-        this.nextbook = null;
-        this.relatedpages = null;
-        this.text = null;
-        this.text2 = null;
-        this.text3 = null;
-        this.text4 = null;
-        this.text5 = null;
-        this.text6 = null;
-        this.text7 = null;
-        this.text8 = null;
-        this.implemented2 = null;
-        this.implemented3 = null;
-        this.implemented4 = null;
-        this.implemented5 = null;
-        this.implemented6 = null;
-        this.implemented7 = null;
-        this.implemented8 = null;
-    }
+    private BookType booktype;
+    private BookType booktype2;
+    private BookType booktype3;
+    private BookType booktype4;
+    private BookType booktype5;
+    private BookType booktype6;
+    private BookType booktype7;
+    private BookType booktype8;
+    private String title;
+    private String pagename;
+    private String location;
+    private String location2;
+    private String location3;
+    private String location4;
+    private String location5;
+    private String location6;
+    private String location7;
+    private String location8;
+    private String blurb;
+    private String author;
+    private String returnpage;
+    private String returnpage2;
+    private String returnpage3;
+    private String returnpage4;
+    private String returnpage5;
+    private String returnpage6;
+    private String returnpage7;
+    private String returnpage8;
+    private String returnpage9;
+    private String returnpage10;
+    private String returnpage11;
+    private String returnpage12;
+    private String returnpage13;
+    private String returnpage14;
+    private String returnpage15;
+    private String returnpage16;
+    private String prevbook;
+    private String nextbook;
+    private String relatedpages;
+    private String text;
+    private String text2;
+    private String text3;
+    private String text4;
+    private String text5;
+    private String text6;
+    private String text7;
+    private String text8;
+    private String implemented2;
+    private String implemented3;
+    private String implemented4;
+    private String implemented5;
+    private String implemented6;
+    private String implemented7;
+    private String implemented8;
 
     @Builder
     public Book(String name, String implemented, String notes, String history, Status status, BookType booktype, String title,
@@ -179,5 +127,10 @@ public class Book extends WikiObject {
         this.implemented6 = null;
         this.implemented7 = null;
         this.implemented8 = null;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

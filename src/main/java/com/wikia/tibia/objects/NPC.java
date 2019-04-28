@@ -4,80 +4,51 @@ import com.wikia.tibia.enums.City;
 import com.wikia.tibia.enums.Gender;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class NPC extends WikiObject {
 
-    private final String job;
-    private final String job2;
-    private final String job3;
-    private final String job4;
-    private final String job5;
-    private final String job6;
-    private final String location;
-    private final City city;
-    private final City city2;
-    private final String street;
-    private final BigDecimal posx;
-    private final BigDecimal posy;
-    private final Integer posz;
-    private final BigDecimal posx2;
-    private final BigDecimal posy2;
-    private final Integer posz2;
-    private final BigDecimal posx3;
-    private final BigDecimal posy3;
-    private final Integer posz3;
-    private final BigDecimal posx4;
-    private final BigDecimal posy4;
-    private final Integer posz4;
-    private final BigDecimal posx5;
-    private final BigDecimal posy5;
-    private final Integer posz5;
-    private final Gender gender;
-    private final String race;
-    private final YesNo buysell;
-    private final String buys;
-    private final String sells;
-    private final List<String> sounds;
-
-    private NPC() {
-        this.job = null;
-        this.job2 = null;
-        this.job3 = null;
-        this.job4 = null;
-        this.job5 = null;
-        this.job6 = null;
-        this.location = null;
-        this.city = null;
-        this.city2 = null;
-        this.street = null;
-        this.posx = null;
-        this.posy = null;
-        this.posz = null;
-        this.posx2 = null;
-        this.posy2 = null;
-        this.posz2 = null;
-        this.posx3 = null;
-        this.posy3 = null;
-        this.posz3 = null;
-        this.posx4 = null;
-        this.posy4 = null;
-        this.posz4 = null;
-        this.posx5 = null;
-        this.posy5 = null;
-        this.posz5 = null;
-        this.gender = null;
-        this.race = null;
-        this.buysell = null;
-        this.buys = null;
-        this.sells = null;
-        this.sounds = null;
-    }
+    private String job;
+    private String job2;
+    private String job3;
+    private String job4;
+    private String job5;
+    private String job6;
+    private String location;
+    private City city;
+    private City city2;
+    private String street;
+    private BigDecimal posx;
+    private BigDecimal posy;
+    private Integer posz;
+    private BigDecimal posx2;
+    private BigDecimal posy2;
+    private Integer posz2;
+    private BigDecimal posx3;
+    private BigDecimal posy3;
+    private Integer posz3;
+    private BigDecimal posx4;
+    private BigDecimal posy4;
+    private Integer posz4;
+    private BigDecimal posx5;
+    private BigDecimal posy5;
+    private Integer posz5;
+    private Gender gender;
+    private String race;
+    private YesNo buysell;
+    private String buys;
+    private String sells;
+    private List<String> sounds;
 
     @Builder
     private NPC(String name, String actualname, String implemented, String notes, String history, Status status,
@@ -118,5 +89,10 @@ public class NPC extends WikiObject {
         this.buys = buys;
         this.sells = sells;
         this.sounds = sounds;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

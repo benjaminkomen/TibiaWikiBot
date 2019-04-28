@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Percentage {
 
+    public static final Percentage EMPTY = Percentage.of("");
+    public static final Percentage UNKNOWN = Percentage.of("100%?");
+
     private String originalValue;
     private Integer value;
 

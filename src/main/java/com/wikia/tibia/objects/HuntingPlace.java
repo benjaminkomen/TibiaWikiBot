@@ -3,72 +3,47 @@ package com.wikia.tibia.objects;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wikia.tibia.enums.City;
 import com.wikia.tibia.enums.Star;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.List;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class HuntingPlace extends WikiObject {
 
-    private final String image;
-    private final City city;
-    private final String location;
-    private final String vocation;
-    private final String lvlknights; // Integer?
-    private final String lvlpaladins; // Integer?
-    private final String lvlmages; // Integer?
-    private final String skknights; // Integer?
-    private final String skpaladins; // Integer?
-    private final String skmages; // Integer?
-    private final String defknights; // Integer?
-    private final String defpaladins; // Integer?
-    private final String defmages; // Integer?
+    private String image;
+    private City city;
+    private String location;
+    private String vocation;
+    private String lvlknights; // Integer?
+    private String lvlpaladins; // Integer?
+    private String lvlmages; // Integer?
+    private String skknights; // Integer?
+    private String skpaladins; // Integer?
+    private String skmages; // Integer?
+    private String defknights; // Integer?
+    private String defpaladins; // Integer?
+    private String defmages; // Integer?
     @JsonManagedReference
-    private final List<HuntingPlaceSkills> lowerlevels;
-    private final String loot;
-    private final Star lootstar;
-    private final String exp;
-    private final Star expstar;
-    private final String bestloot;
-    private final String bestloot2;
-    private final String bestloot3;
-    private final String bestloot4;
-    private final String bestloot5;
-    private final String map;
-    private final String map2;
-    private final String map3;
-    private final String map4;
-
-    private HuntingPlace() {
-        this.image = null;
-        this.city = null;
-        this.location = null;
-        this.vocation = null;
-        this.lvlknights = null;
-        this.lvlpaladins = null;
-        this.lvlmages = null;
-        this.skknights = null;
-        this.skpaladins = null;
-        this.skmages = null;
-        this.defknights = null;
-        this.defpaladins = null;
-        this.defmages = null;
-        this.lowerlevels = null;
-        this.loot = null;
-        this.lootstar = null;
-        this.exp = null;
-        this.expstar = null;
-        this.bestloot = null;
-        this.bestloot2 = null;
-        this.bestloot3 = null;
-        this.bestloot4 = null;
-        this.bestloot5 = null;
-        this.map = null;
-        this.map2 = null;
-        this.map3 = null;
-        this.map4 = null;
-    }
+    private List<HuntingPlaceSkills> lowerlevels;
+    private String loot;
+    private Star lootstar;
+    private String exp;
+    private Star expstar;
+    private String bestloot;
+    private String bestloot2;
+    private String bestloot3;
+    private String bestloot4;
+    private String bestloot5;
+    private String map;
+    private String map2;
+    private String map3;
+    private String map4;
 
     @Builder
     private HuntingPlace(String name, String implemented, String image, City city, String location, String vocation,
@@ -105,5 +80,10 @@ public class HuntingPlace extends WikiObject {
         this.map2 = map2;
         this.map3 = map3;
         this.map4 = map4;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

@@ -45,8 +45,8 @@ public class BuildingRents {
             final String oldHistory = building.getHistory();
             if (newHouseRent.isPresent() && !Objects.equals(oldRent, newHouseRent.get())) {
 
-                building.withRent(newHouseRent.get());
-                building.withHistory(updatedHistory(building, oldHistory, oldRent));
+                building.setRent(newHouseRent.get());
+                building.setHistory(updatedHistory(building, oldHistory, oldRent));
 
                 final String editSummary = String.format("Updating rent for building %s from %s to %s.", building.getName(), oldRent, building.getRent());
                 LOG.info(editSummary);

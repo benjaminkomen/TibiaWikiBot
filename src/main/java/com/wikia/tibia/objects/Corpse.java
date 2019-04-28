@@ -4,49 +4,35 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.wikia.tibia.enums.Article;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.math.BigDecimal;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Corpse extends WikiObject {
 
-    private final String flavortext;
-    private final YesNo skinable;
-    private final String product;
-    private final String liquid;
-    private final Integer stages;
-    private final String firstDecaytime;
-    private final String secondDecaytime;
-    private final String thirdDecaytime;
-    private final Integer firstVolume;
-    private final Integer secondVolume;
-    private final Integer thirdVolume;
-    private final BigDecimal firstWeight;
-    private final BigDecimal secondWeight;
-    private final BigDecimal thirdWeight;
-    private final String corpseof;
-    private final String sellto;
-
-    private Corpse() {
-        this.flavortext = null;
-        this.skinable = null;
-        this.product = null;
-        this.liquid = null;
-        this.stages = null;
-        this.firstDecaytime = null;
-        this.secondDecaytime = null;
-        this.thirdDecaytime = null;
-        this.firstVolume = null;
-        this.secondVolume = null;
-        this.thirdVolume = null;
-        this.firstWeight = null;
-        this.secondWeight = null;
-        this.thirdWeight = null;
-        this.corpseof = null;
-        this.sellto = null;
-    }
+    private String flavortext;
+    private YesNo skinable;
+    private String product;
+    private String liquid;
+    private Integer stages;
+    private String firstDecaytime;
+    private String secondDecaytime;
+    private String thirdDecaytime;
+    private Integer firstVolume;
+    private Integer secondVolume;
+    private Integer thirdVolume;
+    private BigDecimal firstWeight;
+    private BigDecimal secondWeight;
+    private BigDecimal thirdWeight;
+    private String corpseof;
+    private String sellto;
 
     @Builder
     private Corpse(String name, Article article, String actualname, String implemented, String notes, String history,
@@ -116,5 +102,10 @@ public class Corpse extends WikiObject {
     @JsonGetter("3weight")
     public BigDecimal getThirdWeight() {
         return thirdWeight;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

@@ -2,27 +2,23 @@ package com.wikia.tibia.objects;
 
 
 import com.wikia.tibia.enums.Status;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Missile extends WikiObject {
 
-    private final Integer missileid;
-    private final String primarytype;
-    private final String secondarytype;
-    private final Integer lightradius;
-    private final Integer lightcolor;
-    private final String shotby;
-
-    private Missile() {
-        this.missileid = null;
-        this.primarytype = null;
-        this.secondarytype = null;
-        this.lightradius = null;
-        this.lightcolor = null;
-        this.shotby = null;
-    }
+    private Integer missileid;
+    private String primarytype;
+    private String secondarytype;
+    private Integer lightradius;
+    private Integer lightcolor;
+    private String shotby;
 
     @Builder
     private Missile(String name, String implemented, String notes, String history, Status status, Integer missileid,
@@ -34,5 +30,10 @@ public class Missile extends WikiObject {
         this.lightradius = lightradius;
         this.lightcolor = lightcolor;
         this.shotby = shotby;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

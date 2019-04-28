@@ -2,33 +2,26 @@ package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Achievement extends WikiObject {
 
-    private final Integer grade;
-    private final String description;
-    private final String spoiler;
-    private final YesNo premium;
-    private final Integer points;
-    private final YesNo secret;
-    private final Integer coincideswith;
-    private final Integer achievementid;
-    private final String relatedpages;
-
-    private Achievement() {
-        this.grade = null;
-        this.description = null;
-        this.spoiler = null;
-        this.premium = null;
-        this.points = null;
-        this.secret = null;
-        this.coincideswith = null;
-        this.achievementid = null;
-        this.relatedpages = null;
-    }
+    private Integer grade;
+    private String description;
+    private String spoiler;
+    private YesNo premium;
+    private Integer points;
+    private YesNo secret;
+    private Integer coincideswith;
+    private Integer achievementid;
+    private String relatedpages;
 
     @Builder
     public Achievement(String name, String actualname, String implemented, String history, Status status, Integer grade,
@@ -44,5 +37,10 @@ public class Achievement extends WikiObject {
         this.coincideswith = coincideswith;
         this.achievementid = achievementid;
         this.relatedpages = relatedpages;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

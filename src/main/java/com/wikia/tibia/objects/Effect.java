@@ -1,30 +1,26 @@
 package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.Status;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Getter
+@Setter
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Effect extends WikiObject {
 
-    private final Integer effectid;
-    private final String primarytype;
-    private final String secondarytype;
-    private final Integer lightradius;
-    private final Integer lightcolor;
-    private final String causes;
+    private Integer effectid;
+    private String primarytype;
+    private String secondarytype;
+    private Integer lightradius;
+    private Integer lightcolor;
+    private String causes;
     @SuppressWarnings("squid:S1700") // class and field name are the same, but that's understandable
-    private final String effect;
+    private String effect;
 
-    private Effect() {
-        this.effectid = null;
-        this.primarytype = null;
-        this.secondarytype = null;
-        this.lightradius = null;
-        this.lightcolor = null;
-        this.causes = null;
-        this.effect = null;
-    }
 
     @Builder
     private Effect(String name, String implemented, String notes, String history, Status status, Integer effectid,
@@ -38,5 +34,10 @@ public class Effect extends WikiObject {
         this.lightcolor = lightcolor;
         this.causes = causes;
         this.effect = effect;
+    }
+
+    @Override
+    public void setDefaultValues() {
+        // TODO implement this method
     }
 }

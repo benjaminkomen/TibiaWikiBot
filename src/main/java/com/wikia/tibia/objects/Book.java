@@ -2,16 +2,21 @@ package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.BookType;
 import com.wikia.tibia.enums.Status;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Book extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Book.class);
 
     private BookType booktype;
     private BookType booktype2;
@@ -130,7 +135,45 @@ public class Book extends WikiObject {
     }
 
     @Override
+    public String getName() {
+        return getPagename();
+    }
+
+    @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(booktype)) {
+            LOG.warn("Book '{}' has no booktype set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(title)) {
+            title = "?";
+            LOG.warn("Book '{}' has no title set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(pagename)) {
+            pagename = "?";
+            LOG.warn("Book '{}' has no pagename set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(location)) {
+            location = "?";
+        }
+
+        if (ObjectUtils.isEmpty(blurb)) {
+            blurb = "?";
+        }
+
+        if (ObjectUtils.isEmpty(author)) {
+            author = "?";
+        }
+
+        if (ObjectUtils.isEmpty(text)) {
+            LOG.warn("Book '{}' has no text set", getName());
+        }
     }
 }

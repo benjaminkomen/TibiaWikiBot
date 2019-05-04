@@ -23,7 +23,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Still mistakes
+     * Last attempted, but not finished run: May 4, 2019
      */
     @Test
     public void testCheckBooks() {

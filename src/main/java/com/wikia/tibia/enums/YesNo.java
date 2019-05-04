@@ -26,4 +26,18 @@ public enum YesNo implements Description {
     public String getDescription() {
         return description;
     }
+
+    public boolean isYes() {
+        return this == YES_DOT ||
+                this == YES_LOWERCASE ||
+                this == YES_UNKNOWN ||
+                this == YES_UPPERCASE;
+    }
+
+    public boolean isNo() {
+        return this == NO_DOT ||
+                this == NO_LOWERCASE ||
+                this == NO_UNKNOWN ||
+                this == NO_UPPERCASE;
+    }
 }

@@ -4,16 +4,21 @@ import com.wikia.tibia.enums.BuildingType;
 import com.wikia.tibia.enums.City;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Building extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Building.class);
 
     private BuildingType type;
     private String location;
@@ -68,6 +73,61 @@ public class Building extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(type)) {
+            LOG.warn("Building '{}' has no type set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(location)) {
+            location = "?";
+        }
+
+        if (ObjectUtils.isEmpty(posx)) {
+            posx = "?";
+        }
+
+        if (ObjectUtils.isEmpty(posy)) {
+            posy = "?";
+        }
+
+        if (ObjectUtils.isEmpty(posz)) {
+            posz = "?";
+        }
+
+        if (ObjectUtils.isEmpty(street)) {
+            street = "?";
+        }
+
+        if ((ObjectUtils.isEmpty(ownable) || ownable.isYes()) && ObjectUtils.isEmpty(houseid)) {
+            LOG.warn("Building '{}' has no houseid set", getName());
+        }
+
+        if ((ObjectUtils.isEmpty(ownable) || ownable.isYes()) && ObjectUtils.isEmpty(size)) {
+            LOG.warn("Building '{}' has no size set", getName());
+        }
+
+        if ((ObjectUtils.isEmpty(ownable) || ownable.isYes()) && ObjectUtils.isEmpty(beds)) {
+            LOG.warn("Building '{}' has no beds set", getName());
+        }
+
+        if ((ObjectUtils.isEmpty(ownable) || ownable.isYes()) && ObjectUtils.isEmpty(rent)) {
+            LOG.warn("Building '{}' has no rent set", getName());
+        }
+
+        if ((ObjectUtils.isEmpty(ownable) || ownable.isYes()) && ObjectUtils.isEmpty(openwindows)) {
+            LOG.warn("Building '{}' has no openwindows set", getName());
+        }
+
+        if ((ObjectUtils.isEmpty(ownable) || ownable.isYes()) && ObjectUtils.isEmpty(floors)) {
+            LOG.warn("Building '{}' has no floors set", getName());
+        }
+
+        if ((ObjectUtils.isEmpty(ownable) || ownable.isYes()) && ObjectUtils.isEmpty(rooms)) {
+            LOG.warn("Building '{}' has no rooms set", getName());
+        }
     }
 }

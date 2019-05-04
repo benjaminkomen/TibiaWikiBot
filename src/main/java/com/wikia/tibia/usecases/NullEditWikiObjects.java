@@ -52,7 +52,7 @@ public class NullEditWikiObjects {
     private static final Logger LOG = LoggerFactory.getLogger(NullEditWikiObjects.class);
     private static final boolean DEBUG_MODE = false;
     private static final String LOG_SAVE_ARTICLE = "Saving article {} with JSON difference:\n {}";
-    private final static String EDIT_SUMMARY = "[bot] formatting parameters in standardised way.";
+    private static final String EDIT_SUMMARY = "[bot] formatting parameters in standardised way.";
 
     private AchievementRepository achievementRepository;
     private BookRepository bookRepository;
@@ -456,7 +456,7 @@ public class NullEditWikiObjects {
 
     private void pauseForABit() {
         try {
-            Thread.sleep(200);
+            Thread.sleep(1000);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

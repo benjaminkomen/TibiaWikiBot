@@ -23,7 +23,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last attempted, but not finished run: May 4, 2019
+     * Last successful run: May 4, 2019
      */
     @Test
     public void testCheckBooks() {
@@ -31,7 +31,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Still mistakes
+     * Last successful run: May 4, 2019
      */
     @Test
     public void testCheckBuildings() {

@@ -3,6 +3,7 @@ package com.wikia.tibia.utils;
 import com.wikia.tibia.enums.BestiaryClass;
 import com.wikia.tibia.enums.BestiaryLevel;
 import com.wikia.tibia.enums.BookType;
+import com.wikia.tibia.enums.BuildingType;
 import com.wikia.tibia.enums.YesNo;
 import com.wikia.tibia.objects.Percentage;
 
@@ -37,6 +38,10 @@ public class ObjectUtils {
     }
 
     public static boolean isEmpty(BookType subject) {
+        return subject == null;
+    }
+
+    public static boolean isEmpty(BuildingType subject) {
         return subject == null;
     }
 }

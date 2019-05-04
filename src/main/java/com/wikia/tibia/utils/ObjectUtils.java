@@ -30,4 +30,8 @@ public class ObjectUtils {
     public static boolean isEmpty(BestiaryLevel subject) {
         return subject == null;
     }
+
+    public static boolean isEmpty(Integer subject) {
+        return subject == null;
+    }
 }

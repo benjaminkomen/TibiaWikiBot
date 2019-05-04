@@ -15,7 +15,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Successfully run on 2019-01-11
+     * Last successful run: May 4, 2019
      */
     @Test
     public void testCheckAchievements() {
@@ -47,7 +47,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last succesful run: May 4, 2019
+     * Last successful run: May 4, 2019
      */
     @Test
     public void testCheckCreatures() {

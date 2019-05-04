@@ -2,16 +2,21 @@ package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Achievement extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Achievement.class);
 
     private Integer grade;
     private String description;
@@ -41,6 +46,32 @@ public class Achievement extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(grade)) {
+            LOG.warn("Achievement '{}' has no grade set", getName());
+            grade = -1;
+        }
+
+        if (ObjectUtils.isEmpty(premium)) {
+            premium = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(points)) {
+            LOG.warn("Achievement '{}' has no points set", getName());
+            points = -1;
+        }
+
+        if (ObjectUtils.isEmpty(secret)) {
+            secret = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(achievementid)) {
+            LOG.warn("Achievement '{}' has no achievementId set", getName());
+            achievementid = -1;
+        }
     }
 }

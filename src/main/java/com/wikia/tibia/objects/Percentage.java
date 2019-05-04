@@ -4,6 +4,8 @@ import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.Objects;
+
 @Getter
 @NoArgsConstructor
 public class Percentage {
@@ -46,5 +48,17 @@ public class Percentage {
         }
 
         return Integer.valueOf(sanitizedValue);
+    }
+
+    // Equality is determined by originalValue, because the value can strip away question marks and is therefore not reliable for a correct equality check
+    @Override
+    public boolean equals(Object other) {
+        return other instanceof Percentage &&
+                Objects.equals(originalValue, ((Percentage) other).getOriginalValue());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(originalValue);
     }
 }

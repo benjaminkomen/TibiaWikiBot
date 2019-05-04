@@ -1,5 +1,7 @@
 package com.wikia.tibia.utils;
 
+import com.wikia.tibia.enums.BestiaryClass;
+import com.wikia.tibia.enums.BestiaryLevel;
 import com.wikia.tibia.enums.YesNo;
 import com.wikia.tibia.objects.Percentage;
 
@@ -19,5 +21,13 @@ public class ObjectUtils {
 
     public static boolean isEmpty(Percentage subject) {
         return subject == null || Percentage.EMPTY.equals(subject);
+    }
+
+    public static boolean isEmpty(BestiaryClass subject) {
+        return subject == null;
+    }
+
+    public static boolean isEmpty(BestiaryLevel subject) {
+        return subject == null;
     }
 }

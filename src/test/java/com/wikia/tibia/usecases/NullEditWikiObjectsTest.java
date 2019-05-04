@@ -46,6 +46,9 @@ public class NullEditWikiObjectsTest {
         target.checkCorpses();
     }
 
+    /**
+     * Last succesful run: May 4, 2019
+     */
     @Test
     public void testCheckCreatures() {
         target.checkCreatures();

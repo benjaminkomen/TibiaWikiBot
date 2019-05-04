@@ -251,6 +251,11 @@ public class Creature extends WikiObject {
             healMod = Percentage.UNKNOWN;
         }
 
+        // Special case, all creatures in the Bestiary have a healMod of 100%
+        if (!ObjectUtils.isEmpty(healMod) && healMod.equals(Percentage.UNKNOWN) && (!ObjectUtils.isEmpty(bestiaryclass) || !ObjectUtils.isEmpty(bestiarylevel))) {
+            healMod = Percentage.of(100);
+        }
+
         if (ObjectUtils.isEmpty(hpDrainDmgMod)) {
             hpDrainDmgMod = Percentage.UNKNOWN;
         }

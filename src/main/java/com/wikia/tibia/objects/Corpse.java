@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.wikia.tibia.enums.Article;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -106,6 +107,21 @@ public class Corpse extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(skinable)) {
+            skinable = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(liquid)) {
+            liquid = "?";
+        }
+
+        if (ObjectUtils.isEmpty(corpseof)) {
+            corpseof = "?";
+        }
     }
 }

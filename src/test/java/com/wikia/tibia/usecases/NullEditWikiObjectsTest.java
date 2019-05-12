@@ -39,7 +39,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Still mistakes
+     * Last successful run: May 12, 2019
      */
     @Test
     public void testCheckCorpses() {
@@ -54,6 +54,9 @@ public class NullEditWikiObjectsTest {
         target.checkCreatures();
     }
 
+    /**
+     * Last successful run: May 12, 2019
+     */
     @Test
     public void testCheckEffects() {
         target.checkEffects();

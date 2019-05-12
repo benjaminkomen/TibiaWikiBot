@@ -7,6 +7,8 @@ import com.wikia.tibia.enums.BuildingType;
 import com.wikia.tibia.enums.YesNo;
 import com.wikia.tibia.objects.Percentage;
 
+import java.util.List;
+
 public class ObjectUtils {
 
     private ObjectUtils() {
@@ -43,5 +45,9 @@ public class ObjectUtils {
 
     public static boolean isEmpty(BuildingType subject) {
         return subject == null;
+    }
+
+    public static boolean isEmpty(List<Integer> subject) {
+        return subject == null || subject.isEmpty();
     }
 }

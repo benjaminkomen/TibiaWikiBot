@@ -3,11 +3,14 @@ package com.wikia.tibia.objects;
 import com.wikia.tibia.enums.Article;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -15,6 +18,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class TibiaObject extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(TibiaObject.class);
 
     private List<Integer> itemid;
     private String objectclass;
@@ -80,6 +85,22 @@ public class TibiaObject extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(objectclass)) {
+            objectclass = "";
+            LOG.warn("Creature '{}' has no objectclass set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(walkable)) {
+            walkable = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(location)) {
+            location = "?";
+        }
     }
 }

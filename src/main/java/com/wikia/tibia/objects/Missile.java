@@ -2,16 +2,21 @@ package com.wikia.tibia.objects;
 
 
 import com.wikia.tibia.enums.Status;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Missile extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Missile.class);
 
     private Integer missileid;
     private String primarytype;
@@ -34,6 +39,21 @@ public class Missile extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(missileid)) {
+            LOG.warn("Creature '{}' has no missileId set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(primarytype)) {
+            primarytype = "?";
+        }
+
+        if (ObjectUtils.isEmpty(shotby)) {
+            shotby = "?";
+        }
     }
 }

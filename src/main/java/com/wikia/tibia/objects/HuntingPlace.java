@@ -3,6 +3,7 @@ package com.wikia.tibia.objects;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wikia.tibia.enums.City;
 import com.wikia.tibia.enums.Star;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -84,6 +85,37 @@ public class HuntingPlace extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(image)) {
+            image = "None";
+        }
+
+        if (ObjectUtils.isEmpty(location)) {
+            location = "Unknown";
+        }
+
+        if (ObjectUtils.isEmpty(lvlknights)) {
+            lvlknights = "?";
+        }
+
+        if (ObjectUtils.isEmpty(lvlpaladins)) {
+            lvlpaladins = "?";
+        }
+
+        if (ObjectUtils.isEmpty(lvlmages)) {
+            lvlmages = "?";
+        }
+
+        if (ObjectUtils.isEmpty(exp)) {
+            exp = "Unknown";
+        }
+
+        if (ObjectUtils.isEmpty(loot)) {
+            loot = "Unknown";
+        }
     }
 }

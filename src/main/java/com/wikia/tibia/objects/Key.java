@@ -2,16 +2,21 @@ package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.KeyType;
 import com.wikia.tibia.enums.Status;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Key extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Key.class);
 
     private String number;
     private String aka;
@@ -48,7 +53,27 @@ public class Key extends WikiObject {
     }
 
     @Override
+    public String getName() {
+        return String.format("Key %s", number);
+    }
+
+    @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(number)) {
+            number = "?";
+        }
+
+        if (ObjectUtils.isEmpty(primarytype)) {
+            LOG.warn("Creature '{}' has no primarytype set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(shortnotes)) {
+            shortnotes = "?";
+        }
     }
 }

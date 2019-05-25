@@ -3,16 +3,21 @@ package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Outfit extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Outfit.class);
 
     private String primarytype;
     private String secondarytype;
@@ -43,6 +48,26 @@ public class Outfit extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(primarytype)) {
+            primarytype = "";
+            LOG.warn("Outfit '{}' has no primarytype set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(premium)) {
+            premium = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(outfit)) {
+            outfit = "?";
+        }
+
+        if (ObjectUtils.isEmpty(addons)) {
+            addons = "?";
+        }
     }
 }

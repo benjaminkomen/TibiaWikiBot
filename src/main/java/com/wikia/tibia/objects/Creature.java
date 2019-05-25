@@ -268,8 +268,11 @@ public class Creature extends WikiObject {
             sounds = Collections.emptyList();
         }
 
-        if (ObjectUtils.isEmpty(behaviour)) {
+        // if runsat is filled you would get something like this printed "Unknown A stalker never retreats.", which is ugly.
+        if (ObjectUtils.isEmpty(behaviour) && ObjectUtils.isEmpty(runsat)) {
             behaviour = "Unknown";
+        } else if ("Unknown".equals(behaviour) && !ObjectUtils.isEmpty(runsat)) {
+            behaviour = "";
         }
 
         if (ObjectUtils.isEmpty(speed)) {

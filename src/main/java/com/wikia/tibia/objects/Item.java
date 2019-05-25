@@ -8,11 +8,14 @@ import com.wikia.tibia.enums.ItemClass;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.WeaponType;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -21,6 +24,8 @@ import java.util.List;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Item extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Item.class);
 
     private List<Integer> itemid;
     private YesNo marketable;
@@ -250,6 +255,38 @@ public class Item extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(itemclass)) {
+            LOG.warn("Creature '{}' has no itemclass set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(primarytype)) {
+            primarytype = "?";
+            LOG.warn("Creature '{}' has no primarytype set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(value)) {
+            value = "?";
+        }
+
+        if (ObjectUtils.isEmpty(npcvalue)) {
+            npcvalue = "?";
+        }
+
+        if (ObjectUtils.isEmpty(npcprice)) {
+            npcprice = "?";
+        }
+
+        if (ObjectUtils.isEmpty(buyfrom)) {
+            buyfrom = "?";
+        }
+
+        if (ObjectUtils.isEmpty(sellto)) {
+            sellto = "?";
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.wikia.tibia.objects;
 
 import com.wikia.tibia.enums.City;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,6 +29,9 @@ public class Street extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
     }
 }

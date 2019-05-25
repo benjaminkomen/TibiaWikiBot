@@ -3,6 +3,7 @@ package com.wikia.tibia.objects;
 import com.wikia.tibia.enums.QuestType;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -54,6 +55,25 @@ public class Quest extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(reward)) {
+            reward = "?";
+        }
+
+        if (ObjectUtils.isEmpty(location)) {
+            location = "?";
+        }
+
+        if (ObjectUtils.isEmpty(log)) {
+            log = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(premium)) {
+            premium = YesNo.UNKNOWN;
+        }
     }
 }

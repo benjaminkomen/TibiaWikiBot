@@ -5,16 +5,21 @@ import com.wikia.tibia.enums.SpellSubclass;
 import com.wikia.tibia.enums.SpellType;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Getter
 @Setter
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Spell extends WikiObject {
+
+    private static final Logger LOG = LoggerFactory.getLogger(Spell.class);
 
     private SpellType type;
     private SpellSubclass subclass;
@@ -447,6 +452,29 @@ public class Spell extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(type)) {
+            LOG.warn("Spell '{}' has no type set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(subclass)) {
+            LOG.warn("Spell '{}' has no subclass set", getName());
+        }
+
+        if (ObjectUtils.isEmpty(words)) {
+            words = "?";
+        }
+
+        if (ObjectUtils.isEmpty(premium)) {
+            premium = YesNo.UNKNOWN;
+        }
+
+        if (ObjectUtils.isEmpty(voc)) {
+            voc = "?";
+        }
     }
 }

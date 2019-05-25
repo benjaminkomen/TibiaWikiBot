@@ -4,6 +4,7 @@ import com.wikia.tibia.enums.City;
 import com.wikia.tibia.enums.Gender;
 import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
+import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
@@ -93,6 +94,21 @@ public class NPC extends WikiObject {
 
     @Override
     public void setDefaultValues() {
-        // TODO implement this method
+
+        if (ObjectUtils.isEmpty(getImplemented())) {
+            setImplemented("?");
+        }
+
+        if (ObjectUtils.isEmpty(location)) {
+            location = "?";
+        }
+
+        if (ObjectUtils.isEmpty(race)) {
+            race = "?";
+        }
+
+        if (ObjectUtils.isEmpty(buysell)) {
+            buysell = YesNo.UNKNOWN;
+        }
     }
 }

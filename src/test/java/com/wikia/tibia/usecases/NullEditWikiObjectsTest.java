@@ -15,7 +15,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run: May 4, 2019
+     * Last successful run: June 8, 2019
      */
     @Test
     public void testCheckAchievements() {

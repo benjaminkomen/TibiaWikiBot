@@ -49,6 +49,7 @@ public class Item extends WikiObject {
     private Integer earthAttack;
     private Integer iceAttack;
     private Integer energyAttack;
+    private Integer deathAttack;
     private Integer defense;
     private String defensemod;
     private Integer imbueslots;
@@ -106,8 +107,8 @@ public class Item extends WikiObject {
                  String flavortext, Status ingamestatus, String words, ItemClass itemclass, String primarytype,
                  String secondarytype, Integer lightcolor, Integer lightradius, Integer levelrequired,
                  String vocrequired, Integer mlrequired, Hands hands, WeaponType type, String attack,
-                 Integer fireAttack, Integer earthAttack, Integer iceAttack, Integer energyAttack, Integer defense,
-                 String defensemod, Integer imbueslots, String imbuements,
+                 Integer fireAttack, Integer earthAttack, Integer iceAttack, Integer energyAttack, Integer deathAttack,
+                 Integer defense, String defensemod, Integer imbueslots, String imbuements,
                  YesNo enchantable, YesNo enchanted, String range, String attackModification, String hitpointModification,
                  Integer armor, String resist, Integer charges, Percentage criticalHitChance,
                  Percentage criticalHitExtraDamage, Percentage manaleechChance, Percentage manaleechAmount,
@@ -141,6 +142,7 @@ public class Item extends WikiObject {
         this.earthAttack = earthAttack;
         this.iceAttack = iceAttack;
         this.energyAttack = energyAttack;
+        this.deathAttack = deathAttack;
         this.defense = defense;
         this.defensemod = defensemod;
         this.imbueslots = imbueslots;
@@ -251,6 +253,11 @@ public class Item extends WikiObject {
     @JsonGetter("energy_attack")
     public Integer getEnergyAttack() {
         return energyAttack;
+    }
+
+    @JsonGetter("death_attack")
+    public Integer getDeathAttack() {
+        return deathAttack;
     }
 
     @Override

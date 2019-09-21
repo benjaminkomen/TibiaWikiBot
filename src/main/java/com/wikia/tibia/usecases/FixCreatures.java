@@ -91,6 +91,7 @@ public class FixCreatures {
         return items;
     }
 
+    // TODO check WikiObject pagename or Item.Actualname, not Item.Name
     private Optional<Item> getItem(String itemName) {
         return getItems().stream()
                 .filter(i -> Objects.equals(i.getName(), itemName))

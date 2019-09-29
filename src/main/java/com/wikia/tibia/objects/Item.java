@@ -100,9 +100,10 @@ public class Item extends WikiObject {
     private String npcpricerook;
     private String buyfrom;
     private String sellto;
+    private String notes2;
 
     @Builder
-    private Item(String name, Article article, String actualname, String plural, String implemented, String notes,
+    private Item(String name, Article article, String actualname, String plural, String implemented, String notes, String notes2,
                  String history, Status status, List<Integer> itemid, YesNo marketable, YesNo usable, String sprites,
                  String flavortext, Status ingamestatus, String words, ItemClass itemclass, String primarytype,
                  String secondarytype, Integer lightcolor, Integer lightradius, Integer levelrequired,
@@ -193,6 +194,7 @@ public class Item extends WikiObject {
         this.npcpricerook = npcpricerook;
         this.buyfrom = buyfrom;
         this.sellto = sellto;
+        this.notes2 = notes2;
     }
 
     @JsonGetter("atk_mod")

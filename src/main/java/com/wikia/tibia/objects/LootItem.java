@@ -35,4 +35,13 @@ public class LootItem {
     public int hashCode() {
         return Objects.hash(itemName);
     }
+
+    @Override
+    public String toString() {
+        return "LootItem{" +
+                "itemName='" + itemName + '\'' +
+                ", amount='" + amount + '\'' +
+                ", rarity=" + rarity +
+                '}';
+    }
 }

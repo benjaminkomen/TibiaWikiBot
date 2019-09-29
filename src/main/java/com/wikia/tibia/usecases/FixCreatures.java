@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -21,8 +20,8 @@ public class FixCreatures {
 
     private static final Logger LOG = LoggerFactory.getLogger(FixCreatures.class);
 
-    private static final List ITEMS_WITH_NO_DROPPEDBY_LIST = Arrays.asList("Gold Coin", "Platinum Coin");
-    private static final List EVENT_ITEMS = Arrays.asList(
+    private static final List<String> ITEMS_WITH_NO_DROPPEDBY_LIST = List.of("Gold Coin", "Platinum Coin");
+    private static final List<String> EVENT_ITEMS = List.of(
             "Bunch of Winterberries",
             "Envelope from the Wizards",
             "Fireworks Rocket",
@@ -31,7 +30,7 @@ public class FixCreatures {
             "Silver Raid Token",
             "Golden Raid Token"
     );
-    private static final List NON_EVENT_CREATURES_DROPPING_SNOWBALLS = Arrays.asList("Yeti", "Grynch Clan Goblin");
+    private static final List<String> NON_EVENT_CREATURES_DROPPING_SNOWBALLS = List.of("Yeti", "Grynch Clan Goblin");
     private static final boolean DEBUG_MODE = false;
 
     private CreatureRepository creatureRepository;
@@ -45,6 +44,11 @@ public class FixCreatures {
         this.itemRepository = new ItemRepository();
     }
 
+    public FixCreatures(CreatureRepository creatureRepository, ItemRepository itemRepository) {
+        this.creatureRepository = creatureRepository;
+        this.itemRepository = itemRepository;
+    }
+
     /**
      * 1. Get a list of Creatures and sort it.
      * 2. Filter out deprecated or event creatures.
@@ -55,7 +59,8 @@ public class FixCreatures {
      * <p>
      * The end result is a list of Items with their droppedby list extended.
      */
-    public void checkCreatures() {
+    @SuppressWarnings("squid:S3864") // usage of Stream.peek for debugging purposes is justified in this case
+    public Map<String, Item> checkCreatures() {
         getCreatures().stream()
                 .sorted(Comparator.comparing(Creature::getName))
                 .filter(Creature::notDeprecatedOrEvent)
@@ -75,8 +80,11 @@ public class FixCreatures {
                 );
 
         saveItemArticles();
+
+        return itemPagesToUpdate;
     }
 
+    @SuppressWarnings("unchecked")
     private List<Creature> getCreatures() {
         if (creatures == null || creatures.isEmpty()) {
             creatures = creatureRepository.getWikiObjects();
@@ -84,6 +92,7 @@ public class FixCreatures {
         return creatures;
     }
 
+    @SuppressWarnings("unchecked")
     private List<Item> getItems() {
         if (items == null || items.isEmpty()) {
             items = itemRepository.getWikiObjects();
@@ -119,7 +128,7 @@ public class FixCreatures {
         if (!item.getDroppedby().contains(creature.getName()) && itemShouldBeAdded(creature.getName(), item.getName())) {
             LOG.info("Adding creature '{}' to droppedby list of item '{}'.", creature.getName(), item.getName());
 
-            if (!itemPagesToUpdate.keySet().contains(item.getName())) {
+            if (!itemPagesToUpdate.containsKey(item.getName())) {
                 // item not already in itemPages cache, add it
                 item.getDroppedby().add(creature.getName());
                 Collections.sort(item.getDroppedby());

@@ -75,7 +75,7 @@ public class Parser {
     }
 
     /**
-     * Alternative implementation to {@link #list(Class, String)} where the json list is read one-by-one, which makes
+     * Alternative implementation of {@link #list(Class, String)} where the json list is read one-by-one, which makes
      * it more robust against jsonparsingexceptions
      */
     public static <T> List<T> listOneByOne(Class<T> type, String json, long limit) {

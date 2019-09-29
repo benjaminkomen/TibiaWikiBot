@@ -24,13 +24,66 @@ import static org.mockito.Mockito.when;
 public class FixCreaturesTest {
 
     private FixCreatures target;
-    private static Creature RAT = makeRat();
-    private static Creature BEAR = makeBear();
-    private static Creature WASP = makeWasp();
-    private static Item CHEESE = makeCheese();
-    private static Item HONEYCOMB = makeHoneycomb();
+    private Creature Rat = makeRat();
+    private Creature Bear = makeBear();
+    private Creature Wasp = makeWasp();
+    private Item Cheese = makeCheese();
+    private Item Honeycomb = makeHoneycomb();
     private CreatureRepository mockCreatureRepository;
     private ItemRepository mockItemRepository;
+
+    @Before
+    public void setup() {
+        mockCreatureRepository = mock(CreatureRepository.class);
+        mockItemRepository = mock(ItemRepository.class);
+        target = new FixCreatures(mockCreatureRepository, mockItemRepository);
+    }
+
+    @Test
+    public void shouldFixCreatures_DoNothing() {
+        // given
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(Rat));
+        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(Cheese));
+
+        // when
+        final Map<String, Item> result = target.checkCreatures();
+        // then
+        assertThat(result.size(), is(0));
+    }
+
+    @Test
+    public void shouldFixCreatures_AddBearToDroppedbyOfHoneycomb() {
+        // given
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(Bear));
+        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(Honeycomb));
+        when(mockItemRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
+
+        // when
+        final Map<String, Item> result = target.checkCreatures();
+        // then
+        assertThat(result.size(), is(1));
+        assertThat(result.containsKey("Honeycomb"), is(true));
+        assertThat(result.get("Honeycomb").getDroppedby().size(), is(5));
+        assertThat(result.get("Honeycomb").getDroppedby().contains("Bear"), is(true));
+        assertThat(result.get("Honeycomb").getDroppedby().contains("Wasp"), is(false));
+    }
+
+    @Test
+    public void shouldFixCreatures_AddBearAndWaspToDroppedbyOfHoneycomb() {
+        // given
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(Bear, Wasp));
+        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(Honeycomb));
+        when(mockItemRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
+
+        // when
+        final Map<String, Item> result = target.checkCreatures();
+        // then
+        assertThat(result.size(), is(1));
+        assertThat(result.containsKey("Honeycomb"), is(true));
+        assertThat(result.get("Honeycomb").getDroppedby().size(), is(6));
+        assertThat(result.get("Honeycomb").getDroppedby().contains("Bear"), is(true));
+        assertThat(result.get("Honeycomb").getDroppedby().contains("Wasp"), is(true));
+    }
 
     private static Creature makeRat() {
         return Creature.builder()
@@ -83,59 +136,5 @@ public class FixCreaturesTest {
                 .name("Honeycomb")
                 .droppedby(new ArrayList<>(Arrays.asList("Grynch Clan Goblin", "Shadowpelt", "Werebear", "Willi Wasp"))) // Bear and Wasp are purposely missing
                 .build();
-    }
-
-    @Before
-    public void setup() {
-        mockCreatureRepository = mock(CreatureRepository.class);
-        mockItemRepository = mock(ItemRepository.class);
-        target = new FixCreatures(mockCreatureRepository, mockItemRepository);
-    }
-
-    @Test
-    public void shouldFixCreatures_DoNothing() {
-        // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(RAT));
-        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(CHEESE));
-        when(mockItemRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
-
-        // when
-        final Map<String, Item> result = target.checkCreatures();
-        // then
-        assertThat(result.size(), is(0));
-    }
-
-    @Test
-    public void shouldFixCreatures_AddBearToDroppedbyOfHoneycomb() {
-        // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(BEAR));
-        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(HONEYCOMB));
-        when(mockItemRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
-
-        // when
-        final Map<String, Item> result = target.checkCreatures();
-        // then
-        assertThat(result.size(), is(1));
-        assertThat(result.containsKey("Honeycomb"), is(true));
-        assertThat(result.get("Honeycomb").getDroppedby().size(), is(5));
-        assertThat(result.get("Honeycomb").getDroppedby().contains("Bear"), is(true));
-        assertThat(result.get("Honeycomb").getDroppedby().contains("Wasp"), is(false));
-    }
-
-    @Test
-    public void shouldFixCreatures_AddBearAndWaspToDroppedbyOfHoneycomb() {
-        // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(BEAR, WASP));
-        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(HONEYCOMB));
-        when(mockItemRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
-
-        // when
-        final Map<String, Item> result = target.checkCreatures();
-        // then
-        assertThat(result.size(), is(1));
-        assertThat(result.containsKey("Honeycomb"), is(true));
-        assertThat(result.get("Honeycomb").getDroppedby().size(), is(6));
-        assertThat(result.get("Honeycomb").getDroppedby().contains("Bear"), is(true));
-        assertThat(result.get("Honeycomb").getDroppedby().contains("Wasp"), is(true));
     }
 }

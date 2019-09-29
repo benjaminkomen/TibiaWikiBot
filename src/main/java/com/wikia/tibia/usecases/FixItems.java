@@ -34,6 +34,11 @@ public class FixItems {
         this.itemRepository = new ItemRepository();
     }
 
+    public FixItems(CreatureRepository creatureRepository, ItemRepository itemRepository) {
+        this.creatureRepository = creatureRepository;
+        this.itemRepository = itemRepository;
+    }
+
     /**
      * 1. Get a list of Items and sort it.
      * 2. Filter out deprecated or event items.
@@ -44,7 +49,8 @@ public class FixItems {
      * <p>
      * The end result is a list of Creatures with their LootTable extended.
      */
-    public void checkItems() {
+    @SuppressWarnings("squid:S3864") // usage of Stream.peek for debugging purposes is justified in this case
+    public Map<String, Creature> checkItems() {
 
         getItems().stream()
                 .sorted(Comparator.comparing(Item::getName))
@@ -65,8 +71,11 @@ public class FixItems {
                 );
 
         saveCreatureArticles();
+
+        return creaturePagesToUpdate;
     }
 
+    @SuppressWarnings("unchecked")
     private List<Creature> getCreatures() {
         if (creatures == null || creatures.isEmpty()) {
             creatures = creatureRepository.getWikiObjects();
@@ -80,7 +89,7 @@ public class FixItems {
                 .findAny();
     }
 
-
+    @SuppressWarnings("unchecked")
     private List<Item> getItems() {
         if (items == null || items.isEmpty()) {
             items = itemRepository.getWikiObjects();
@@ -95,7 +104,7 @@ public class FixItems {
         if (!creature.getLoot().contains(LootItem.fromName(item.getName())) && itemShouldBeAdded(creature.getName(), item.getName())) {
             LOG.info("Adding item '{}' to loot table of creature '{}'.", item.getName(), creature.getName());
 
-            if (!creaturePagesToUpdate.keySet().contains(creature.getName())) {
+            if (!creaturePagesToUpdate.containsKey(creature.getName())) {
                 // creature not already in creaturePages cache, add it
                 creature.getLoot().add(LootItem.fromName(item.getName()));
                 creaturePagesToUpdate.put(creature.getName(), creature);

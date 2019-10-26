@@ -100,6 +100,7 @@ public class Item extends WikiObject {
     private String npcpricerook;
     private String buyfrom;
     private String sellto;
+    private String fansite;
     private String notes2;
 
     @Builder
@@ -119,7 +120,7 @@ public class Item extends WikiObject {
                  YesNo writable, YesNo rewritable, Integer writechars, YesNo hangable, YesNo holdsliquid, Integer mana,
                  DamageElement damagetype, String damage, Integer volume, String duration, YesNo destructible,
                  List<String> droppedby, String value, String npcvalue, String npcprice, String npcvaluerook,
-                 String npcpricerook, String buyfrom, String sellto) {
+                 String npcpricerook, String buyfrom, String sellto, String fansite) {
         super(name, article, actualname, plural, implemented, notes, history, status);
         this.itemid = itemid;
         this.marketable = marketable;
@@ -194,6 +195,7 @@ public class Item extends WikiObject {
         this.npcpricerook = npcpricerook;
         this.buyfrom = buyfrom;
         this.sellto = sellto;
+        this.fansite = fansite;
         this.notes2 = notes2;
     }
 

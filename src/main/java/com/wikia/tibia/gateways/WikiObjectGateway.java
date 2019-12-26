@@ -31,4 +31,8 @@ public abstract class WikiObjectGateway<T extends WikiObject> {
 
         return request.put(contracts.getDescription(), wikiObject, header, dryRun);
     }
+
+    public String getWikiObject(String pageName) {
+        return request.get(contracts.getDescription() + "/" + pageName);
+    }
 }

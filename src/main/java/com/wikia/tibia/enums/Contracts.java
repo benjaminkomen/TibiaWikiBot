@@ -16,6 +16,7 @@ public enum Contracts implements Description {
     ITEMS(API.getDescription() + "/items"),
     KEYS(API.getDescription() + "/keys"),
     LOCATIONS(API.getDescription() + "/locations"),
+    LOOT_STATISTICS(API.getDescription() + "/loot"),
     MISSILES(API.getDescription() + "/missiles"),
     MOUNTS(API.getDescription() + "/mounts"),
     NPCS(API.getDescription() + "/npcs"),

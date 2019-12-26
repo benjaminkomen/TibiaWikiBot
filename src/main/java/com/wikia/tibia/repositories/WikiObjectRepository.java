@@ -31,4 +31,8 @@ public abstract class WikiObjectRepository<T extends Class<? extends WikiObject>
     public String saveWikiObject(WikiObject wikiObject, String editSummary, boolean dryRun) {
         return wikiObjectGateway.saveWikiObject(wikiObject, editSummary, dryRun);
     }
+
+    public Object getWikiObject(String pageName) {
+        return Parser.parse(wikiObjectClass, wikiObjectGateway.getWikiObject(pageName));
+    }
 }

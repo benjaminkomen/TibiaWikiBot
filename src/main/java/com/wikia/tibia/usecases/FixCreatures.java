@@ -7,13 +7,7 @@ import com.wikia.tibia.repositories.ItemRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FixCreatures {
@@ -87,7 +81,13 @@ public class FixCreatures {
     @SuppressWarnings("unchecked")
     private List<Creature> getCreatures() {
         if (creatures == null || creatures.isEmpty()) {
-            creatures = creatureRepository.getWikiObjects();
+            var tryList = creatureRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                creatures = (List<Creature>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of creatures: %s", tryList.getCause());
+            }
         }
         return creatures;
     }
@@ -95,7 +95,13 @@ public class FixCreatures {
     @SuppressWarnings("unchecked")
     private List<Item> getItems() {
         if (items == null || items.isEmpty()) {
-            items = itemRepository.getWikiObjects();
+            var tryList = itemRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                items = (List<Item>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of items: %s", tryList.getCause());
+            }
         }
         return items;
     }

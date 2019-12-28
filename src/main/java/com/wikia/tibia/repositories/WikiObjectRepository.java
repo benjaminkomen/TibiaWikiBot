@@ -3,6 +3,7 @@ package com.wikia.tibia.repositories;
 import com.wikia.tibia.gateways.WikiObjectGateway;
 import com.wikia.tibia.jackson.Parser;
 import com.wikia.tibia.objects.WikiObject;
+import io.vavr.control.Try;
 
 import java.util.List;
 
@@ -16,23 +17,27 @@ public abstract class WikiObjectRepository<T extends Class<? extends WikiObject>
         this.wikiObjectGateway = wikiObjectGateway;
     }
 
-    public List<T> getWikiObjects() {
-        return Parser.listOneByOne(wikiObjectClass, wikiObjectGateway.getWikiObjects(true), -1);
+    public Try<List<T>> getWikiObjects() {
+        return wikiObjectGateway.getWikiObjects(true)
+                .map(json -> Parser.listOneByOne(wikiObjectClass, json, -1));
     }
 
-    public List<T> getWikiObjects(long limit) {
-        return Parser.listOneByOne(wikiObjectClass, wikiObjectGateway.getWikiObjects(true), limit);
+    public Try<List<T>> getWikiObjects(long limit) {
+        return wikiObjectGateway.getWikiObjects(true)
+                .map(json -> Parser.listOneByOne(wikiObjectClass, json, limit));
     }
 
-    public List<String> getWikiObjectsList() {
-        return Parser.list(String.class, wikiObjectGateway.getWikiObjects(false));
+    public Try<List<String>> getWikiObjectsList() {
+        return wikiObjectGateway.getWikiObjects(false)
+                .map(json -> Parser.list(String.class, json));
     }
 
-    public String saveWikiObject(WikiObject wikiObject, String editSummary, boolean dryRun) {
+    public Try<String> saveWikiObject(WikiObject wikiObject, String editSummary, boolean dryRun) {
         return wikiObjectGateway.saveWikiObject(wikiObject, editSummary, dryRun);
     }
 
-    public Object getWikiObject(String pageName) {
-        return Parser.parse(wikiObjectClass, wikiObjectGateway.getWikiObject(pageName));
+    public Try<Object> getWikiObject(String pageName) {
+        return wikiObjectGateway.getWikiObject(pageName)
+                .map(json -> Parser.parse(wikiObjectClass, json));
     }
 }

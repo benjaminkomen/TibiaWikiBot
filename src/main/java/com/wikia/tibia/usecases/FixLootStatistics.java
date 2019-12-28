@@ -41,35 +41,41 @@ public class FixLootStatistics {
      */
     public Map<String, Creature> checkLootStatistics() {
         getLootPages().stream()
+                .filter(lootPage -> lootPage.getName() != null && !lootPage.isEmpty())
                 .sorted(Comparator.comparing(Loot::getName))
-                .filter(lootPage -> !lootPage.isEmpty())
                 .peek(c -> LOG.debug("Processing loot statistics page of creature: {}", c.getName()))
                 .forEach(lootPage -> {
-                    Creature correspondingCreature = getCreature(lootPage.getName());
-
-                    lootPage.getLoot()
-                            .forEach(lootStatisticsItem -> {
-                                boolean lootStatisticsItemExistsInCreatureLootList = correspondingCreature.getLoot().stream()
-                                        .anyMatch(lootItem -> Objects.equals(lootItem.getItemName(), lootStatisticsItem.getItemName()));
-
-                                // loot item exists on loot statistics page, but not on creature page. Add it.
-                                if (!lootStatisticsItemExistsInCreatureLootList && !"Empty".equals(lootStatisticsItem.getItemName())) {
-
-                                    final LootItem newLootItem = LootItem.builder()
-                                            .itemName(lootStatisticsItem.getItemName())
-                                            .build();
-
-                                    if (!creaturePagesToUpdate.containsKey(correspondingCreature.getName())) {
-                                        // creature not already in creaturePages cache, add it
-                                        correspondingCreature.getLoot().add(newLootItem);
-                                        creaturePagesToUpdate.put(correspondingCreature.getName(), correspondingCreature);
-                                    } else {
-                                        // creature already present in creaturePages cache, get the existing creature and add the new loot item
-                                        final Creature existingCreature = creaturePagesToUpdate.get(correspondingCreature.getName());
-                                        existingCreature.getLoot().add(newLootItem);
-                                    }
-                                }
+                    final Creature correspondingCreature = getCreature(lootPage.getName())
+                            .orElseGet(() -> {
+                                LOG.error("Could not find creature with name '{}' in collection of creatures.", lootPage.getName());
+                                return null;
                             });
+
+                    if (correspondingCreature != null) {
+                        lootPage.getLoot()
+                                .forEach(lootStatisticsItem -> {
+                                    boolean lootStatisticsItemExistsInCreatureLootList = correspondingCreature.getLoot().stream()
+                                            .anyMatch(lootItem -> Objects.equals(lootItem.getItemName(), lootStatisticsItem.getItemName()));
+
+                                    // loot item exists on loot statistics page, but not on creature page. Add it.
+                                    if (!lootStatisticsItemExistsInCreatureLootList && !"Empty".equals(lootStatisticsItem.getItemName())) {
+
+                                        final LootItem newLootItem = LootItem.builder()
+                                                .itemName(lootStatisticsItem.getItemName())
+                                                .build();
+
+                                        if (!creaturePagesToUpdate.containsKey(correspondingCreature.getName())) {
+                                            // creature not already in creaturePages cache, add it
+                                            correspondingCreature.getLoot().add(newLootItem);
+                                            creaturePagesToUpdate.put(correspondingCreature.getName(), correspondingCreature);
+                                        } else {
+                                            // creature already present in creaturePages cache, get the existing creature and add the new loot item
+                                            final Creature existingCreature = creaturePagesToUpdate.get(correspondingCreature.getName());
+                                            existingCreature.getLoot().add(newLootItem);
+                                        }
+                                    }
+                                });
+                    }
                 });
 
         saveCreatureArticles();
@@ -77,29 +83,36 @@ public class FixLootStatistics {
         return creaturePagesToUpdate;
     }
 
-    private Creature getCreature(String creaturePageName) {
-        Object wikiObject = creatureRepository.getWikiObject(creaturePageName);
-
-        if (wikiObject instanceof Creature) {
-            return (Creature) wikiObject;
-        } else {
-            LOG.error("Failed to get wikiObject of type Creature with name {}", creaturePageName);
-            throw new IllegalStateException(String.format("Failed to get wikiObject of type Creature with name %s", creaturePageName));
-        }
-    }
-
     @SuppressWarnings("unchecked")
     private List<Creature> getCreatures() {
         if (creatures == null || creatures.isEmpty()) {
-            creatures = creatureRepository.getWikiObjects();
+            var tryList = creatureRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                creatures = (List<Creature>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of creatures: %s", tryList.getCause());
+            }
         }
         return creatures;
+    }
+
+    private Optional<Creature> getCreature(String creatureName) {
+        return getCreatures().stream()
+                .filter(i -> Objects.equals(i.getName(), creatureName))
+                .findAny();
     }
 
     @SuppressWarnings("unchecked")
     private List<Loot> getLootPages() {
         if (loot == null || loot.isEmpty()) {
-            loot = lootRepository.getWikiObjects();
+            var tryList = lootRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                loot = (List<Loot>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of lootPages: %s", tryList.getCause());
+            }
         }
         return loot;
     }

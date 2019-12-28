@@ -6,6 +6,7 @@ import com.wikia.tibia.objects.LootItem;
 import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.ItemRepository;
+import io.vavr.control.Try;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -98,8 +99,8 @@ public class FixItemsTest {
     @Test
     public void shouldFixItems_DoNothing() {
         // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(Rat));
-        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(Cheese));
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(Rat)));
+        when(mockItemRepository.getWikiObjects()).thenReturn(Try.success(List.of(Cheese)));
 
         // when
         final Map<String, Creature> result = target.checkItems();
@@ -110,9 +111,9 @@ public class FixItemsTest {
     @Test
     public void shouldFixItems_AddHoneycombToLootOfBear() {
         // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(Bear));
-        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(Honeycomb));
-        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(Bear)));
+        when(mockItemRepository.getWikiObjects()).thenReturn(Try.success(List.of(Honeycomb)));
+        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
 
         // when
         final Map<String, Creature> result = target.checkItems();
@@ -126,9 +127,9 @@ public class FixItemsTest {
     @Test
     public void shouldFixItems_AddHoneycombToLootOfBearAndWasp() {
         // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(Bear, Wasp));
-        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(Honeycomb));
-        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(Bear, Wasp)));
+        when(mockItemRepository.getWikiObjects()).thenReturn(Try.success(List.of(Honeycomb)));
+        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
 
         // when
         final Map<String, Creature> result = target.checkItems();
@@ -146,9 +147,9 @@ public class FixItemsTest {
     @Test
     public void shouldFixItems_AddHoneycombAndBearPawToLootOfBear() {
         // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(List.of(Bear));
-        when(mockItemRepository.getWikiObjects()).thenReturn(List.of(Honeycomb, BearPaw));
-        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(Bear)));
+        when(mockItemRepository.getWikiObjects()).thenReturn(Try.success(List.of(Honeycomb, BearPaw)));
+        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
 
         // when
         final Map<String, Creature> result = target.checkItems();

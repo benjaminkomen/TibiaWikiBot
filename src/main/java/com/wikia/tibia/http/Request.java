@@ -1,6 +1,8 @@
 package com.wikia.tibia.http;
 
+import com.wikia.tibia.exceptions.ResponseException;
 import com.wikia.tibia.jackson.Parser;
+import io.vavr.control.Try;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,11 +30,11 @@ public class Request {
         return null;
     }
 
-    public String get(String location) {
+    public Try<String> get(String location) {
         return get(URI.create(location));
     }
 
-    public String get(URI location) {
+    public Try<String> get(URI location) {
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(location)
                 .GET()
@@ -40,26 +42,31 @@ public class Request {
 
         final HttpResponse<String> response = invoke(request);
 
+        if (response != null && response.statusCode() >= 400) {
+            // we receive an error response
+            return Try.failure(new ResponseException(response.body()));
+        }
+
         if (response != null && response.body() != null) {
-            return response.body();
+            return Try.success(response.body());
         } else {
-            return "";
+            return Try.success("");
         }
     }
 
-    public String put(String location, Object body, Header header, boolean dryRun) {
+    public Try<String> put(String location, Object body, Header header, boolean dryRun) {
         return this.put(location, Parser.json(body), header, dryRun);
     }
 
-    public String put(String location, Object body, boolean dryRun) {
+    public Try<String> put(String location, Object body, boolean dryRun) {
         return this.put(location, Parser.json(body), null, dryRun);
     }
 
-    public String put(String location, String jsonBody, Header header, boolean dryRun) {
+    public Try<String> put(String location, String jsonBody, Header header, boolean dryRun) {
         return this.put(URI.create(location), jsonBody, header, dryRun);
     }
 
-    public String put(URI location, String jsonBody, Header header, boolean dryRun) {
+    public Try<String> put(URI location, String jsonBody, Header header, boolean dryRun) {
         final HttpRequest.Builder requestBuilder = HttpRequest.newBuilder()
                 .uri(location)
                 .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -73,19 +80,24 @@ public class Request {
 
         if (dryRun) {
             LOG.info("Not actually doing request due to dry run.");
-            return "";
+            return Try.success("");
         }
 
         final HttpResponse<String> response = invoke(request);
 
+        if (response != null && response.statusCode() >= 400) {
+            // we receive an error response
+            return Try.failure(new ResponseException(response.body()));
+        }
+
         if (response != null && response.body() != null) {
-            return response.body();
+            return Try.success(response.body());
         } else {
-            return "";
+            return Try.success("");
         }
     }
 
-    public String post(URI location, String jsonBody) {
+    public Try<String> post(URI location, String jsonBody) {
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(location)
                 .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
@@ -93,14 +105,19 @@ public class Request {
 
         final HttpResponse<String> response = invoke(request);
 
+        if (response != null && response.statusCode() >= 400) {
+            // we receive an error response
+            return Try.failure(new ResponseException(response.body()));
+        }
+
         if (response != null && response.body() != null) {
-            return response.body();
+            return Try.success(response.body());
         } else {
-            return "";
+            return Try.success("");
         }
     }
 
-    public String delete(URI location) {
+    public Try<String> delete(URI location) {
         final HttpRequest request = HttpRequest.newBuilder()
                 .uri(location)
                 .DELETE()
@@ -108,10 +125,15 @@ public class Request {
 
         final HttpResponse<String> response = invoke(request);
 
+        if (response != null && response.statusCode() >= 400) {
+            // we receive an error response
+            return Try.failure(new ResponseException(response.body()));
+        }
+
         if (response != null && response.body() != null) {
-            return response.body();
+            return Try.success(response.body());
         } else {
-            return "";
+            return Try.success("");
         }
     }
 }

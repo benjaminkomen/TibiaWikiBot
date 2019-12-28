@@ -1,42 +1,8 @@
 package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.jackson.Parser;
-import com.wikia.tibia.objects.Achievement;
-import com.wikia.tibia.objects.Book;
-import com.wikia.tibia.objects.Building;
-import com.wikia.tibia.objects.Corpse;
-import com.wikia.tibia.objects.Creature;
-import com.wikia.tibia.objects.Effect;
-import com.wikia.tibia.objects.HuntingPlace;
-import com.wikia.tibia.objects.Item;
-import com.wikia.tibia.objects.Key;
-import com.wikia.tibia.objects.Location;
-import com.wikia.tibia.objects.Missile;
-import com.wikia.tibia.objects.Mount;
-import com.wikia.tibia.objects.NPC;
-import com.wikia.tibia.objects.Outfit;
-import com.wikia.tibia.objects.Quest;
-import com.wikia.tibia.objects.Spell;
-import com.wikia.tibia.objects.Street;
-import com.wikia.tibia.objects.TibiaObject;
-import com.wikia.tibia.repositories.AchievementRepository;
-import com.wikia.tibia.repositories.BookRepository;
-import com.wikia.tibia.repositories.BuildingRepository;
-import com.wikia.tibia.repositories.CorpseRepository;
-import com.wikia.tibia.repositories.CreatureRepository;
-import com.wikia.tibia.repositories.EffectRepository;
-import com.wikia.tibia.repositories.HuntingPlaceRepository;
-import com.wikia.tibia.repositories.ItemRepository;
-import com.wikia.tibia.repositories.KeyRepository;
-import com.wikia.tibia.repositories.LocationRepository;
-import com.wikia.tibia.repositories.MissileRepository;
-import com.wikia.tibia.repositories.MountRepository;
-import com.wikia.tibia.repositories.NPCRepository;
-import com.wikia.tibia.repositories.ObjectRepository;
-import com.wikia.tibia.repositories.OutfitRepository;
-import com.wikia.tibia.repositories.QuestRepository;
-import com.wikia.tibia.repositories.SpellRepository;
-import com.wikia.tibia.repositories.StreetRepository;
+import com.wikia.tibia.objects.*;
+import com.wikia.tibia.repositories.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -115,10 +81,10 @@ public class NullEditWikiObjects {
     public void checkAchievements() {
         getAchievements()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    achievementRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            achievementRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -127,10 +93,10 @@ public class NullEditWikiObjects {
     public void checkBooks() {
         getBooks()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    bookRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            bookRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -139,10 +105,10 @@ public class NullEditWikiObjects {
     public void checkBuildings() {
         getBuildings()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    buildingRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            buildingRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -151,10 +117,10 @@ public class NullEditWikiObjects {
     public void checkCorpses() {
         getCorpses()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    corpseRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            corpseRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -164,10 +130,10 @@ public class NullEditWikiObjects {
     public void checkCreatures() {
         getCreatures()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    creatureRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            creatureRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -176,10 +142,10 @@ public class NullEditWikiObjects {
     public void checkEffects() {
         getEffects()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    effectRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            effectRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -188,9 +154,9 @@ public class NullEditWikiObjects {
     public void checkHuntingPlaces() {
         getHuntingPlaces()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    huntingPlaceRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            huntingPlaceRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -199,10 +165,10 @@ public class NullEditWikiObjects {
     public void checkItems() {
         getItems()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    itemRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            itemRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -211,10 +177,10 @@ public class NullEditWikiObjects {
     public void checkKeys() {
         getKeys()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    keyRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            keyRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -223,10 +189,10 @@ public class NullEditWikiObjects {
     public void checkLocations() {
         getLocations()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    locationRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            locationRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -235,10 +201,10 @@ public class NullEditWikiObjects {
     public void checkMissiles() {
         getMissiles()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    missileRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            missileRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -247,10 +213,10 @@ public class NullEditWikiObjects {
     public void checkMounts() {
         getMounts()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    mountRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            mountRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -259,10 +225,10 @@ public class NullEditWikiObjects {
     public void checkNPCs() {
         getNPCs()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    npcRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            npcRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -271,10 +237,10 @@ public class NullEditWikiObjects {
     public void checkObjects() {
         getObjects()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    objectRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            objectRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -283,10 +249,10 @@ public class NullEditWikiObjects {
     public void checkOutfits() {
         getOutfits()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    outfitRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            outfitRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -295,10 +261,10 @@ public class NullEditWikiObjects {
     public void checkQuests() {
         getQuests()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    questRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            questRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -307,10 +273,10 @@ public class NullEditWikiObjects {
     public void checkSpells() {
         getSpells()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    spellRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            spellRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -319,10 +285,10 @@ public class NullEditWikiObjects {
     public void checkStreets() {
         getStreets()
                 .forEach(wikiObject -> {
-                    wikiObject.setTargetJson(Parser.json(wikiObject));
-                    wikiObject.setDefaultValues();
-                    LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
-                    streetRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
+                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setDefaultValues();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            streetRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
                 );
@@ -330,126 +296,234 @@ public class NullEditWikiObjects {
 
     private List<Achievement> getAchievements() {
         if (achievements == null || achievements.isEmpty()) {
-            achievements = achievementRepository.getWikiObjects();
+            var tryList = achievementRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                achievements = (List<Achievement>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of achievements: %s", tryList.getCause());
+            }
         }
         return achievements;
     }
 
     private List<Book> getBooks() {
         if (books == null || books.isEmpty()) {
-            books = bookRepository.getWikiObjects();
+            var tryList = bookRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                books = (List<Book>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of books: %s", tryList.getCause());
+            }
         }
         return books;
     }
 
     private List<Building> getBuildings() {
         if (buildings == null || buildings.isEmpty()) {
-            buildings = buildingRepository.getWikiObjects();
+            var tryList = buildingRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                buildings = (List<Building>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of buildings: %s", tryList.getCause());
+            }
         }
         return buildings;
     }
 
     private List<Corpse> getCorpses() {
         if (corpses == null || corpses.isEmpty()) {
-            corpses = corpseRepository.getWikiObjects();
+            var tryList = corpseRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                corpses = (List<Corpse>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of corpses: %s", tryList.getCause());
+            }
         }
         return corpses;
     }
 
     private List<Creature> getCreatures() {
         if (creatures == null || creatures.isEmpty()) {
-            creatures = creatureRepository.getWikiObjects();
+            var tryList = creatureRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                creatures = (List<Creature>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of creatures: %s", tryList.getCause());
+            }
         }
         return creatures;
     }
 
     private List<Effect> getEffects() {
         if (effects == null || effects.isEmpty()) {
-            effects = effectRepository.getWikiObjects();
+            var tryList = effectRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                effects = (List<Effect>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of effects: %s", tryList.getCause());
+            }
         }
         return effects;
     }
 
     private List<HuntingPlace> getHuntingPlaces() {
         if (huntingPlaces == null || huntingPlaces.isEmpty()) {
-            huntingPlaces = huntingPlaceRepository.getWikiObjects();
+            var tryList = huntingPlaceRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                huntingPlaces = (List<HuntingPlace>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of hunting places: %s", tryList.getCause());
+            }
         }
         return huntingPlaces;
     }
 
     private List<Item> getItems() {
         if (items == null || items.isEmpty()) {
-            items = itemRepository.getWikiObjects();
+            var tryList = itemRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                items = (List<Item>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of items: %s", tryList.getCause());
+            }
         }
         return items;
     }
 
     private List<Key> getKeys() {
         if (keys == null || keys.isEmpty()) {
-            keys = keyRepository.getWikiObjects();
+            var tryList = keyRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                keys = (List<Key>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of keys: %s", tryList.getCause());
+            }
         }
         return keys;
     }
 
     private List<Location> getLocations() {
         if (locations == null || locations.isEmpty()) {
-            locations = locationRepository.getWikiObjects();
+            var tryList = locationRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                locations = (List<Location>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of locations: %s", tryList.getCause());
+            }
         }
         return locations;
     }
 
     private List<Missile> getMissiles() {
         if (missiles == null || missiles.isEmpty()) {
-            missiles = missileRepository.getWikiObjects();
+            var tryList = missileRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                missiles = (List<Missile>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of missiles: %s", tryList.getCause());
+            }
         }
         return missiles;
     }
 
     private List<Mount> getMounts() {
         if (mounts == null || mounts.isEmpty()) {
-            mounts = mountRepository.getWikiObjects();
+            var tryList = mountRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                mounts = (List<Mount>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of mounts: %s", tryList.getCause());
+            }
         }
         return mounts;
     }
 
     private List<NPC> getNPCs() {
         if (npcs == null || npcs.isEmpty()) {
-            npcs = npcRepository.getWikiObjects();
+            var tryList = npcRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                npcs = (List<NPC>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of npcs: %s", tryList.getCause());
+            }
         }
         return npcs;
     }
 
     private List<TibiaObject> getObjects() {
         if (objects == null || objects.isEmpty()) {
-            objects = objectRepository.getWikiObjects();
+            var tryList = objectRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                objects = (List<TibiaObject>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of objects: %s", tryList.getCause());
+            }
         }
         return objects;
     }
 
     private List<Outfit> getOutfits() {
         if (outfits == null || outfits.isEmpty()) {
-            outfits = outfitRepository.getWikiObjects();
+            var tryList = outfitRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                outfits = (List<Outfit>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of outfits: %s", tryList.getCause());
+            }
         }
         return outfits;
     }
 
     private List<Quest> getQuests() {
         if (quests == null || quests.isEmpty()) {
-            quests = questRepository.getWikiObjects();
+            var tryList = questRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                quests = (List<Quest>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of quests: %s", tryList.getCause());
+            }
         }
         return quests;
     }
 
     private List<Spell> getSpells() {
         if (spells == null || spells.isEmpty()) {
-            spells = spellRepository.getWikiObjects();
+            var tryList = spellRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                spells = (List<Spell>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of spells: %s", tryList.getCause());
+            }
         }
         return spells;
     }
 
     private List<Street> getStreets() {
         if (streets == null || streets.isEmpty()) {
-            streets = streetRepository.getWikiObjects();
+            var tryList = streetRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                streets = (List<Street>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of streets: %s", tryList.getCause());
+            }
         }
         return streets;
     }

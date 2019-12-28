@@ -3,6 +3,7 @@ package com.wikia.tibia.usecases;
 import com.wikia.tibia.objects.*;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.LootRepository;
+import io.vavr.control.Try;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,8 +40,8 @@ public class FixLootStatisticsTest {
     @Test
     public void shouldFixLootStatistics_DoNothing() {
         // given
-        when(mockCreatureRepository.getWikiObject("Rat")).thenReturn(CreatureRat);
-        when(mockLootRepository.getWikiObjects()).thenReturn(List.of(LootRat));
+        when(mockCreatureRepository.getWikiObject("Rat")).thenReturn(Try.success(CreatureRat));
+        when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootRat)));
 
         // when
         final Map<String, Creature> result = target.checkLootStatistics();
@@ -55,9 +56,9 @@ public class FixLootStatisticsTest {
     @Test
     public void shouldFixLootStatistics_AddSwordToDroppedByListOfRat() {
         // given
-        when(mockCreatureRepository.getWikiObject("Rat")).thenReturn(CreatureRat);
-        when(mockLootRepository.getWikiObjects()).thenReturn(List.of(LootRatWithSword));
-        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn("success");
+        when(mockCreatureRepository.getWikiObject("Rat")).thenReturn(Try.success(CreatureRat));
+        when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootRatWithSword)));
+        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
 
         // when
         final Map<String, Creature> result = target.checkLootStatistics();

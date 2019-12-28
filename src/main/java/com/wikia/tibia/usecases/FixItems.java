@@ -2,6 +2,7 @@ package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Item;
+import com.wikia.tibia.objects.Loot;
 import com.wikia.tibia.objects.LootItem;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.ItemRepository;
@@ -78,7 +79,13 @@ public class FixItems {
     @SuppressWarnings("unchecked")
     private List<Creature> getCreatures() {
         if (creatures == null || creatures.isEmpty()) {
-            creatures = creatureRepository.getWikiObjects();
+            var tryList = creatureRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                creatures = (List<Creature>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of creatures: %s", tryList.getCause());
+            }
         }
         return creatures;
     }
@@ -92,7 +99,13 @@ public class FixItems {
     @SuppressWarnings("unchecked")
     private List<Item> getItems() {
         if (items == null || items.isEmpty()) {
-            items = itemRepository.getWikiObjects();
+            var tryList = itemRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                items = (List<Item>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of items: %s", tryList.getCause());
+            }
         }
         return items;
     }

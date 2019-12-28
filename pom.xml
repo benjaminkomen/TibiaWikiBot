@@ -27,6 +27,8 @@
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
         <jackson.version>2.10.1</jackson.version>
         <jsonassert.version>1.5.0</jsonassert.version>
+        <guava.version>28.1-jre</guava.version>
+        <vavr.version>0.10.2</vavr.version>
     </properties>
 
     <dependencies>
@@ -120,6 +122,20 @@
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
             <version>${jsonassert.version}</version>
+        </dependency>
+
+        <!-- Needed for some URL utils -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+
+        <!-- Vavr - functional language features -->
+        <dependency>
+            <groupId>io.vavr</groupId>
+            <artifactId>vavr</artifactId>
+            <version>${vavr.version}</version>
         </dependency>
 
     </dependencies>

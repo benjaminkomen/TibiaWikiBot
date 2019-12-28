@@ -17,6 +17,7 @@ import lombok.Setter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -70,7 +71,7 @@ public class Creature extends WikiObject {
     private String speed;
     private String strategy;
     private String location;
-    private List<LootItem> loot;
+    private List<LootItem> loot = new ArrayList<>();
 
     @Builder
     public Creature(String name, Article article, String actualname, String plural, String implemented, String notes,

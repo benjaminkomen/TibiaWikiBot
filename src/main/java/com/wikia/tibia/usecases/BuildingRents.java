@@ -1,6 +1,7 @@
 package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.objects.Building;
+import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.objects.csv.HouseRent;
 import com.wikia.tibia.repositories.BuildingRepository;
@@ -72,7 +73,13 @@ public class BuildingRents {
 
     private List<Building> getBuildings() {
         if (buildings == null || buildings.isEmpty()) {
-            buildings = buildingRepository.getWikiObjects();
+            var tryList = buildingRepository.getWikiObjects();
+
+            if (tryList.isSuccess()) {
+                buildings = (List<Building>) tryList.get();
+            } else {
+                LOG.error("Failed to get a list of buildings: %s", tryList.getCause());
+            }
         }
         return buildings;
     }

@@ -40,7 +40,7 @@ public class FixLootStatisticsTest {
     @Test
     public void shouldFixLootStatistics_DoNothing() {
         // given
-        when(mockCreatureRepository.getWikiObject("Rat")).thenReturn(Try.success(CreatureRat));
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(CreatureRat)));
         when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootRat)));
 
         // when
@@ -56,7 +56,7 @@ public class FixLootStatisticsTest {
     @Test
     public void shouldFixLootStatistics_AddSwordToDroppedByListOfRat() {
         // given
-        when(mockCreatureRepository.getWikiObject("Rat")).thenReturn(Try.success(CreatureRat));
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(CreatureRat)));
         when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootRatWithSword)));
         when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
 

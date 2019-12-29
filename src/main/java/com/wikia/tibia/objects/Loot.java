@@ -10,6 +10,7 @@ import java.util.List;
 @AllArgsConstructor(access = AccessLevel.PUBLIC)
 public class Loot {
 
+    private String pageName;
     private String version;
     private String kills;
     private String name;

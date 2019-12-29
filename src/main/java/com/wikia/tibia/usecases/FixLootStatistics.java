@@ -47,7 +47,7 @@ public class FixLootStatistics {
                 .forEach(lootPage -> {
                     final Creature correspondingCreature = getCreature(lootPage.getName())
                             .orElseGet(() -> {
-                                LOG.error("Could not find creature with name '{}' in collection of creatures.", lootPage.getName());
+                                LOG.error("Could not find creature with pageName '{}' and name '{}' in collection of creatures.", lootPage.getPageName(), lootPage.getName());
                                 return null;
                             });
 

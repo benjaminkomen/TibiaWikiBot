@@ -67,6 +67,7 @@ public class FixLootStatistics {
 
                                     // loot item exists on loot statistics page, but not on creature page. Add it.
                                     if (!lootStatisticsItemExistsInCreatureLootList && !"Empty".equals(lootStatisticsItem.getItemName())) {
+                                        LOG.info("Adding item '{}' to loot list of creature '{}'.", lootStatisticsItem.getItemName(), correspondingCreature.getName());
 
                                         final LootItem newLootItem = LootItem.builder()
                                                 .itemName(lootStatisticsItem.getItemName())

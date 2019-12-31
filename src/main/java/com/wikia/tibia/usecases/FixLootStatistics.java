@@ -22,6 +22,14 @@ public class FixLootStatistics {
     private List<Loot> loot = new ArrayList<>();
     private List<Creature> creatures = new ArrayList<>();
     private Map<String, Creature> creaturePagesToUpdate = new ConcurrentHashMap<>(); // creature name, actual creature
+    private static final Map<String, String> DIFFERENTLY_NAMED_ITEMS = Map.of(
+            "Skull", "Skull (Item)",
+            "Black Skull", "Black Skull (Item)",
+            "Dead Snake", "Dead Snake (Item)",
+            "Dead Frog", "Dead Frog (Item)",
+            "Clusters of Solace", "Cluster of Solace",
+            "Bag With Stolen Gold", "Bag with Stolen Gold"
+    );
 
     public FixLootStatistics() {
         this.creatureRepository = new CreatureRepository();
@@ -55,7 +63,7 @@ public class FixLootStatistics {
                         lootPage.getLoot()
                                 .forEach(lootStatisticsItem -> {
                                     boolean lootStatisticsItemExistsInCreatureLootList = correspondingCreature.getLoot().stream()
-                                            .anyMatch(lootItem -> Objects.equals(lootItem.getItemName(), lootStatisticsItem.getItemName()));
+                                            .anyMatch(lootItem -> Objects.equals(lootItem.getItemName(), replaceSomeNames(lootStatisticsItem.getItemName())));
 
                                     // loot item exists on loot statistics page, but not on creature page. Add it.
                                     if (!lootStatisticsItemExistsInCreatureLootList && !"Empty".equals(lootStatisticsItem.getItemName())) {
@@ -135,4 +143,11 @@ public class FixLootStatistics {
         }
     }
 
+    // Some items are actually named differently on the wiki, because of page names conflicts
+    private String replaceSomeNames(String itemName) {
+        if (DIFFERENTLY_NAMED_ITEMS.containsKey(itemName)) {
+            return DIFFERENTLY_NAMED_ITEMS.get(itemName);
+        }
+        return itemName;
+    }
 }

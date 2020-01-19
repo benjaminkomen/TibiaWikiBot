@@ -27,7 +27,7 @@
         <maven.surefire.plugin.version>2.22.2</maven.surefire.plugin.version>
         <jackson.version>2.10.1</jackson.version>
         <jsonassert.version>1.5.0</jsonassert.version>
-        <guava.version>28.1-jre</guava.version>
+        <guava.version>28.2-jre</guava.version>
         <vavr.version>0.10.2</vavr.version>
     </properties>
 

@@ -24,12 +24,11 @@ public class FixLootStatisticsTest {
     private FixLootStatistics target;
     private CreatureRepository mockCreatureRepository;
     private LootRepository mockLootRepository;
-    private Creature CreatureRat = makeCreatureRat();
-    private Creature CreatureAmazon = makeCreatureAmazon();
-    private Loot LootRat = makeLootRat();
-    private Loot LootAmazon = makeLootAmazon();
-
-    private Loot LootRatWithSword = makeLootRatWithSword();
+    private final Creature CreatureRat = makeCreatureRat();
+    private final Creature CreatureAmazon = makeCreatureAmazon();
+    private final LootWrapper LootRat = makeLootRat();
+    private final LootWrapper LootAmazon = makeLootAmazon();
+    private final LootWrapper LootRatWithSword = makeLootRatWithSword();
 
     @Before
     public void setup() {
@@ -122,51 +121,57 @@ public class FixLootStatisticsTest {
                 .build();
     }
 
-    private static Loot makeLootRat() {
-        return Loot.builder()
-                .kills("14605")
-                .name("Rat")
-                .loot(new ArrayList<>(Arrays.asList(
-                        LootStatisticsItem.builder().itemName("Empty").times("108").build(),
-                        LootStatisticsItem.builder().itemName("Cheese").times("5741").build(),
-                        LootStatisticsItem.builder().itemName("Gold Coin").times("14477").amount("1").total("20591").build()
-                )))
-                .version("9.63")
+    private static LootWrapper makeLootRat() {
+        return LootWrapper.builder()
+                .loot2(Loot.builder()
+                        .kills("14605")
+                        .name("Rat")
+                        .loot(new ArrayList<>(Arrays.asList(
+                                LootStatisticsItem.builder().itemName("Empty").times("108").build(),
+                                LootStatisticsItem.builder().itemName("Cheese").times("5741").build(),
+                                LootStatisticsItem.builder().itemName("Gold Coin").times("14477").amount("1").total("20591").build()
+                        )))
+                        .version("9.63")
+                        .build())
                 .build();
     }
 
-    private static Loot makeLootRatWithSword() {
-        return Loot.builder()
-                .kills("14605")
-                .name("Rat")
-                .loot(new ArrayList<>(Arrays.asList(
-                        LootStatisticsItem.builder().itemName("Empty").times("108").build(),
-                        LootStatisticsItem.builder().itemName("Cheese").times("5741").build(),
-                        LootStatisticsItem.builder().itemName("Gold Coin").times("14477").amount("1").total("20591").build(),
-                        LootStatisticsItem.builder().itemName("Sword").times("1").build()
-                )))
-                .version("9.63")
+    private static LootWrapper makeLootRatWithSword() {
+        return LootWrapper.builder()
+                .loot2(Loot.builder()
+                        .kills("14605")
+                        .name("Rat")
+                        .loot(new ArrayList<>(Arrays.asList(
+                                LootStatisticsItem.builder().itemName("Empty").times("108").build(),
+                                LootStatisticsItem.builder().itemName("Cheese").times("5741").build(),
+                                LootStatisticsItem.builder().itemName("Gold Coin").times("14477").amount("1").total("20591").build(),
+                                LootStatisticsItem.builder().itemName("Sword").times("1").build()
+                        )))
+                        .version("9.63")
+                        .build())
                 .build();
     }
 
-    private Loot makeLootAmazon() {
-        return Loot.builder()
-                .kills("21983")
-                .name("Amazon")
-                .loot(new ArrayList<>(Arrays.asList(
-                        LootStatisticsItem.builder().itemName("Empty").times("253").build(),
-                        LootStatisticsItem.builder().itemName("Dagger").times("17606").amount("1").total("17606").build(),
-                        LootStatisticsItem.builder().itemName("Skull").times("17581").amount("1-2").total("26316").build(),
-                        LootStatisticsItem.builder().itemName("Gold Coin").times("1").amount("1").total("2").build(),
-                        LootStatisticsItem.builder().itemName("Brown Bread").times("1").amount("1").total("2").build(),
-                        LootStatisticsItem.builder().itemName("Sabre").times("1").amount("1").total("2").build(),
-                        LootStatisticsItem.builder().itemName("Girlish Hair Decoration").times("1").amount("1").total("2").build(),
-                        LootStatisticsItem.builder().itemName("Protective Charm").times("1").amount("1").total("2").build(),
-                        LootStatisticsItem.builder().itemName("Torch").times("1").amount("1").total("2").build(),
-                        LootStatisticsItem.builder().itemName("Crystal Necklace").times("1").amount("1").total("2").build(),
-                        LootStatisticsItem.builder().itemName("Small Ruby").times("1").amount("1").total("1").build()
-                )))
-                .version("8.6")
+    private LootWrapper makeLootAmazon() {
+        return LootWrapper.builder()
+                .loot2(Loot.builder()
+                        .kills("21983")
+                        .name("Amazon")
+                        .loot(new ArrayList<>(Arrays.asList(
+                                LootStatisticsItem.builder().itemName("Empty").times("253").build(),
+                                LootStatisticsItem.builder().itemName("Dagger").times("17606").amount("1").total("17606").build(),
+                                LootStatisticsItem.builder().itemName("Skull").times("17581").amount("1-2").total("26316").build(),
+                                LootStatisticsItem.builder().itemName("Gold Coin").times("1").amount("1").total("2").build(),
+                                LootStatisticsItem.builder().itemName("Brown Bread").times("1").amount("1").total("2").build(),
+                                LootStatisticsItem.builder().itemName("Sabre").times("1").amount("1").total("2").build(),
+                                LootStatisticsItem.builder().itemName("Girlish Hair Decoration").times("1").amount("1").total("2").build(),
+                                LootStatisticsItem.builder().itemName("Protective Charm").times("1").amount("1").total("2").build(),
+                                LootStatisticsItem.builder().itemName("Torch").times("1").amount("1").total("2").build(),
+                                LootStatisticsItem.builder().itemName("Crystal Necklace").times("1").amount("1").total("2").build(),
+                                LootStatisticsItem.builder().itemName("Small Ruby").times("1").amount("1").total("1").build()
+                        )))
+                        .version("8.6")
+                        .build())
                 .build();
     }
 }

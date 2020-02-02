@@ -18,5 +18,5 @@ target
 !maven-wrapper.properties
 !maven-wrapper.jar
 !system.properties
-!src/main/resources/log.properties
+!src/main/resources/log4j.properties
 src/main/resources/temp

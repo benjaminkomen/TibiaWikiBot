@@ -3,6 +3,7 @@ package com.wikia.tibia.usecases;
 import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Loot;
 import com.wikia.tibia.objects.LootItem;
+import com.wikia.tibia.objects.LootWrapper;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.LootRepository;
 import org.slf4j.Logger;
@@ -17,9 +18,9 @@ public class FixLootStatistics {
 
     private static final boolean DEBUG_MODE = false;
 
-    private CreatureRepository creatureRepository;
-    private LootRepository lootRepository;
-    private List<Loot> loot = new ArrayList<>();
+    private final CreatureRepository creatureRepository;
+    private final LootRepository lootRepository;
+    private List<LootWrapper> loot = new ArrayList<>();
     private List<Creature> creatures = new ArrayList<>();
     private Map<String, Creature> creaturePagesToUpdate = new ConcurrentHashMap<>(); // creature name, actual creature
     private static final Map<String, String> DIFFERENTLY_NAMED_ITEMS = Map.of(
@@ -49,6 +50,7 @@ public class FixLootStatistics {
      */
     public Map<String, Creature> checkLootStatistics() {
         getLootPages().stream()
+                .map(LootWrapper::getMergedLoot)
                 .filter(lootPage -> lootPage.getName() != null && !lootPage.isEmpty())
                 .sorted(Comparator.comparing(Loot::getName))
                 .peek(c -> LOG.debug("Processing loot statistics page of creature: {}", c.getName()))
@@ -113,12 +115,12 @@ public class FixLootStatistics {
     }
 
     @SuppressWarnings("unchecked")
-    private List<Loot> getLootPages() {
+    private List<LootWrapper> getLootPages() {
         if (loot == null || loot.isEmpty()) {
             var tryList = lootRepository.getWikiObjects();
 
             if (tryList.isSuccess()) {
-                loot = (List<Loot>) tryList.get();
+                loot = (List<LootWrapper>) tryList.get();
             } else {
                 LOG.error("Failed to get a list of lootPages: %s", tryList.getCause());
             }

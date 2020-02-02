@@ -99,6 +99,41 @@ public class LootStatisticsItem {
             return String.format("%s-%s", newLower, newUpper);
         }
 
+        // if one is a single number and the other a range, compute the range taking the single number into account
+        if ((left.matches(NUMBER_REGEX) && right.matches(NUMBER_RANGE_REGEX)) ||
+                (left.matches(NUMBER_RANGE_REGEX) && right.matches(NUMBER_REGEX))) {
+
+            if (left.matches(NUMBER_REGEX)) {
+                String[] leftMatches = getMatches(NUMBER_PATTERN, left);
+                var leftNumber = leftMatches[0];
+
+                String[] rightMatches = getMatches(NUMBER_RANGE_PATTERN, right);
+                rightMatches = rightMatches[0].split("-");
+                var rightLower = rightMatches[0];
+                var rightUpper = rightMatches[1];
+
+                var newLower = Math.min(Integer.parseInt(leftNumber), Integer.parseInt(rightLower));
+                var newUpper = Math.max(Integer.parseInt(leftNumber), Integer.parseInt(rightUpper));
+
+                return String.format("%s-%s", newLower, newUpper);
+            }
+
+            if (right.matches(NUMBER_REGEX)) {
+                String[] rightMatches = getMatches(NUMBER_PATTERN, right);
+                var rightNumber = rightMatches[0];
+
+                String[] leftMatches = getMatches(NUMBER_RANGE_PATTERN, left);
+                leftMatches = leftMatches[0].split("-");
+                var leftLower = leftMatches[0];
+                var leftUpper = leftMatches[1];
+
+                var newLower = Math.min(Integer.parseInt(rightNumber), Integer.parseInt(leftLower));
+                var newUpper = Math.max(Integer.parseInt(rightNumber), Integer.parseInt(leftUpper));
+
+                return String.format("%s-%s", newLower, newUpper);
+            }
+        }
+
         log.warn("Could not correctly sum amounts, neither left ({}) nor right ({}) is a valid number.", left, right);
         return "";
     }

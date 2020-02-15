@@ -19,7 +19,7 @@
         <hamcrest.version>2.2</hamcrest.version>
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <json.version>20190722</json.version>
-        <lombok.version>1.18.10</lombok.version>
+        <lombok.version>1.18.12</lombok.version>
         <jetbrains.version>18.0.0</jetbrains.version>
         <streamex.version>0.7.2</streamex.version>
         <commons.io.version>2.6</commons.io.version>

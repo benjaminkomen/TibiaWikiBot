@@ -3,13 +3,19 @@ package com.wikia.tibia.usecases;
 import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Loot;
 import com.wikia.tibia.objects.LootItem;
+import com.wikia.tibia.objects.LootStatisticsItem;
 import com.wikia.tibia.objects.LootWrapper;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.LootRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class FixLootStatistics {
@@ -31,6 +37,8 @@ public class FixLootStatistics {
             "Clusters of Solace", "Cluster of Solace",
             "Bag With Stolen Gold", "Bag with Stolen Gold"
     );
+    private static final List<String> DEMON_GOBLIN_LOOT = List.of("Small Stone", "Bone", "Leather Armor", "Mouldy Cheese");
+    private static final String DEMON_NAME = "Demon";
 
     public FixLootStatistics() {
         this.creatureRepository = new CreatureRepository();
@@ -67,8 +75,8 @@ public class FixLootStatistics {
                                     boolean lootStatisticsItemExistsInCreatureLootList = correspondingCreature.getLoot().stream()
                                             .anyMatch(lootItem -> Objects.equals(lootItem.getItemName(), replaceSomeNames(lootStatisticsItem.getItemName())));
 
-                                    // loot item exists on loot statistics page, but not on creature page. Add it.
-                                    if (!lootStatisticsItemExistsInCreatureLootList && !"Empty".equals(lootStatisticsItem.getItemName())) {
+                                    // loot item exists on loot statistics page, but not on creature page. Add it if applicable.
+                                    if (!lootStatisticsItemExistsInCreatureLootList && shouldAddLootItemToCreature(lootStatisticsItem, correspondingCreature)) {
                                         LOG.info("Adding item '{}' to loot list of creature '{}'.", lootStatisticsItem.getItemName(), correspondingCreature.getName());
 
                                         final LootItem newLootItem = LootItem.builder()
@@ -135,7 +143,6 @@ public class FixLootStatistics {
                     pauseForABit();
                 }
         );
-
     }
 
     private void pauseForABit() {
@@ -146,11 +153,30 @@ public class FixLootStatistics {
         }
     }
 
-    // Some items are actually named differently on the wiki, because of page names conflicts
+    /**
+     * Some items are actually named differently on the wiki, because of page names conflicts
+     */
     private String replaceSomeNames(String itemName) {
         if (DIFFERENTLY_NAMED_ITEMS.containsKey(itemName)) {
             return DIFFERENTLY_NAMED_ITEMS.get(itemName);
         }
         return itemName;
+    }
+
+    /**
+     * There are a few reasons when NOT to add a loot item to a creature:
+     * - the loot statistics item name is "Empty", that is not relevant on the creature's loot page
+     * - the loot statistics data is incorrect, e.g. with Demon / Demon (Goblin)
+     */
+    private boolean shouldAddLootItemToCreature(LootStatisticsItem lootStatisticsItem, Creature correspondingCreature) {
+        return !"Empty".equals(lootStatisticsItem.getItemName()) && !forbiddenCombinationOfLootAndCreature(lootStatisticsItem, correspondingCreature);
+    }
+
+    /**
+     * Example: https://tibia.fandom.com/wiki/Loot_Statistics:Demon contains certain loot items from https://tibia.fandom.com/wiki/Demon_(Goblin).
+     * These loot items should not be added to the loot list of Demons, because they are wrong.
+     */
+    private boolean forbiddenCombinationOfLootAndCreature(LootStatisticsItem lootStatisticsItem, Creature correspondingCreature) {
+        return DEMON_GOBLIN_LOOT.contains(lootStatisticsItem.getItemName()) && DEMON_NAME.equals(correspondingCreature.getName());
     }
 }

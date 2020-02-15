@@ -1,7 +1,12 @@
 package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.enums.Rarity;
-import com.wikia.tibia.objects.*;
+import com.wikia.tibia.objects.Creature;
+import com.wikia.tibia.objects.Loot;
+import com.wikia.tibia.objects.LootItem;
+import com.wikia.tibia.objects.LootStatisticsItem;
+import com.wikia.tibia.objects.LootWrapper;
+import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.LootRepository;
 import io.vavr.control.Try;
@@ -10,6 +15,7 @@ import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -26,9 +32,12 @@ public class FixLootStatisticsTest {
     private LootRepository mockLootRepository;
     private final Creature CreatureRat = makeCreatureRat();
     private final Creature CreatureAmazon = makeCreatureAmazon();
+    private final Creature CreatureDemon = makeCreatureDemon();
+
     private final LootWrapper LootRat = makeLootRat();
     private final LootWrapper LootAmazon = makeLootAmazon();
     private final LootWrapper LootRatWithSword = makeLootRatWithSword();
+    private final LootWrapper LootDemon = makeLootDemon();
 
     @Before
     public void setup() {
@@ -89,6 +98,23 @@ public class FixLootStatisticsTest {
         assertThat(result.size(), is(0));
     }
 
+    /**
+     * The loot list of a Demon contains some Demon (Goblin) items. These should not be added to a Demon's loot list.
+     */
+    @Test
+    public void shouldFixLootStatistics_DoNotAddDemonGoblinLootToDemon() {
+        // given
+        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(CreatureDemon)));
+        when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootDemon)));
+        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
+
+        // when
+        final Map<String, Creature> result = target.checkLootStatistics();
+        // then
+        assertThat(result.size(), is(1));
+        assertThat(result.get("Demon").getLoot().get(1).getItemName(), is("Demonrage Sword"));
+    }
+
     private static Creature makeCreatureRat() {
         return Creature.builder()
                 .actualname("Rat")
@@ -116,6 +142,17 @@ public class FixLootStatisticsTest {
                         LootItem.builder().itemName("Torch").rarity(Rarity.RARE).build(),
                         LootItem.builder().itemName("Crystal Necklace").rarity(Rarity.VERY_RARE).build(),
                         LootItem.builder().itemName("Small Ruby").rarity(Rarity.VERY_RARE).build()
+                        ))
+                )
+                .build();
+    }
+
+    private Creature makeCreatureDemon() {
+        return Creature.builder()
+                .actualname("Demon")
+                .name("Demon")
+                .loot(new ArrayList<>(Collections.singletonList(
+                        LootItem.builder().itemName("Magic Plate Armor").build()
                         ))
                 )
                 .build();
@@ -171,6 +208,23 @@ public class FixLootStatisticsTest {
                                 LootStatisticsItem.builder().itemName("Small Ruby").times("1").amount("1").total("1").build()
                         )))
                         .version("8.6")
+                        .build())
+                .build();
+    }
+
+    private LootWrapper makeLootDemon() {
+        return LootWrapper.builder()
+                .loot2(Loot.builder()
+                        .kills("34026")
+                        .name("Demon")
+                        .loot(new ArrayList<>(Arrays.asList(
+                                LootStatisticsItem.builder().itemName("Small Stone").times("21").amount("1-3").total("38").build(),
+                                LootStatisticsItem.builder().itemName("Mouldy Cheese").times("10").amount("1").total("10").build(),
+                                LootStatisticsItem.builder().itemName("Leather Armor").times("8").amount("1").total("8").build(),
+                                LootStatisticsItem.builder().itemName("Bone").times("7").amount("1").total("7").build(),
+                                LootStatisticsItem.builder().itemName("Demonrage Sword").times("20").amount("1").total("20").build()
+                        )))
+                        .version("10.37")
                         .build())
                 .build();
     }

@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.json.JSONObject;
 import org.skyscreamer.jsonassert.JSONCompare;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
@@ -12,15 +13,16 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class WrappedWikiObject {
 
-    private String originalJson;
-    private String targetJson;
+    private JSONObject originalJson;
+    private JSONObject targetJson;
 
-    public WrappedWikiObject(String originalJson, String targetJson) {
+    public WrappedWikiObject(JSONObject originalJson, JSONObject targetJson) {
         this.originalJson = originalJson;
         this.targetJson = targetJson;
     }
 
     public String jsonDifference() {
+        targetJson.remove("originalJson");
         return JSONCompare.compareJSON(originalJson, targetJson, JSONCompareMode.STRICT).toString();
     }
 

@@ -7,6 +7,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.wikia.tibia.objects.WrappedWikiObject;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -101,7 +102,7 @@ public class Parser {
                             try {
                                 T value = mapper.treeToValue(jn, type);
                                 if (value instanceof WrappedWikiObject) {
-                                    ((WrappedWikiObject) value).setOriginalJson(Parser.json(value));
+                                    ((WrappedWikiObject) value).setOriginalJson(new JSONObject(value));
                                 }
                                 return value;
                             } catch (JsonProcessingException e) {

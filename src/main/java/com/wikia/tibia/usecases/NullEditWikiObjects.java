@@ -1,8 +1,42 @@
 package com.wikia.tibia.usecases;
 
-import com.wikia.tibia.jackson.Parser;
-import com.wikia.tibia.objects.*;
-import com.wikia.tibia.repositories.*;
+import com.wikia.tibia.objects.Achievement;
+import com.wikia.tibia.objects.Book;
+import com.wikia.tibia.objects.Building;
+import com.wikia.tibia.objects.Corpse;
+import com.wikia.tibia.objects.Creature;
+import com.wikia.tibia.objects.Effect;
+import com.wikia.tibia.objects.HuntingPlace;
+import com.wikia.tibia.objects.Item;
+import com.wikia.tibia.objects.Key;
+import com.wikia.tibia.objects.Location;
+import com.wikia.tibia.objects.Missile;
+import com.wikia.tibia.objects.Mount;
+import com.wikia.tibia.objects.NPC;
+import com.wikia.tibia.objects.Outfit;
+import com.wikia.tibia.objects.Quest;
+import com.wikia.tibia.objects.Spell;
+import com.wikia.tibia.objects.Street;
+import com.wikia.tibia.objects.TibiaObject;
+import com.wikia.tibia.repositories.AchievementRepository;
+import com.wikia.tibia.repositories.BookRepository;
+import com.wikia.tibia.repositories.BuildingRepository;
+import com.wikia.tibia.repositories.CorpseRepository;
+import com.wikia.tibia.repositories.CreatureRepository;
+import com.wikia.tibia.repositories.EffectRepository;
+import com.wikia.tibia.repositories.HuntingPlaceRepository;
+import com.wikia.tibia.repositories.ItemRepository;
+import com.wikia.tibia.repositories.KeyRepository;
+import com.wikia.tibia.repositories.LocationRepository;
+import com.wikia.tibia.repositories.MissileRepository;
+import com.wikia.tibia.repositories.MountRepository;
+import com.wikia.tibia.repositories.NPCRepository;
+import com.wikia.tibia.repositories.ObjectRepository;
+import com.wikia.tibia.repositories.OutfitRepository;
+import com.wikia.tibia.repositories.QuestRepository;
+import com.wikia.tibia.repositories.SpellRepository;
+import com.wikia.tibia.repositories.StreetRepository;
+import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,9 +115,10 @@ public class NullEditWikiObjects {
     public void checkAchievements() {
         getAchievements()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
                             wikiObject.setDefaultValues();
-                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
+                            var jsonDifference = wikiObject.jsonDifference();
+                            LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), jsonDifference);
                             achievementRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
                         }
@@ -93,7 +128,7 @@ public class NullEditWikiObjects {
     public void checkBooks() {
         getBooks()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             bookRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -105,7 +140,7 @@ public class NullEditWikiObjects {
     public void checkBuildings() {
         getBuildings()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             buildingRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -117,7 +152,7 @@ public class NullEditWikiObjects {
     public void checkCorpses() {
         getCorpses()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             corpseRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -130,7 +165,7 @@ public class NullEditWikiObjects {
     public void checkCreatures() {
         getCreatures()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             creatureRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -142,7 +177,7 @@ public class NullEditWikiObjects {
     public void checkEffects() {
         getEffects()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             effectRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -154,7 +189,7 @@ public class NullEditWikiObjects {
     public void checkHuntingPlaces() {
         getHuntingPlaces()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             huntingPlaceRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
                             pauseForABit();
@@ -165,7 +200,7 @@ public class NullEditWikiObjects {
     public void checkItems() {
         getItems()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             itemRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -177,7 +212,7 @@ public class NullEditWikiObjects {
     public void checkKeys() {
         getKeys()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             keyRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -189,7 +224,7 @@ public class NullEditWikiObjects {
     public void checkLocations() {
         getLocations()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             locationRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -201,7 +236,7 @@ public class NullEditWikiObjects {
     public void checkMissiles() {
         getMissiles()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             missileRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -213,7 +248,7 @@ public class NullEditWikiObjects {
     public void checkMounts() {
         getMounts()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             mountRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -225,7 +260,7 @@ public class NullEditWikiObjects {
     public void checkNPCs() {
         getNPCs()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             npcRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -237,7 +272,7 @@ public class NullEditWikiObjects {
     public void checkObjects() {
         getObjects()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             objectRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -249,7 +284,7 @@ public class NullEditWikiObjects {
     public void checkOutfits() {
         getOutfits()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             outfitRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -261,7 +296,7 @@ public class NullEditWikiObjects {
     public void checkQuests() {
         getQuests()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             questRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -273,7 +308,7 @@ public class NullEditWikiObjects {
     public void checkSpells() {
         getSpells()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             spellRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);
@@ -285,7 +320,7 @@ public class NullEditWikiObjects {
     public void checkStreets() {
         getStreets()
                 .forEach(wikiObject -> {
-                            wikiObject.setTargetJson(Parser.json(wikiObject));
+                            wikiObject.setTargetJson(new JSONObject(wikiObject));
                             wikiObject.setDefaultValues();
                             LOG.info(LOG_SAVE_ARTICLE, wikiObject.getName(), wikiObject.jsonDifference());
                             streetRepository.saveWikiObject(wikiObject, EDIT_SUMMARY, DEBUG_MODE);

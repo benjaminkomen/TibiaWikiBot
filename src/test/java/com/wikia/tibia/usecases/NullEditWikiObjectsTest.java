@@ -4,7 +4,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
-@Ignore
+//@Ignore
 public class NullEditWikiObjectsTest {
 
     private NullEditWikiObjects target;
@@ -15,7 +15,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run: June 8, 2019
+     * Last partial run: February 29, 2020
      */
     @Test
     public void testCheckAchievements() {

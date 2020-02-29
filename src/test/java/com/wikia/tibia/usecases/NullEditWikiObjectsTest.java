@@ -151,7 +151,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run:
+     * Last successful run: February 29, 2020
      */
     @Test
     public void testCheckStreets() {

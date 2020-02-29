@@ -16,6 +16,7 @@ public enum City implements Description {
     FEYRIST("Feyrist"),
     GNOMEGATE("Gnomegate"),
     GRAY_BEACH("Gray Beach"),
+    ISSAVI("Issavi"),
     ISLAND_OF_DESTINY("Island of Destiny"),
     KAZORDOON("Kazordoon"),
     LIBERTY_BAY("Liberty Bay"),

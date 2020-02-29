@@ -21,6 +21,7 @@ public class Spell extends WikiObject {
 
     private static final Logger LOG = LoggerFactory.getLogger(Spell.class);
 
+    private String spellid;
     private SpellType type;
     private SpellSubclass subclass;
     private SpellSubclass runegroup;
@@ -96,7 +97,7 @@ public class Spell extends WikiObject {
     private String animation;
 
     @Builder
-    private Spell(String name, String implemented, String notes, String history, Status status, SpellType type,
+    private Spell(String name, String implemented, String notes, String history, Status status, String spellid, SpellType type,
                   SpellSubclass subclass, SpellSubclass runegroup, String damagetype, String words, Integer mana,
                   Integer cooldown, Integer cooldowngroup, Integer cooldowngroup2, Integer levelrequired, YesNo premium,
                   YesNo promotion, Integer soul, YesNo zoltanonly, YesNo partyspell, YesNo specialspell,
@@ -115,6 +116,7 @@ public class Spell extends WikiObject {
                   String sorcererRathleton, String sorcererSvargrond, String sorcererThais, String sorcererVenore,
                   String sorcererYalahar, Integer spellcost, String effect, String animation) {
         super(name, null, null, null, implemented, notes, history, status);
+        this.spellid = spellid;
         this.type = type;
         this.subclass = subclass;
         this.runegroup = runegroup;

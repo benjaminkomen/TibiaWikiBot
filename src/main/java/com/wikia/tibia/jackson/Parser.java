@@ -101,7 +101,7 @@ public class Parser {
                             try {
                                 T value = mapper.treeToValue(jn, type);
                                 if (value instanceof WrappedWikiObject) {
-                                    ((WrappedWikiObject) value).setOriginalJson(jn.toString());
+                                    ((WrappedWikiObject) value).setOriginalJson(Parser.json(value));
                                 }
                                 return value;
                             } catch (JsonProcessingException e) {

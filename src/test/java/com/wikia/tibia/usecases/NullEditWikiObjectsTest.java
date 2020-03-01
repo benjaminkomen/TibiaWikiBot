@@ -1,7 +1,6 @@
 package com.wikia.tibia.usecases;
 
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 
 //@Ignore
@@ -71,7 +70,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last partial run: February 29, 2020
+     * Last successful run: February 29, 2020
      */
     @Test
     public void testCheckItems() {

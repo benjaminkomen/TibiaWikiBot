@@ -15,7 +15,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <junit.version>4.13</junit.version>
-        <mockito.version>3.3.0</mockito.version>
+        <mockito.version>3.3.3</mockito.version>
         <hamcrest.version>2.2</hamcrest.version>
         <slf4j.version>1.8.0-beta4</slf4j.version>
         <json.version>20190722</json.version>

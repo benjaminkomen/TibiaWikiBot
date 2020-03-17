@@ -148,8 +148,8 @@
                 <version>${maven.compiler.plugin.version}</version>
                 <!-- The source and target entries make sure you can run the app from IntelliJ while using java 9+ methods-->
                 <configuration>
-                    <source>13</source>
-                    <target>13</target>
+                    <source>14</source>
+                    <target>14</target>
                 </configuration>
             </plugin>
 

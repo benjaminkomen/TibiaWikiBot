@@ -7,9 +7,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.wikia.tibia.objects.WrappedWikiObject;
+import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -18,9 +17,9 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
+@Slf4j
 public class Parser {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Parser.class);
     private static ObjectMapper defaultObjectMapper;
 
     private Parser() {
@@ -106,7 +105,7 @@ public class Parser {
                                 }
                                 return value;
                             } catch (JsonProcessingException e) {
-                                LOG.error("Unable to construct object of type '{}' from the following json: {} because of error: {}", type, jn, e);
+                                log.error("Unable to construct object of type '{}' from the following json: {} because of error: {}", type, jn, e);
                                 return null;
                             }
                         })
@@ -114,7 +113,7 @@ public class Parser {
                         .limit(limit)
                         .collect(Collectors.toList());
             } else {
-                LOG.error("Retrieved json is not a json array, cannot parse to list.");
+                log.error("Retrieved json is not a json array, cannot parse to list.");
                 return Collections.emptyList();
             }
         } catch (IOException e) {
@@ -130,7 +129,7 @@ public class Parser {
         try {
             return mapper.writeValueAsString(object);
         } catch (JsonProcessingException e) {
-            LOG.error("Unable to serialise object to json", e);
+            log.error("Unable to serialise object to json", e);
             return "";
         }
     }

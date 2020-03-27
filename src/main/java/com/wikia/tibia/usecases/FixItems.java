@@ -2,12 +2,10 @@ package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Item;
-import com.wikia.tibia.objects.Loot;
 import com.wikia.tibia.objects.LootItem;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.ItemRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,9 +16,9 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 public class FixItems {
 
-    private static final Logger LOG = LoggerFactory.getLogger(FixItems.class);
     private static final boolean DEBUG_MODE = false;
     private static final List<String> ORC_RAID_ITEMS = Arrays.asList("Amazon Armor", "Amazon Helmet", "Amazon Shield");
 
@@ -57,12 +55,12 @@ public class FixItems {
                 .sorted(Comparator.comparing(Item::getName))
                 .filter(Item::notDeprecatedOrEvent)
                 .filter(item -> item.getDroppedby() != null && !item.getDroppedby().isEmpty())
-                .peek(i -> LOG.debug("Processing item: {}", i.getName()))
+                .peek(i -> log.debug("Processing item: {}", i.getName()))
                 .forEach(item -> item.getDroppedby().stream()
                         .map(creatureName -> {
                             final Optional<Creature> creature = getCreature(creatureName);
                             if (creature.isEmpty()) {
-                                LOG.error("Could not find creature with name '{}' from item '{}' in collection" +
+                                log.error("Could not find creature with name '{}' from item '{}' in collection" +
                                         " of creatures.", creatureName, item.getName());
                             }
                             return creature.orElse(null);
@@ -84,7 +82,7 @@ public class FixItems {
             if (tryList.isSuccess()) {
                 creatures = (List<Creature>) tryList.get();
             } else {
-                LOG.error("Failed to get a list of creatures: %s", tryList.getCause());
+                log.error("Failed to get a list of creatures: %s", tryList.getCause());
             }
         }
         return creatures;
@@ -104,7 +102,7 @@ public class FixItems {
             if (tryList.isSuccess()) {
                 items = (List<Item>) tryList.get();
             } else {
-                LOG.error("Failed to get a list of items: %s", tryList.getCause());
+                log.error("Failed to get a list of items: %s", tryList.getCause());
             }
         }
         return items;
@@ -115,7 +113,7 @@ public class FixItems {
      */
     private void addItemToLootTableOfCreature(Item item, Creature creature) {
         if (!creature.getLoot().contains(LootItem.fromName(item.getName())) && itemShouldBeAdded(creature.getName(), item.getName())) {
-            LOG.info("Adding item '{}' to loot table of creature '{}'.", item.getName(), creature.getName());
+            log.info("Adding item '{}' to loot table of creature '{}'.", item.getName(), creature.getName());
 
             if (!creaturePagesToUpdate.containsKey(creature.getName())) {
                 // creature not already in creaturePages cache, add it
@@ -163,7 +161,7 @@ public class FixItems {
     }
 
     private void saveCreatureArticles() {
-        LOG.info("If debug mode is disabled, {} creature articles are being edited NOW.", creaturePagesToUpdate.size());
+        log.info("If debug mode is disabled, {} creature articles are being edited NOW.", creaturePagesToUpdate.size());
         creaturePagesToUpdate.forEach((key, value) -> {
                     creatureRepository.saveWikiObject(value, "[bot] adding missing item(s) to loot list.", DEBUG_MODE);
                     pauseForABit();

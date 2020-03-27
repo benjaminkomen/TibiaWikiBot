@@ -3,8 +3,7 @@ package com.wikia.tibia.http;
 import com.wikia.tibia.exceptions.ResponseException;
 import com.wikia.tibia.jackson.Parser;
 import io.vavr.control.Try;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.net.URI;
@@ -12,9 +11,9 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+@Slf4j
 public class Request {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Request.class);
     private HttpClient httpClient;
 
     public Request() {
@@ -25,7 +24,7 @@ public class Request {
         try {
             return httpClient.send(request, HttpResponse.BodyHandlers.ofString());
         } catch (IOException | InterruptedException e) {
-            LOG.error("Error while invoking requested URI", e);
+            log.error("Error while invoking requested URI", e);
         }
         return null;
     }
@@ -79,7 +78,7 @@ public class Request {
         final HttpRequest request = requestBuilder.build();
 
         if (dryRun) {
-            LOG.info("Not actually doing request due to dry run.");
+            log.info("Not actually doing request due to dry run.");
             return Try.success("");
         }
 

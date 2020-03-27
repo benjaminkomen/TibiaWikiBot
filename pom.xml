@@ -146,7 +146,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <version>${maven.compiler.plugin.version}</version>
-                <!-- The source and target entries make sure you can run the app from IntelliJ while using java 9+ methods-->
                 <configuration>
                     <source>14</source>
                     <target>14</target>

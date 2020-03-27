@@ -1,13 +1,11 @@
 package com.wikia.tibia.usecases;
 
 import com.wikia.tibia.objects.Building;
-import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.objects.csv.HouseRent;
 import com.wikia.tibia.repositories.BuildingRepository;
 import com.wikia.tibia.repositories.InputRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +15,9 @@ import java.util.Optional;
 /**
  * Update all building pages one time with their new rent.
  */
+@Slf4j
 public class BuildingRents {
 
-    private static final Logger LOG = LoggerFactory.getLogger(BuildingRents.class);
     private static final boolean DEBUG_MODE = false;
 
     private InputRepository inputRepository = new InputRepository();
@@ -33,13 +31,13 @@ public class BuildingRents {
     public void updateRentToBuildings() {
 
         List<HouseRent> houseRents = inputRepository.getCSVFile("data/house_new_rents.csv", HouseRent.class);
-        LOG.info("Reading house_new_rents.csv");
+        log.info("Reading house_new_rents.csv");
 
         getBuildings().forEach(building -> {
             final Optional<Integer> newHouseRent = getHouseRentByHouseId(houseRents, building.getHouseid()).map(HouseRent::getNewRentInGps).map(Integer::valueOf);
 
             if (newHouseRent.isEmpty()) {
-                LOG.error("Could not find building with name {} in list of new house rents.", building.getName());
+                log.error("Could not find building with name {} in list of new house rents.", building.getName());
             }
 
             final Integer oldRent = building.getRent();
@@ -50,12 +48,12 @@ public class BuildingRents {
                 building.setHistory(updatedHistory(building, oldHistory, oldRent));
 
                 final String editSummary = String.format("Updating rent for building %s from %s to %s.", building.getName(), oldRent, building.getRent());
-                LOG.info(editSummary);
+                log.info(editSummary);
                 saveBuildingArticle(building, editSummary);
             }
         });
 
-        LOG.info("Finished updating rent for all Buildings.");
+        log.info("Finished updating rent for all Buildings.");
     }
 
     private String updatedHistory(Building building, String oldHistory, Integer oldRent) {
@@ -78,7 +76,7 @@ public class BuildingRents {
             if (tryList.isSuccess()) {
                 buildings = (List<Building>) tryList.get();
             } else {
-                LOG.error("Failed to get a list of buildings: %s", tryList.getCause());
+                log.error("Failed to get a list of buildings: %s", tryList.getCause());
             }
         }
         return buildings;

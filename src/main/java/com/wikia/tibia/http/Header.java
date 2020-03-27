@@ -1,24 +1,15 @@
 package com.wikia.tibia.http;
 
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.ToString;
+import lombok.Value;
 
-@Getter
-@AllArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
-@ToString
-@EqualsAndHashCode
+@Value
+/**
+ * TODO: make a record class from this
+ */
 public class Header {
 
-    private final String name;
-    private final String value;
-
-    private Header() {
-        this.name = null;
-        this.value = null;
-    }
+    String name;
+    String value;
 }

@@ -7,8 +7,7 @@ import com.wikia.tibia.objects.LootStatisticsItem;
 import com.wikia.tibia.objects.LootWrapper;
 import com.wikia.tibia.repositories.CreatureRepository;
 import com.wikia.tibia.repositories.LootRepository;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -19,9 +18,8 @@ import java.util.Objects;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 
+@Slf4j
 public class FixLootStatistics {
-
-    private static final Logger LOG = LoggerFactory.getLogger(FixLootStatistics.class);
 
     private static final boolean DEBUG_MODE = false;
 
@@ -79,11 +77,11 @@ public class FixLootStatistics {
                 .map(LootWrapper::getMergedLoot)
                 .filter(lootPage -> lootPage.getName() != null && !lootPage.isEmpty())
                 .sorted(Comparator.comparing(Loot::getName))
-                .peek(c -> LOG.debug("Processing loot statistics page of creature: {}", c.getName()))
+                .peek(c -> log.debug("Processing loot statistics page of creature: {}", c.getName()))
                 .forEach(lootPage -> {
                     final Creature correspondingCreature = getCreature(lootPage.getName())
                             .orElseGet(() -> {
-                                LOG.error("Could not find creature with pageName '{}' and name '{}' in collection of creatures.", lootPage.getPageName(), lootPage.getName());
+                                log.error("Could not find creature with pageName '{}' and name '{}' in collection of creatures.", lootPage.getPageName(), lootPage.getName());
                                 return null;
                             });
 
@@ -95,7 +93,7 @@ public class FixLootStatistics {
 
                                     // loot item exists on loot statistics page, but not on creature page. Add it if applicable.
                                     if (!lootStatisticsItemExistsInCreatureLootList && shouldAddLootItemToCreature(lootStatisticsItem, correspondingCreature)) {
-                                        LOG.info("Adding item '{}' to loot list of creature '{}'.", lootStatisticsItem.getItemName(), correspondingCreature.getName());
+                                        log.info("Adding item '{}' to loot list of creature '{}'.", lootStatisticsItem.getItemName(), correspondingCreature.getName());
 
                                         final LootItem newLootItem = LootItem.builder()
                                                 .itemName(lootStatisticsItem.getItemName())
@@ -128,7 +126,7 @@ public class FixLootStatistics {
             if (tryList.isSuccess()) {
                 creatures = (List<Creature>) tryList.get();
             } else {
-                LOG.error("Failed to get a list of creatures: %s", tryList.getCause());
+                log.error("Failed to get a list of creatures: %s", tryList.getCause());
             }
         }
         return creatures;
@@ -148,14 +146,14 @@ public class FixLootStatistics {
             if (tryList.isSuccess()) {
                 loot = (List<LootWrapper>) tryList.get();
             } else {
-                LOG.error("Failed to get a list of lootPages: %s", tryList.getCause());
+                log.error("Failed to get a list of lootPages: %s", tryList.getCause());
             }
         }
         return loot;
     }
 
     private void saveCreatureArticles() {
-        LOG.info("If debug mode is disabled, {} creature articles are being edited NOW.", creaturePagesToUpdate.size());
+        log.info("If debug mode is disabled, {} creature articles are being edited NOW.", creaturePagesToUpdate.size());
         creaturePagesToUpdate.forEach((key, value) -> {
                     creatureRepository.saveWikiObject(value, "[bot] adding missing item(s) to loot list.", DEBUG_MODE);
                     pauseForABit();

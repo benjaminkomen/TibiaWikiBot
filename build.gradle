@@ -1,5 +1,7 @@
 plugins {
     id 'java'
+    id 'jacoco'
+    id "org.sonarqube" version "2.8"
 }
 
 group = 'com.wikia.tibia'
@@ -29,6 +31,13 @@ dependencies {
     testImplementation 'org.hamcrest:hamcrest-library:2.2'
     annotationProcessor 'org.projectlombok:lombok:1.18.12'
     compileOnly 'org.projectlombok:lombok:1.18.12'
+}
+
+sonarqube {
+    properties {
+        property "sonar.projectName", "TibiaWikiBot"
+        property "sonar.projectKey", "com.onlaika:TibiaWikiBot"
+    }
 }
 
 sourceCompatibility = 14

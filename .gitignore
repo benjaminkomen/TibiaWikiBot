@@ -17,4 +17,3 @@ build/
 src/main/resources/temp
 
 .gradle/
-gradle/

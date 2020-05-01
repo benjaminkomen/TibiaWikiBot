@@ -1,8 +1,5 @@
 *.class
 
-# Mobile Tools for Java (J2ME)
-.mtj.tmp/
-
 # Package Files #
 *.jar
 *.war
@@ -14,9 +11,9 @@ hs_err_pid*
 *.iml
 .idea/
 *.properties
-target
-!maven-wrapper.properties
-!maven-wrapper.jar
-!system.properties
+target/
+build/
 !src/main/resources/log4j.properties
 src/main/resources/temp
+
+.gradle/

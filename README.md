@@ -4,9 +4,10 @@
 
 # TibiaWikiBot
 
-TibiaWikiBot is a MediaWiki bot which can be run in IDE's such as Eclipse or IntelliJ. It has two main usecases:
-- FixCreatures;
-- FixItems.
+TibiaWikiBot is a MediaWiki bot which can be run in IDE's such as Eclipse or IntelliJ. It has these main usecases:
+- FixCreatures
+- FixItems
+- FixLootStatistics
 
 These are used to add missing links to creatures on item pages and missing links to items on creature pages
  on [TibiaWiki](https://tibia.fandom.com), a wiki about the game [Tibia](https://www.tibia.com).

@@ -19,4 +19,5 @@ cache:
     - '.gradle'
 
 script:
-  - ./gradlew clean build sonarqube
+#  - ./gradlew clean build sonarqube ## FIXME enable when the java/util/jar/Pack200 bug has been fixed
+  - ./gradlew clean build

@@ -15,7 +15,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run: June 8, 2019
+     * Last partial run: February 29, 2020
      */
     @Test
     public void testCheckAchievements() {
@@ -71,7 +71,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run:
+     * Last successful run: February 29, 2020
      */
     @Test
     public void testCheckItems() {
@@ -127,7 +127,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run:
+     * Last partial run: February 29, 2020
      */
     @Test
     public void testCheckOutfits() {
@@ -135,7 +135,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run:
+     * Last partial run: February 29, 2020
      */
     @Test
     public void testCheckQuests() {
@@ -143,7 +143,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run:
+     * Last partial run: February 29, 2020
      */
     @Test
     public void testCheckSpells() {
@@ -151,7 +151,7 @@ public class NullEditWikiObjectsTest {
     }
 
     /**
-     * Last successful run:
+     * Last successful run: February 29, 2020
      */
     @Test
     public void testCheckStreets() {

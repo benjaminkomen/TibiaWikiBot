@@ -72,7 +72,7 @@ public class Request {
                 .header("Content-Type", "application/json");
 
         if (header != null) {
-            requestBuilder.header(header.getName(), header.getValue());
+            requestBuilder.header(header.name(), header.value());
         }
 
         final HttpRequest request = requestBuilder.build();

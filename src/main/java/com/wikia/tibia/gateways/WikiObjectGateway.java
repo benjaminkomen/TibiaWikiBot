@@ -26,10 +26,7 @@ public abstract class WikiObjectGateway<T extends WikiObject> {
     }
 
     public Try<String> saveWikiObject(T wikiObject, String editSummary, boolean dryRun) {
-        final Header header = Header.builder()
-                .name("X-WIKI-Edit-Summary")
-                .value(editSummary)
-                .build();
+        final Header header = new Header("X-WIKI-Edit-Summary", editSummary);
 
         return request.put(contracts.getDescription(), wikiObject, header, dryRun);
     }

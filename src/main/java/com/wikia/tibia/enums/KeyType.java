@@ -15,7 +15,7 @@ public enum KeyType implements Description {
     SILVER("Silver"),
     WOODEN("Wooden");
 
-    private String description;
+    private final String description;
 
     KeyType(String description) {
         this.description = description;

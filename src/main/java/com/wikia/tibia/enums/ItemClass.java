@@ -12,7 +12,7 @@ public enum ItemClass implements Description {
     TOOLS_AND_OTHER_EQUIPMENT("Tools and other Equipment"),
     OTHER_ITEMS("Other Items");
 
-    private String description;
+    private final String description;
 
     ItemClass(String description) {
         this.description = description;

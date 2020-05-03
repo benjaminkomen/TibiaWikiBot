@@ -10,7 +10,7 @@ public enum BestiaryOccurrence implements Description {
     RARE("Rare"),
     VERY_RARE("Very Rare");
 
-    private String description;
+    private final String description;
 
     BestiaryOccurrence(String description) {
         this.description = description;

@@ -22,11 +22,11 @@ public class FixItems {
     private static final boolean DEBUG_MODE = false;
     private static final List<String> ORC_RAID_ITEMS = Arrays.asList("Amazon Armor", "Amazon Helmet", "Amazon Shield");
 
-    private CreatureRepository creatureRepository;
-    private ItemRepository itemRepository;
+    private final CreatureRepository creatureRepository;
+    private final ItemRepository itemRepository;
     private List<Item> items = new ArrayList<>();
     private List<Creature> creatures = new ArrayList<>();
-    private Map<String, Creature> creaturePagesToUpdate = new ConcurrentHashMap<>(); // creature name, actual creature
+    private final Map<String, Creature> creaturePagesToUpdate = new ConcurrentHashMap<>(); // creature name, actual creature
 
     public FixItems() {
         this.creatureRepository = new CreatureRepository();

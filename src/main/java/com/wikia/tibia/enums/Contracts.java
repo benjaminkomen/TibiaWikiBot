@@ -28,7 +28,7 @@ public enum Contracts implements Description {
     SPELLS(API.getDescription() + "/spells"),
     STREETS(API.getDescription() + "/streets");
 
-    private String description;
+    private final String description;
 
     Contracts(String description) {
         this.description = description;

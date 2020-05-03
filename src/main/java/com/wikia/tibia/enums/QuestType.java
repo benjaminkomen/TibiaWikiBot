@@ -10,7 +10,7 @@ public enum QuestType implements Description {
     WORLD_EVENT("event"),
     WORLD_TASK("task");
 
-    private String description;
+    private final String description;
 
     QuestType(String description) {
         this.description = description;

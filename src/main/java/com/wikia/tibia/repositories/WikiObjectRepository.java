@@ -9,8 +9,8 @@ import java.util.List;
 
 public abstract class WikiObjectRepository<T extends Class<? extends WikiObject>, U extends WikiObjectGateway<WikiObject>> {
 
-    private Class<T> wikiObjectClass;
-    private U wikiObjectGateway;
+    private final Class<T> wikiObjectClass;
+    private final U wikiObjectGateway;
 
     public WikiObjectRepository(Class<T> wikiObjectClass, U wikiObjectGateway) {
         this.wikiObjectClass = wikiObjectClass;

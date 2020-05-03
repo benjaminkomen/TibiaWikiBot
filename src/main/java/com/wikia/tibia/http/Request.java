@@ -14,7 +14,7 @@ import java.net.http.HttpResponse;
 @Slf4j
 public class Request {
 
-    private HttpClient httpClient;
+    private final HttpClient httpClient;
 
     public Request() {
         httpClient = HttpClient.newHttpClient();

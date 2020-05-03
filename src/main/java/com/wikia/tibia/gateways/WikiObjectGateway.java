@@ -9,8 +9,8 @@ import io.vavr.control.Try;
 
 public abstract class WikiObjectGateway<T extends WikiObject> {
 
-    private Request request;
-    private Contracts contracts;
+    private final Request request;
+    private final Contracts contracts;
 
     protected WikiObjectGateway(Contracts contracts) {
         this.contracts = contracts;
@@ -22,7 +22,7 @@ public abstract class WikiObjectGateway<T extends WikiObject> {
     }
 
     public Try<String> getWikiObjects(boolean expand) {
-        return request.get(contracts.getDescription() + "?expand=" + expand);
+        return request.get(String.format("%s?expand=%s", contracts.getDescription(), expand));
     }
 
     public Try<String> saveWikiObject(T wikiObject, String editSummary, boolean dryRun) {
@@ -32,6 +32,6 @@ public abstract class WikiObjectGateway<T extends WikiObject> {
     }
 
     public Try<String> getWikiObject(String pageName) {
-        return request.get(contracts.getDescription() + "/" + UrlEscapers.urlFragmentEscaper().escape(pageName));
+        return request.get(String.format("%s/%s", contracts.getDescription(), UrlEscapers.urlFragmentEscaper().escape(pageName)));
     }
 }

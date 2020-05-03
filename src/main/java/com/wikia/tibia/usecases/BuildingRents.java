@@ -20,12 +20,18 @@ public class BuildingRents {
 
     private static final boolean DEBUG_MODE = false;
 
-    private InputRepository inputRepository = new InputRepository();
-    private BuildingRepository buildingRepository;
+    private final InputRepository inputRepository;
+    private final BuildingRepository buildingRepository;
     private List<Building> buildings = new ArrayList<>();
 
     public BuildingRents() {
+        inputRepository = new InputRepository();
         buildingRepository = new BuildingRepository();
+    }
+
+    public BuildingRents(InputRepository inputRepository, BuildingRepository buildingRepository) {
+        this.inputRepository = inputRepository;
+        this.buildingRepository = buildingRepository;
     }
 
     public void updateRentToBuildings() {
@@ -33,25 +39,27 @@ public class BuildingRents {
         List<HouseRent> houseRents = inputRepository.getCSVFile("data/house_new_rents.csv", HouseRent.class);
         log.info("Reading house_new_rents.csv");
 
-        getBuildings().forEach(building -> {
-            final Optional<Integer> newHouseRent = getHouseRentByHouseId(houseRents, building.getHouseid()).map(HouseRent::getNewRentInGps).map(Integer::valueOf);
+        Optional.ofNullable(getBuildings())
+                .ifPresent(buildingList -> buildingList.forEach(building -> {
+                            final Optional<Integer> newHouseRent = getHouseRentByHouseId(houseRents, building.getHouseid()).map(HouseRent::getNewRentInGps).map(Integer::valueOf);
 
-            if (newHouseRent.isEmpty()) {
-                log.error("Could not find building with name {} in list of new house rents.", building.getName());
-            }
+                            if (newHouseRent.isEmpty()) {
+                                log.error("Could not find building with name {} in list of new house rents.", building.getName());
+                            }
 
-            final Integer oldRent = building.getRent();
-            final String oldHistory = building.getHistory();
-            if (newHouseRent.isPresent() && !Objects.equals(oldRent, newHouseRent.get())) {
+                            final Integer oldRent = building.getRent();
+                            final String oldHistory = building.getHistory();
+                            if (newHouseRent.isPresent() && !Objects.equals(oldRent, newHouseRent.get())) {
 
-                building.setRent(newHouseRent.get());
-                building.setHistory(updatedHistory(building, oldHistory, oldRent));
+                                building.setRent(newHouseRent.get());
+                                building.setHistory(updatedHistory(building, oldHistory, oldRent));
 
-                final String editSummary = String.format("Updating rent for building %s from %s to %s.", building.getName(), oldRent, building.getRent());
-                log.info(editSummary);
-                saveBuildingArticle(building, editSummary);
-            }
-        });
+                                final String editSummary = String.format("Updating rent for building %s from %s to %s.", building.getName(), oldRent, building.getRent());
+                                log.info(editSummary);
+                                saveBuildingArticle(building, editSummary);
+                            }
+                        })
+                );
 
         log.info("Finished updating rent for all Buildings.");
     }

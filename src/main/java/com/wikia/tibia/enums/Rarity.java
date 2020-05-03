@@ -17,7 +17,7 @@ public enum Rarity implements Description {
     VERY_RARE("very rare"),
     EXTREMELY_RARE("extremely rare");
 
-    private String description;
+    private final String description;
 
     Rarity(String description) {
         this.description = description;

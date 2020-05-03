@@ -10,14 +10,13 @@ import com.wikia.tibia.enums.SpellSubclass;
 import com.wikia.tibia.enums.SpellType;
 import com.wikia.tibia.enums.YesNo;
 import com.wikia.tibia.objects.Percentage;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ObjectUtils {
-
-    private ObjectUtils() {
-        // don't instantiate this class, it has only static members
-    }
 
     public static boolean isEmpty(String subject) {
         return subject == null || "".equals(subject);

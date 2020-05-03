@@ -10,7 +10,7 @@ public enum Gender implements Description {
     UNKNOWN("Unknown"),
     EMPTY("");
 
-    private String description;
+    private final String description;
 
     Gender(String description) {
         this.description = description;

@@ -10,7 +10,7 @@ public enum Star {
     FOUR(4),
     FIVE(5);
 
-    private int number;
+    private final int number;
 
     Star(int number) {
         this.number = number;

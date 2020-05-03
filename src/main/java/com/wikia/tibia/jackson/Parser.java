@@ -7,6 +7,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.type.CollectionType;
 import com.wikia.tibia.objects.WrappedWikiObject;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 
@@ -18,13 +20,10 @@ import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 @Slf4j
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class Parser {
 
     private static ObjectMapper defaultObjectMapper;
-
-    private Parser() {
-        // don't instantiate this class, it has only static members
-    }
 
     public static <T> T parse(Class<T> type, String json) {
         return parse(type, getDefaultObjectMapper(), json);

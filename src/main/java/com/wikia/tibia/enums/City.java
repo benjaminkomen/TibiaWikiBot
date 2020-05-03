@@ -34,7 +34,7 @@ public enum City implements Description {
     YALAHAR("Yalahar"),
     EMPTY("");
 
-    private String description;
+    private final String description;
 
     City(String description) {
         this.description = description;

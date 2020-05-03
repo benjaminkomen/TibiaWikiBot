@@ -9,7 +9,7 @@ public enum Article implements Description {
     AN("an"),
     EMPTY("");
 
-    private String description;
+    private final String description;
 
     Article(String description) {
         this.description = description;

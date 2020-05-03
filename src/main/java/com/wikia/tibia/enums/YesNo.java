@@ -16,7 +16,7 @@ public enum YesNo implements Description {
     UNKNOWN("?"),
     EMPTY("");
 
-    private String description;
+    private final String description;
 
     YesNo(String description) {
         this.description = description;

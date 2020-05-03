@@ -12,7 +12,7 @@ public enum Status implements Description {
     TS_ONLY_UPPERCASE("TS-only"),
     EVENT("event");
 
-    private String description;
+    private final String description;
 
     Status(String description) {
         this.description = description;

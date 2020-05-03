@@ -26,7 +26,7 @@ public enum BestiaryClass implements Description {
     UNDEAD("Undead"),
     VERMIN("Vermin");
 
-    private String description;
+    private final String description;
 
     BestiaryClass(String description) {
         this.description = description;

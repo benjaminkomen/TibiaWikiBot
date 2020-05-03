@@ -1,8 +1,9 @@
 package com.wikia.tibia.gateways;
 
 import com.wikia.tibia.enums.Contracts;
+import com.wikia.tibia.objects.Quest;
 
-public class QuestGateway extends WikiObjectGateway {
+public class QuestGateway extends WikiObjectGateway<Quest> {
 
     public QuestGateway() {
         super(Contracts.QUESTS);

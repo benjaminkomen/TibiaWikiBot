@@ -4,8 +4,7 @@ import com.fasterxml.jackson.databind.MappingIterator;
 import com.fasterxml.jackson.databind.ObjectReader;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvSchema;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.File;
 import java.io.IOException;
@@ -23,9 +22,9 @@ import java.util.Scanner;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+@Slf4j
 public class InputRepository {
 
-    private static final Logger log = LoggerFactory.getLogger(InputRepository.class);
     private static final String DEFAULT_CHARSET = "UTF-8";
 
     public String getInput(String fileName) {

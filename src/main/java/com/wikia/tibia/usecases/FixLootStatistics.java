@@ -27,7 +27,7 @@ public class FixLootStatistics {
     private final LootRepository lootRepository;
     private List<LootWrapper> loot = new ArrayList<>();
     private List<Creature> creatures = new ArrayList<>();
-    private Map<String, Creature> creaturePagesToUpdate = new ConcurrentHashMap<>(); // creature name, actual creature
+    private final Map<String, Creature> creaturePagesToUpdate = new ConcurrentHashMap<>(); // creature name, actual creature
     private static final Map<String, String> DIFFERENTLY_NAMED_ITEMS = Map.of(
             "Skull", "Skull (Item)",
             "Black Skull", "Black Skull (Item)",
@@ -36,7 +36,7 @@ public class FixLootStatistics {
             "Clusters of Solace", "Cluster of Solace",
             "Bag With Stolen Gold", "Bag with Stolen Gold"
     );
-    private static Map<String, List<String>> forbiddenCreaturesAndLoot = new HashMap<>();
+    private static final Map<String, List<String>> forbiddenCreaturesAndLoot = new HashMap<>();
 
     static {
         forbiddenCreaturesAndLoot.put("Demon", List.of("Small Stone", "Bone", "Leather Armor", "Mouldy Cheese"));

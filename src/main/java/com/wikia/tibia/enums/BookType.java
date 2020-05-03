@@ -65,7 +65,7 @@ public enum BookType implements Description {
     YOUR_STUDENT_BOOK("Your Student Book"),
     ;
 
-    private String description;
+    private final String description;
 
     BookType(String description) {
         this.description = description;

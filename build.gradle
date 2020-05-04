@@ -15,7 +15,7 @@ repositories {
 
 dependencies {
     implementation 'org.slf4j:slf4j-api:1.8.0-beta4'
-    implementation 'org.slf4j:slf4j-simple:1.8.0-beta4'
+    implementation 'org.slf4j:slf4j-simple:2.0.0-alpha1'
     implementation 'org.json:json:20190722'
     implementation 'one.util:streamex:0.7.2'
     implementation 'commons-io:commons-io:2.6'

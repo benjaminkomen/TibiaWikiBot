@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wikia.tibia.exceptions.JacksonParsingException
-import com.wikia.tibia.objects.WrappedWikiObject
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.IOException

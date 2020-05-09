@@ -1,9 +1,8 @@
-package com.wikia.tibia.enums;
+package com.wikia.tibia.enums
 
-import com.wikia.tibia.interfaces.Description;
+import com.wikia.tibia.interfaces.Description
 
-public enum Contracts implements Description {
-
+enum class Contracts(private val description: String) : Description {
     HOST("http://localhost:8080"),
     API(HOST.getDescription() + "/api"),
     ACHIEVEMENTS(API.getDescription() + "/achievements"),
@@ -16,7 +15,6 @@ public enum Contracts implements Description {
     ITEMS(API.getDescription() + "/items"),
     KEYS(API.getDescription() + "/keys"),
     LOCATIONS(API.getDescription() + "/locations"),
-    @Deprecated
     LOOT_STATISTICS(API.getDescription() + "/loot"),
     LOOT_STATISTICS_V2(API.getDescription() + "/v2/loot"),
     MISSILES(API.getDescription() + "/missiles"),
@@ -28,14 +26,8 @@ public enum Contracts implements Description {
     SPELLS(API.getDescription() + "/spells"),
     STREETS(API.getDescription() + "/streets");
 
-    private final String description;
-
-    Contracts(String description) {
-        this.description = description;
+    override fun getDescription(): String {
+        return description
     }
 
-    @Override
-    public String getDescription() {
-        return description;
-    }
 }

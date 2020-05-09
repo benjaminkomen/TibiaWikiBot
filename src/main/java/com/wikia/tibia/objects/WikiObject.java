@@ -1,8 +1,6 @@
 package com.wikia.tibia.objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.wikia.tibia.enums.Article;
-import com.wikia.tibia.enums.Status;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,10 +1,9 @@
-package com.wikia.tibia.enums;
+package com.wikia.tibia.enums
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.wikia.tibia.interfaces.Description;
+import com.fasterxml.jackson.annotation.JsonValue
+import com.wikia.tibia.interfaces.Description
 
-public enum City implements Description {
-
+enum class City(private val description: String) : Description {
     AB_DENDRIEL("Ab'Dendriel"),
     ANKRAHMUN("Ankrahmun"),
     CARLIN("Carlin"),
@@ -34,14 +33,8 @@ public enum City implements Description {
     YALAHAR("Yalahar"),
     EMPTY("");
 
-    private final String description;
-
-    City(String description) {
-        this.description = description;
-    }
-
     @JsonValue
-    public String getDescription() {
-        return description;
+    override fun getDescription(): String {
+        return description
     }
 }

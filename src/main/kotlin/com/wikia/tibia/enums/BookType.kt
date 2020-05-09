@@ -1,10 +1,9 @@
-package com.wikia.tibia.enums;
+package com.wikia.tibia.enums
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.wikia.tibia.interfaces.Description;
+import com.fasterxml.jackson.annotation.JsonValue
+import com.wikia.tibia.interfaces.Description
 
-public enum BookType implements Description {
-
+enum class BookType(private val description: String) : Description {
     BOOK_ATLAS("Book (Atlas)"),
     BOOK_BLACK("Book (Black)"),
     BOOK_BLUE("Book (Blue)"),
@@ -62,17 +61,10 @@ public enum BookType implements Description {
     TORN_BOOK_DIARY("Torn Book (Diary)"),
     TORN_BOOK_READABLE("Torn Book (Readable)"),
     WRINKLED_PARCHMENT("Wrinkled Parchment"),
-    YOUR_STUDENT_BOOK("Your Student Book"),
-    ;
-
-    private final String description;
-
-    BookType(String description) {
-        this.description = description;
-    }
+    YOUR_STUDENT_BOOK("Your Student Book");
 
     @JsonValue
-    public String getDescription() {
-        return description;
+    override fun getDescription(): String {
+        return description
     }
 }

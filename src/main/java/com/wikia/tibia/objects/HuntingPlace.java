@@ -1,8 +1,6 @@
 package com.wikia.tibia.objects;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.wikia.tibia.enums.City;
-import com.wikia.tibia.enums.Star;
 import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;

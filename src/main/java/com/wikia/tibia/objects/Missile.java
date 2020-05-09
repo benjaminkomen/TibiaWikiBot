@@ -1,7 +1,6 @@
 package com.wikia.tibia.objects;
 
 
-import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;
 import lombok.Builder;

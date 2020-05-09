@@ -1,8 +1,5 @@
 package com.wikia.tibia.objects;
 
-import com.wikia.tibia.enums.City;
-import com.wikia.tibia.enums.Gender;
-import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
 import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;

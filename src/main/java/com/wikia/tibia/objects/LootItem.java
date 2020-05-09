@@ -1,6 +1,5 @@
 package com.wikia.tibia.objects;
 
-import com.wikia.tibia.enums.Rarity;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

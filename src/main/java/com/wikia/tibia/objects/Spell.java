@@ -1,9 +1,6 @@
 package com.wikia.tibia.objects;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.wikia.tibia.enums.SpellSubclass;
-import com.wikia.tibia.enums.SpellType;
-import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
 import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;

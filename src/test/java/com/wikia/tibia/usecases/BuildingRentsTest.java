@@ -1,7 +1,5 @@
 package com.wikia.tibia.usecases;
 
-import com.wikia.tibia.enums.BuildingType;
-import com.wikia.tibia.enums.City;
 import com.wikia.tibia.objects.Building;
 import com.wikia.tibia.objects.WikiObject;
 import com.wikia.tibia.objects.csv.HouseRent;

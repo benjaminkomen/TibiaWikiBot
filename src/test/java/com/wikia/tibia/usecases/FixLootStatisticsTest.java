@@ -1,6 +1,5 @@
 package com.wikia.tibia.usecases;
 
-import com.wikia.tibia.enums.Rarity;
 import com.wikia.tibia.objects.Creature;
 import com.wikia.tibia.objects.Loot;
 import com.wikia.tibia.objects.LootItem;

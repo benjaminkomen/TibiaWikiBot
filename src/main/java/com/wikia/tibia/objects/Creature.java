@@ -1,12 +1,6 @@
 package com.wikia.tibia.objects;
 
 import com.fasterxml.jackson.annotation.JsonGetter;
-import com.wikia.tibia.enums.Article;
-import com.wikia.tibia.enums.BestiaryClass;
-import com.wikia.tibia.enums.BestiaryLevel;
-import com.wikia.tibia.enums.BestiaryOccurrence;
-import com.wikia.tibia.enums.Spawntype;
-import com.wikia.tibia.enums.Status;
 import com.wikia.tibia.enums.YesNo;
 import com.wikia.tibia.utils.ObjectUtils;
 import lombok.AccessLevel;

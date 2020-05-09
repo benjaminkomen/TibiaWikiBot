@@ -1,9 +1,9 @@
-package com.wikia.tibia.enums;
+package com.wikia.tibia.enums
 
-import com.fasterxml.jackson.annotation.JsonValue;
-import com.wikia.tibia.interfaces.Description;
+import com.fasterxml.jackson.annotation.JsonValue
+import com.wikia.tibia.interfaces.Description
 
-public enum BestiaryClass implements Description {
+enum class BestiaryClass(private val description: String) : Description {
     AMPHIBIC("Amphibic"),
     AQUATIC("Aquatic"),
     BIRD("Bird"),
@@ -17,7 +17,7 @@ public enum BestiaryClass implements Description {
     HUMAN("Human"),
     HUMANOID("Humanoid"),
     LYCANTHROPE("Lycanthrope"),
-    LYCANTHROPE2("Lycantrophe"), // supposedly wrongly spelled
+    LYCANTHROPE2("Lycantrophe"),  // supposedly wrongly spelled
     MAGICAL("Magical"),
     MAMMAL("Mammal"),
     PLANT("Plant"),
@@ -26,14 +26,8 @@ public enum BestiaryClass implements Description {
     UNDEAD("Undead"),
     VERMIN("Vermin");
 
-    private final String description;
-
-    BestiaryClass(String description) {
-        this.description = description;
-    }
-
     @JsonValue
-    public String getDescription() {
-        return description;
+    override fun getDescription(): String {
+        return description
     }
 }

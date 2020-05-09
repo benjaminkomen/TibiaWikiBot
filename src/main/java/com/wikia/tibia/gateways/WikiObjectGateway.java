@@ -1,7 +1,6 @@
 package com.wikia.tibia.gateways;
 
 import com.google.common.net.UrlEscapers;
-import com.wikia.tibia.enums.Contracts;
 import com.wikia.tibia.http.Header;
 import com.wikia.tibia.http.Request;
 import com.wikia.tibia.objects.WikiObject;

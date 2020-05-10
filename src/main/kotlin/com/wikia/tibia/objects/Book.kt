@@ -5,9 +5,9 @@ import com.wikia.tibia.enums.Status
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
-data class Book(
+data class Book( 
         private val name: String,
-        private var implemented: String?,
+        private val implemented: String?,
         private val notes: String,
         private val history: String,
         private val status: Status,
@@ -19,9 +19,9 @@ data class Book(
         private val booktype6: BookType,
         private val booktype7: BookType,
         private val booktype8: BookType,
-        private var title: String?,
-        private var pagename: String?,
-        private var location: String?,
+        private val title: String?,
+        private val pagename: String?,
+        private val location: String?,
         private val location2: String,
         private val location3: String,
         private val location4: String,
@@ -29,8 +29,8 @@ data class Book(
         private val location6: String,
         private val location7: String,
         private val location8: String,
-        private var blurb: String?,
-        private var author: String?,
+        private val blurb: String?,
+        private val author: String?,
         private val returnpage: String,
         private val returnpage2: String,
         private val returnpage3: String,
@@ -69,27 +69,27 @@ data class Book(
 
     fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(booktype)) {
             logger.warn("Book '{}' has no booktype set", name)
         }
         if (isEmpty(title)) {
-            title = "?"
+            this.copy(title = "?")
             logger.warn("Book '{}' has no title set", name)
         }
         if (isEmpty(pagename)) {
-            pagename = "?"
+            this.copy(pagename = "?")
             logger.warn("Book '{}' has no pagename set", name)
         }
         if (isEmpty(location)) {
-            location = "?"
+            this.copy(location = "?")
         }
         if (isEmpty(blurb)) {
-            blurb = "?"
+            this.copy(blurb = "?")
         }
         if (isEmpty(author)) {
-            author = "?"
+            this.copy(author = "?")
         }
         if (isEmpty(text)) {
             logger.warn("Book '{}' has no text set", name)

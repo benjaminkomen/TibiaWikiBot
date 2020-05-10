@@ -10,169 +10,169 @@ data class Creature(
         private val article: Article,
         private val actualname: String,
         private val plural: String,
-        private var implemented: String?,
+        private val implemented: String?,
         private val notes: String,
         private val history: String,
         private val status: Status,
-        @get:JsonGetter("hp") var hitPoints: String?,
-        @get:JsonGetter("exp") var experiencePoints: String?,
-        private var armor: String?,
-        private var summon: String?,
-        private var convince: String?,
-        private var illusionable: YesNo?,
-        private var creatureclass: String?,
-        private var primarytype: String?,
+        @get:JsonGetter("hp") val hitPoints: String?,
+        @get:JsonGetter("exp") val experiencePoints: String?,
+        private val armor: String?,
+        private val summon: String?,
+        private val convince: String?,
+        private val illusionable: YesNo?,
+        private val creatureclass: String?,
+        private val primarytype: String?,
         private val secondarytype: String,
         private val bestiaryclass: BestiaryClass,
         private val bestiarylevel: BestiaryLevel,
         private val occurrence: BestiaryOccurrence,
         private val spawntype: List<Spawntype>,
-        private var isboss: YesNo?,
+        private val isboss: YesNo?,
         private val isarenaboss: YesNo,
         private val isevent: YesNo,
-        private var abilities: String?,
+        private val abilities: String?,
         private val usedelements: String,
-        private var maxdmg: String?,
-        private var pushable: YesNo?,
-        private var pushobjects: YesNo?,
-        private var walksaround: String?,
-        private var walksthrough: String?,
-        private var paraimmune: YesNo?,
-        private var senseinvis: YesNo?,
-        private var physicalDmgMod: Percentage?,
-        private var holyDmgMod: Percentage?,
-        private var deathDmgMod: Percentage?,
-        private var fireDmgMod: Percentage?,
-        private var energyDmgMod: Percentage?,
-        private var iceDmgMod: Percentage?,
-        private var earthDmgMod: Percentage?,
-        private var drownDmgMod: Percentage?,
-        private var hpDrainDmgMod: Percentage?,
-        private var healMod: Percentage?,
+        private val maxdmg: String?,
+        private val pushable: YesNo?,
+        private val pushobjects: YesNo?,
+        private val walksaround: String?,
+        private val walksthrough: String?,
+        private val paraimmune: YesNo?,
+        private val senseinvis: YesNo?,
+        private val physicalDmgMod: Percentage?,
+        private val holyDmgMod: Percentage?,
+        private val deathDmgMod: Percentage?,
+        private val fireDmgMod: Percentage?,
+        private val energyDmgMod: Percentage?,
+        private val iceDmgMod: Percentage?,
+        private val earthDmgMod: Percentage?,
+        private val drownDmgMod: Percentage?,
+        private val hpDrainDmgMod: Percentage?,
+        private val healMod: Percentage?,
         private val bestiaryname: String,
         private val bestiarytext: String,
-        private var sounds: List<String>?,
-        private var behaviour: String?,
+        private val sounds: List<String>?,
+        private val behaviour: String?,
         private val runsat: String,
-        private var speed: String?,
-        private var strategy: String?,
-        private var location: String?,
-        private var loot: List<LootItem>?
+        private val speed: String?,
+        private val strategy: String?,
+        private val location: String?,
+        private val loot: List<LootItem>?
 ) {
 
     fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(hitPoints)) {
-            hitPoints = "?"
+            this.copy(hitPoints = "?")
         }
         if (isEmpty(experiencePoints)) {
-            experiencePoints = "?"
+            this.copy(experiencePoints = "?")
         }
         if (isEmpty(armor)) {
-            armor = "?"
+            this.copy(armor = "?")
         }
         if (isEmpty(summon)) {
-            summon = "?"
+            this.copy(summon = "?")
         }
         if (isEmpty(convince)) {
-            convince = "?"
+            this.copy(convince = "?")
         }
         if (isEmpty(illusionable)) {
-            illusionable = YesNo.UNKNOWN
+            this.copy(illusionable = YesNo.UNKNOWN)
         }
         if (isEmpty(creatureclass)) {
-            creatureclass = ""
+            this.copy(creatureclass = "")
             logger.warn("Creature '{}' has no creatureclass set", name)
         }
         if (isEmpty(primarytype)) {
-            primarytype = ""
+            this.copy(primarytype = "")
             logger.warn("Creature '{}' has no primarytype set", name)
         }
         if (isEmpty(isboss)) {
-            isboss = YesNo.UNKNOWN
+            this.copy(isboss = YesNo.UNKNOWN)
         }
         if (isEmpty(abilities)) {
-            abilities = "Unknown"
+            this.copy(abilities = "Unknown")
         }
         if (isEmpty(maxdmg)) {
-            maxdmg = "?"
+            this.copy(maxdmg = "?")
         }
         if (isEmpty(pushable)) {
-            pushable = YesNo.UNKNOWN
+            this.copy(pushable = YesNo.UNKNOWN)
         }
         if (isEmpty(pushobjects)) {
-            pushobjects = YesNo.UNKNOWN
+            this.copy(pushobjects = YesNo.UNKNOWN)
         }
         if (isEmpty(walksaround)) {
-            walksaround = "?"
+            this.copy(walksaround = "?")
         }
         if (isEmpty(walksthrough)) {
-            walksthrough = "?"
+            this.copy(walksthrough = "?")
         }
         if (isEmpty(paraimmune)) {
-            paraimmune = YesNo.UNKNOWN
+            this.copy(paraimmune = YesNo.UNKNOWN)
         }
         if (isEmpty(senseinvis)) {
-            senseinvis = YesNo.UNKNOWN
+            this.copy(senseinvis = YesNo.UNKNOWN)
         }
         if (isEmpty(physicalDmgMod)) {
-            physicalDmgMod = Percentage.UNKNOWN
+            this.copy(physicalDmgMod = Percentage.UNKNOWN)
         }
         if (isEmpty(earthDmgMod)) {
-            earthDmgMod = Percentage.UNKNOWN
+            this.copy(earthDmgMod = Percentage.UNKNOWN)
         }
         if (isEmpty(fireDmgMod)) {
-            fireDmgMod = Percentage.UNKNOWN
+            this.copy(fireDmgMod = Percentage.UNKNOWN)
         }
         if (isEmpty(deathDmgMod)) {
-            deathDmgMod = Percentage.UNKNOWN
+            this.copy(deathDmgMod = Percentage.UNKNOWN)
         }
         if (isEmpty(energyDmgMod)) {
-            energyDmgMod = Percentage.UNKNOWN
+            this.copy(energyDmgMod = Percentage.UNKNOWN)
         }
         if (isEmpty(holyDmgMod)) {
-            holyDmgMod = Percentage.UNKNOWN
+            this.copy(holyDmgMod = Percentage.UNKNOWN)
         }
         if (isEmpty(iceDmgMod)) {
-            iceDmgMod = Percentage.UNKNOWN
+            this.copy(iceDmgMod = Percentage.UNKNOWN)
         }
         if (isEmpty(healMod)) {
-            healMod = Percentage.UNKNOWN
+            this.copy(healMod = Percentage.UNKNOWN)
         }
 
         // Special case, all creatures in the Bestiary have a healMod of 100%
         if (!isEmpty(healMod) && healMod == Percentage.UNKNOWN && (!isEmpty(bestiaryclass) || !isEmpty(bestiarylevel))) {
-            healMod = Percentage.of(100)
+            this.copy(healMod = Percentage.of(100))
         }
         if (isEmpty(hpDrainDmgMod)) {
-            hpDrainDmgMod = Percentage.UNKNOWN
+            this.copy(hpDrainDmgMod = Percentage.UNKNOWN)
         }
         if (isEmpty(drownDmgMod)) {
-            drownDmgMod = Percentage.UNKNOWN
+            this.copy(drownDmgMod = Percentage.UNKNOWN)
         }
         if (sounds == null) {
-            sounds = emptyList()
+            this.copy(sounds = emptyList())
         }
 
         // if runsat is filled you would get something like this printed "Unknown A stalker never retreats.", which is ugly.
         if (isEmpty(behaviour) && isEmpty(runsat)) {
-            behaviour = "Unknown"
+            this.copy(behaviour = "Unknown")
         } else if ("Unknown" == behaviour && !isEmpty(runsat)) {
-            behaviour = ""
+            this.copy(behaviour = "")
         }
         if (isEmpty(speed)) {
-            speed = "?"
+            this.copy(speed = "?")
         }
         if (isEmpty(strategy)) {
-            strategy = "Unknown"
+            this.copy(strategy = "Unknown")
         }
         if (isEmpty(location)) {
-            location = "Unknown"
+            this.copy(location = "Unknown")
         }
         if (loot == null) {
-            loot = emptyList()
+            this.copy(loot = emptyList())
         }
     }
 

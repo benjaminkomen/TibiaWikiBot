@@ -1,39 +1,47 @@
 package com.wikia.tibia.objects
 
+import com.wikia.tibia.enums.Status
 import com.wikia.tibia.enums.YesNo
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
-import lombok.*
 import org.slf4j.LoggerFactory
 
-@Getter
-@Setter
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-class Outfit @Builder private constructor(name: String, implemented: String, notes: String, history: String, status: Status, private var primarytype: String,
-                                          private val secondarytype: String, private var premium: YesNo, // class and field name are the same, but that's understandable
-                                          private var outfit: String, private var addons: String, private val bought: YesNo,
-                                          private val fulloutfitprice: Int, private val achievement: String, private val artwork: String) : WikiObject(name, null, null, null, implemented, notes, history, status) {
+data class Outfit(
+        private val name: String,
+        private val implemented: String,
+        private val notes: String,
+        private val history: String,
+        private val status: Status,
+        private val primarytype: String,
+        private val secondarytype: String,
+        private val premium: YesNo, // class and field name are the same, but that's understandable
+        private val outfit: String,
+        private val addons: String,
+        private val bought: YesNo,
+        private val fulloutfitprice: Int,
+        private val achievement: String,
+        private val artwork: String
+) {
 
-    override fun setDefaultValues() {
+    fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(primarytype)) {
-            primarytype = ""
-            LOG.warn("Outfit '{}' has no primarytype set", name)
+            this.copy(primarytype = "")
+            logger.warn("Outfit '{}' has no primarytype set", name)
         }
         if (isEmpty(premium)) {
-            premium = YesNo.UNKNOWN
+            this.copy(premium = YesNo.UNKNOWN)
         }
         if (isEmpty(outfit)) {
-            outfit = "?"
+            this.copy(outfit = "?")
         }
         if (isEmpty(addons)) {
-            addons = "?"
+            this.copy(addons = "?")
         }
     }
 
     companion object {
-        private val LOG = LoggerFactory.getLogger(Outfit::class.java)
+        private val logger = LoggerFactory.getLogger(Outfit::class.java)
     }
-
 }

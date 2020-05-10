@@ -6,11 +6,11 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Key(
-        private val name: String,
-        private var implemented: String?,
+        private val name: String, // TODO should this be here?
+        private val implemented: String?,
         private val history: String,
         private val status: Status,
-        private var number: String?,
+        private val number: String?,
         private val aka: String,
         private val primarytype: KeyType?,
         private val secondarytype: KeyType,
@@ -21,23 +21,23 @@ data class Key(
         private val buyfrom: String,
         private val sellto: String,
         private val origin: String,
-        private var shortnotes: String?,
+        private val shortnotes: String?,
         private val longnotes: String
 ) {
     fun getName() = String.format("Key %s", number)
 
     fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(number)) {
-            number = "?"
+            this.copy(number = "?")
         }
         if (isEmpty(primarytype)) {
             logger.warn("Key '{}' has no primarytype set", getName())
         }
         if (isEmpty(shortnotes)) {
-            shortnotes = "?"
+            this.copy(shortnotes = "?")
         }
     }
 

@@ -9,16 +9,16 @@ import org.slf4j.LoggerFactory
 
 data class Building(
         private val name: String,
-        private var implemented: String?,
+        private val implemented: String?,
         private val notes: String,
         private val history: String,
         private val status: Status,
         private val type: BuildingType,
-        private var location: String?,
-        private var posx: String?,
-        private var posy: String?,
-        private var posz: String?,
-        private var street: String?,
+        private val location: String?,
+        private val posx: String?,
+        private val posy: String?,
+        private val posz: String?,
+        private val street: String?,
         private val street2: String,
         private val street3: String,
         private val street4: String,
@@ -38,25 +38,25 @@ data class Building(
 
     fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(type)) {
             logger.warn("Building '{}' has no type set", name)
         }
         if (isEmpty(location)) {
-            location = "?"
+            this.copy(location = "?")
         }
         if (isEmpty(posx)) {
-            posx = "?"
+            this.copy(posx = "?")
         }
         if (isEmpty(posy)) {
-            posy = "?"
+            this.copy(posy = "?")
         }
         if (isEmpty(posz)) {
-            posz = "?"
+            this.copy(posz = "?")
         }
         if (isEmpty(street)) {
-            street = "?"
+            this.copy(street = "?")
         }
         if ((isEmpty(ownable) || ownable.isYes) && isEmpty(houseid)) {
             logger.warn("Building '{}' has no houseid set", name)

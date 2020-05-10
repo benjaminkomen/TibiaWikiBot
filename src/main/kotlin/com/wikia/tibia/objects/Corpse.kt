@@ -11,14 +11,14 @@ data class Corpse(
         private val name: String,
         private val article: Article,
         private val actualname: String,
-        private var implemented: String?,
+        private val implemented: String?,
         private val notes: String,
         private val history: String,
         private val status: Status,
         private val flavortext: String,
-        private var skinable: YesNo,
+        private val skinable: YesNo,
         private val product: String,
-        private var liquid: String,
+        private val liquid: String,
         private val stages: Int,
         @get:JsonGetter("1decaytime") val firstDecaytime: String,
         @get:JsonGetter("2decaytime") val secondDecaytime: String,
@@ -29,22 +29,22 @@ data class Corpse(
         @get:JsonGetter("1weight") val firstWeight: BigDecimal,
         @get:JsonGetter("2weight") val secondWeight: BigDecimal,
         @get:JsonGetter("3weight") val thirdWeight: BigDecimal,
-        private var corpseof: String,
+        private val corpseof: String,
         private val sellto: String
 ) {
 
     fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(skinable)) {
-            skinable = YesNo.UNKNOWN
+            this.copy(skinable = YesNo.UNKNOWN)
         }
         if (isEmpty(liquid)) {
-            liquid = "?"
+            this.copy(liquid = "?")
         }
         if (isEmpty(corpseof)) {
-            corpseof = "?"
+            this.copy(corpseof = "?")
         }
     }
 

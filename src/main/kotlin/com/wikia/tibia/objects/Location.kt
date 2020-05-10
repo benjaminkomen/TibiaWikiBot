@@ -6,11 +6,11 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 
 data class Location(
         private val name: String,
-        private var implemented: String?,
+        private val implemented: String?,
         private val status: Status,
         private val ruler: String,
         private val population: String,
-        private var near: String?,
+        private val near: String?,
         private val organization: String,
         private val map: String,
         private val map2: String,
@@ -18,18 +18,18 @@ data class Location(
         private val map4: String,
         private val map5: String,
         private val map6: String,
-        private var links: YesNo?
+        private val links: YesNo?
 ) {
 
     fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(near)) {
-            near = "?"
+            this.copy(near = "?")
         }
         if (isEmpty(links)) {
-            links = YesNo.UNKNOWN
+            this.copy(links = YesNo.UNKNOWN)
         }
     }
 

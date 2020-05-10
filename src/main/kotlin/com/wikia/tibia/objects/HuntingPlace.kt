@@ -1,5 +1,6 @@
 package com.wikia.tibia.objects
 
+import com.fasterxml.jackson.annotation.JsonBackReference
 import com.fasterxml.jackson.annotation.JsonManagedReference
 import com.wikia.tibia.enums.City
 import com.wikia.tibia.enums.Star
@@ -7,14 +8,14 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 
 data class HuntingPlace(
         private val name: String,
-        private var implemented: String?,
-        private var image: String?,
+        private val implemented: String?,
+        private val image: String?,
         private val city: City,
-        private var location: String?,
+        private val location: String?,
         private val vocation: String,
-        private var lvlknights: String?,
-        private var lvlpaladins: String?,
-        private var lvlmages: String?,
+        private val lvlknights: String?,
+        private val lvlpaladins: String?,
+        private val lvlmages: String?,
         private val skknights: String,
         private val skpaladins: String,
         private val skmages: String,
@@ -22,9 +23,9 @@ data class HuntingPlace(
         private val defpaladins: String,
         private val defmages: String,
         @JsonManagedReference private val lowerlevels: List<HuntingPlaceSkills>,
-        private var loot: String?,
+        private val loot: String?,
         private val lootstar: Star,
-        private var exp: String?,
+        private val exp: String?,
         private val expstar: Star,
         private val bestloot: String,
         private val bestloot2: String,
@@ -39,28 +40,42 @@ data class HuntingPlace(
 
     fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(image)) {
-            image = "None"
+            this.copy(image = "None")
         }
         if (isEmpty(location)) {
-            location = "Unknown"
+            this.copy(location = "Unknown")
         }
         if (isEmpty(lvlknights)) {
-            lvlknights = "?"
+            this.copy(lvlknights = "?")
         }
         if (isEmpty(lvlpaladins)) {
-            lvlpaladins = "?"
+            this.copy(lvlpaladins = "?")
         }
         if (isEmpty(lvlmages)) {
-            lvlmages = "?"
+            this.copy(lvlmages = "?")
         }
         if (isEmpty(exp)) {
-            exp = "Unknown"
+            this.copy(exp = "Unknown")
         }
         if (isEmpty(loot)) {
-            loot = "Unknown"
+            this.copy(loot = "Unknown")
         }
     }
 }
+
+data class HuntingPlaceSkills(
+        private val areaname: String,
+        private val lvlknights: String,
+        private val lvlpaladins: String,
+        private val lvlmages: String,
+        private val skknights: String,
+        private val skpaladins: String,
+        private val skmages: String,
+        private val defknights: String,
+        private val defpaladins: String,
+        private val defmages: String,
+        @JsonBackReference private val huntingPlace: HuntingPlace
+)

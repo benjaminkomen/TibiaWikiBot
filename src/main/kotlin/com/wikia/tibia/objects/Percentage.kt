@@ -5,13 +5,10 @@ import lombok.Getter
 import lombok.NoArgsConstructor
 import java.util.*
 
-@Getter
-@NoArgsConstructor
-class Percentage {
-    @get:JsonValue
-    var originalValue: String
-        private set
+data class Percentage(
+    @get:JsonValue var originalValue: String,
     private var value: Int?
+) {
 
     private constructor(value: String) {
         originalValue = value
@@ -25,7 +22,7 @@ class Percentage {
 
     private fun sanitize(value: String): Int? {
         val sanitizedValue = value.replace("\\D+".toRegex(), "")
-        return if (sanitizedValue.length < 1) {
+        return if (sanitizedValue.isEmpty()) {
             null
         } else Integer.valueOf(sanitizedValue)
     }
@@ -43,6 +40,7 @@ class Percentage {
     companion object {
         val EMPTY = of("")
         val UNKNOWN = of("100%?")
+
         fun of(value: String): Percentage {
             return Percentage(value)
         }

@@ -11,7 +11,7 @@ data class Item(
         private val article: Article,
         private val actualname: String,
         private val plural: String,
-        private var implemented: String?,
+        private val implemented: String?,
         private val notes: String,
         private val notes2: String,
         private val history: String,
@@ -24,7 +24,7 @@ data class Item(
         private val ingamestatus: Status,
         private val words: String,
         private val itemclass: ItemClass,
-        private var primarytype: String?,
+        private val primarytype: String?,
         private val secondarytype: String,
         private val lightcolor: Int,
         private val lightradius: Int,
@@ -82,41 +82,41 @@ data class Item(
         private val duration: String,
         private val destructible: YesNo,
         private val droppedby: List<String>,
-        private var value: String?,
-        private var npcvalue: String?,
-        private var npcprice: String?,
+        private val value: String?,
+        private val npcvalue: String?,
+        private val npcprice: String?,
         private val npcvaluerook: String,
         private val npcpricerook: String,
-        private var buyfrom: String?,
-        private var sellto: String?,
+        private val buyfrom: String?,
+        private val sellto: String?,
         private val fansite: String
 ) {
 
     fun setDefaultValues() {
         if (isEmpty(implemented)) {
-            implemented = "?"
+            this.copy(implemented = "?")
         }
         if (isEmpty(itemclass)) {
             logger.warn("Creature '{}' has no itemclass set", name)
         }
         if (isEmpty(primarytype)) {
-            primarytype = "?"
+            this.copy(primarytype = "?")
             logger.warn("Creature '{}' has no primarytype set", name)
         }
         if (isEmpty(value)) {
-            value = "?"
+            this.copy(value = "?")
         }
         if (isEmpty(npcvalue)) {
-            npcvalue = "?"
+            this.copy(npcvalue = "?")
         }
         if (isEmpty(npcprice)) {
-            npcprice = "?"
+            this.copy(npcprice = "?")
         }
         if (isEmpty(buyfrom)) {
-            buyfrom = "?"
+            this.copy(buyfrom = "?")
         }
         if (isEmpty(sellto)) {
-            sellto = "?"
+            this.copy(sellto = "?")
         }
     }
 

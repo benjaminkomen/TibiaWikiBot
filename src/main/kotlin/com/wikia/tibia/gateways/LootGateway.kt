@@ -1,13 +1,13 @@
 package com.wikia.tibia.gateways
 
 import com.google.common.net.UrlEscapers
-import com.wikia.tibia.enums.Contracts
+import com.wikia.tibia.enums.Contract
 import com.wikia.tibia.http.Request
 import io.vavr.control.Try
 
 class LootGateway {
 
-    private val contracts = Contracts.LOOT_STATISTICS_V2
+    private val contracts = Contract.LOOT_STATISTICS_V2
     private val request: Request = Request()
 
     val loot: Try<String>

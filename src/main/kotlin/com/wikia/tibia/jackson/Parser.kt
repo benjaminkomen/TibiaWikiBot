@@ -81,8 +81,7 @@ object Parser {
 //        }
 //    }
 
-    @JvmOverloads
-    fun json(someObject: Any, mapper: ObjectMapper? = defaultObjectMapper): String {
+    fun <T> json(someObject: T, mapper: ObjectMapper? = defaultObjectMapper): String {
         return try {
             mapper!!.writeValueAsString(someObject)
         } catch (e: JsonProcessingException) {

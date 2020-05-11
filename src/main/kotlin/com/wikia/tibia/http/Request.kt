@@ -1,6 +1,7 @@
 package com.wikia.tibia.http
 
 import com.wikia.tibia.exceptions.ResponseException
+import com.wikia.tibia.jackson.Parser
 import io.vavr.control.Try
 import org.slf4j.LoggerFactory
 import java.io.IOException
@@ -43,6 +44,10 @@ class Request {
         } else {
             Try.success("")
         }
+    }
+
+    fun <T> put(location: String, jsonBody: T, header: Header, dryRun: Boolean): Try<String> {
+        return this.put(URI.create(location), Parser.json(jsonBody), header, dryRun)
     }
 
     fun put(location: String, jsonBody: String, header: Header?, dryRun: Boolean): Try<String> {

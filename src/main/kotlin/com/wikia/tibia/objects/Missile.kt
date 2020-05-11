@@ -16,8 +16,9 @@ data class Missile(
         private val lightradius: Int,
         private val lightcolor: Int,
         private val shotby: String
-) {
-    fun setDefaultValues() {
+): WikiObject() {
+
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

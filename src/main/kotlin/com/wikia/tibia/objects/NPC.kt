@@ -45,9 +45,9 @@ data class NPC(
         private val buys: String,
         private val sells: String,
         private val sounds: List<String>
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

@@ -20,9 +20,9 @@ data class Achievement(
         private val coincideswith: Int,
         private val achievementid: Int?,
         private val relatedpages: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

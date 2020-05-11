@@ -3,19 +3,18 @@ package com.wikia.tibia.objects
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
-import java.util.function.Consumer
 
 data class LootWrapper(
         private val loot2: Loot?,
         @JsonProperty("loot2_rc") private val loot2Rc: Loot?,
-        @JsonIgnore val mergedLoot: Loot
+        @JsonIgnore private var mergedLoot: Loot?
 ) {
 
-    private fun getMergedLoot() {
-        if (field == null) {
-            field = computeMergedLoot()
+    fun getMergedLoot(): Loot? {
+        if (mergedLoot == null) {
+            mergedLoot = computeMergedLoot()
         }
-        return field
+        return mergedLoot
     }
 
     private fun computeMergedLoot(): Loot? {
@@ -45,36 +44,27 @@ data class LootWrapper(
 
     private fun sumLoot(first: List<LootStatisticsItem>?, second: List<LootStatisticsItem>?): List<LootStatisticsItem> {
         val result: MutableSet<LootStatisticsItem> = HashSet()
-        first.forEach(Consumer { newItem: LootStatisticsItem ->
-            val existingItem = findItem(result, newItem.itemName)
-            if (existingItem.isEmpty) {
-                // item not in list yet, add it
-                result.add(newItem)
-            } else {
-                // item already in list, merge it
-                val mergedItem = existingItem.get().add(newItem)
-                result.remove(existingItem.get())
-                result.add(mergedItem)
-            }
-        })
-        second.forEach(Consumer { newItem: LootStatisticsItem ->
-            val existingItem = findItem(result, newItem.itemName)
-            if (existingItem.isEmpty) {
-                // item not in list yet, add it
-                result.add(newItem)
-            } else {
-                // item already in list, merge it
-                val mergedItem = existingItem.get().add(newItem)
-                result.remove(existingItem.get())
-                result.add(mergedItem)
-            }
-        })
-        return listOf(result)
+
+        first?.forEach { addOrMergeItem(result, it) }
+        second?.forEach { addOrMergeItem(result, it) }
+
+        return result.toList()
+    }
+
+    private fun addOrMergeItem(result: MutableSet<LootStatisticsItem>, newItem: LootStatisticsItem) {
+        val existingItem = findItem(result, newItem.itemName)
+        if (existingItem == null) {
+            // item not in list yet, add it
+            result.add(newItem)
+        } else {
+            // item already in list, merge it
+            val mergedItem = existingItem.add(newItem)
+            result.remove(existingItem)
+            result.add(mergedItem)
+        }
     }
 
     private fun findItem(items: Set<LootStatisticsItem?>, itemName: String): LootStatisticsItem? {
-        return items
-                .filter { item -> item?.itemName == itemName }
-                .firstOrNull()
+        return items.firstOrNull { item -> item?.itemName == itemName }
     }
 }

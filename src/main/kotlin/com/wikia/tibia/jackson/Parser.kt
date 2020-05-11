@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.wikia.tibia.exceptions.JacksonParsingException
+import com.wikia.tibia.objects.WikiObject
 import org.json.JSONObject
 import org.slf4j.LoggerFactory
 import java.io.IOException
@@ -79,19 +80,6 @@ object Parser {
 //            throw JacksonParsingException(e)
 //        }
 //    }
-
-    private fun <T> parseJsonToWrappedWikiObject(mapper: ObjectMapper, jn: JsonNode?, type: Class<T>): T? {
-        return try {
-            val value = mapper.treeToValue(jn, type)
-            if (value is WrappedWikiObject) {
-                (value as WrappedWikiObject).originalJson = JSONObject(value)
-            }
-            value
-        } catch (e: JsonProcessingException) {
-            logger.error("Unable to construct object of type '{}' from the following json: {} because of error: {}", type, jn, e)
-            null
-        }
-    }
 
     @JvmOverloads
     fun json(someObject: Any, mapper: ObjectMapper? = defaultObjectMapper): String {

@@ -65,9 +65,9 @@ data class Book(
         private val implemented6: String,
         private val implemented7: String,
         private val implemented8: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

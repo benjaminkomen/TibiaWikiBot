@@ -34,9 +34,9 @@ data class Building(
         private val rooms: Int,
         private val furnishings: String,
         private val image: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

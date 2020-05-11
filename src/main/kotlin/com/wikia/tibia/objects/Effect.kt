@@ -17,9 +17,9 @@ data class Effect(
         private val lightcolor: Int,
         private val causes: String?,
         private val effect: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

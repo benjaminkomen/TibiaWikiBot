@@ -36,9 +36,9 @@ data class HuntingPlace(
         private val map2: String,
         private val map3: String,
         private val map4: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

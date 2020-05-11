@@ -6,7 +6,6 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Key(
-        private val name: String, // TODO should this be here?
         private val implemented: String?,
         private val history: String,
         private val status: Status,
@@ -23,10 +22,11 @@ data class Key(
         private val origin: String,
         private val shortnotes: String?,
         private val longnotes: String
-) {
+): WikiObject() {
+
     fun getName() = String.format("Key %s", number)
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

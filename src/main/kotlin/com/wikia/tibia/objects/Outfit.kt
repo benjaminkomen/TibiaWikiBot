@@ -20,9 +20,9 @@ data class Outfit(
         private val fulloutfitprice: Int,
         private val achievement: String,
         private val artwork: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

@@ -20,9 +20,9 @@ data class Mount(
         private val lightradius: Int,
         private val lightcolor: Int,
         private val artwork: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

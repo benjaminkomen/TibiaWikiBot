@@ -31,9 +31,9 @@ data class Corpse(
         @get:JsonGetter("3weight") val thirdWeight: BigDecimal,
         private val corpseof: String,
         private val sellto: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

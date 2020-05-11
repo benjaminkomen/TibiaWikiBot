@@ -19,9 +19,9 @@ data class Location(
         private val map5: String,
         private val map6: String,
         private val links: YesNo?
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

@@ -90,9 +90,9 @@ data class Item(
         private val buyfrom: String?,
         private val sellto: String?,
         private val fansite: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

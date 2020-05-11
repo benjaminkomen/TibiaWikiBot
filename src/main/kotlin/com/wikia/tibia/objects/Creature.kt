@@ -58,9 +58,9 @@ data class Creature(
         private val strategy: String?,
         private val location: String?,
         private val loot: List<LootItem>?
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

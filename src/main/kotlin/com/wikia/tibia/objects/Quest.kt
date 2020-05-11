@@ -25,9 +25,9 @@ data class Quest(
         private val transcripts: YesNo,
         private val dangers: String,
         private val legend: String
-) {
+): WikiObject() {
 
-    fun setDefaultValues() {
+    override fun setDefaultValues() {
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }

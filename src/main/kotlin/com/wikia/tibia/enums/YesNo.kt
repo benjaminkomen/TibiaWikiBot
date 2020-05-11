@@ -3,7 +3,7 @@ package com.wikia.tibia.enums
 import com.fasterxml.jackson.annotation.JsonValue
 import com.wikia.tibia.interfaces.Description
 
-enum class YesNo(private val description: String) : Description {
+enum class YesNo(@JsonValue override val description: String) : Description {
     YES_LOWERCASE("yes"),
     YES_UPPERCASE("Yes"),
     YES_DOT("Yes."),
@@ -14,11 +14,6 @@ enum class YesNo(private val description: String) : Description {
     NO_UNKNOWN("no?"),
     UNKNOWN("?"),
     EMPTY("");
-
-    @JsonValue
-    override fun getDescription(): String {
-        return description
-    }
 
     val isYes: Boolean
         get() = this == YES_DOT || this == YES_LOWERCASE || this == YES_UNKNOWN || this == YES_UPPERCASE

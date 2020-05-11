@@ -3,7 +3,7 @@ package com.wikia.tibia.enums
 import com.fasterxml.jackson.annotation.JsonValue
 import com.wikia.tibia.interfaces.Description
 
-enum class BookType(private val description: String) : Description {
+enum class BookType(@JsonValue override val description: String) : Description {
     BOOK_ATLAS("Book (Atlas)"),
     BOOK_BLACK("Book (Black)"),
     BOOK_BLUE("Book (Blue)"),
@@ -62,9 +62,4 @@ enum class BookType(private val description: String) : Description {
     TORN_BOOK_READABLE("Torn Book (Readable)"),
     WRINKLED_PARCHMENT("Wrinkled Parchment"),
     YOUR_STUDENT_BOOK("Your Student Book");
-
-    @JsonValue
-    override fun getDescription(): String {
-        return description
-    }
 }

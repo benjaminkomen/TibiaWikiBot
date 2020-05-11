@@ -1,33 +1,29 @@
 package com.wikia.tibia.enums
 
+import com.fasterxml.jackson.annotation.JsonValue
 import com.wikia.tibia.interfaces.Description
 
-enum class Contracts(private val description: String) : Description {
+enum class Contracts(@JsonValue override val description: String) : Description {
     HOST("http://localhost:8080"),
-    API(HOST.getDescription() + "/api"),
-    ACHIEVEMENTS(API.getDescription() + "/achievements"),
-    BOOKS(API.getDescription() + "/books"),
-    BUILDINGS(API.getDescription() + "/buildings"),
-    CORPSES(API.getDescription() + "/corpses"),
-    CREATURES(API.getDescription() + "/creatures"),
-    EFFECTS(API.getDescription() + "/effects"),
-    HUNTING_PLACES(API.getDescription() + "/huntingplaces"),
-    ITEMS(API.getDescription() + "/items"),
-    KEYS(API.getDescription() + "/keys"),
-    LOCATIONS(API.getDescription() + "/locations"),
-    LOOT_STATISTICS(API.getDescription() + "/loot"),
-    LOOT_STATISTICS_V2(API.getDescription() + "/v2/loot"),
-    MISSILES(API.getDescription() + "/missiles"),
-    MOUNTS(API.getDescription() + "/mounts"),
-    NPCS(API.getDescription() + "/npcs"),
-    OBJECTS(API.getDescription() + "/objects"),
-    OUTFITS(API.getDescription() + "/outfits"),
-    QUESTS(API.getDescription() + "/quests"),
-    SPELLS(API.getDescription() + "/spells"),
-    STREETS(API.getDescription() + "/streets");
-
-    override fun getDescription(): String {
-        return description
-    }
-
+    API(HOST.description + "/api"),
+    ACHIEVEMENTS(API.description + "/achievements"),
+    BOOKS(API.description + "/books"),
+    BUILDINGS(API.description + "/buildings"),
+    CORPSES(API.description + "/corpses"),
+    CREATURES(API.description + "/creatures"),
+    EFFECTS(API.description + "/effects"),
+    HUNTING_PLACES(API.description + "/huntingplaces"),
+    ITEMS(API.description + "/items"),
+    KEYS(API.description + "/keys"),
+    LOCATIONS(API.description + "/locations"),
+    LOOT_STATISTICS(API.description + "/loot"),
+    LOOT_STATISTICS_V2(API.description + "/v2/loot"),
+    MISSILES(API.description + "/missiles"),
+    MOUNTS(API.description + "/mounts"),
+    NPCS(API.description + "/npcs"),
+    OBJECTS(API.description + "/objects"),
+    OUTFITS(API.description + "/outfits"),
+    QUESTS(API.description + "/quests"),
+    SPELLS(API.description + "/spells"),
+    STREETS(API.description + "/streets");
 }

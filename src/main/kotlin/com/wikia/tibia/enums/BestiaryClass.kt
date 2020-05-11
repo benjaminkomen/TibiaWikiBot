@@ -3,7 +3,7 @@ package com.wikia.tibia.enums
 import com.fasterxml.jackson.annotation.JsonValue
 import com.wikia.tibia.interfaces.Description
 
-enum class BestiaryClass(private val description: String) : Description {
+enum class BestiaryClass(@JsonValue override val description: String) : Description {
     AMPHIBIC("Amphibic"),
     AQUATIC("Aquatic"),
     BIRD("Bird"),
@@ -25,9 +25,4 @@ enum class BestiaryClass(private val description: String) : Description {
     SLIME("Slime"),
     UNDEAD("Undead"),
     VERMIN("Vermin");
-
-    @JsonValue
-    override fun getDescription(): String {
-        return description
-    }
 }

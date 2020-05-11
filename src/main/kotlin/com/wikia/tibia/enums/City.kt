@@ -3,7 +3,7 @@ package com.wikia.tibia.enums
 import com.fasterxml.jackson.annotation.JsonValue
 import com.wikia.tibia.interfaces.Description
 
-enum class City(private val description: String) : Description {
+enum class City(@JsonValue override val description: String) : Description {
     AB_DENDRIEL("Ab'Dendriel"),
     ANKRAHMUN("Ankrahmun"),
     CARLIN("Carlin"),
@@ -32,9 +32,4 @@ enum class City(private val description: String) : Description {
     VENORE("Venore"),
     YALAHAR("Yalahar"),
     EMPTY("");
-
-    @JsonValue
-    override fun getDescription(): String {
-        return description
-    }
 }

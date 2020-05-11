@@ -6,7 +6,7 @@ import com.wikia.tibia.interfaces.Description
 /**
  * See also: https://tibia.fandom.com/wiki/Rareness
  */
-enum class Rarity(private val description: String) : Description {
+enum class Rarity(@JsonValue override val description: String) : Description {
     ALWAYS("always"),
     COMMON("common"),
     UNCOMMON("uncommon"),
@@ -14,9 +14,4 @@ enum class Rarity(private val description: String) : Description {
     RARE("rare"),
     VERY_RARE("very rare"),
     EXTREMELY_RARE("extremely rare");
-
-    @JsonValue
-    override fun getDescription(): String {
-        return description
-    }
 }

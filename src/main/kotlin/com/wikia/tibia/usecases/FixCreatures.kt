@@ -97,7 +97,7 @@ class FixCreatures(
      * eligible for adding, add it. Also sort it.
      */
     private fun addCreatureToDroppedByListOfItem(creature: Creature, item: Item) {
-        if (!item.droppedby.contains(creature.name) && itemShouldBeAdded(creature.name, item.name)) {
+        if (item.droppedby != null && !item.droppedby.contains(creature.name) && itemShouldBeAdded(creature.name, item.name)) {
             logger.info("Adding creature '${creature.name}' to droppedby list of item '${item.name}'.")
             if (!itemPagesToUpdate.containsKey(item.name)) {
                 // item not already in itemPages cache, add it

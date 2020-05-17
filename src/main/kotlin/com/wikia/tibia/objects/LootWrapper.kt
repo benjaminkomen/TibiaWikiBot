@@ -5,9 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import java.util.*
 
 data class LootWrapper(
-        private val loot2: Loot?,
-        @JsonProperty("loot2_rc") private val loot2Rc: Loot?,
-        @JsonIgnore private var mergedLoot: Loot?
+        private val loot2: Loot? = null,
+        @JsonProperty("loot2_rc") private val loot2Rc: Loot? = null,
+        @JsonIgnore private var mergedLoot: Loot? = null
 ) {
 
     fun getMergedLoot(): Loot? {

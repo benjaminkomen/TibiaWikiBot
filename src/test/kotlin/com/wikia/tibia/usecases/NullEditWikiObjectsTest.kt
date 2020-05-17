@@ -1,160 +1,179 @@
-package com.wikia.tibia.usecases;
+package com.wikia.tibia.usecases
 
-import org.junit.Before;
-import org.junit.Ignore;
-import org.junit.Test;
+import com.wikia.tibia.repositories.*
+import org.junit.Before
+import org.junit.Ignore
+import org.junit.Test
 
 @Ignore
-public class NullEditWikiObjectsTest {
-
-    private NullEditWikiObjects target;
+class NullEditWikiObjectsTest {
+    private lateinit var target: NullEditWikiObjects
 
     @Before
-    public void setup() {
-        target = new NullEditWikiObjects();
+    fun setup() {
+        target = NullEditWikiObjects(
+                achievementRepository = AchievementRepository(),
+                bookRepository = BookRepository(),
+                buildingRepository = BuildingRepository(),
+                corpseRepository = CorpseRepository(),
+                creatureRepository = CreatureRepository(),
+                effectRepository = EffectRepository(),
+                huntingPlaceRepository = HuntingPlaceRepository(),
+                itemRepository = ItemRepository(),
+                keyRepository = KeyRepository(),
+                locationRepository = LocationRepository(),
+                missileRepository = MissileRepository(),
+                mountRepository = MountRepository(),
+                npcRepository = NPCRepository(),
+                objectRepository = ObjectRepository(),
+                outfitRepository = OutfitRepository(),
+                questRepository = QuestRepository(),
+                spellRepository = SpellRepository(),
+                streetRepository = StreetRepository()
+        )
     }
 
     /**
      * Last partial run: February 29, 2020
      */
     @Test
-    public void testCheckAchievements() {
-        target.checkAchievements();
+    fun testCheckAchievements() {
+        target.checkAchievements()
     }
 
     /**
      * Last successful run: May 4, 2019
      */
     @Test
-    public void testCheckBooks() {
-        target.checkBooks();
+    fun testCheckBooks() {
+        target.checkBooks()
     }
 
     /**
      * Last successful run: May 4, 2019
      */
     @Test
-    public void testCheckBuildings() {
-        target.checkBuildings();
+    fun testCheckBuildings() {
+        target.checkBuildings()
     }
 
     /**
      * Last successful run: May 12, 2019
      */
     @Test
-    public void testCheckCorpses() {
-        target.checkCorpses();
+    fun testCheckCorpses() {
+        target.checkCorpses()
     }
 
     /**
      * Last successful run: May 25, 2019
      */
     @Test
-    public void testCheckCreatures() {
-        target.checkCreatures();
+    fun testCheckCreatures() {
+        target.checkCreatures()
     }
 
     /**
      * Last successful run: May 12, 2019
      */
     @Test
-    public void testCheckEffects() {
-        target.checkEffects();
+    fun testCheckEffects() {
+        target.checkEffects()
     }
 
     /**
      * Last successful run:
      */
     @Test
-    public void testCheckHuntingPlaces() {
-        target.checkHuntingPlaces();
+    fun testCheckHuntingPlaces() {
+        target.checkHuntingPlaces()
     }
 
     /**
      * Last successful run: February 29, 2020
      */
     @Test
-    public void testCheckItems() {
-        target.checkItems();
+    fun testCheckItems() {
+        target.checkItems()
     }
 
     /**
      * Last successful run: never
      */
     @Test
-    public void testCheckKeys() {
-        target.checkKeys();
+    fun testCheckKeys() {
+        target.checkKeys()
     }
 
     /**
      * Last successful run: not yet
      */
     @Test
-    public void testCheckLocations() {
-        target.checkLocations();
+    fun testCheckLocations() {
+        target.checkLocations()
     }
 
     /**
      * Last successful run: May 25, 2019
      */
     @Test
-    public void testCheckMissiles() {
-        target.checkMissiles();
+    fun testCheckMissiles() {
+        target.checkMissiles()
     }
 
     /**
      * Last successful run: May 25, 2019
      */
     @Test
-    public void testCheckMounts() {
-        target.checkMounts();
+    fun testCheckMounts() {
+        target.checkMounts()
     }
 
     /**
      * Last successful run: May 25, 2019
      */
     @Test
-    public void testCheckNPCs() {
-        target.checkNPCs();
+    fun testCheckNPCs() {
+        target.checkNPCs()
     }
 
     /**
      * Last successful run:
      */
     @Test
-    public void testCheckObjects() {
-        target.checkObjects();
+    fun testCheckObjects() {
+        target.checkObjects()
     }
 
     /**
      * Last partial run: February 29, 2020
      */
     @Test
-    public void testCheckOutfits() {
-        target.checkOutfits();
+    fun testCheckOutfits() {
+        target.checkOutfits()
     }
 
     /**
      * Last partial run: February 29, 2020
      */
     @Test
-    public void testCheckQuests() {
-        target.checkQuests();
+    fun testCheckQuests() {
+        target.checkQuests()
     }
 
     /**
      * Last partial run: February 29, 2020
      */
     @Test
-    public void testCheckSpells() {
-        target.checkSpells();
+    fun testCheckSpells() {
+        target.checkSpells()
     }
 
     /**
      * Last successful run: February 29, 2020
      */
     @Test
-    public void testCheckStreets() {
-        target.checkStreets();
+    fun testCheckStreets() {
+        target.checkStreets()
     }
 }

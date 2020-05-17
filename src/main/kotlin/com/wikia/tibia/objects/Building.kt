@@ -19,10 +19,10 @@ data class Building(
         private val posy: String?,
         private val posz: String?,
         private val street: String?,
-        private val street2: String,
-        private val street3: String,
-        private val street4: String,
-        private val street5: String,
+        private val street2: String? = null,
+        private val street3: String? = null,
+        private val street4: String? = null,
+        private val street5: String? = null,
         val houseid: Int,
         private val size: Int,
         private val beds: Int,
@@ -34,7 +34,7 @@ data class Building(
         private val rooms: Int,
         private val furnishings: String,
         private val image: String
-): WikiObject() {
+) : WikiObject() {
 
     override fun setDefaultValues() {
         if (isEmpty(implemented)) {

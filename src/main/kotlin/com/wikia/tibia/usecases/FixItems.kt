@@ -36,18 +36,18 @@ class FixItems(
                 .asSequence()
                 .sortedBy { it.name }
                 .filter { it.notDeprecatedOrEvent(it.status) }
-                .filter { it.droppedby.isNotEmpty() }
+                .filter { it.droppedby?.isNotEmpty() ?: false }
                 .onEach { logger.debug("Processing item: ${it.name}") }
                 .forEach { item: Item ->
                     item.droppedby
-                            .mapNotNull { creatureName ->
+                            ?.mapNotNull { creatureName ->
                                 val creature = getCreature(creatureName)
                                 if (creature == null) {
                                     logger.error("Could not find creature with name '$creatureName' from item '${item.name}' in collection of creatures.")
                                 }
                                 creature
                             }
-                            .forEach { addItemToLootTableOfCreature(item, it) }
+                            ?.forEach { addItemToLootTableOfCreature(item, it) }
                 }
         saveCreatureArticles()
         return creaturePagesToUpdate

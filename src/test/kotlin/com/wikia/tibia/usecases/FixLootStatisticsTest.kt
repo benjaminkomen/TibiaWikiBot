@@ -1,65 +1,51 @@
-package com.wikia.tibia.usecases;
+package com.wikia.tibia.usecases
 
-import com.wikia.tibia.objects.Creature;
-import com.wikia.tibia.objects.Loot;
-import com.wikia.tibia.objects.LootItem;
-import com.wikia.tibia.objects.LootStatisticsItem;
-import com.wikia.tibia.objects.LootWrapper;
-import com.wikia.tibia.objects.WikiObject;
-import com.wikia.tibia.repositories.CreatureRepository;
-import com.wikia.tibia.repositories.LootRepository;
-import io.vavr.control.Try;
-import org.junit.Before;
-import org.junit.Test;
+import com.wikia.tibia.enums.Rarity
+import com.wikia.tibia.objects.*
+import com.wikia.tibia.repositories.CreatureRepository
+import com.wikia.tibia.repositories.LootRepository
+import io.vavr.control.Try
+import org.hamcrest.MatcherAssert.assertThat
+import org.hamcrest.Matchers.`is`
+import org.junit.Before
+import org.junit.Test
+import org.mockito.ArgumentMatchers.*
+import org.mockito.Mockito.`when`
+import org.mockito.Mockito.mock
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyBoolean;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
-
-public class FixLootStatisticsTest {
-
-    private FixLootStatistics target;
-    private CreatureRepository mockCreatureRepository;
-    private LootRepository mockLootRepository;
-    private final Creature CreatureRat = makeCreatureRat();
-    private final Creature CreatureAmazon = makeCreatureAmazon();
-    private final Creature CreatureDemon = makeCreatureDemon();
-
-    private final LootWrapper LootRat = makeLootRat();
-    private final LootWrapper LootAmazon = makeLootAmazon();
-    private final LootWrapper LootRatWithSword = makeLootRatWithSword();
-    private final LootWrapper LootDemon = makeLootDemon();
+class FixLootStatisticsTest {
+    private lateinit var target: FixLootStatistics
+    private lateinit var mockCreatureRepository: CreatureRepository
+    private lateinit var mockLootRepository: LootRepository
+    private val CreatureRat = makeCreatureRat()
+    private val CreatureAmazon = makeCreatureAmazon()
+    private val CreatureDemon = makeCreatureDemon()
+    private val LootRat = makeLootRat()
+    private val LootAmazon = makeLootAmazon()
+    private val LootRatWithSword = makeLootRatWithSword()
+    private val LootDemon = makeLootDemon()
 
     @Before
-    public void setup() {
-        mockCreatureRepository = mock(CreatureRepository.class);
-        mockLootRepository = mock(LootRepository.class);
-        target = new FixLootStatistics(mockCreatureRepository, mockLootRepository);
+    fun setup() {
+        mockCreatureRepository = mock(CreatureRepository::class.java)
+        mockLootRepository = mock(LootRepository::class.java)
+        target = FixLootStatistics(mockCreatureRepository, mockLootRepository)
     }
 
     /**
      * Do nothing because the loot list of Rat contains exactly the same as the loot statistics list of Rat.
      */
     @Test
-    public void shouldFixLootStatistics_DoNothing() {
+    fun `should fix loot statistics - do nothing`() {
         // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(CreatureRat)));
-        when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootRat)));
+        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(CreatureRat)))
+        `when`(mockLootRepository.wikiObjects).thenReturn(Try.success(listOf(LootRat)))
 
         // when
-        final Map<String, Creature> result = target.checkLootStatistics();
+        val result = target.checkLootStatistics()
+
         // then
-        assertThat(result.size(), is(0));
+        assertThat(result.size, `is`(0))
     }
 
     /**
@@ -67,19 +53,21 @@ public class FixLootStatisticsTest {
      * This should be added.
      */
     @Test
-    public void shouldFixLootStatistics_AddSwordToDroppedByListOfRat() {
+    fun `should fix loot statistics - add sword to droppedby list of rat`() {
         // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(CreatureRat)));
-        when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootRatWithSword)));
-        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
+        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(CreatureRat)))
+        `when`(mockLootRepository.wikiObjects).thenReturn(Try.success(listOf(LootRatWithSword)))
+        `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
+                .thenReturn(Try.success("success"))
 
         // when
-        final Map<String, Creature> result = target.checkLootStatistics();
+        val result = target.checkLootStatistics()
+
         // then
-        assertThat(result.size(), is(1));
-        assertThat(result.containsKey("Rat"), is(true));
-        assertThat(result.get("Rat").getLoot().size(), is(3));
-        assertThat(result.get("Rat").getLoot().stream().anyMatch(lootItem -> "Sword".equals(lootItem.getItemName())), is(true));
+        assertThat(result.size, `is`(1))
+        assertThat(result.containsKey("Rat"), `is`(true))
+        assertThat((result["Rat"] ?: error("")).loot?.size, `is`(3))
+        assertThat((result["Rat"] ?: error("")).loot?.any { (itemName) -> "Sword" == itemName }, `is`(true))
     }
 
     /**
@@ -87,146 +75,151 @@ public class FixLootStatisticsTest {
      * This should be added.
      */
     @Test
-    public void shouldFixLootStatistics_DoNotAddSkullToLootListOfAmazon() {
+    fun `should fix loot statistics - do not add skull to loot list of amazon`() {
         // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(CreatureAmazon)));
-        when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootAmazon)));
-        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
+        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(CreatureAmazon)))
+        `when`(mockLootRepository.wikiObjects).thenReturn(Try.success(listOf(LootAmazon)))
+        `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
+                .thenReturn(Try.success("success"))
 
         // when
-        final Map<String, Creature> result = target.checkLootStatistics();
+        val result = target.checkLootStatistics()
+
         // then
-        assertThat(result.size(), is(0));
+        assertThat(result.size, `is`(0))
     }
 
     /**
      * The loot list of a Demon contains some Demon (Goblin) items. These should not be added to a Demon's loot list.
      */
     @Test
-    public void shouldFixLootStatistics_DoNotAddDemonGoblinLootToDemon() {
+    fun `should fix loot statistics - do not add demon goblin loot to demon`() {
         // given
-        when(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(List.of(CreatureDemon)));
-        when(mockLootRepository.getWikiObjects()).thenReturn(Try.success(List.of(LootDemon)));
-        when(mockCreatureRepository.saveWikiObject(any(WikiObject.class), anyString(), anyBoolean())).thenReturn(Try.success("success"));
+        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(CreatureDemon)))
+        `when`(mockLootRepository.wikiObjects).thenReturn(Try.success(listOf(LootDemon)))
+        `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
+                .thenReturn(Try.success("success"))
 
         // when
-        final Map<String, Creature> result = target.checkLootStatistics();
+        val result = target.checkLootStatistics()
+
         // then
-        assertThat(result.size(), is(1));
-        assertThat(result.get("Demon").getLoot().get(1).getItemName(), is("Demonrage Sword"));
+        assertThat(result.size, `is`(1))
+        assertThat((result["Demon"] ?: error("")).loot!![1].itemName, `is`("Demonrage Sword"))
     }
 
-    private static Creature makeCreatureRat() {
-        return Creature.builder()
-                .actualname("Rat")
-                .name("Rat")
-                .loot(new ArrayList<>(Arrays.asList(
-                        LootItem.builder().itemName("Gold Coin").amount("0-4").build(),
-                        LootItem.builder().itemName("Cheese").build()
-                        ))
+    private fun makeCreatureAmazon(): Creature {
+        return Creature(
+                actualname = "Amazon",
+                name = "Amazon",
+                loot = mutableListOf(
+                        LootItem(itemName = "Gold Coin", amount = "0-20"),
+                        LootItem(itemName = "Skull (Item)", amount = "0-2"),
+                        LootItem(itemName = "Dagger"),
+                        LootItem(itemName = "Brown Bread"),
+                        LootItem(itemName = "Sabre"),
+                        LootItem(itemName = "Girlish Hair Decoration"),
+                        LootItem(itemName = "Protective Charm"),
+                        LootItem(itemName = "Torch", rarity = Rarity.RARE),
+                        LootItem(itemName = "Crystal Necklace", rarity = Rarity.VERY_RARE),
+                        LootItem(itemName = "Small Ruby", rarity = Rarity.VERY_RARE)
                 )
-                .build();
+        )
     }
 
-    private Creature makeCreatureAmazon() {
-        return Creature.builder()
-                .actualname("Amazon")
-                .name("Amazon")
-                .loot(new ArrayList<>(Arrays.asList(
-                        LootItem.builder().itemName("Gold Coin").amount("0-20").build(),
-                        LootItem.builder().itemName("Skull (Item)").amount("0-2").build(),
-                        LootItem.builder().itemName("Dagger").build(),
-                        LootItem.builder().itemName("Brown Bread").build(),
-                        LootItem.builder().itemName("Sabre").build(),
-                        LootItem.builder().itemName("Girlish Hair Decoration").build(),
-                        LootItem.builder().itemName("Protective Charm").build(),
-                        LootItem.builder().itemName("Torch").rarity(Rarity.RARE).build(),
-                        LootItem.builder().itemName("Crystal Necklace").rarity(Rarity.VERY_RARE).build(),
-                        LootItem.builder().itemName("Small Ruby").rarity(Rarity.VERY_RARE).build()
-                        ))
+    private fun makeCreatureDemon(): Creature {
+        return Creature(
+                actualname = "Demon",
+                name = "Demon",
+                loot = mutableListOf(LootItem(itemName = "Magic Plate Armor"))
+        )
+    }
+
+    private fun makeLootAmazon(): LootWrapper {
+        return LootWrapper(
+                loot2 = Loot(
+                        kills = "21983",
+                        pageName = "Amazon",
+                        name = "Amazon",
+                        loot = mutableListOf(
+                                LootStatisticsItem(itemName = "Empty", times = "253"),
+                                LootStatisticsItem(itemName = "Dagger", times = "17606", amount = "1", total = "17606"),
+                                LootStatisticsItem(itemName = "Skull", times = "17581", amount = "1-2", total = "26316"),
+                                LootStatisticsItem(itemName = "Gold Coin", times = "1", amount = "1", total = "2"),
+                                LootStatisticsItem(itemName = "Brown Bread", times = "1", amount = "1", total = "2"),
+                                LootStatisticsItem(itemName = "Sabre", times = "1", amount = "1", total = "2"),
+                                LootStatisticsItem(itemName = "Girlish Hair Decoration", times = "1", amount = "1", total = "2"),
+                                LootStatisticsItem(itemName = "Protective Charm", times = "1", amount = "1", total = "2"),
+                                LootStatisticsItem(itemName = "Torch", times = "1", amount = "1", total = "2"),
+                                LootStatisticsItem(itemName = "Crystal Necklace", times = "1", amount = "1", total = "2"),
+                                LootStatisticsItem(itemName = "Small Ruby", times = "1", amount = "1", total = "1")
+                        ),
+                        version = "8.6"
                 )
-                .build();
+        )
     }
 
-    private Creature makeCreatureDemon() {
-        return Creature.builder()
-                .actualname("Demon")
-                .name("Demon")
-                .loot(new ArrayList<>(Collections.singletonList(
-                        LootItem.builder().itemName("Magic Plate Armor").build()
-                        ))
+    private fun makeLootDemon(): LootWrapper {
+        return LootWrapper(
+                loot2 = Loot(
+                        kills = "34026",
+                        pageName = "Demon",
+                        name = "Demon",
+                        loot = mutableListOf(
+                                LootStatisticsItem(itemName = "Small Stone", times = "21", amount = "1-3", total = "38"),
+                                LootStatisticsItem(itemName = "Mouldy Cheese", times = "10", amount = "1", total = "10"),
+                                LootStatisticsItem(itemName = "Leather Armor", times = "8", amount = "1", total = "8"),
+                                LootStatisticsItem(itemName = "Bone", times = "7", amount = "1", total = "7"),
+                                LootStatisticsItem(itemName = "Demonrage Sword", times = "20", amount = "1", total = "20")
+                        ),
+                        version = "10.37"
                 )
-                .build();
+        )
     }
 
-    private static LootWrapper makeLootRat() {
-        return LootWrapper.builder()
-                .loot2(Loot.builder()
-                        .kills("14605")
-                        .name("Rat")
-                        .loot(new ArrayList<>(Arrays.asList(
-                                LootStatisticsItem.builder().itemName("Empty").times("108").build(),
-                                LootStatisticsItem.builder().itemName("Cheese").times("5741").build(),
-                                LootStatisticsItem.builder().itemName("Gold Coin").times("14477").amount("1").total("20591").build()
-                        )))
-                        .version("9.63")
-                        .build())
-                .build();
-    }
+    companion object {
+        private fun makeCreatureRat(): Creature {
+            return Creature(
+                    actualname = "Rat",
+                    name = "Rat",
+                    loot = mutableListOf(
+                            LootItem(itemName = "Gold Coin", amount = "0-4"),
+                            LootItem(itemName = "Cheese")
+                    )
+            )
+        }
 
-    private static LootWrapper makeLootRatWithSword() {
-        return LootWrapper.builder()
-                .loot2(Loot.builder()
-                        .kills("14605")
-                        .name("Rat")
-                        .loot(new ArrayList<>(Arrays.asList(
-                                LootStatisticsItem.builder().itemName("Empty").times("108").build(),
-                                LootStatisticsItem.builder().itemName("Cheese").times("5741").build(),
-                                LootStatisticsItem.builder().itemName("Gold Coin").times("14477").amount("1").total("20591").build(),
-                                LootStatisticsItem.builder().itemName("Sword").times("1").build()
-                        )))
-                        .version("9.63")
-                        .build())
-                .build();
-    }
+        private fun makeLootRat(): LootWrapper {
+            return LootWrapper(
+                    loot2 = Loot(
+                            kills = "14605",
+                            pageName = "Rat",
+                            name = "Rat",
+                            loot = mutableListOf(
+                                    LootStatisticsItem(itemName = "Empty", times = "108"),
+                                    LootStatisticsItem(itemName = "Cheese", times = "5741"),
+                                    LootStatisticsItem(itemName = "Gold Coin", times = "14477", amount = "1", total = "20591")
+                            ),
+                            version = "9.63"
+                    )
+            )
+        }
 
-    private LootWrapper makeLootAmazon() {
-        return LootWrapper.builder()
-                .loot2(Loot.builder()
-                        .kills("21983")
-                        .name("Amazon")
-                        .loot(new ArrayList<>(Arrays.asList(
-                                LootStatisticsItem.builder().itemName("Empty").times("253").build(),
-                                LootStatisticsItem.builder().itemName("Dagger").times("17606").amount("1").total("17606").build(),
-                                LootStatisticsItem.builder().itemName("Skull").times("17581").amount("1-2").total("26316").build(),
-                                LootStatisticsItem.builder().itemName("Gold Coin").times("1").amount("1").total("2").build(),
-                                LootStatisticsItem.builder().itemName("Brown Bread").times("1").amount("1").total("2").build(),
-                                LootStatisticsItem.builder().itemName("Sabre").times("1").amount("1").total("2").build(),
-                                LootStatisticsItem.builder().itemName("Girlish Hair Decoration").times("1").amount("1").total("2").build(),
-                                LootStatisticsItem.builder().itemName("Protective Charm").times("1").amount("1").total("2").build(),
-                                LootStatisticsItem.builder().itemName("Torch").times("1").amount("1").total("2").build(),
-                                LootStatisticsItem.builder().itemName("Crystal Necklace").times("1").amount("1").total("2").build(),
-                                LootStatisticsItem.builder().itemName("Small Ruby").times("1").amount("1").total("1").build()
-                        )))
-                        .version("8.6")
-                        .build())
-                .build();
-    }
-
-    private LootWrapper makeLootDemon() {
-        return LootWrapper.builder()
-                .loot2(Loot.builder()
-                        .kills("34026")
-                        .name("Demon")
-                        .loot(new ArrayList<>(Arrays.asList(
-                                LootStatisticsItem.builder().itemName("Small Stone").times("21").amount("1-3").total("38").build(),
-                                LootStatisticsItem.builder().itemName("Mouldy Cheese").times("10").amount("1").total("10").build(),
-                                LootStatisticsItem.builder().itemName("Leather Armor").times("8").amount("1").total("8").build(),
-                                LootStatisticsItem.builder().itemName("Bone").times("7").amount("1").total("7").build(),
-                                LootStatisticsItem.builder().itemName("Demonrage Sword").times("20").amount("1").total("20").build()
-                        )))
-                        .version("10.37")
-                        .build())
-                .build();
+        private fun makeLootRatWithSword(): LootWrapper {
+            return LootWrapper(
+                    loot2 = Loot(
+                            kills = "14605",
+                            pageName = "Rat",
+                            name = "Rat",
+                            loot = mutableListOf(
+                                    LootStatisticsItem(itemName = "Empty", times = "108"),
+                                    LootStatisticsItem(itemName = "Cheese", times = "5741"),
+                                    LootStatisticsItem(itemName = "Gold Coin", times = "14477", amount = "1", total = "20591"),
+                                    LootStatisticsItem(itemName = "Sword", times = "1")
+                            ),
+                            version = "9.63"
+                    )
+            )
+        }
     }
 }

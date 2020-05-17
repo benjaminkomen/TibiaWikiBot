@@ -17,7 +17,7 @@ abstract class WikiObjectRepository<T : WikiObject>(
         get() = wikiObjectGateway.getWikiObjects(true)
                 .map { listOneByOne(wikiObjectClass, it, -1) }
 
-    fun getWikiObjects(limit: Int): Try<List<T>> {
+    fun getWikiObjects(limit: Int = -1): Try<List<T>> {
         return wikiObjectGateway.getWikiObjects(true)
                 .map { listOneByOne(wikiObjectClass, it, limit) }
     }

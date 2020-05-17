@@ -7,8 +7,6 @@ plugins {
 group = 'com.wikia.tibia'
 version = '1.2.0'
 description = 'TibiaWikiBot'
-sourceCompatibility = '14'
-targetCompatibility = '14'
 
 repositories {
     mavenLocal()
@@ -55,18 +53,12 @@ sonarqube {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
-    options.compilerArgs += '--enable-preview'
 }
 
 tasks.withType(Test) {
-    jvmArgs += "--enable-preview"
     useJUnit()
 
     testLogging {
         events "passed", "skipped", "failed"
     }
-}
-
-tasks.withType(JavaExec) {
-    jvmArgs += '--enable-preview'
 }

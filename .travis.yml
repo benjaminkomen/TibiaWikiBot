@@ -1,7 +1,7 @@
 language: java
 
 jdk:
-  - openjdk14
+  - openjdk13
 
 addons:
   sonarcloud:
@@ -19,5 +19,4 @@ cache:
     - '.gradle'
 
 script:
-#  - ./gradlew clean build sonarqube ## FIXME enable when the java/util/jar/Pack200 bug has been fixed
-  - ./gradlew clean build
+  - ./gradlew clean build sonarqube

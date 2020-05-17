@@ -227,7 +227,7 @@ class NullEditWikiObjects(
 
     private fun getAchievements(): List<Achievement> {
         if (achievements.isEmpty()) {
-            val tryList = achievementRepository.wikiObjects
+            val tryList = achievementRepository.getWikiObjects()
             achievements = if (tryList.isSuccess) {
                 tryList.get() as List<Achievement>
             } else {
@@ -240,7 +240,7 @@ class NullEditWikiObjects(
 
     private fun getBooks(): List<Book> {
         if (books.isEmpty()) {
-            val tryList = bookRepository.wikiObjects
+            val tryList = bookRepository.getWikiObjects()
             books = if (tryList.isSuccess) {
                 tryList.get() as List<Book>
             } else {
@@ -253,7 +253,7 @@ class NullEditWikiObjects(
 
     private fun getBuildings(): List<Building> {
         if (buildings.isEmpty()) {
-            val tryList = buildingRepository.wikiObjects
+            val tryList = buildingRepository.getWikiObjects()
             buildings = if (tryList.isSuccess) {
                 tryList.get() as List<Building>
             } else {
@@ -266,7 +266,7 @@ class NullEditWikiObjects(
 
     private fun getCorpses(): List<Corpse> {
         if (corpses.isEmpty()) {
-            val tryList = corpseRepository.wikiObjects
+            val tryList = corpseRepository.getWikiObjects()
             corpses = if (tryList.isSuccess) {
                 tryList.get() as List<Corpse>
             } else {
@@ -279,7 +279,7 @@ class NullEditWikiObjects(
 
     private fun getCreatures(): List<Creature> {
         if (creatures.isEmpty()) {
-            val tryList = creatureRepository.wikiObjects
+            val tryList = creatureRepository.getWikiObjects()
             creatures = if (tryList.isSuccess) {
                 tryList.get() as List<Creature>
             } else {
@@ -292,7 +292,7 @@ class NullEditWikiObjects(
 
     private fun getEffects(): List<Effect> {
         if (effects.isEmpty()) {
-            val tryList = effectRepository.wikiObjects
+            val tryList = effectRepository.getWikiObjects()
             effects = if (tryList.isSuccess) {
                 tryList.get() as List<Effect>
             } else {
@@ -305,7 +305,7 @@ class NullEditWikiObjects(
 
     private fun getHuntingPlaces(): List<HuntingPlace> {
         if (huntingPlaces.isEmpty()) {
-            val tryList = huntingPlaceRepository.wikiObjects
+            val tryList = huntingPlaceRepository.getWikiObjects()
             huntingPlaces = if (tryList.isSuccess) {
                 tryList.get() as List<HuntingPlace>
             } else {
@@ -318,7 +318,7 @@ class NullEditWikiObjects(
 
     private fun getItems(): List<Item> {
         if (items.isEmpty()) {
-            val tryList = itemRepository.wikiObjects
+            val tryList = itemRepository.getWikiObjects()
             items = if (tryList.isSuccess) {
                 tryList.get() as List<Item>
             } else {
@@ -331,7 +331,7 @@ class NullEditWikiObjects(
 
     private fun getKeys(): List<Key> {
         if (keys.isEmpty()) {
-            val tryList = keyRepository.wikiObjects
+            val tryList = keyRepository.getWikiObjects()
             keys = if (tryList.isSuccess) {
                 tryList.get() as List<Key>
             } else {
@@ -344,7 +344,7 @@ class NullEditWikiObjects(
 
     private fun getLocations(): List<Location> {
         if (locations.isEmpty()) {
-            val tryList = locationRepository.wikiObjects
+            val tryList = locationRepository.getWikiObjects()
             locations = if (tryList.isSuccess) {
                 tryList.get() as List<Location>
             } else {
@@ -357,7 +357,7 @@ class NullEditWikiObjects(
 
     private fun getMissiles(): List<Missile> {
         if (missiles.isEmpty()) {
-            val tryList = missileRepository.wikiObjects
+            val tryList = missileRepository.getWikiObjects()
             if (tryList.isSuccess) {
                 missiles = tryList.get() as List<Missile>
             } else {
@@ -370,7 +370,7 @@ class NullEditWikiObjects(
 
     private fun getMounts(): List<Mount> {
         if (mounts.isEmpty()) {
-            val tryList = mountRepository.wikiObjects
+            val tryList = mountRepository.getWikiObjects()
             mounts = if (tryList.isSuccess) {
                 tryList.get() as List<Mount>
             } else {
@@ -383,7 +383,7 @@ class NullEditWikiObjects(
 
     private fun getNPCs(): List<NPC> {
         if (npcs.isEmpty()) {
-            val tryList = npcRepository.wikiObjects
+            val tryList = npcRepository.getWikiObjects()
             npcs = if (tryList.isSuccess) {
                 tryList.get() as List<NPC>
             } else {
@@ -396,7 +396,7 @@ class NullEditWikiObjects(
 
     private fun getObjects(): List<TibiaObject> {
         if (objects.isEmpty()) {
-            val tryList = objectRepository.wikiObjects
+            val tryList = objectRepository.getWikiObjects()
             objects = if (tryList.isSuccess) {
                 tryList.get() as List<TibiaObject>
             } else {
@@ -409,7 +409,7 @@ class NullEditWikiObjects(
 
     private fun getOutfits(): List<Outfit> {
         if (outfits.isEmpty()) {
-            val tryList = outfitRepository.wikiObjects
+            val tryList = outfitRepository.getWikiObjects()
             outfits = if (tryList.isSuccess) {
                 tryList.get() as List<Outfit>
             } else {
@@ -422,7 +422,7 @@ class NullEditWikiObjects(
 
     private fun getQuests(): List<Quest> {
         if (quests.isEmpty()) {
-            val tryList = questRepository.wikiObjects
+            val tryList = questRepository.getWikiObjects()
             quests = if (tryList.isSuccess) {
                 tryList.get() as List<Quest>
             } else {
@@ -435,7 +435,7 @@ class NullEditWikiObjects(
 
     private fun getSpells(): List<Spell> {
         if (spells.isEmpty()) {
-            val tryList = spellRepository.wikiObjects
+            val tryList = spellRepository.getWikiObjects()
             spells = if (tryList.isSuccess) {
                 tryList.get() as List<Spell>
             } else {
@@ -448,7 +448,7 @@ class NullEditWikiObjects(
 
     private fun getStreets(): List<Street> {
         if (streets.isEmpty()) {
-            val tryList = streetRepository.wikiObjects
+            val tryList = streetRepository.getWikiObjects()
             streets = if (tryList.isSuccess) {
                 tryList.get() as List<Street>
             } else {

@@ -9,9 +9,11 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.*
+import org.mockito.ArgumentMatchers.anyBoolean
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import testutils.any
 
 class FixLootStatisticsTest {
     private lateinit var target: FixLootStatistics
@@ -38,8 +40,8 @@ class FixLootStatisticsTest {
     @Test
     fun `should fix loot statistics - do nothing`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(CreatureRat)))
-        `when`(mockLootRepository.wikiObjects).thenReturn(Try.success(listOf(LootRat)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(CreatureRat)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(LootRat)))
 
         // when
         val result = target.checkLootStatistics()
@@ -55,8 +57,8 @@ class FixLootStatisticsTest {
     @Test
     fun `should fix loot statistics - add sword to droppedby list of rat`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(CreatureRat)))
-        `when`(mockLootRepository.wikiObjects).thenReturn(Try.success(listOf(LootRatWithSword)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(CreatureRat)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(LootRatWithSword)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
                 .thenReturn(Try.success("success"))
 
@@ -77,8 +79,8 @@ class FixLootStatisticsTest {
     @Test
     fun `should fix loot statistics - do not add skull to loot list of amazon`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(CreatureAmazon)))
-        `when`(mockLootRepository.wikiObjects).thenReturn(Try.success(listOf(LootAmazon)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(CreatureAmazon)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(LootAmazon)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
                 .thenReturn(Try.success("success"))
 
@@ -95,8 +97,8 @@ class FixLootStatisticsTest {
     @Test
     fun `should fix loot statistics - do not add demon goblin loot to demon`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(CreatureDemon)))
-        `when`(mockLootRepository.wikiObjects).thenReturn(Try.success(listOf(LootDemon)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(CreatureDemon)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(LootDemon)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
                 .thenReturn(Try.success("success"))
 

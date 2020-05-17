@@ -73,7 +73,7 @@ class FixLootStatistics(
 
     private fun getCreatures(): List<Creature> {
         if (creatures.isEmpty()) {
-            val tryList: Try<List<Creature>> = creatureRepository.wikiObjects
+            val tryList: Try<List<Creature>> = creatureRepository.getWikiObjects()
             creatures = if (tryList.isSuccess) {
                 tryList.get() as List<Creature>
             } else {
@@ -91,7 +91,7 @@ class FixLootStatistics(
     private val lootPages: List<LootWrapper>
         get() {
             if (loot.isEmpty()) {
-                val tryList = lootRepository.wikiObjects
+                val tryList = lootRepository.getLoot()
                 loot = if (tryList.isSuccess) {
                     tryList.get() as List<LootWrapper>
                 } else {

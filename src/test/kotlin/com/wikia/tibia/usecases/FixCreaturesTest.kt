@@ -13,9 +13,11 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.*
+import org.mockito.ArgumentMatchers.anyBoolean
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import testutils.any
 
 class FixCreaturesTest {
     private lateinit var target: FixCreatures
@@ -37,8 +39,8 @@ class FixCreaturesTest {
     @Test
     fun `should fix creatures - do nothing`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(Rat)))
-        `when`(mockItemRepository.wikiObjects).thenReturn(Try.success(listOf(Cheese)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Rat)))
+        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Cheese)))
 
         // when
         val result = target.checkCreatures()
@@ -50,8 +52,8 @@ class FixCreaturesTest {
     @Test
     fun `should fix creatures - add bear to droppedby of honeycomb`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(Bear)))
-        `when`(mockItemRepository.wikiObjects).thenReturn(Try.success(listOf(Honeycomb)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
+        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
         `when`(mockItemRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
                 .thenReturn(Try.success("success"))
 
@@ -69,8 +71,8 @@ class FixCreaturesTest {
     @Test
     fun `should fix creatures - add bear and wasp to droppedby of honeycomb`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(Bear, Wasp)))
-        `when`(mockItemRepository.wikiObjects).thenReturn(Try.success(listOf(Honeycomb)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear, Wasp)))
+        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
         `when`(mockItemRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
                 .thenReturn(Try.success("success"))
 

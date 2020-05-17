@@ -12,9 +12,11 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
 import org.junit.Before
 import org.junit.Test
-import org.mockito.ArgumentMatchers.*
+import org.mockito.ArgumentMatchers.anyBoolean
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import testutils.any
 
 class FixItemsTest {
     private lateinit var target: FixItems
@@ -37,8 +39,8 @@ class FixItemsTest {
     @Test
     fun `should fix items - do nothing`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(Rat)))
-        `when`(mockItemRepository.wikiObjects).thenReturn(Try.success(listOf(Cheese)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Rat)))
+        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Cheese)))
 
         // when
         val result = target.checkItems()
@@ -50,8 +52,8 @@ class FixItemsTest {
     @Test
     fun `should fix items - add honeycomb to loot of bear`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(Bear)))
-        `when`(mockItemRepository.wikiObjects).thenReturn(Try.success(listOf(Honeycomb)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
+        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
                 .thenReturn(Try.success("success"))
 
@@ -68,8 +70,8 @@ class FixItemsTest {
     @Test
     fun `should fix items - add honeycomb to loot of bear and wasp`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(Bear, Wasp)))
-        `when`(mockItemRepository.wikiObjects).thenReturn(Try.success(listOf(Honeycomb)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear, Wasp)))
+        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
                 .thenReturn(Try.success("success"))
 
@@ -89,8 +91,8 @@ class FixItemsTest {
     @Test
     fun `should fix items - add honeycomb and bear paw to loot of bear`() {
         // given
-        `when`(mockCreatureRepository.wikiObjects).thenReturn(Try.success(listOf(Bear)))
-        `when`(mockItemRepository.wikiObjects).thenReturn(Try.success(listOf(Honeycomb, BearPaw)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
+        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb, BearPaw)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
                 .thenReturn(Try.success("success"))
 

@@ -60,7 +60,7 @@ class BuildingRents(
 
     private fun getBuildings(): List<Building> {
         if (buildings.isEmpty()) {
-            val tryList = buildingRepository.wikiObjects
+            val tryList = buildingRepository.getWikiObjects()
             buildings = if (tryList.isSuccess) {
                 tryList.get() as List<Building>
             } else {

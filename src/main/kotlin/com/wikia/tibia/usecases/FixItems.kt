@@ -55,7 +55,7 @@ class FixItems(
 
     private fun getCreatures(): List<Creature> {
         if (creatures.isEmpty()) {
-            val tryList: Try<List<Creature>> = creatureRepository.wikiObjects
+            val tryList: Try<List<Creature>> = creatureRepository.getWikiObjects()
             creatures = if (tryList.isSuccess) {
                 tryList.get() as List<Creature>
             } else {
@@ -72,7 +72,7 @@ class FixItems(
 
     private fun getItems(): List<Item> {
         if (items.isEmpty()) {
-            val tryList = itemRepository.wikiObjects
+            val tryList = itemRepository.getWikiObjects()
             items = if (tryList.isSuccess) {
                 tryList.get() as List<Item>
             } else {

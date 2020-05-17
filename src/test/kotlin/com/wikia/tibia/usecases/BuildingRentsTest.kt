@@ -15,10 +15,13 @@ import org.hamcrest.Matchers.`is`
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
-import org.mockito.ArgumentMatchers.*
+import org.mockito.ArgumentMatchers.anyBoolean
+import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import testutils.any
+import testutils.eq
 
 class BuildingRentsTest {
 

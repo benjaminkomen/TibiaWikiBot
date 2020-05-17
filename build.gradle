@@ -38,10 +38,10 @@ dependencies {
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "13"
+    kotlinOptions.jvmTarget = "11"
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "13"
+    kotlinOptions.jvmTarget = "11"
 }
 
 sonarqube {

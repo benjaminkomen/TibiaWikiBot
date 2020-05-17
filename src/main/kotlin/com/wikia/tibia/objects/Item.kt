@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory
 import java.math.BigDecimal
 
 data class Item(
-        private val name: String,
+        val name: String,
         private val article: Article,
         private val actualname: String,
         private val plural: String,
@@ -15,7 +15,7 @@ data class Item(
         private val notes: String,
         private val notes2: String,
         private val history: String,
-        private val status: Status,
+        val status: Status,
         private val itemid: List<Int>,
         private val marketable: YesNo,
         private val usable: YesNo,
@@ -81,7 +81,7 @@ data class Item(
         private val volume: Int,
         private val duration: String,
         private val destructible: YesNo,
-        private val droppedby: List<String>,
+        val droppedby: MutableList<String>,
         private val value: String?,
         private val npcvalue: String?,
         private val npcprice: String?,

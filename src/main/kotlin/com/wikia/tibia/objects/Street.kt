@@ -4,7 +4,7 @@ import com.wikia.tibia.enums.City
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
 
 data class Street(
-        private val name: String,
+         val name: String,
         private val implemented: String,
         private val notes: String,
         private val city: City,

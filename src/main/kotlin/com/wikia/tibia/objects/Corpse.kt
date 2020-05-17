@@ -8,7 +8,7 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import java.math.BigDecimal
 
 data class Corpse(
-        private val name: String,
+        val name: String,
         private val article: Article,
         private val actualname: String,
         private val implemented: String?,

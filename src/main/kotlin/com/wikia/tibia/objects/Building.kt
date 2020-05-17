@@ -8,10 +8,10 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Building(
-        private val name: String,
+        val name: String,
         private val implemented: String?,
         private val notes: String,
-        private val history: String,
+        val history: String,
         private val status: Status,
         private val type: BuildingType,
         private val location: String?,
@@ -23,10 +23,10 @@ data class Building(
         private val street3: String,
         private val street4: String,
         private val street5: String,
-        private val houseid: Int,
+        val houseid: Int,
         private val size: Int,
         private val beds: Int,
-        private val rent: Int,
+        val rent: Int,
         private val ownable: YesNo,
         private val city: City,
         private val openwindows: Int,

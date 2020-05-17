@@ -6,14 +6,14 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Creature(
-        private val name: String,
+        val name: String,
         private val article: Article,
         private val actualname: String,
         private val plural: String,
         private val implemented: String?,
         private val notes: String,
         private val history: String,
-        private val status: Status,
+        val status: Status,
         @get:JsonGetter("hp") val hitPoints: String?,
         @get:JsonGetter("exp") val experiencePoints: String?,
         private val armor: String?,
@@ -57,7 +57,7 @@ data class Creature(
         private val speed: String?,
         private val strategy: String?,
         private val location: String?,
-        private val loot: List<LootItem>?
+        val loot: MutableList<LootItem>?
 ): WikiObject() {
 
     override fun setDefaultValues() {
@@ -172,7 +172,7 @@ data class Creature(
             this.copy(location = "Unknown")
         }
         if (loot == null) {
-            this.copy(loot = emptyList())
+            this.copy(loot = mutableListOf())
         }
     }
 

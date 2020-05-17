@@ -5,7 +5,7 @@ import com.wikia.tibia.enums.YesNo
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
 
 data class Location(
-        private val name: String,
+        val name: String,
         private val implemented: String?,
         private val status: Status,
         private val ruler: String,

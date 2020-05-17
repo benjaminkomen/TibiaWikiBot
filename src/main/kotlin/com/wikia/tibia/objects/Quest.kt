@@ -6,7 +6,7 @@ import com.wikia.tibia.enums.YesNo
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
 
 data class Quest(
-        private val name: String,
+         val name: String,
         private val implemented: String,
         private val history: String,
         private val status: Status,

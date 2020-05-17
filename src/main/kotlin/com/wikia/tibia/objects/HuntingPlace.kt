@@ -7,7 +7,7 @@ import com.wikia.tibia.enums.Star
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
 
 data class HuntingPlace(
-        private val name: String,
+        val name: String,
         private val implemented: String?,
         private val image: String?,
         private val city: City,

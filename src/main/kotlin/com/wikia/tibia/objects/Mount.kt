@@ -6,7 +6,7 @@ import com.wikia.tibia.enums.YesNo
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
 
 data class Mount(
-        private val name: String,
+         val name: String,
         private val implemented: String,
         private val notes: String,
         private val history: String,

@@ -6,7 +6,7 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Achievement(
-        private val name: String,
+        val name: String,
         private val actualname: String,
         private val implemented: String?,
         private val history: String,

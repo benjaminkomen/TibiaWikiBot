@@ -4,7 +4,7 @@ import com.wikia.tibia.enums.Rarity
 import java.util.*
 
 data class LootItem(
-        private val itemName: String,
+        val itemName: String,
         private val amount: String?,
         private val rarity: Rarity?
 ) {

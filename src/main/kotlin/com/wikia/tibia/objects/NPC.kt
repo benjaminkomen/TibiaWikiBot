@@ -8,7 +8,7 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import java.math.BigDecimal
 
 data class NPC(
-        private val name: String,
+         val name: String,
         private val actualname: String,
         private val implemented: String,
         private val notes: String,

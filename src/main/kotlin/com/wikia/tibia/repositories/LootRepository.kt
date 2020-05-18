@@ -10,12 +10,12 @@ class LootRepository(
 ) {
     fun getLoot(): Try<List<LootWrapper>> {
         return lootGateway.getLoot(true)
-                .map { Parser.listOneByOne(LootWrapper::class.java, it, -1) }
+                .map { Parser.listOneByOne(type = LootWrapper::class.java, json = it) }
     }
 
     fun getLoot(limit: Int): Try<List<LootWrapper>> {
         return lootGateway.getLoot(true)
-                .map { Parser.listOneByOne(LootWrapper::class.java, it, limit) }
+                .map { Parser.listOneByOne(type = LootWrapper::class.java, json = it, limit = limit) }
     }
 
     fun getLoot(pageName: String): Try<Any?> {

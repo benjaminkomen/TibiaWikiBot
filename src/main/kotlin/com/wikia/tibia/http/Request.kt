@@ -39,7 +39,7 @@ class Request {
             // we receive an error response
             return Try.failure(ResponseException(response.body()))
         }
-        return if (response != null && response.body() != null) {
+        return if (response?.body() != null) {
             Try.success(response.body())
         } else {
             Try.success("")
@@ -72,7 +72,7 @@ class Request {
             // we receive an error response
             return Try.failure(ResponseException(response.body()))
         }
-        return if (response != null && response.body() != null) {
+        return if (response?.body() != null) {
             Try.success(response.body())
         } else {
             Try.success("")
@@ -89,7 +89,7 @@ class Request {
             // we receive an error response
             return Try.failure(ResponseException(response.body()))
         }
-        return if (response != null && response.body() != null) {
+        return if (response?.body() != null) {
             Try.success(response.body())
         } else {
             Try.success("")

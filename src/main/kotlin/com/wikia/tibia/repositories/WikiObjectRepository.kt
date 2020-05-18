@@ -14,12 +14,12 @@ abstract class WikiObjectRepository<T : WikiObject>(
 
     fun getWikiObjects(): Try<List<T>> {
         return wikiObjectGateway.getWikiObjects(true)
-                .map { listOneByOne(wikiObjectClass, it, -1) }
+                .map { listOneByOne(type = wikiObjectClass, json = it) }
     }
 
     fun getWikiObjects(limit: Int = -1): Try<List<T>> {
         return wikiObjectGateway.getWikiObjects(true)
-                .map { listOneByOne(wikiObjectClass, it, limit) }
+                .map { listOneByOne(type = wikiObjectClass, json = it, limit = limit) }
     }
 
     fun getWikiObjectsList(): Try<List<String>> {

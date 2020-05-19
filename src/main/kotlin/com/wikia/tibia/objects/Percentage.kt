@@ -8,6 +8,16 @@ data class Percentage(
         private var value: Int?
 ) {
 
+    constructor(value: String): this(originalValue = value, value = value) {
+        this.originalValue = value
+        this.value = sanitize(value)
+    }
+
+    constructor(value: Int) {
+        this.originalValue = "$value%"
+        this.value = value
+    }
+
     // Equality is determined by originalValue, because the value can strip away question marks and is therefore not reliable for a correct equality check
     override fun equals(other: Any?): Boolean {
         return other is Percentage &&

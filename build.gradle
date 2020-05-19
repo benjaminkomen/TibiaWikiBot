@@ -27,6 +27,7 @@ dependencies {
     implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${jacksonVersion}"
+    implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
     implementation "org.skyscreamer:jsonassert:1.5.0"
     implementation "com.google.guava:guava:29.0-jre"
     implementation "io.vavr:vavr:0.10.3"

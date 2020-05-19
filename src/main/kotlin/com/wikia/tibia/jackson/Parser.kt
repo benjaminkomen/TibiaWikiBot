@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.core.JsonProcessingException
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.module.kotlin.jacksonObjectMapper
 import com.wikia.tibia.exceptions.JacksonParsingException
 import org.slf4j.LoggerFactory
 import java.io.IOException
@@ -11,9 +12,8 @@ import java.io.IOException
 object Parser {
 
     private val logger = LoggerFactory.getLogger(Parser::class.java)
-    private val defaultObjectMapper: ObjectMapper =
-            ObjectMapper()
-                    .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+    private val defaultObjectMapper = jacksonObjectMapper()
+            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
     fun <T> parse(type: Class<T>, json: String?): T? {
         return parse(type, defaultObjectMapper, json)
@@ -51,7 +51,7 @@ object Parser {
      * Alternative implementation of list() where the json list is read one-by-one, which makes
      * it more robust against jsonparsingexceptions
      */
-    fun <T: Any> listOneByOne(type: Class<T>, mapper: ObjectMapper = defaultObjectMapper, json: String?, limit: Int = Int.MAX_VALUE): List<T> {
+    fun <T : Any> listOneByOne(type: Class<T>, mapper: ObjectMapper = defaultObjectMapper, json: String?, limit: Int = Int.MAX_VALUE): List<T> {
         if (json == null || "" == json) {
             return emptyList()
         }

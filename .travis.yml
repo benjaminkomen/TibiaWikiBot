@@ -3,6 +3,9 @@ language: java
 jdk:
   - openjdk11
 
+git:
+  depth: false
+
 addons:
   sonarcloud:
     organization: "benjaminkomen-github"
@@ -20,4 +23,4 @@ cache:
 
 script:
   - ./gradlew jacocoTestReport
-  - ./gradlew sonarqube
+  - ./gradlew -Dsonar.host.url=https://sonarcloud.io -Dsonar.organization=benjaminkomen-github -Dsonar.login=$SONAR_TOKEN sonarqube

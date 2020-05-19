@@ -48,6 +48,7 @@ sonarqube {
     properties {
         property "sonar.projectName", "TibiaWikiBot"
         property "sonar.projectKey", "com.onlaika:TibiaWikiBot"
+        property "sonar.java.coveragePlugin", "jacoco"
     }
 }
 
@@ -61,4 +62,9 @@ tasks.withType(Test) {
     testLogging {
         events "passed", "skipped", "failed"
     }
+}
+
+jacocoTestReport {
+    // Forcing the execution of 'test' before the execution of 'jacocoTestReport'
+    dependsOn test
 }

@@ -14,7 +14,7 @@ class WikiObjectGateway<T : WikiObject> constructor(private val contract: Contra
         get() = getWikiObjects(false)
 
     fun getWikiObjects(expand: Boolean): Try<String> {
-        return request.get(java.lang.String.format("%s?expand=%s", contract.description, expand))
+        return request.get("${contract.description}?expand=$expand")
     }
 
     fun saveWikiObject(wikiObject: T, editSummary: String?, dryRun: Boolean): Try<String> {

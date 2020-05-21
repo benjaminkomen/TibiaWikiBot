@@ -5,18 +5,8 @@ import java.util.*
 
 data class Percentage(
         @get:JsonValue var originalValue: String,
-        private var value: Int?
+        private var value: Int? = null
 ) {
-
-    constructor(value: String): this(originalValue = value, value = value) {
-        this.originalValue = value
-        this.value = sanitize(value)
-    }
-
-    constructor(value: Int) {
-        this.originalValue = "$value%"
-        this.value = value
-    }
 
     // Equality is determined by originalValue, because the value can strip away question marks and is therefore not reliable for a correct equality check
     override fun equals(other: Any?): Boolean {

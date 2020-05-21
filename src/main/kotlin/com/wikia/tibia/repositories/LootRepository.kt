@@ -13,11 +13,6 @@ class LootRepository(
                 .map { Parser.listOneByOne(type = LootWrapper::class.java, json = it) }
     }
 
-    fun getLoot(limit: Int): Try<List<LootWrapper>> {
-        return lootGateway.getLoot(true)
-                .map { Parser.listOneByOne(type = LootWrapper::class.java, json = it, limit = limit) }
-    }
-
     fun getLoot(pageName: String): Try<LootWrapper> {
         return lootGateway.getLoot(pageName)
                 .map { Parser.parse(LootWrapper::class.java, it) }

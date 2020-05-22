@@ -18,12 +18,16 @@ data class Percentage(
         return Objects.hash(originalValue)
     }
 
+    override fun toString(): String {
+        return if (value != null) "$value" else ""
+    }
+
     companion object {
         val EMPTY = of("")
         val UNKNOWN = of("100%?")
 
         private fun sanitize(value: String): Int? {
-            val sanitizedValue = value.replace("\\D+".toRegex(), "")
+            val sanitizedValue = value.replace("""\D+""".toRegex(), "") // strip anything not a digit away
             return if (sanitizedValue.isEmpty()) {
                 null
             } else Integer.valueOf(sanitizedValue)

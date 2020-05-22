@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory
 data class Creature(
         val name: String,
         val article: Article? = null,
-        val actualname: String,
+        val actualname: String? = null,
         val plural: String? = null,
         val implemented: String? = null,
         val notes: String? = null,

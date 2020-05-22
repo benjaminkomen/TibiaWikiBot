@@ -9,7 +9,7 @@ import java.math.BigDecimal
 data class Item(
         val name: String,
         val article: Article? = null,
-        val actualname: String,
+        val actualname: String? = null,
         val plural: String? = null,
         val implemented: String? = null,
         val notes: String? = null,
@@ -23,7 +23,7 @@ data class Item(
         val flavortext: String? = null,
         val ingamestatus: Status? = null,
         val words: String? = null,
-        val itemclass: ItemClass,
+        val itemclass: ItemClass ? = null,
         val primarytype: String? = null,
         val secondarytype: String? = null,
         val lightcolor: Int? = null,

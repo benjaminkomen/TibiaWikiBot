@@ -1,11 +1,13 @@
 package com.wikia.tibia.objects
 
+import com.fasterxml.jackson.annotation.JsonCreator
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonValue
 import java.util.*
 
 data class Percentage(
-        @get:JsonValue var originalValue: String,
-        private var value: Int? = null
+        @get:JsonValue val originalValue: String,
+        @JsonIgnore private val value: Int? = null
 ) {
 
     // Equality is determined by originalValue, because the value can strip away question marks and is therefore not reliable for a correct equality check
@@ -33,6 +35,8 @@ data class Percentage(
             } else Integer.valueOf(sanitizedValue)
         }
 
+        @JsonCreator
+        @JvmStatic
         fun of(value: String): Percentage {
             return Percentage(
                     originalValue = value,

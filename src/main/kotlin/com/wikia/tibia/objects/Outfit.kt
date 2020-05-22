@@ -6,21 +6,21 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Outfit(
-         val name: String,
-        private val implemented: String,
-        private val notes: String,
-        private val history: String,
-        private val status: Status,
-        private val primarytype: String,
-        private val secondarytype: String,
-        private val premium: YesNo, // class and field name are the same, but that's understandable
-        private val outfit: String,
-        private val addons: String,
-        private val bought: YesNo,
-        private val fulloutfitprice: Int,
-        private val achievement: String,
-        private val artwork: String
-): WikiObject() {
+        val name: String,
+        val implemented: String,
+        val notes: String,
+        val history: String,
+        val status: Status,
+        val primarytype: String,
+        val secondarytype: String,
+        val premium: YesNo, // class and field name are the same, but that's understandable
+        val outfit: String,
+        val addons: String,
+        val bought: YesNo,
+        val fulloutfitprice: Int,
+        val achievement: String,
+        val artwork: String
+) : WikiObject() {
 
     override fun setDefaultValues() {
         if (isEmpty(implemented)) {

@@ -5,8 +5,8 @@ import java.util.*
 
 data class LootItem(
         val itemName: String,
-        private val amount: String? = null,
-        private val rarity: Rarity? = null
+        val amount: String? = null,
+        val rarity: Rarity? = null
 ) {
 
     override fun equals(other: Any?): Boolean {

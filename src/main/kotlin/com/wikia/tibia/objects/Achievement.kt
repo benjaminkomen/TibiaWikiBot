@@ -7,20 +7,20 @@ import org.slf4j.LoggerFactory
 
 data class Achievement(
         val name: String,
-        private val actualname: String,
-        private val implemented: String?,
-        private val history: String,
-        private val status: Status,
-        private val grade: Int,
-        private val description: String,
-        private val spoiler: String,
-        private val premium: YesNo?,
-        private val points: Int?,
-        private val secret: YesNo?,
-        private val coincideswith: Int,
-        private val achievementid: Int?,
-        private val relatedpages: String
-): WikiObject() {
+        val actualname: String,
+        val implemented: String?,
+        val history: String,
+        val status: Status,
+        val grade: Int,
+        val description: String,
+        val spoiler: String,
+        val premium: YesNo?,
+        val points: Int?,
+        val secret: YesNo?,
+        val coincideswith: Int,
+        val achievementid: Int?,
+        val relatedpages: String
+) : WikiObject() {
 
     override fun setDefaultValues() {
         if (isEmpty(implemented)) {

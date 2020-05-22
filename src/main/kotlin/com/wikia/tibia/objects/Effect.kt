@@ -6,18 +6,18 @@ import org.slf4j.LoggerFactory
 
 data class Effect(
         val name: String,
-        private val implemented: String?,
-        private val notes: String,
-        private val history: String,
-        private val status: Status,
-        private val effectid: List<Int?>?,
-        private val primarytype: String?,
-        private val secondarytype: String,
-        private val lightradius: Int,
-        private val lightcolor: Int,
-        private val causes: String?,
-        private val effect: String
-): WikiObject() {
+        val implemented: String?,
+        val notes: String,
+        val history: String,
+        val status: Status,
+        val effectid: List<Int?>?,
+        val primarytype: String?,
+        val secondarytype: String,
+        val lightradius: Int,
+        val lightcolor: Int,
+        val causes: String?,
+        val effect: String
+) : WikiObject() {
 
     override fun setDefaultValues() {
         if (isEmpty(implemented)) {

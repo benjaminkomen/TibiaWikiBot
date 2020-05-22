@@ -8,9 +8,9 @@ import kotlin.streams.toList
 
 data class LootStatisticsItem(
         val itemName: String,
-        private val times: String,
-        private val amount: String? = null,
-        private val total: String? = null
+        val times: String,
+        val amount: String? = null,
+        val total: String? = null
 ) {
     override fun equals(other: Any?): Boolean {
         return other is LootStatisticsItem &&

@@ -6,26 +6,26 @@ import com.wikia.tibia.enums.YesNo
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
 
 data class Quest(
-         val name: String,
-        private val implemented: String,
-        private val history: String,
-        private val status: Status,
-        private val aka: String,
-        private val reward: String,
-        private val location: String,
-        private val rookgaardquest: YesNo,
-        private val type: QuestType,
-        private val lvl: Int,
-        private val lvlrec: Int,
-        private val lvlnote: String,
-        private val log: YesNo,
-        private val time: String,
-        private val timealloc: String,
-        private val premium: YesNo,
-        private val transcripts: YesNo,
-        private val dangers: String,
-        private val legend: String
-): WikiObject() {
+        val name: String,
+        val implemented: String,
+        val history: String,
+        val status: Status,
+        val aka: String,
+        val reward: String,
+        val location: String,
+        val rookgaardquest: YesNo,
+        val type: QuestType,
+        val lvl: Int,
+        val lvlrec: Int,
+        val lvlnote: String,
+        val log: YesNo,
+        val time: String,
+        val timealloc: String,
+        val premium: YesNo,
+        val transcripts: YesNo,
+        val dangers: String,
+        val legend: String
+) : WikiObject() {
 
     override fun setDefaultValues() {
         if (isEmpty(implemented)) {

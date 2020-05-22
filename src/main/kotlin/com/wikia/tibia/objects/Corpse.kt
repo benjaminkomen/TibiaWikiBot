@@ -9,17 +9,17 @@ import java.math.BigDecimal
 
 data class Corpse(
         val name: String,
-        private val article: Article,
-        private val actualname: String,
-        private val implemented: String?,
-        private val notes: String,
-        private val history: String,
-        private val status: Status,
-        private val flavortext: String,
-        private val skinable: YesNo,
-        private val product: String,
-        private val liquid: String,
-        private val stages: Int,
+        val article: Article,
+        val actualname: String,
+        val implemented: String?,
+        val notes: String,
+        val history: String,
+        val status: Status,
+        val flavortext: String,
+        val skinable: YesNo,
+        val product: String,
+        val liquid: String,
+        val stages: Int,
         @get:JsonGetter("1decaytime") val firstDecaytime: String,
         @get:JsonGetter("2decaytime") val secondDecaytime: String,
         @get:JsonGetter("3decaytime") val thirdDecaytime: String,
@@ -29,9 +29,9 @@ data class Corpse(
         @get:JsonGetter("1weight") val firstWeight: BigDecimal,
         @get:JsonGetter("2weight") val secondWeight: BigDecimal,
         @get:JsonGetter("3weight") val thirdWeight: BigDecimal,
-        private val corpseof: String,
-        private val sellto: String
-): WikiObject() {
+        val corpseof: String,
+        val sellto: String
+) : WikiObject() {
 
     override fun setDefaultValues() {
         if (isEmpty(implemented)) {

@@ -6,23 +6,23 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Key(
-        private val implemented: String?,
-        private val history: String,
-        private val status: Status,
-        private val number: String?,
-        private val aka: String,
-        private val primarytype: KeyType?,
-        private val secondarytype: KeyType,
-        private val location: String,
-        private val value: String,
-        private val npcvalue: Int,
-        private val npcprice: Int,
-        private val buyfrom: String,
-        private val sellto: String,
-        private val origin: String,
-        private val shortnotes: String?,
-        private val longnotes: String
-): WikiObject() {
+        val implemented: String?,
+        val history: String,
+        val status: Status,
+        val number: String?,
+        val aka: String,
+        val primarytype: KeyType?,
+        val secondarytype: KeyType,
+        val location: String,
+        val value: String,
+        val npcvalue: Int,
+        val npcprice: Int,
+        val buyfrom: String,
+        val sellto: String,
+        val origin: String,
+        val shortnotes: String?,
+        val longnotes: String
+) : WikiObject() {
 
     fun getName() = String.format("Key %s", number)
 

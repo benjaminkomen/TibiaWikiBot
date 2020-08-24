@@ -32,7 +32,7 @@ dependencies {
     implementation "com.google.guava:guava:29.0-jre"
     implementation "io.vavr:vavr:0.10.3"
     testImplementation "junit:junit:4.13"
-    testImplementation "org.mockito:mockito-core:3.4.6"
+    testImplementation "org.mockito:mockito-core:3.5.5"
     testImplementation "org.hamcrest:hamcrest-core:2.2"
     annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
     compileOnly "org.projectlombok:lombok:${lombokVersion}"

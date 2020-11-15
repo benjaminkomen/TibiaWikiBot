@@ -44,4 +44,4 @@ jobs:
             -Dsonar.organization=benjaminkomen-github
             -Dsonar.projectKey=com.onlaika:TibiaWikiBot
             -Dsonar.verbose=true
-        run: ./gradlew build sonarqube --info
+#        run: ./gradlew build sonarqube --info

@@ -35,13 +35,13 @@ jobs:
       - name: Build with Gradle and generate test report for Sonar to use
         run: ./gradlew jacocoTestReport
       - name: SonarCloud Scan
-          uses: sonarsource/sonarcloud-github-action@master
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-            SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-          with:
-            args: >
-              -Dsonar.organization=benjaminkomen-github
-              -Dsonar.projectKey=com.onlaika:TibiaWikiBot
-              -Dsonar.verbose=true
-          run: ./gradlew build sonarqube --info
+        uses: sonarsource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=benjaminkomen-github
+            -Dsonar.projectKey=com.onlaika:TibiaWikiBot
+            -Dsonar.verbose=true
+        run: ./gradlew build sonarqube --info

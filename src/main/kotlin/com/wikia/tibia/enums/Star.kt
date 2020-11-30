@@ -9,5 +9,4 @@ enum class Star(@get:JsonValue val number: Int) {
     THREE(3),
     FOUR(4),
     FIVE(5);
-
 }

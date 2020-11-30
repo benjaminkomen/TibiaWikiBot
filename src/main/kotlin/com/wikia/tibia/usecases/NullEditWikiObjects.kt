@@ -1,228 +1,261 @@
 package com.wikia.tibia.usecases
 
-import com.wikia.tibia.objects.*
-import com.wikia.tibia.repositories.*
+import com.wikia.tibia.objects.Achievement
+import com.wikia.tibia.objects.Book
+import com.wikia.tibia.objects.Building
+import com.wikia.tibia.objects.Corpse
+import com.wikia.tibia.objects.Creature
+import com.wikia.tibia.objects.Effect
+import com.wikia.tibia.objects.HuntingPlace
+import com.wikia.tibia.objects.Item
+import com.wikia.tibia.objects.Key
+import com.wikia.tibia.objects.Location
+import com.wikia.tibia.objects.Missile
+import com.wikia.tibia.objects.Mount
+import com.wikia.tibia.objects.NPC
+import com.wikia.tibia.objects.Outfit
+import com.wikia.tibia.objects.Quest
+import com.wikia.tibia.objects.Spell
+import com.wikia.tibia.objects.Street
+import com.wikia.tibia.objects.TibiaObject
+import com.wikia.tibia.repositories.AchievementRepository
+import com.wikia.tibia.repositories.BookRepository
+import com.wikia.tibia.repositories.BuildingRepository
+import com.wikia.tibia.repositories.CorpseRepository
+import com.wikia.tibia.repositories.CreatureRepository
+import com.wikia.tibia.repositories.EffectRepository
+import com.wikia.tibia.repositories.HuntingPlaceRepository
+import com.wikia.tibia.repositories.ItemRepository
+import com.wikia.tibia.repositories.KeyRepository
+import com.wikia.tibia.repositories.LocationRepository
+import com.wikia.tibia.repositories.MissileRepository
+import com.wikia.tibia.repositories.MountRepository
+import com.wikia.tibia.repositories.NPCRepository
+import com.wikia.tibia.repositories.ObjectRepository
+import com.wikia.tibia.repositories.OutfitRepository
+import com.wikia.tibia.repositories.QuestRepository
+import com.wikia.tibia.repositories.SpellRepository
+import com.wikia.tibia.repositories.StreetRepository
 import com.wikia.tibia.utils.pauseForABit
 import org.slf4j.LoggerFactory
-import java.util.*
+import java.util.ArrayList
 
 class NullEditWikiObjects(
-        private val achievementRepository: AchievementRepository,
-        private val bookRepository: BookRepository,
-        private val buildingRepository: BuildingRepository,
-        private val corpseRepository: CorpseRepository,
-        private val creatureRepository: CreatureRepository,
-        private val effectRepository: EffectRepository,
-        private val huntingPlaceRepository: HuntingPlaceRepository,
-        private val itemRepository: ItemRepository,
-        private val keyRepository: KeyRepository,
-        private val locationRepository: LocationRepository,
-        private val missileRepository: MissileRepository,
-        private val mountRepository: MountRepository,
-        private val npcRepository: NPCRepository,
-        private val objectRepository: ObjectRepository,
-        private val outfitRepository: OutfitRepository,
-        private val questRepository: QuestRepository,
-        private val spellRepository: SpellRepository,
-        private val streetRepository: StreetRepository,
-        private var achievements: List<Achievement> = ArrayList<Achievement>(),
-        private var books: List<Book> = ArrayList<Book>(),
-        private var buildings: List<Building> = ArrayList<Building>(),
-        private var corpses: List<Corpse> = ArrayList<Corpse>(),
-        private var creatures: List<Creature> = ArrayList<Creature>(),
-        private var effects: List<Effect> = ArrayList<Effect>(),
-        private var huntingPlaces: List<HuntingPlace> = ArrayList<HuntingPlace>(),
-        private var items: List<Item> = ArrayList<Item>(),
-        private var keys: List<Key> = ArrayList<Key>(),
-        private var locations: List<Location> = ArrayList<Location>(),
-        private var missiles: List<Missile> = ArrayList<Missile>(),
-        private var mounts: List<Mount> = ArrayList<Mount>(),
-        private var npcs: List<NPC> = ArrayList<NPC>(),
-        private var objects: List<TibiaObject> = ArrayList<TibiaObject>(),
-        private var outfits: List<Outfit> = ArrayList<Outfit>(),
-        private var quests: List<Quest> = ArrayList<Quest>(),
-        private var spells: List<Spell> = ArrayList<Spell>(),
-        private var streets: List<Street> = ArrayList()
+    private val achievementRepository: AchievementRepository,
+    private val bookRepository: BookRepository,
+    private val buildingRepository: BuildingRepository,
+    private val corpseRepository: CorpseRepository,
+    private val creatureRepository: CreatureRepository,
+    private val effectRepository: EffectRepository,
+    private val huntingPlaceRepository: HuntingPlaceRepository,
+    private val itemRepository: ItemRepository,
+    private val keyRepository: KeyRepository,
+    private val locationRepository: LocationRepository,
+    private val missileRepository: MissileRepository,
+    private val mountRepository: MountRepository,
+    private val npcRepository: NPCRepository,
+    private val objectRepository: ObjectRepository,
+    private val outfitRepository: OutfitRepository,
+    private val questRepository: QuestRepository,
+    private val spellRepository: SpellRepository,
+    private val streetRepository: StreetRepository,
+    private var achievements: List<Achievement> = ArrayList<Achievement>(),
+    private var books: List<Book> = ArrayList<Book>(),
+    private var buildings: List<Building> = ArrayList<Building>(),
+    private var corpses: List<Corpse> = ArrayList<Corpse>(),
+    private var creatures: List<Creature> = ArrayList<Creature>(),
+    private var effects: List<Effect> = ArrayList<Effect>(),
+    private var huntingPlaces: List<HuntingPlace> = ArrayList<HuntingPlace>(),
+    private var items: List<Item> = ArrayList<Item>(),
+    private var keys: List<Key> = ArrayList<Key>(),
+    private var locations: List<Location> = ArrayList<Location>(),
+    private var missiles: List<Missile> = ArrayList<Missile>(),
+    private var mounts: List<Mount> = ArrayList<Mount>(),
+    private var npcs: List<NPC> = ArrayList<NPC>(),
+    private var objects: List<TibiaObject> = ArrayList<TibiaObject>(),
+    private var outfits: List<Outfit> = ArrayList<Outfit>(),
+    private var quests: List<Quest> = ArrayList<Quest>(),
+    private var spells: List<Spell> = ArrayList<Spell>(),
+    private var streets: List<Street> = ArrayList()
 ) {
 
     fun checkAchievements() {
         getAchievements()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    achievementRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                achievementRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkBooks() {
         getBooks()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    bookRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                bookRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkBuildings() {
         getBuildings()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    buildingRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                buildingRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkCorpses() {
         getCorpses()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    corpseRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                corpseRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
-
 
     fun checkCreatures() {
         getCreatures()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    creatureRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                creatureRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkEffects() {
         getEffects()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    effectRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                effectRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkHuntingPlaces() {
         getHuntingPlaces()
-                .forEach {
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    huntingPlaceRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                huntingPlaceRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkItems() {
         getItems()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    itemRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                itemRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkKeys() {
         getKeys()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.getName())
-                    keyRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.getName())
+                keyRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkLocations() {
         getLocations()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    locationRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                locationRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkMissiles() {
         getMissiles()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    missileRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                missileRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkMounts() {
         getMounts()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    mountRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                mountRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkNPCs() {
         getNPCs()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    npcRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                npcRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkObjects() {
         getObjects()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    objectRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                objectRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkOutfits() {
         getOutfits()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    outfitRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                outfitRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkQuests() {
         getQuests()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    questRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                questRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkSpells() {
         getSpells()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    spellRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                spellRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     fun checkStreets() {
         getStreets()
-                .forEach {
-                    it.setDefaultValues()
-                    logger.info(LOG_SAVE_ARTICLE, it.name)
-                    streetRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                    pauseForABit()
-                }
+            .forEach {
+                it.setDefaultValues()
+                logger.info(LOG_SAVE_ARTICLE, it.name)
+                streetRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
+                pauseForABit()
+            }
     }
 
     private fun getAchievements(): List<Achievement> {
@@ -458,7 +491,6 @@ class NullEditWikiObjects(
         }
         return streets
     }
-
 
     companion object {
         private val logger = LoggerFactory.getLogger(NullEditWikiObjects::class.java)

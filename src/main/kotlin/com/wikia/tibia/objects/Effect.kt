@@ -5,18 +5,18 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Effect(
-        val name: String,
-        val implemented: String?,
-        val notes: String,
-        val history: String,
-        val status: Status,
-        val effectid: List<Int?>?,
-        val primarytype: String?,
-        val secondarytype: String,
-        val lightradius: Int,
-        val lightcolor: Int,
-        val causes: String?,
-        val effect: String
+    val name: String,
+    val implemented: String?,
+    val notes: String,
+    val history: String,
+    val status: Status,
+    val effectid: List<Int?>?,
+    val primarytype: String?,
+    val secondarytype: String,
+    val lightradius: Int,
+    val lightcolor: Int,
+    val causes: String?,
+    val effect: String
 ) : WikiObject() {
 
     override fun setDefaultValues() {

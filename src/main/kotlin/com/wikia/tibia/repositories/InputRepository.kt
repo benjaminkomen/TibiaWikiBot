@@ -11,7 +11,8 @@ import java.nio.file.Files
 import java.nio.file.NoSuchFileException
 import java.nio.file.Path
 import java.nio.file.Paths
-import java.util.*
+import java.util.ArrayList
+import java.util.Scanner
 import java.util.stream.Collectors
 
 object InputRepository {
@@ -42,11 +43,15 @@ object InputRepository {
         try {
             Files.walk(Paths.get(resource)).use { paths ->
                 return paths
-                        .filter { Files.isRegularFile(it) }
-                        .collect(Collectors.toList())
+                    .filter { Files.isRegularFile(it) }
+                    .collect(Collectors.toList())
             }
         } catch (e: IOException) {
-            logger.error("An error occurred when reading the folder contents of folderName {}. Make sure it actually exists.", folderName, e)
+            logger.error(
+                "An error occurred when reading the folder contents of folderName {}. Make sure it actually exists.",
+                folderName,
+                e
+            )
         }
         return emptyList()
     }
@@ -84,8 +89,8 @@ object InputRepository {
         val result: MutableList<T> = ArrayList()
         val mapper = CsvMapper()
         val schema = mapper
-                .typedSchemaFor(clazz)
-                .withHeader()
+            .typedSchemaFor(clazz)
+            .withHeader()
         val reader = CsvMapper().readerFor(clazz).with(schema)
         val fileToRead = getInput(fileName, charsetName)
         try {

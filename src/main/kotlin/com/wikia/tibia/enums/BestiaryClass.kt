@@ -17,7 +17,7 @@ enum class BestiaryClass(@JsonValue override val description: String) : Descript
     HUMAN("Human"),
     HUMANOID("Humanoid"),
     LYCANTHROPE("Lycanthrope"),
-    LYCANTHROPE2("Lycantrophe"),  // supposedly wrongly spelled
+    LYCANTHROPE2("Lycantrophe"), // supposedly wrongly spelled
     MAGICAL("Magical"),
     MAMMAL("Mammal"),
     PLANT("Plant"),

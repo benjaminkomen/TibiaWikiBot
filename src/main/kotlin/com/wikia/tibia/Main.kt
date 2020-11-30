@@ -16,22 +16,22 @@ object Main {
     @JvmStatic
     fun main(args: Array<String>) {
         val fixLootStatistics = FixLootStatistics(
-                creatureRepository = CreatureRepository(),
-                lootRepository = LootRepository(lootGateway = LootGateway())
+            creatureRepository = CreatureRepository(),
+            lootRepository = LootRepository(lootGateway = LootGateway())
         )
         logger.debug("Starting usecase FixLootStatistics")
         fixLootStatistics.checkLootStatistics()
 
         val fixCreatures = FixCreatures(
-                creatureRepository = CreatureRepository(),
-                itemRepository = ItemRepository()
+            creatureRepository = CreatureRepository(),
+            itemRepository = ItemRepository()
         )
         logger.debug("Starting usecase FixCreatures")
         fixCreatures.checkCreatures()
 
         val fixItems = FixItems(
-                creatureRepository = CreatureRepository(),
-                itemRepository = ItemRepository()
+            creatureRepository = CreatureRepository(),
+            itemRepository = ItemRepository()
         )
         logger.debug("Starting usecase FixItems")
         fixItems.checkItems()

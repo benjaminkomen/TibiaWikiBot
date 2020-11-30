@@ -5,6 +5,6 @@ import com.wikia.tibia.gateways.WikiObjectGateway
 import com.wikia.tibia.objects.TibiaObject
 
 class ObjectRepository : WikiObjectRepository<TibiaObject>(
-        wikiObjectClass = TibiaObject::class.java,
-        wikiObjectGateway = WikiObjectGateway(Contract.OBJECTS)
+    wikiObjectClass = TibiaObject::class.java,
+    wikiObjectGateway = WikiObjectGateway(Contract.OBJECTS)
 )

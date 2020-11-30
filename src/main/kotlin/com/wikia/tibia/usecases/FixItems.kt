@@ -8,15 +8,15 @@ import com.wikia.tibia.repositories.ItemRepository
 import com.wikia.tibia.utils.pauseForABit
 import io.vavr.control.Try
 import org.slf4j.LoggerFactory
-import java.util.*
+import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 
 class FixItems(
-        private val creatureRepository: CreatureRepository,
-        private val itemRepository: ItemRepository,
-        private var items: List<Item> = ArrayList(),
-        private var creatures: List<Creature> = ArrayList(),
-        private val creaturePagesToUpdate: MutableMap<String, Creature> = ConcurrentHashMap() // creature name, actual creature
+    private val creatureRepository: CreatureRepository,
+    private val itemRepository: ItemRepository,
+    private var items: List<Item> = ArrayList(),
+    private var creatures: List<Creature> = ArrayList(),
+    private val creaturePagesToUpdate: MutableMap<String, Creature> = ConcurrentHashMap() // creature name, actual creature
 ) {
 
     /**
@@ -33,22 +33,22 @@ class FixItems(
     // usage of Stream.peek for debugging purposes is justified in this case
     fun checkItems(): Map<String, Creature> {
         getItems()
-                .asSequence()
-                .sortedBy { it.name }
-                .filter { it.notDeprecatedOrEvent(it.status) }
-                .filter { it.droppedby?.isNotEmpty() ?: false }
-                .onEach { logger.debug("Processing item: ${it.name}") }
-                .forEach { item: Item ->
-                    item.droppedby
-                            ?.mapNotNull { creatureName ->
-                                val creature = getCreature(creatureName)
-                                if (creature == null) {
-                                    logger.error("Could not find creature with name '$creatureName' from item '${item.name}' in collection of creatures.")
-                                }
-                                creature
-                            }
-                            ?.forEach { addItemToLootTableOfCreature(item, it) }
-                }
+            .asSequence()
+            .sortedBy { it.name }
+            .filter { it.notDeprecatedOrEvent(it.status) }
+            .filter { it.droppedby?.isNotEmpty() ?: false }
+            .onEach { logger.debug("Processing item: ${it.name}") }
+            .forEach { item: Item ->
+                item.droppedby
+                    ?.mapNotNull { creatureName ->
+                        val creature = getCreature(creatureName)
+                        if (creature == null) {
+                            logger.error("Could not find creature with name '$creatureName' from item '${item.name}' in collection of creatures.")
+                        }
+                        creature
+                    }
+                    ?.forEach { addItemToLootTableOfCreature(item, it) }
+            }
         saveCreatureArticles()
         return creaturePagesToUpdate
     }
@@ -106,8 +106,8 @@ class FixItems(
      */
     private fun itemShouldBeAdded(creaturePageName: String, lootItemNamePrecise: String): Boolean {
         return addOrcWarlordLootIfNotOrcRaidItem(creaturePageName, lootItemNamePrecise) &&
-                addOldAndUsedBackpackIfNotOrc(creaturePageName, lootItemNamePrecise) &&
-                addOrcTuskIfNotOrc(creaturePageName, lootItemNamePrecise)
+            addOldAndUsedBackpackIfNotOrc(creaturePageName, lootItemNamePrecise) &&
+            addOrcTuskIfNotOrc(creaturePageName, lootItemNamePrecise)
     }
 
     private fun addOrcWarlordLootIfNotOrcRaidItem(creaturePageName: String, lootItemNamePrecise: String): Boolean {

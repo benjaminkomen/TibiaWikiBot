@@ -52,39 +52,39 @@ class BuildingRentsTest {
     @Test
     fun `should update rent to buildings`() {
         val someHouseRents = listOf(
-                HouseRent(
-                        houseId = "40501",
-                        houseName = "Coastwood 1",
-                        newRentInKk = "50",
-                        newRentInGps = "50000"
-                )
+            HouseRent(
+                houseId = "40501",
+                houseName = "Coastwood 1",
+                newRentInKk = "50",
+                newRentInGps = "50000"
+            )
         )
 
         val someBuildings = listOf(
-                Building(
-                        image = "<gallery>Coastwood1.jpg</gallery>",
-                        openwindows = 4,
-                        rooms = 1,
-                        houseid = 40501,
-                        notes = "It's located in the Northwestern part of [[Ab'Dendriel]] on the second floor, the southern house.",
-                        city = City.AB_DENDRIEL,
-                        furnishings = "1 [[Wall Lamp]].",
-                        history = "Before {{OfficialNewsArchive|4984|April 15, 2019}}, this house's rent was 980 gold per month.",
-                        type = BuildingType.House,
-                        rent = 980,
-                        posx = "127.135",
-                        posy = "123.115",
-                        posz = "6",
-                        floors = 1,
-                        size = 16,
-                        street = "Coastwood",
-                        name = "Coastwood 1",
-                        implemented = "6.2",
-                        location = "[[Ab'Dendriel]]",
-                        beds = 2,
-                        ownable = YesNo.YES_LOWERCASE,
-                        status = Status.ACTIVE
-                )
+            Building(
+                image = "<gallery>Coastwood1.jpg</gallery>",
+                openwindows = 4,
+                rooms = 1,
+                houseid = 40501,
+                notes = "It's located in the Northwestern part of [[Ab'Dendriel]] on the second floor, the southern house.",
+                city = City.AB_DENDRIEL,
+                furnishings = "1 [[Wall Lamp]].",
+                history = "Before {{OfficialNewsArchive|4984|April 15, 2019}}, this house's rent was 980 gold per month.",
+                type = BuildingType.House,
+                rent = 980,
+                posx = "127.135",
+                posy = "123.115",
+                posz = "6",
+                floors = 1,
+                size = 16,
+                street = "Coastwood",
+                name = "Coastwood 1",
+                implemented = "6.2",
+                location = "[[Ab'Dendriel]]",
+                beds = 2,
+                ownable = YesNo.YES_LOWERCASE,
+                status = Status.ACTIVE
+            )
         )
 
         `when`(inputRepository.getCSVFile(anyString(), eq(HouseRent::class.java))).thenReturn(someHouseRents)

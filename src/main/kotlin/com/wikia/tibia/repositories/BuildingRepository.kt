@@ -5,6 +5,6 @@ import com.wikia.tibia.gateways.WikiObjectGateway
 import com.wikia.tibia.objects.Building
 
 class BuildingRepository : WikiObjectRepository<Building>(
-        wikiObjectClass = Building::class.java,
-        wikiObjectGateway = WikiObjectGateway(Contract.BUILDINGS)
+    wikiObjectClass = Building::class.java,
+    wikiObjectGateway = WikiObjectGateway(Contract.BUILDINGS)
 )

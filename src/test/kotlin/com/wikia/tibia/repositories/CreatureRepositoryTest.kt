@@ -28,7 +28,8 @@ class CreatureRepositoryTest {
 
     @Test
     fun `should get empty list of Creature objects`() {
-        val someJson = """[]"""
+        val someJson =
+            """[]"""
         `when`(creatureGateway.getWikiObjects(true)).thenReturn(Try.success(someJson))
 
         val result = creatureRepository.getWikiObjects()

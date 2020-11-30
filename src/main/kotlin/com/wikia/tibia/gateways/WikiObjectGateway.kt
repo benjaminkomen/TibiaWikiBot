@@ -20,10 +20,10 @@ class WikiObjectGateway<T : WikiObject> constructor(private val contract: Contra
     fun saveWikiObject(wikiObject: T, editSummary: String?, dryRun: Boolean): Try<String> {
         val header = Header("X-WIKI-Edit-Summary", editSummary ?: "")
         return request.put(
-                location = contract.description,
-                jsonBody = wikiObject,
-                header = header,
-                dryRun = dryRun
+            location = contract.description,
+            jsonBody = wikiObject,
+            header = header,
+            dryRun = dryRun
         )
     }
 

@@ -2,12 +2,12 @@ package com.wikia.tibia.objects
 
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonProperty
-import java.util.*
+import java.util.HashSet
 
 data class LootWrapper(
-        val loot2: Loot? = null,
-        @JsonProperty("loot2_rc") val loot2Rc: Loot? = null,
-        @JsonIgnore private var mergedLoot: Loot? = null
+    val loot2: Loot? = null,
+    @JsonProperty("loot2_rc") val loot2Rc: Loot? = null,
+    @JsonIgnore private var mergedLoot: Loot? = null
 ) {
 
     fun getMergedLoot(): Loot? {
@@ -27,19 +27,19 @@ data class LootWrapper(
         } else {
             // they are both non-null
             Loot(
-                    name = loot2.name, // assume loot2Rc does not have a different name
-                    pageName = loot2.pageName, // assume they both have the same pagename
-                    version = loot2.version, // just take the version of loot2, it doesn't really matter
-                    kills = sumKills(),
-                    loot = sumLoot(loot2.loot, loot2Rc.loot)
+                name = loot2.name, // assume loot2Rc does not have a different name
+                pageName = loot2.pageName, // assume they both have the same pagename
+                version = loot2.version, // just take the version of loot2, it doesn't really matter
+                kills = sumKills(),
+                loot = sumLoot(loot2.loot, loot2Rc.loot)
             )
         }
     }
 
     private fun sumKills(): String {
         return loot2Rc?.kills?.toInt()
-                ?.let { loot2?.kills?.toInt()?.plus(it).toString() }
-                ?: ""
+            ?.let { loot2?.kills?.toInt()?.plus(it).toString() }
+            ?: ""
     }
 
     private fun sumLoot(first: List<LootStatisticsItem>?, second: List<LootStatisticsItem>?): List<LootStatisticsItem> {

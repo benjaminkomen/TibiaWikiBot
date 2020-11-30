@@ -31,9 +31,9 @@ class Request {
 
     fun get(location: URI): Try<String> {
         val request = HttpRequest.newBuilder()
-                .uri(location)
-                .GET()
-                .build()
+            .uri(location)
+            .GET()
+            .build()
         val response = invoke(request)
         if (response != null && response.statusCode() >= 400) {
             // we receive an error response
@@ -56,9 +56,9 @@ class Request {
 
     fun put(location: URI, jsonBody: String, header: Header?, dryRun: Boolean): Try<String> {
         val requestBuilder = HttpRequest.newBuilder()
-                .uri(location)
-                .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
-                .header("Content-Type", "application/json")
+            .uri(location)
+            .PUT(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .header("Content-Type", "application/json")
         if (header != null) {
             requestBuilder.header(header.name, header.value)
         }
@@ -81,9 +81,9 @@ class Request {
 
     fun post(location: URI, jsonBody: String): Try<String> {
         val request = HttpRequest.newBuilder()
-                .uri(location)
-                .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
-                .build()
+            .uri(location)
+            .POST(HttpRequest.BodyPublishers.ofString(jsonBody))
+            .build()
         val response = invoke(request)
         if (response != null && response.statusCode() >= 400) {
             // we receive an error response

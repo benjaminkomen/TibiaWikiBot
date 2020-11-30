@@ -1,6 +1,23 @@
 package com.wikia.tibia.usecases
 
-import com.wikia.tibia.repositories.*
+import com.wikia.tibia.repositories.AchievementRepository
+import com.wikia.tibia.repositories.BookRepository
+import com.wikia.tibia.repositories.BuildingRepository
+import com.wikia.tibia.repositories.CorpseRepository
+import com.wikia.tibia.repositories.CreatureRepository
+import com.wikia.tibia.repositories.EffectRepository
+import com.wikia.tibia.repositories.HuntingPlaceRepository
+import com.wikia.tibia.repositories.ItemRepository
+import com.wikia.tibia.repositories.KeyRepository
+import com.wikia.tibia.repositories.LocationRepository
+import com.wikia.tibia.repositories.MissileRepository
+import com.wikia.tibia.repositories.MountRepository
+import com.wikia.tibia.repositories.NPCRepository
+import com.wikia.tibia.repositories.ObjectRepository
+import com.wikia.tibia.repositories.OutfitRepository
+import com.wikia.tibia.repositories.QuestRepository
+import com.wikia.tibia.repositories.SpellRepository
+import com.wikia.tibia.repositories.StreetRepository
 import org.junit.Before
 import org.junit.Ignore
 import org.junit.Test
@@ -12,24 +29,24 @@ class NullEditWikiObjectsTest {
     @Before
     fun setup() {
         target = NullEditWikiObjects(
-                achievementRepository = AchievementRepository(),
-                bookRepository = BookRepository(),
-                buildingRepository = BuildingRepository(),
-                corpseRepository = CorpseRepository(),
-                creatureRepository = CreatureRepository(),
-                effectRepository = EffectRepository(),
-                huntingPlaceRepository = HuntingPlaceRepository(),
-                itemRepository = ItemRepository(),
-                keyRepository = KeyRepository(),
-                locationRepository = LocationRepository(),
-                missileRepository = MissileRepository(),
-                mountRepository = MountRepository(),
-                npcRepository = NPCRepository(),
-                objectRepository = ObjectRepository(),
-                outfitRepository = OutfitRepository(),
-                questRepository = QuestRepository(),
-                spellRepository = SpellRepository(),
-                streetRepository = StreetRepository()
+            achievementRepository = AchievementRepository(),
+            bookRepository = BookRepository(),
+            buildingRepository = BuildingRepository(),
+            corpseRepository = CorpseRepository(),
+            creatureRepository = CreatureRepository(),
+            effectRepository = EffectRepository(),
+            huntingPlaceRepository = HuntingPlaceRepository(),
+            itemRepository = ItemRepository(),
+            keyRepository = KeyRepository(),
+            locationRepository = LocationRepository(),
+            missileRepository = MissileRepository(),
+            mountRepository = MountRepository(),
+            npcRepository = NPCRepository(),
+            objectRepository = ObjectRepository(),
+            outfitRepository = OutfitRepository(),
+            questRepository = QuestRepository(),
+            spellRepository = SpellRepository(),
+            streetRepository = StreetRepository()
         )
     }
 

@@ -1,17 +1,17 @@
 package com.wikia.tibia.objects
 
 import com.wikia.tibia.enums.Rarity
-import java.util.*
+import java.util.Objects
 
 data class LootItem(
-        val itemName: String,
-        val amount: String? = null,
-        val rarity: Rarity? = null
+    val itemName: String,
+    val amount: String? = null,
+    val rarity: Rarity? = null
 ) {
 
     override fun equals(other: Any?): Boolean {
         return other is LootItem &&
-                itemName == other.itemName
+            itemName == other.itemName
     }
 
     override fun hashCode(): Int {
@@ -22,9 +22,9 @@ data class LootItem(
 
         fun fromName(itemName: String): LootItem {
             return LootItem(
-                    itemName = itemName,
-                    amount = null,
-                    rarity = null
+                itemName = itemName,
+                amount = null,
+                rarity = null
             )
         }
     }

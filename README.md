@@ -1,4 +1,4 @@
-[![Build Status](https://www.travis-ci.com/benjaminkomen/TibiaWikiBot.svg?branch=master)](https://www.travis-ci.com/benjaminkomen/TibiaWikiBot)
+![Build Status](https://github.com/benjaminkomen/TibiaWikiBot/workflows/Build/badge.svg)
 [![Quality Gate](https://sonarcloud.io/api/project_badges/measure?project=com.onlaika%3ATibiaWikiBot&metric=alert_status)](https://sonarcloud.io/dashboard?id=com.onlaika%3ATibiaWikiBot)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=com.onlaika%3ATibiaWikiBot&metric=coverage)](https://sonarcloud.io/dashboard?id=com.onlaika%3ATibiaWikiBot)
 

@@ -55,7 +55,7 @@ class FixItemsTest {
         `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
         `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
-                .thenReturn(Try.success("success"))
+            .thenReturn(Try.success("success"))
 
         // when
         val result = target.checkItems()
@@ -73,7 +73,7 @@ class FixItemsTest {
         `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear, Wasp)))
         `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
-                .thenReturn(Try.success("success"))
+            .thenReturn(Try.success("success"))
 
         // when
         val result = target.checkItems()
@@ -94,7 +94,7 @@ class FixItemsTest {
         `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
         `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb, BearPaw)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
-                .thenReturn(Try.success("success"))
+            .thenReturn(Try.success("success"))
 
         // when
         val result = target.checkItems()
@@ -110,58 +110,58 @@ class FixItemsTest {
     companion object {
         private fun makeRat(): Creature {
             return Creature(
-                    actualname = "Rat",
-                    name = "Rat",
-                    loot = mutableListOf(
-                            LootItem(itemName = "Gold Coin", amount = "0-4"),
-                            LootItem(itemName = "Cheese")
-                    )
+                actualname = "Rat",
+                name = "Rat",
+                loot = mutableListOf(
+                    LootItem(itemName = "Gold Coin", amount = "0-4"),
+                    LootItem(itemName = "Cheese")
+                )
             )
         }
 
         private fun makeBear(): Creature {
             return Creature(
-                    actualname = "Bear",
-                    name = "Bear",
-                    loot = mutableListOf(
-                            LootItem(itemName = "Meat", amount = "0-4"),
-                            LootItem(itemName = "Ham", amount = "0-3")
-                    )
+                actualname = "Bear",
+                name = "Bear",
+                loot = mutableListOf(
+                    LootItem(itemName = "Meat", amount = "0-4"),
+                    LootItem(itemName = "Ham", amount = "0-3")
+                )
             )
         }
 
         private fun makeWasp(): Creature {
             return Creature(
-                    actualname = "Wasp",
-                    name = "Wasp",
-                    loot = mutableListOf()
+                actualname = "Wasp",
+                name = "Wasp",
+                loot = mutableListOf()
             )
         }
 
         private fun makeCheese(): Item {
             return Item(
-                    actualname = "Cheese",
-                    name = "Cheese",
-                    itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
-                    droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
+                actualname = "Cheese",
+                name = "Cheese",
+                itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+                droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
             )
         }
 
         private fun makeHoneycomb(): Item {
             return Item(
-                    actualname = "Honeycomb",
-                    name = "Honeycomb",
-                    itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
-                    droppedby = mutableListOf("Bear", "Grynch Clan Goblin", "Shadowpelt", "Wasp", "Werebear", "Willi Wasp")
+                actualname = "Honeycomb",
+                name = "Honeycomb",
+                itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+                droppedby = mutableListOf("Bear", "Grynch Clan Goblin", "Shadowpelt", "Wasp", "Werebear", "Willi Wasp")
             )
         }
 
         private fun makeBearPaw(): Item {
             return Item(
-                    actualname = "Bear Paw",
-                    name = "Bear Paw",
-                    itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
-                    droppedby = mutableListOf("Bear", "Shadowpelt", "Werebear")
+                actualname = "Bear Paw",
+                name = "Bear Paw",
+                itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+                droppedby = mutableListOf("Bear", "Shadowpelt", "Werebear")
             )
         }
     }

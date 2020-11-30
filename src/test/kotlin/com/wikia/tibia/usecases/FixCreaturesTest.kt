@@ -55,7 +55,7 @@ class FixCreaturesTest {
         `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
         `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
         `when`(mockItemRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
-                .thenReturn(Try.success("success"))
+            .thenReturn(Try.success("success"))
 
         // when
         val result = target.checkCreatures()
@@ -74,7 +74,7 @@ class FixCreaturesTest {
         `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear, Wasp)))
         `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
         `when`(mockItemRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
-                .thenReturn(Try.success("success"))
+            .thenReturn(Try.success("success"))
 
         // when
         val result = target.checkCreatures()
@@ -90,53 +90,53 @@ class FixCreaturesTest {
     companion object {
         private fun makeRat(): Creature {
             return Creature(
-                    actualname = "Rat",
-                    name = "Rat",
-                    loot = mutableListOf(
-                            LootItem(itemName = "Gold Coin", amount = "0-4"),
-                            LootItem(itemName = "Cheese")
-                    )
+                actualname = "Rat",
+                name = "Rat",
+                loot = mutableListOf(
+                    LootItem(itemName = "Gold Coin", amount = "0-4"),
+                    LootItem(itemName = "Cheese")
+                )
             )
         }
 
         private fun makeBear(): Creature {
             return Creature(
-                    actualname = "Bear",
-                    name = "Bear",
-                    loot = mutableListOf(
-                            LootItem(itemName = "Meat", amount = "0-4"),
-                            LootItem(itemName = "Ham", amount = "0-3"),
-                            LootItem(itemName = "Bear Paw", rarity = Rarity.SEMI_RARE),
-                            LootItem(itemName = "Honeycomb", rarity = Rarity.RARE)
-                    )
+                actualname = "Bear",
+                name = "Bear",
+                loot = mutableListOf(
+                    LootItem(itemName = "Meat", amount = "0-4"),
+                    LootItem(itemName = "Ham", amount = "0-3"),
+                    LootItem(itemName = "Bear Paw", rarity = Rarity.SEMI_RARE),
+                    LootItem(itemName = "Honeycomb", rarity = Rarity.RARE)
+                )
             )
         }
 
         private fun makeWasp(): Creature {
             return Creature(
-                    actualname = "Wasp",
-                    name = "Wasp",
-                    loot = mutableListOf(
-                            LootItem(itemName = "Honeycomb", rarity = Rarity.SEMI_RARE)
-                    )
+                actualname = "Wasp",
+                name = "Wasp",
+                loot = mutableListOf(
+                    LootItem(itemName = "Honeycomb", rarity = Rarity.SEMI_RARE)
+                )
             )
         }
 
         private fun makeCheese(): Item {
             return Item(
-                    actualname = "Cheese",
-                    name = "Cheese",
-                    itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
-                    droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
+                actualname = "Cheese",
+                name = "Cheese",
+                itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+                droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
             )
         }
 
         private fun makeHoneycomb(): Item {
             return Item(
-                    actualname = "Honeycomb",
-                    name = "Honeycomb",
-                    itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
-                    droppedby = mutableListOf("Grynch Clan Goblin", "Shadowpelt", "Werebear", "Willi Wasp") // Bear and Wasp are purposely missing
+                actualname = "Honeycomb",
+                name = "Honeycomb",
+                itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+                droppedby = mutableListOf("Grynch Clan Goblin", "Shadowpelt", "Werebear", "Willi Wasp") // Bear and Wasp are purposely missing
             )
         }
     }

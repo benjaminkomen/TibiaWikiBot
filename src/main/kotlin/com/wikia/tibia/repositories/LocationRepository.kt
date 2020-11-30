@@ -5,6 +5,6 @@ import com.wikia.tibia.gateways.WikiObjectGateway
 import com.wikia.tibia.objects.Location
 
 class LocationRepository : WikiObjectRepository<Location>(
-        wikiObjectClass = Location::class.java,
-        wikiObjectGateway = WikiObjectGateway(Contract.LOCATIONS)
+    wikiObjectClass = Location::class.java,
+    wikiObjectGateway = WikiObjectGateway(Contract.LOCATIONS)
 )

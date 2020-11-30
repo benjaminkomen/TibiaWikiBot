@@ -5,6 +5,6 @@ import com.wikia.tibia.gateways.WikiObjectGateway
 import com.wikia.tibia.objects.Quest
 
 class QuestRepository : WikiObjectRepository<Quest>(
-        wikiObjectClass = Quest::class.java,
-        wikiObjectGateway = WikiObjectGateway(Contract.QUESTS)
+    wikiObjectClass = Quest::class.java,
+    wikiObjectGateway = WikiObjectGateway(Contract.QUESTS)
 )

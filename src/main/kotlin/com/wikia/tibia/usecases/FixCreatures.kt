@@ -7,15 +7,15 @@ import com.wikia.tibia.repositories.ItemRepository
 import com.wikia.tibia.utils.pauseForABit
 import io.vavr.control.Try
 import org.slf4j.LoggerFactory
-import java.util.*
+import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 
 class FixCreatures(
-        private val creatureRepository: CreatureRepository,
-        private val itemRepository: ItemRepository,
-        private val itemPagesToUpdate: MutableMap<String, Item> = ConcurrentHashMap(), // item name, actual item (for easy lookup)
-        private var items: List<Item> = ArrayList(),
-        private var creatures: List<Creature> = ArrayList()
+    private val creatureRepository: CreatureRepository,
+    private val itemRepository: ItemRepository,
+    private val itemPagesToUpdate: MutableMap<String, Item> = ConcurrentHashMap(), // item name, actual item (for easy lookup)
+    private var items: List<Item> = ArrayList(),
+    private var creatures: List<Creature> = ArrayList()
 ) {
 
     /**
@@ -31,22 +31,22 @@ class FixCreatures(
      */
     fun checkCreatures(): Map<String, Item> {
         getCreatures()
-                .asSequence()
-                .sortedBy { it.name }
-                .filter { it.notDeprecatedOrEvent(it.status) }
-                .filter { it.loot != null && it.loot.isNotEmpty() }
-                .onEach { logger.debug("Processing creature: ${it.name}") }
-                .forEach { creature: Creature ->
-                    creature.loot
-                            ?.mapNotNull{
-                                val item = getItem(it.itemName)
-                                if (item == null) {
-                                    logger.error("Could not find loot item with name '${it.itemName}' from creature '${creature.name}' in collection of items.")
-                                }
-                                item
-                            }
-                            ?.forEach { addCreatureToDroppedByListOfItem(creature, it) }
-                }
+            .asSequence()
+            .sortedBy { it.name }
+            .filter { it.notDeprecatedOrEvent(it.status) }
+            .filter { it.loot != null && it.loot.isNotEmpty() }
+            .onEach { logger.debug("Processing creature: ${it.name}") }
+            .forEach { creature: Creature ->
+                creature.loot
+                    ?.mapNotNull {
+                        val item = getItem(it.itemName)
+                        if (item == null) {
+                            logger.error("Could not find loot item with name '${it.itemName}' from creature '${creature.name}' in collection of items.")
+                        }
+                        item
+                    }
+                    ?.forEach { addCreatureToDroppedByListOfItem(creature, it) }
+            }
         saveItemArticles()
         return itemPagesToUpdate
     }
@@ -124,13 +124,13 @@ class FixCreatures(
     companion object {
         private val ITEMS_WITH_NO_DROPPEDBY_LIST = listOf("Gold Coin", "Platinum Coin")
         private val EVENT_ITEMS = listOf(
-                "Bunch of Winterberries",
-                "Envelope from the Wizards",
-                "Fireworks Rocket",
-                "Party Trumpet",
-                "Party Hat",
-                "Silver Raid Token",
-                "Golden Raid Token"
+            "Bunch of Winterberries",
+            "Envelope from the Wizards",
+            "Fireworks Rocket",
+            "Party Trumpet",
+            "Party Hat",
+            "Silver Raid Token",
+            "Golden Raid Token"
         )
         private val NON_EVENT_CREATURES_DROPPING_SNOWBALLS = listOf("Yeti", "Grynch Clan Goblin")
         private const val DEBUG_MODE = false

@@ -16,6 +16,7 @@ enum class Contract(@JsonValue override val description: String) : Description {
     ITEMS(API.description + "/items"),
     KEYS(API.description + "/keys"),
     LOCATIONS(API.description + "/locations"),
+
     @Deprecated("use LOOT_STATISTICS_V2")
     LOOT_STATISTICS(API.description + "/loot"),
     LOOT_STATISTICS_V2(API.description + "/v2/loot"),

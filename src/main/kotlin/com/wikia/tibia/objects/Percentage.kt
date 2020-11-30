@@ -3,17 +3,17 @@ package com.wikia.tibia.objects
 import com.fasterxml.jackson.annotation.JsonCreator
 import com.fasterxml.jackson.annotation.JsonIgnore
 import com.fasterxml.jackson.annotation.JsonValue
-import java.util.*
+import java.util.Objects
 
 data class Percentage(
-        @get:JsonValue val originalValue: String,
-        @JsonIgnore private val value: Int? = null
+    @get:JsonValue val originalValue: String,
+    @JsonIgnore private val value: Int? = null
 ) {
 
     // Equality is determined by originalValue, because the value can strip away question marks and is therefore not reliable for a correct equality check
     override fun equals(other: Any?): Boolean {
         return other is Percentage &&
-                originalValue == other.originalValue
+            originalValue == other.originalValue
     }
 
     override fun hashCode(): Int {
@@ -39,15 +39,15 @@ data class Percentage(
         @JvmStatic
         fun of(value: String): Percentage {
             return Percentage(
-                    originalValue = value,
-                    value = sanitize(value)
+                originalValue = value,
+                value = sanitize(value)
             )
         }
 
         fun of(value: Int): Percentage {
             return Percentage(
-                    originalValue = "$value%",
-                    value = value
+                originalValue = "$value%",
+                value = value
             )
         }
     }

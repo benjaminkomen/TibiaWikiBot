@@ -5,17 +5,17 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Missile(
-        val name: String,
-        val implemented: String,
-        val notes: String,
-        val history: String,
-        val status: Status,
-        val missileid: Int,
-        val primarytype: String,
-        val secondarytype: String,
-        val lightradius: Int,
-        val lightcolor: Int,
-        val shotby: String
+    val name: String,
+    val implemented: String,
+    val notes: String,
+    val history: String,
+    val status: Status,
+    val missileid: Int,
+    val primarytype: String,
+    val secondarytype: String,
+    val lightradius: Int,
+    val lightcolor: Int,
+    val shotby: String
 ) : WikiObject() {
 
     override fun setDefaultValues() {

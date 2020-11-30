@@ -16,5 +16,4 @@ class PercentageTest {
         assertThat(Percentage.EMPTY.toString(), `is`(""))
         assertThat(Percentage.of(100).toString(), `is`("100"))
     }
-
 }

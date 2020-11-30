@@ -13,7 +13,7 @@ object Parser {
 
     private val logger = LoggerFactory.getLogger(Parser::class.java)
     private val defaultObjectMapper = jacksonObjectMapper()
-            .setSerializationInclusion(JsonInclude.Include.NON_NULL)
+        .setSerializationInclusion(JsonInclude.Include.NON_NULL)
 
     fun <T> parse(type: Class<T>, json: String?): T? {
         return parse(type, defaultObjectMapper, json)
@@ -51,7 +51,12 @@ object Parser {
      * Alternative implementation of list() where the json list is read one-by-one, which makes
      * it more robust against jsonparsingexceptions
      */
-    fun <T : Any> listOneByOne(type: Class<T>, mapper: ObjectMapper = defaultObjectMapper, json: String?, limit: Int = Int.MAX_VALUE): List<T> {
+    fun <T : Any> listOneByOne(
+        type: Class<T>,
+        mapper: ObjectMapper = defaultObjectMapper,
+        json: String?,
+        limit: Int = Int.MAX_VALUE
+    ): List<T> {
         if (json == null || "" == json) {
             return emptyList()
         }
@@ -59,10 +64,10 @@ object Parser {
             val jsonAsNode: JsonNode = mapper.readTree(json)
             if (jsonAsNode.isArray) {
                 (0 until jsonAsNode.size()).asSequence()
-                        .map { jsonAsNode.get(it) }
-                        .mapNotNull { parseJsonToWikiObject(mapper, it, type) }
-                        .take(limit)
-                        .toList()
+                    .map { jsonAsNode.get(it) }
+                    .mapNotNull { parseJsonToWikiObject(mapper, it, type) }
+                    .take(limit)
+                    .toList()
             } else {
                 logger.error("Retrieved json is not a json array, cannot parse to list.")
                 emptyList()

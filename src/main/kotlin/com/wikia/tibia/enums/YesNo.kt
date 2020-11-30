@@ -20,5 +20,4 @@ enum class YesNo(@JsonValue override val description: String) : Description {
 
     val isNo: Boolean
         get() = this == NO_DOT || this == NO_LOWERCASE || this == NO_UNKNOWN || this == NO_UPPERCASE
-
 }

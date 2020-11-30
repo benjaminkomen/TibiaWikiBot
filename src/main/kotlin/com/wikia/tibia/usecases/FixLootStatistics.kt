@@ -9,15 +9,15 @@ import com.wikia.tibia.repositories.LootRepository
 import com.wikia.tibia.utils.pauseForABit
 import io.vavr.control.Try
 import org.slf4j.LoggerFactory
-import java.util.*
+import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 
 class FixLootStatistics(
-        private val creatureRepository: CreatureRepository,
-        private val lootRepository: LootRepository,
-        private var loot: List<LootWrapper> = ArrayList(),
-        private var creatures: List<Creature> = ArrayList(),
-        private val creaturePagesToUpdate: MutableMap<String, Creature> = ConcurrentHashMap() // creature name, actual creature
+    private val creatureRepository: CreatureRepository,
+    private val lootRepository: LootRepository,
+    private var loot: List<LootWrapper> = ArrayList(),
+    private var creatures: List<Creature> = ArrayList(),
+    private val creaturePagesToUpdate: MutableMap<String, Creature> = ConcurrentHashMap() // creature name, actual creature
 ) {
 
     /**
@@ -28,36 +28,36 @@ class FixLootStatistics(
      */
     fun checkLootStatistics(): Map<String, Creature> {
         lootPages
-                .asSequence()
-                .mapNotNull { it.getMergedLoot() }
-                .filter { !it.isEmpty() }
-                .sortedBy { it.name }
-                .onEach { logger.debug("Processing loot statistics page of creature: ${it.name}") }
-                .forEach { (pageName, _, _, name, loot1) ->
-                    val correspondingCreature = getCreature(name)
-                    if (correspondingCreature == null) {
-                        logger.error("Could not find creature with pageName '$pageName' and name '$name' in collection of creatures.")
-                    }
-                    if (correspondingCreature != null) {
-                        loot1?.forEach { addLootItemsToLootList(correspondingCreature, it) }
-                    }
+            .asSequence()
+            .mapNotNull { it.getMergedLoot() }
+            .filter { !it.isEmpty() }
+            .sortedBy { it.name }
+            .onEach { logger.debug("Processing loot statistics page of creature: ${it.name}") }
+            .forEach { (pageName, _, _, name, loot1) ->
+                val correspondingCreature = getCreature(name)
+                if (correspondingCreature == null) {
+                    logger.error("Could not find creature with pageName '$pageName' and name '$name' in collection of creatures.")
                 }
+                if (correspondingCreature != null) {
+                    loot1?.forEach { addLootItemsToLootList(correspondingCreature, it) }
+                }
+            }
         saveCreatureArticles()
         return creaturePagesToUpdate
     }
 
     private fun addLootItemsToLootList(correspondingCreature: Creature, lootStatisticsItem: LootStatisticsItem) {
         val lootStatisticsItemExistsInCreatureLootList = correspondingCreature.loot
-                ?.any { lootItem -> lootItem.itemName == replaceSomeNames(lootStatisticsItem.itemName) }
-                ?: false
+            ?.any { lootItem -> lootItem.itemName == replaceSomeNames(lootStatisticsItem.itemName) }
+            ?: false
 
         // loot item exists on loot statistics page, but not on creature page. Add it if applicable.
         if (!lootStatisticsItemExistsInCreatureLootList && shouldAddLootItemToCreature(lootStatisticsItem, correspondingCreature)) {
             logger.info("Adding item '${lootStatisticsItem.itemName}' to loot list of creature '${correspondingCreature.name}'.")
             val newLootItem = LootItem(
-                    itemName = lootStatisticsItem.itemName,
-                    amount = null,
-                    rarity = null
+                itemName = lootStatisticsItem.itemName,
+                amount = null,
+                rarity = null
             )
             if (!creaturePagesToUpdate.containsKey(correspondingCreature.name)) {
                 // creature not already in creaturePages cache, add it
@@ -124,10 +124,12 @@ class FixLootStatistics(
      * - the loot statistics item name is "Empty", that is not relevant on the creature's loot page
      * - the loot statistics data is incorrect, e.g. with Demon / Demon (Goblin)
      */
-    private fun shouldAddLootItemToCreature(lootStatisticsItem: LootStatisticsItem,
-                                            correspondingCreature: Creature): Boolean {
+    private fun shouldAddLootItemToCreature(
+        lootStatisticsItem: LootStatisticsItem,
+        correspondingCreature: Creature
+    ): Boolean {
         return "Empty" != lootStatisticsItem.itemName &&
-                !forbiddenCombinationOfLootAndCreature(lootStatisticsItem, correspondingCreature)
+            !forbiddenCombinationOfLootAndCreature(lootStatisticsItem, correspondingCreature)
     }
 
     /**
@@ -135,42 +137,44 @@ class FixLootStatistics(
      * from https://tibia.fandom.com/wiki/Demon_(Goblin).
      * These loot items should not be added to the loot list of Demons, because they are wrong.
      */
-    private fun forbiddenCombinationOfLootAndCreature(lootStatisticsItem: LootStatisticsItem,
-                                                      correspondingCreature: Creature): Boolean {
+    private fun forbiddenCombinationOfLootAndCreature(
+        lootStatisticsItem: LootStatisticsItem,
+        correspondingCreature: Creature
+    ): Boolean {
         return forbiddenCreaturesAndLoot.entries
-                .any {
-                    it.key == correspondingCreature.name &&
-                            it.value.contains(lootStatisticsItem.itemName)
-                }
+            .any {
+                it.key == correspondingCreature.name &&
+                    it.value.contains(lootStatisticsItem.itemName)
+            }
     }
 
     companion object {
         private val logger = LoggerFactory.getLogger(FixLootStatistics::class.java)
         private const val DEBUG_MODE = false
         private val DIFFERENTLY_NAMED_ITEMS = mapOf(
-                "Skull" to "Skull (Item)",
-                "Black Skull" to "Black Skull (Item)",
-                "Dead Snake" to "Dead Snake (Item)",
-                "Dead Frog" to "Dead Frog (Item)",
-                "Clusters of Solace" to "Cluster of Solace",
-                "Bag With Stolen Gold" to "Bag with Stolen Gold"
+            "Skull" to "Skull (Item)",
+            "Black Skull" to "Black Skull (Item)",
+            "Dead Snake" to "Dead Snake (Item)",
+            "Dead Frog" to "Dead Frog (Item)",
+            "Clusters of Solace" to "Cluster of Solace",
+            "Bag With Stolen Gold" to "Bag with Stolen Gold"
         )
         private val forbiddenCreaturesAndLoot = mapOf(
-                "Demon" to listOf("Small Stone", "Bone", "Leather Armor", "Mouldy Cheese"),
-                "Mountain Troll" to listOf("Bunch of Troll Hair"),
-                "Minotaur Bruiser" to listOf("Minotaur Horn", "Minotaur Leather"),
-                "Muglex Clan Footman" to listOf("Goblin Ear"),
-                "Woodling" to listOf("Piece of Swampling Wood", "Swampling Moss"),
-                "Meadow Strider" to listOf("Seeds", "Marsh Stalker Beak", "Marsh Stalker Feather"),
-                "Dawnfly" to listOf("Damselfly Eye", "Damselfly Wing"),
-                "Scar Tribe Shaman" to listOf("Shamanic Hood", "Orc Tooth", "Broken Shamanic Staff"),
-                "Scar Tribe Warrior" to listOf("Skull Belt", "Orc Leather"),
-                "Brittle Skeleton" to listOf("Pelvis Bone"),
-                "Minotaur Poacher" to listOf("Broken Crossbow", "Minotaur Leather", "Minotaur Horn"),
-                "Juvenile Cyclops" to listOf("Cyclops Toe"),
-                "Minotaur Occultist" to listOf("Minotaur Horn", "Purple Robe"),
-                "Lesser Fire Devil" to listOf("Small Pitchfork"),
-                "Troll Marauder" to listOf("Bunch of Troll Hair", "Trollroot")
+            "Demon" to listOf("Small Stone", "Bone", "Leather Armor", "Mouldy Cheese"),
+            "Mountain Troll" to listOf("Bunch of Troll Hair"),
+            "Minotaur Bruiser" to listOf("Minotaur Horn", "Minotaur Leather"),
+            "Muglex Clan Footman" to listOf("Goblin Ear"),
+            "Woodling" to listOf("Piece of Swampling Wood", "Swampling Moss"),
+            "Meadow Strider" to listOf("Seeds", "Marsh Stalker Beak", "Marsh Stalker Feather"),
+            "Dawnfly" to listOf("Damselfly Eye", "Damselfly Wing"),
+            "Scar Tribe Shaman" to listOf("Shamanic Hood", "Orc Tooth", "Broken Shamanic Staff"),
+            "Scar Tribe Warrior" to listOf("Skull Belt", "Orc Leather"),
+            "Brittle Skeleton" to listOf("Pelvis Bone"),
+            "Minotaur Poacher" to listOf("Broken Crossbow", "Minotaur Leather", "Minotaur Horn"),
+            "Juvenile Cyclops" to listOf("Cyclops Toe"),
+            "Minotaur Occultist" to listOf("Minotaur Horn", "Purple Robe"),
+            "Lesser Fire Devil" to listOf("Small Pitchfork"),
+            "Troll Marauder" to listOf("Bunch of Troll Hair", "Trollroot")
         )
     }
 }

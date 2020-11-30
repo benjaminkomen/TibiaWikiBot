@@ -6,20 +6,20 @@ import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 
 data class Achievement(
-        val name: String,
-        val actualname: String,
-        val implemented: String?,
-        val history: String,
-        val status: Status,
-        val grade: Int,
-        val description: String,
-        val spoiler: String,
-        val premium: YesNo?,
-        val points: Int?,
-        val secret: YesNo?,
-        val coincideswith: Int,
-        val achievementid: Int?,
-        val relatedpages: String
+    val name: String,
+    val actualname: String,
+    val implemented: String?,
+    val history: String,
+    val status: Status,
+    val grade: Int,
+    val description: String,
+    val spoiler: String,
+    val premium: YesNo?,
+    val points: Int?,
+    val secret: YesNo?,
+    val coincideswith: Int,
+    val achievementid: Int?,
+    val relatedpages: String
 ) : WikiObject() {
 
     override fun setDefaultValues() {

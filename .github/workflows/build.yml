@@ -35,7 +35,7 @@ jobs:
       - name: Build with Gradle, check style and generate test report for Sonar to use
         run: ./gradlew ktlintCheck jacocoTestReport
       - name: SonarCloud Scan
-        run: ./gradlew build sonarqube --info
+        run: ./gradlew sonarqube --info
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

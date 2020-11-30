@@ -5,15 +5,9 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper
 import org.slf4j.LoggerFactory
 import java.io.File
 import java.io.IOException
-import java.net.URI
-import java.net.URISyntaxException
-import java.nio.file.Files
 import java.nio.file.NoSuchFileException
-import java.nio.file.Path
-import java.nio.file.Paths
 import java.util.ArrayList
 import java.util.Scanner
-import java.util.stream.Collectors
 
 object InputRepository {
 
@@ -32,29 +26,29 @@ object InputRepository {
         }
     }
 
-    fun getFolderContents(folderName: String?): List<Path> {
-        val classLoader = javaClass.classLoader
-        var resource = URI.create("")
-        try {
-            resource = classLoader.getResource(folderName).toURI()
-        } catch (e: URISyntaxException) {
-            logger.error("URI {} not well formed.", resource, e)
-        }
-        try {
-            Files.walk(Paths.get(resource)).use { paths ->
-                return paths
-                    .filter { Files.isRegularFile(it) }
-                    .collect(Collectors.toList())
-            }
-        } catch (e: IOException) {
-            logger.error(
-                "An error occurred when reading the folder contents of folderName {}. Make sure it actually exists.",
-                folderName,
-                e
-            )
-        }
-        return emptyList()
-    }
+    // fun getFolderContents(folderName: String?): List<Path> {
+    //     val classLoader = javaClass.classLoader
+    //     var resource = URI.create("")
+    //     try {
+    //         resource = classLoader.getResource(folderName).toURI()
+    //     } catch (e: URISyntaxException) {
+    //         logger.error("URI {} not well formed.", resource, e)
+    //     }
+    //     try {
+    //         Files.walk(Paths.get(resource)).use { paths ->
+    //             return paths
+    //                 .filter { Files.isRegularFile(it) }
+    //                 .collect(Collectors.toList())
+    //         }
+    //     } catch (e: IOException) {
+    //         logger.error(
+    //             "An error occurred when reading the folder contents of folderName {}. Make sure it actually exists.",
+    //             folderName,
+    //             e
+    //         )
+    //     }
+    //     return emptyList()
+    // }
 
     @Throws(NoSuchFileException::class)
     private fun getFileContents(fileName: String?, charsetName: String): String {

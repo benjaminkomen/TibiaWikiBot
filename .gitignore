@@ -11,6 +11,7 @@ hs_err_pid*
 *.iml
 .idea/
 *.properties
+!sonar-project.properties
 target/
 build/
 out/

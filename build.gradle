@@ -1,7 +1,7 @@
 plugins {
     id "jacoco"
     id "org.sonarqube" version "3.0"
-    id "org.jetbrains.kotlin.jvm" version "1.4.20"
+    id "org.jetbrains.kotlin.jvm" version "1.4.21"
     id "org.jlleitschuh.gradle.ktlint" version "9.4.1"
 }
 
@@ -18,7 +18,7 @@ ext {
     slf4jVersion = '2.0.0-alpha1'
     jacksonVersion = '2.12.0'
     junitVersion = '5.7.0'
-    kotlinVersion = '1.4.20'
+    kotlinVersion = '1.4.21'
 }
 
 dependencies {

@@ -180,6 +180,7 @@ class FixLootStatistics(
         )
         private val lootStatisticsTableEntriesNotToBeUsedOnCreaturePage = listOf(
             "Empty",
+            "Old Rag",
             "Part of a Jester Doll",
             "Secret Instruction",
         )

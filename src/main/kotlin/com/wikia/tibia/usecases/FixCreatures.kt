@@ -7,7 +7,6 @@ import com.wikia.tibia.repositories.ItemRepository
 import com.wikia.tibia.utils.pauseForABit
 import io.vavr.control.Try
 import org.slf4j.LoggerFactory
-import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 
 class FixCreatures(
@@ -83,13 +82,15 @@ class FixCreatures(
     }
 
     private fun itemShouldBeAdded(creaturePageName: String, lootItemNamePrecise: String): Boolean {
-        if ("Snowball" == lootItemNamePrecise) {
-            return NON_EVENT_CREATURES_DROPPING_SNOWBALLS.contains(creaturePageName)
+        return when {
+            "Snowball" == lootItemNamePrecise -> {
+                NON_EVENT_CREATURES_DROPPING_SNOWBALLS.contains(creaturePageName)
+            }
+            ITEMS_WITH_NO_DROPPEDBY_LIST.contains(lootItemNamePrecise) -> {
+                false
+            }
+            else -> EVENT_ITEMS.contains(lootItemNamePrecise).not()
         }
-        if (ITEMS_WITH_NO_DROPPEDBY_LIST.contains(lootItemNamePrecise)) {
-            return false
-        }
-        return !EVENT_ITEMS.contains(lootItemNamePrecise)
     }
 
     /**
@@ -97,7 +98,11 @@ class FixCreatures(
      * eligible for adding, add it. Also sort it.
      */
     private fun addCreatureToDroppedByListOfItem(creature: Creature, item: Item) {
-        if (item.droppedby != null && !item.droppedby.contains(creature.name) && itemShouldBeAdded(creature.name, item.name)) {
+        if (item.droppedby != null && !item.droppedby.contains(creature.name) && itemShouldBeAdded(
+                creature.name,
+                item.name
+            )
+        ) {
             logger.info("Adding creature '${creature.name}' to droppedby list of item '${item.name}'.")
             if (!itemPagesToUpdate.containsKey(item.name)) {
                 // item not already in itemPages cache, add it
@@ -127,6 +132,7 @@ class FixCreatures(
             "Bunch of Winterberries",
             "Envelope from the Wizards",
             "Fireworks Rocket",
+            "Old Rag",
             "Party Trumpet",
             "Party Hat",
             "Silver Raid Token",

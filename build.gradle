@@ -65,7 +65,7 @@ tasks.withType(JavaCompile) {
 }
 
 tasks.withType(Test) {
-    useJUnit()
+    useJUnitPlatform() // use jUnit 5
 
     testLogging {
         events "passed", "skipped", "failed"

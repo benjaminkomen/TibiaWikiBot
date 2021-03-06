@@ -9,7 +9,6 @@ import com.wikia.tibia.repositories.LootRepository
 import com.wikia.tibia.utils.pauseForABit
 import io.vavr.control.Try
 import org.slf4j.LoggerFactory
-import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 
 class FixLootStatistics(
@@ -52,7 +51,11 @@ class FixLootStatistics(
             ?: false
 
         // loot item exists on loot statistics page, but not on creature page. Add it if applicable.
-        if (!lootStatisticsItemExistsInCreatureLootList && shouldAddLootItemToCreature(lootStatisticsItem, correspondingCreature)) {
+        if (!lootStatisticsItemExistsInCreatureLootList && shouldAddLootItemToCreature(
+                lootStatisticsItem,
+                correspondingCreature
+            )
+        ) {
             logger.info("Adding item '${lootStatisticsItem.itemName}' to loot list of creature '${correspondingCreature.name}'.")
             val newLootItem = LootItem(
                 itemName = lootStatisticsItem.itemName,
@@ -121,15 +124,15 @@ class FixLootStatistics(
 
     /**
      * There are a few reasons when NOT to add a loot item to a creature:
-     * - the loot statistics item name is "Empty", that is not relevant on the creature's loot page
+     * - the loot statistics item name is e.g. "Empty", that is not relevant on the creature's loot page
      * - the loot statistics data is incorrect, e.g. with Demon / Demon (Goblin)
      */
     private fun shouldAddLootItemToCreature(
         lootStatisticsItem: LootStatisticsItem,
         correspondingCreature: Creature
     ): Boolean {
-        return "Empty" != lootStatisticsItem.itemName &&
-            !forbiddenCombinationOfLootAndCreature(lootStatisticsItem, correspondingCreature)
+        return lootStatisticsTableEntriesNotToBeUsedOnCreaturePage.contains(lootStatisticsItem.itemName)
+            .not() && forbiddenCombinationOfLootAndCreature(lootStatisticsItem, correspondingCreature).not()
     }
 
     /**
@@ -143,8 +146,7 @@ class FixLootStatistics(
     ): Boolean {
         return forbiddenCreaturesAndLoot.entries
             .any {
-                it.key == correspondingCreature.name &&
-                    it.value.contains(lootStatisticsItem.itemName)
+                it.key == correspondingCreature.name && it.value.contains(lootStatisticsItem.itemName)
             }
     }
 
@@ -176,5 +178,6 @@ class FixLootStatistics(
             "Lesser Fire Devil" to listOf("Small Pitchfork"),
             "Troll Marauder" to listOf("Bunch of Troll Hair", "Trollroot")
         )
+        private val lootStatisticsTableEntriesNotToBeUsedOnCreaturePage = listOf("Empty", "Secret Instruction")
     }
 }

@@ -10,29 +10,32 @@ import com.wikia.tibia.objects.WikiObject
 import com.wikia.tibia.repositories.CreatureRepository
 import com.wikia.tibia.repositories.LootRepository
 import io.vavr.control.Try
-import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Assertions.assertFalse
+import org.junit.jupiter.api.Assertions.assertTrue
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
 import testutils.any
 
-class FixLootStatisticsTest {
+internal class FixLootStatisticsTest {
     private lateinit var target: FixLootStatistics
     private lateinit var mockCreatureRepository: CreatureRepository
     private lateinit var mockLootRepository: LootRepository
-    private val CreatureRat = makeCreatureRat()
-    private val CreatureAmazon = makeCreatureAmazon()
-    private val CreatureDemon = makeCreatureDemon()
-    private val LootRat = makeLootRat()
-    private val LootAmazon = makeLootAmazon()
-    private val LootRatWithSword = makeLootRatWithSword()
-    private val LootDemon = makeLootDemon()
+    private val creatureRat = makeCreatureRat()
+    private val creatureAmazon = makeCreatureAmazon()
+    private val creatureDemon = makeCreatureDemon()
+    private val creaturePriestessOfTheWildSun = makeCreaturePriestessOfTheWildSun()
+    private val lootRat = makeLootRat()
+    private val lootAmazon = makeLootAmazon()
+    private val lootRatWithSword = makeLootRatWithSword()
+    private val lootDemon = makeLootDemon()
+    private val lootPriestessOfTheWildSun = makeLootPriestessOfTheWildSun()
 
-    @Before
+    @BeforeEach
     fun setup() {
         mockCreatureRepository = mock(CreatureRepository::class.java)
         mockLootRepository = mock(LootRepository::class.java)
@@ -45,14 +48,14 @@ class FixLootStatisticsTest {
     @Test
     fun `should fix loot statistics - do nothing`() {
         // given
-        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(CreatureRat)))
-        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(LootRat)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(creatureRat)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(lootRat)))
 
         // when
         val result = target.checkLootStatistics()
 
         // then
-        assertThat(result.size, `is`(0))
+        assertEquals(0, result.size)
     }
 
     /**
@@ -62,8 +65,8 @@ class FixLootStatisticsTest {
     @Test
     fun `should fix loot statistics - add sword to droppedby list of rat`() {
         // given
-        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(CreatureRat)))
-        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(LootRatWithSword)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(creatureRat)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(lootRatWithSword)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
             .thenReturn(Try.success("success"))
 
@@ -71,10 +74,10 @@ class FixLootStatisticsTest {
         val result = target.checkLootStatistics()
 
         // then
-        assertThat(result.size, `is`(1))
-        assertThat(result.containsKey("Rat"), `is`(true))
-        assertThat((result["Rat"] ?: error("")).loot?.size, `is`(3))
-        assertThat((result["Rat"] ?: error("")).loot?.any { (itemName) -> "Sword" == itemName }, `is`(true))
+        assertEquals(1, result.size)
+        assertTrue(result.containsKey("Rat"))
+        assertEquals(3, (result["Rat"] ?: error("")).loot?.size)
+        assertTrue((result["Rat"] ?: error("")).loot?.any { (itemName) -> "Sword" == itemName } ?: false)
     }
 
     /**
@@ -84,8 +87,8 @@ class FixLootStatisticsTest {
     @Test
     fun `should fix loot statistics - do not add skull to loot list of amazon`() {
         // given
-        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(CreatureAmazon)))
-        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(LootAmazon)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(creatureAmazon)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(lootAmazon)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
             .thenReturn(Try.success("success"))
 
@@ -93,7 +96,7 @@ class FixLootStatisticsTest {
         val result = target.checkLootStatistics()
 
         // then
-        assertThat(result.size, `is`(0))
+        assertEquals(0, result.size)
     }
 
     /**
@@ -102,8 +105,8 @@ class FixLootStatisticsTest {
     @Test
     fun `should fix loot statistics - do not add demon goblin loot to demon`() {
         // given
-        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(CreatureDemon)))
-        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(LootDemon)))
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(creatureDemon)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(lootDemon)))
         `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
             .thenReturn(Try.success("success"))
 
@@ -111,8 +114,30 @@ class FixLootStatisticsTest {
         val result = target.checkLootStatistics()
 
         // then
-        assertThat(result.size, `is`(1))
-        assertThat((result["Demon"] ?: error("")).loot!![1].itemName, `is`("Demonrage Sword"))
+        assertEquals(1, result.size)
+        assertEquals("Demonrage Sword", (result["Demon"] ?: error("")).loot!![1].itemName)
+    }
+
+    /**
+     * The loot list of a Priestess of the Wild Sun contains the item Secret Instruction.
+     * But it should not be added to the creatures' loot list.
+     */
+    @Test
+    fun `should fix loot statistics - do not add Secret Instruction item to any creature page`() {
+        // given
+        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(creaturePriestessOfTheWildSun)))
+        `when`(mockLootRepository.getLoot()).thenReturn(Try.success(listOf(lootPriestessOfTheWildSun)))
+        `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
+            .thenReturn(Try.success("success"))
+
+        // when
+        val result = target.checkLootStatistics()
+
+        // then
+        val lootList = result["Priestess of the Wild Sun"]?.loot!!
+        assertEquals(1, result.size)
+        assertTrue(lootList.contains(LootItem("Secret Instruction (Silver)")))
+        assertFalse(lootList.contains(LootItem("Secret Instruction")))
     }
 
     private fun makeCreatureAmazon(): Creature {
@@ -139,6 +164,18 @@ class FixLootStatisticsTest {
             actualname = "Demon",
             name = "Demon",
             loot = mutableListOf(LootItem(itemName = "Magic Plate Armor"))
+        )
+    }
+
+    private fun makeCreaturePriestessOfTheWildSun(): Creature {
+        return Creature(
+            actualname = "Priestess of the Wild Sun",
+            name = "Priestess of the Wild Sun",
+            loot = mutableListOf(
+                LootItem(itemName = "Secret Instruction (Gryphon)"),
+                LootItem(itemName = "Secret Instruction (Mirror)"),
+                LootItem(itemName = "Secret Instruction (Silver)"),
+            )
         )
     }
 
@@ -184,49 +221,63 @@ class FixLootStatisticsTest {
         )
     }
 
-    companion object {
-        private fun makeCreatureRat(): Creature {
-            return Creature(
-                actualname = "Rat",
+    private fun makeLootPriestessOfTheWildSun(): LootWrapper {
+        return LootWrapper(
+            loot2 = Loot(
+                kills = "2073",
+                pageName = "Priestess of the Wild Sun",
+                name = "Priestess of the Wild Sun",
+                loot = mutableListOf(
+                    LootStatisticsItem(itemName = "Platinum Coin", times = "2073", amount = "1-3", total = "4185"),
+                    LootStatisticsItem(itemName = "Fafnar Symbol", times = "185", amount = "1", total = "185"),
+                    LootStatisticsItem(itemName = "Secret Instruction", times = "144", amount = "1", total = "144"),
+                ),
+                version = "12.31.9580"
+            )
+        )
+    }
+
+    private fun makeCreatureRat(): Creature {
+        return Creature(
+            actualname = "Rat",
+            name = "Rat",
+            loot = mutableListOf(
+                LootItem(itemName = "Gold Coin", amount = "0-4"),
+                LootItem(itemName = "Cheese")
+            )
+        )
+    }
+
+    private fun makeLootRat(): LootWrapper {
+        return LootWrapper(
+            loot2 = Loot(
+                kills = "14605",
+                pageName = "Rat",
                 name = "Rat",
                 loot = mutableListOf(
-                    LootItem(itemName = "Gold Coin", amount = "0-4"),
-                    LootItem(itemName = "Cheese")
-                )
+                    LootStatisticsItem(itemName = "Empty", times = "108"),
+                    LootStatisticsItem(itemName = "Cheese", times = "5741"),
+                    LootStatisticsItem(itemName = "Gold Coin", times = "14477", amount = "1", total = "20591")
+                ),
+                version = "9.63"
             )
-        }
+        )
+    }
 
-        private fun makeLootRat(): LootWrapper {
-            return LootWrapper(
-                loot2 = Loot(
-                    kills = "14605",
-                    pageName = "Rat",
-                    name = "Rat",
-                    loot = mutableListOf(
-                        LootStatisticsItem(itemName = "Empty", times = "108"),
-                        LootStatisticsItem(itemName = "Cheese", times = "5741"),
-                        LootStatisticsItem(itemName = "Gold Coin", times = "14477", amount = "1", total = "20591")
-                    ),
-                    version = "9.63"
-                )
+    private fun makeLootRatWithSword(): LootWrapper {
+        return LootWrapper(
+            loot2 = Loot(
+                kills = "14605",
+                pageName = "Rat",
+                name = "Rat",
+                loot = mutableListOf(
+                    LootStatisticsItem(itemName = "Empty", times = "108"),
+                    LootStatisticsItem(itemName = "Cheese", times = "5741"),
+                    LootStatisticsItem(itemName = "Gold Coin", times = "14477", amount = "1", total = "20591"),
+                    LootStatisticsItem(itemName = "Sword", times = "1")
+                ),
+                version = "9.63"
             )
-        }
-
-        private fun makeLootRatWithSword(): LootWrapper {
-            return LootWrapper(
-                loot2 = Loot(
-                    kills = "14605",
-                    pageName = "Rat",
-                    name = "Rat",
-                    loot = mutableListOf(
-                        LootStatisticsItem(itemName = "Empty", times = "108"),
-                        LootStatisticsItem(itemName = "Cheese", times = "5741"),
-                        LootStatisticsItem(itemName = "Gold Coin", times = "14477", amount = "1", total = "20591"),
-                        LootStatisticsItem(itemName = "Sword", times = "1")
-                    ),
-                    version = "9.63"
-                )
-            )
-        }
+        )
     }
 }

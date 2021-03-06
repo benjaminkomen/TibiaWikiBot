@@ -159,7 +159,7 @@ class FixLootStatistics(
             "Dead Snake" to "Dead Snake (Item)",
             "Dead Frog" to "Dead Frog (Item)",
             "Clusters of Solace" to "Cluster of Solace",
-            "Bag With Stolen Gold" to "Bag with Stolen Gold"
+            "Bag With Stolen Gold" to "Bag with Stolen Gold",
         )
         private val forbiddenCreaturesAndLoot = mapOf(
             "Demon" to listOf("Small Stone", "Bone", "Leather Armor", "Mouldy Cheese"),
@@ -176,8 +176,12 @@ class FixLootStatistics(
             "Juvenile Cyclops" to listOf("Cyclops Toe"),
             "Minotaur Occultist" to listOf("Minotaur Horn", "Purple Robe"),
             "Lesser Fire Devil" to listOf("Small Pitchfork"),
-            "Troll Marauder" to listOf("Bunch of Troll Hair", "Trollroot")
+            "Troll Marauder" to listOf("Bunch of Troll Hair", "Trollroot"),
         )
-        private val lootStatisticsTableEntriesNotToBeUsedOnCreaturePage = listOf("Empty", "Secret Instruction")
+        private val lootStatisticsTableEntriesNotToBeUsedOnCreaturePage = listOf(
+            "Empty",
+            "Part of a Jester Doll",
+            "Secret Instruction",
+        )
     }
 }

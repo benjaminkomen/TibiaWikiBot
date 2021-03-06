@@ -8,7 +8,6 @@ import com.wikia.tibia.repositories.ItemRepository
 import com.wikia.tibia.utils.pauseForABit
 import io.vavr.control.Try
 import org.slf4j.LoggerFactory
-import java.util.ArrayList
 import java.util.concurrent.ConcurrentHashMap
 
 class FixItems(
@@ -107,7 +106,8 @@ class FixItems(
     private fun itemShouldBeAdded(creaturePageName: String, lootItemNamePrecise: String): Boolean {
         return addOrcWarlordLootIfNotOrcRaidItem(creaturePageName, lootItemNamePrecise) &&
             addOldAndUsedBackpackIfNotOrc(creaturePageName, lootItemNamePrecise) &&
-            addOrcTuskIfNotOrc(creaturePageName, lootItemNamePrecise)
+            addOrcTuskIfNotOrc(creaturePageName, lootItemNamePrecise) &&
+            EVENT_ITEMS.contains(lootItemNamePrecise).not()
     }
 
     private fun addOrcWarlordLootIfNotOrcRaidItem(creaturePageName: String, lootItemNamePrecise: String): Boolean {
@@ -142,6 +142,9 @@ class FixItems(
     companion object {
         private const val DEBUG_MODE = false
         private val ORC_RAID_ITEMS = listOf("Amazon Armor", "Amazon Helmet", "Amazon Shield")
+        private val EVENT_ITEMS = listOf(
+            "Old Rag",
+        )
         private val logger = LoggerFactory.getLogger(FixItems::class.java)
     }
 }

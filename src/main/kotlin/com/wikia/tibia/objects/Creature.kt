@@ -17,6 +17,7 @@ data class Creature(
     val actualname: String? = null,
     val plural: String? = null,
     val implemented: String? = null,
+    @get:JsonGetter("race_id") val raceId: String? = null,
     val notes: String? = null,
     val history: String? = null,
     val status: Status? = null,

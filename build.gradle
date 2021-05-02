@@ -18,7 +18,7 @@ ext {
     slf4jVersion = '2.0.0-alpha1'
     jacksonVersion = '2.12.3'
     junitVersion = '5.7.1'
-    kotlinVersion = '1.4.32'
+    kotlinVersion = '1.5.0'
 }
 
 dependencies {

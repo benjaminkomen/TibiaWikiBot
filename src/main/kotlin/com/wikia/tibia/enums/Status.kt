@@ -13,9 +13,9 @@ enum class Status(@JsonValue override val description: String) : Description {
 
     fun isActive(): Boolean {
         return this != DEPRECATED &&
-                this != UNOBTAINABLE &&
-                this != TS_ONLY_LOWERCASE &&
-                this != TS_ONLY_UPPERCASE &&
-                this != EVENT
+            this != UNOBTAINABLE &&
+            this != TS_ONLY_LOWERCASE &&
+            this != TS_ONLY_UPPERCASE &&
+            this != EVENT
     }
 }

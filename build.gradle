@@ -1,7 +1,7 @@
 plugins {
     id "jacoco"
     id "org.sonarqube" version "3.2.0"
-    id "org.jetbrains.kotlin.jvm" version "1.4.32"
+    id "org.jetbrains.kotlin.jvm" version "1.5.0"
     id "org.jlleitschuh.gradle.ktlint" version "10.0.0"
 }
 
@@ -17,8 +17,8 @@ repositories {
 ext {
     slf4jVersion = '2.0.0-alpha1'
     jacksonVersion = '2.12.3'
-    junitVersion = '5.7.1'
-    kotlinVersion = '1.4.32'
+    junitVersion = '5.7.2'
+    kotlinVersion = '1.5.0'
 }
 
 dependencies {
@@ -34,16 +34,16 @@ dependencies {
     implementation "io.vavr:vavr:0.10.3"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
-    testImplementation "org.mockito:mockito-core:3.9.0"
+    testImplementation "org.mockito:mockito-core:3.10.0"
     testImplementation "org.hamcrest:hamcrest-core:2.2"
 }
 
 compileKotlin {
-    kotlinOptions.jvmTarget = "15"
+    kotlinOptions.jvmTarget = "16"
     kotlinOptions.useIR = true
 }
 compileTestKotlin {
-    kotlinOptions.jvmTarget = "15"
+    kotlinOptions.jvmTarget = "16"
 }
 
 sonarqube {

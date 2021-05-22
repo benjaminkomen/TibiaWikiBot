@@ -34,7 +34,7 @@ class FixItems(
         getItems()
             .asSequence()
             .sortedBy { it.name }
-            .filter { it.notDeprecatedOrEvent(it.status) }
+            .filter { it.isActive(it.status) }
             .filter { it.droppedby?.isNotEmpty() ?: false }
             .onEach { logger.debug("Processing item: ${it.name}") }
             .forEach { item: Item ->

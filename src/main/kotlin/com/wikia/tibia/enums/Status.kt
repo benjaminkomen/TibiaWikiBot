@@ -11,7 +11,11 @@ enum class Status(@JsonValue override val description: String) : Description {
     TS_ONLY_UPPERCASE("TS-only"),
     EVENT("event");
 
-    fun notDeprecatedTsOrEvent(): Boolean {
-        return this != DEPRECATED && this != TS_ONLY_LOWERCASE && this != TS_ONLY_UPPERCASE && this != EVENT
+    fun isActive(): Boolean {
+        return this != DEPRECATED &&
+                this != UNOBTAINABLE &&
+                this != TS_ONLY_LOWERCASE &&
+                this != TS_ONLY_UPPERCASE &&
+                this != EVENT
     }
 }

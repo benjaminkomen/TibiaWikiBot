@@ -32,7 +32,7 @@ class FixCreatures(
         getCreatures()
             .asSequence()
             .sortedBy { it.name }
-            .filter { it.notDeprecatedOrEvent(it.status) }
+            .filter { it.isActive(it.status) }
             .filter { it.loot != null && it.loot.isNotEmpty() }
             .onEach { logger.debug("Processing creature: ${it.name}") }
             .forEach { creature: Creature ->

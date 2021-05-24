@@ -88,7 +88,7 @@ class FixLootStatistics(
     }
 
     private fun getCreature(creatureName: String): Creature? {
-        return getCreatures().firstOrNull { it.name == creatureName }
+        return getCreatures().firstOrNull { it.name.equals(creatureName, ignoreCase = true) }
     }
 
     private val lootPages: List<LootWrapper>

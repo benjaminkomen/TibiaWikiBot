@@ -89,6 +89,7 @@ data class Item(
     val destructible: YesNo? = null,
     val droppedby: MutableList<String>? = mutableListOf(),
     val value: String? = null,
+    val storevalue: String? = null,
     val npcvalue: String? = null,
     val npcprice: String? = null,
     val npcvaluerook: String? = null,

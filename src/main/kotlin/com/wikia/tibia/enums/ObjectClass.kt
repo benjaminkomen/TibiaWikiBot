@@ -3,7 +3,7 @@ package com.wikia.tibia.enums
 import com.fasterxml.jackson.annotation.JsonValue
 import com.wikia.tibia.interfaces.Description
 
-enum class ItemClass(@JsonValue override val description: String) : Description {
+enum class ObjectClass(@JsonValue override val description: String) : Description {
     BODY_EQUIPMENT("Body Equipment"),
     WEAPONS("Weapons"),
     RUNES("Runes"),

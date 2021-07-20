@@ -1,6 +1,6 @@
 package com.wikia.tibia.usecases
 
-import com.wikia.tibia.enums.ItemClass
+import com.wikia.tibia.enums.ObjectClass
 import com.wikia.tibia.enums.Rarity
 import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.objects.Item
@@ -156,7 +156,7 @@ internal class FixCreaturesTest {
         return Item(
             actualname = "Cheese",
             name = "Cheese",
-            itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+            objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
             droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
         )
     }
@@ -165,7 +165,7 @@ internal class FixCreaturesTest {
         return Item(
             actualname = "Honeycomb",
             name = "Honeycomb",
-            itemclass = ItemClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+            objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
             droppedby = mutableListOf(
                 "Grynch Clan Goblin",
                 "Shadowpelt",
@@ -179,7 +179,7 @@ internal class FixCreaturesTest {
         return Item(
             actualname = "Old Rag",
             name = "Old Rag",
-            itemclass = ItemClass.OTHER_ITEMS,
+            objectclass = ObjectClass.OTHER_ITEMS,
             droppedby = mutableListOf(
                 "Cyclops",
                 "Troll",
@@ -192,7 +192,7 @@ internal class FixCreaturesTest {
         return Item(
             actualname = "Meat",
             name = "Meat",
-            itemclass = ItemClass.OTHER_ITEMS,
+            objectclass = ObjectClass.OTHER_ITEMS,
             droppedby = mutableListOf()
         )
     }

@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonGetter
 import com.wikia.tibia.enums.Article
 import com.wikia.tibia.enums.DamageElement
 import com.wikia.tibia.enums.Hands
-import com.wikia.tibia.enums.ItemClass
+import com.wikia.tibia.enums.ObjectClass
 import com.wikia.tibia.enums.Status
 import com.wikia.tibia.enums.WeaponType
 import com.wikia.tibia.enums.YesNo
@@ -29,7 +29,7 @@ data class Item(
     val flavortext: String? = null,
     val ingamestatus: Status? = null,
     val words: String? = null,
-    val itemclass: ItemClass? = null,
+    val objectclass: ObjectClass? = null,
     val primarytype: String? = null,
     val secondarytype: String? = null,
     val lightcolor: Int? = null,
@@ -38,7 +38,7 @@ data class Item(
     val vocrequired: String? = null,
     val mlrequired: Int? = null,
     val hands: Hands? = null,
-    val type: WeaponType? = null,
+    val weapontype: WeaponType? = null,
     val attack: String? = null,
     @get:JsonGetter("fire_attack") val fireAttack: Int? = null,
     @get:JsonGetter("earth_attack") val earthAttack: Int? = null,
@@ -81,9 +81,9 @@ data class Item(
     val writechars: Int? = null,
     val hangable: YesNo? = null,
     val holdsliquid: YesNo? = null,
-    val mana: Int? = null,
+    val manacost: Int? = null,
     val damagetype: DamageElement? = null,
-    val damage: String? = null,
+    val damagerange: String? = null,
     val volume: Int? = null,
     val duration: String? = null,
     val destructible: YesNo? = null,
@@ -103,12 +103,12 @@ data class Item(
         if (isEmpty(implemented)) {
             this.copy(implemented = "?")
         }
-        if (isEmpty(itemclass)) {
-            logger.warn("Creature '{}' has no itemclass set", name)
+        if (isEmpty(objectclass)) {
+            logger.warn("Item '${name}' has no objectclass set")
         }
         if (isEmpty(primarytype)) {
             this.copy(primarytype = "?")
-            logger.warn("Creature '{}' has no primarytype set", name)
+            logger.warn("Item '${name}' has no primarytype set")
         }
         if (isEmpty(value)) {
             this.copy(value = "?")

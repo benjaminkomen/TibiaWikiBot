@@ -104,11 +104,11 @@ data class Item(
             this.copy(implemented = "?")
         }
         if (isEmpty(objectclass)) {
-            logger.warn("Item '${name}' has no objectclass set")
+            logger.warn("Item '$name' has no objectclass set")
         }
         if (isEmpty(primarytype)) {
             this.copy(primarytype = "?")
-            logger.warn("Item '${name}' has no primarytype set")
+            logger.warn("Item '$name' has no primarytype set")
         }
         if (isEmpty(value)) {
             this.copy(value = "?")

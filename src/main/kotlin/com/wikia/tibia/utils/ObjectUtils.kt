@@ -4,8 +4,8 @@ import com.wikia.tibia.enums.BestiaryClass
 import com.wikia.tibia.enums.BestiaryLevel
 import com.wikia.tibia.enums.BookType
 import com.wikia.tibia.enums.BuildingType
-import com.wikia.tibia.enums.ObjectClass
 import com.wikia.tibia.enums.KeyType
+import com.wikia.tibia.enums.ObjectClass
 import com.wikia.tibia.enums.SpellSubclass
 import com.wikia.tibia.enums.SpellType
 import com.wikia.tibia.enums.YesNo

@@ -50,7 +50,10 @@ class CreatureRepositoryTest {
     }
 
     // TODO it would be cool to rewrite this to Kotlin some time
-    private fun `inject mocked gateway`(creatureRepository: CreatureRepository, creatureGateway: WikiObjectGateway<Creature>) {
+    private fun `inject mocked gateway`(
+        creatureRepository: CreatureRepository,
+        creatureGateway: WikiObjectGateway<Creature>
+    ) {
         val field: Field = creatureRepository.javaClass.superclass.getDeclaredField("wikiObjectGateway")
         field.trySetAccessible()
         field.set(creatureRepository, creatureGateway)

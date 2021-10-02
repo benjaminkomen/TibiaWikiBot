@@ -89,7 +89,13 @@ class BuildingRentsTest {
 
         `when`(inputRepository.getCSVFile(anyString(), eq(HouseRent::class.java))).thenReturn(someHouseRents)
         `when`(buildingRepository.getWikiObjects()).thenReturn(Try.success(someBuildings))
-        `when`(buildingRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean())).thenReturn(Try.success("saved!"))
+        `when`(
+            buildingRepository.saveWikiObject(
+                any(WikiObject::class.java),
+                anyString(),
+                anyBoolean()
+            )
+        ).thenReturn(Try.success("saved!"))
         target = BuildingRents(buildingRepository)
 
         target.updateRentToBuildings()

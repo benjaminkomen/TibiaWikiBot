@@ -7,7 +7,6 @@ import com.wikia.tibia.objects.Corpse
 import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.objects.Effect
 import com.wikia.tibia.objects.HuntingPlace
-import com.wikia.tibia.objects.Item
 import com.wikia.tibia.objects.Key
 import com.wikia.tibia.objects.Location
 import com.wikia.tibia.objects.Missile
@@ -25,7 +24,6 @@ import com.wikia.tibia.repositories.CorpseRepository
 import com.wikia.tibia.repositories.CreatureRepository
 import com.wikia.tibia.repositories.EffectRepository
 import com.wikia.tibia.repositories.HuntingPlaceRepository
-import com.wikia.tibia.repositories.ItemRepository
 import com.wikia.tibia.repositories.KeyRepository
 import com.wikia.tibia.repositories.LocationRepository
 import com.wikia.tibia.repositories.MissileRepository
@@ -38,7 +36,6 @@ import com.wikia.tibia.repositories.SpellRepository
 import com.wikia.tibia.repositories.StreetRepository
 import com.wikia.tibia.utils.pauseForABit
 import org.slf4j.LoggerFactory
-import java.util.ArrayList
 
 class NullEditWikiObjects(
     private val achievementRepository: AchievementRepository,
@@ -48,7 +45,6 @@ class NullEditWikiObjects(
     private val creatureRepository: CreatureRepository,
     private val effectRepository: EffectRepository,
     private val huntingPlaceRepository: HuntingPlaceRepository,
-    private val itemRepository: ItemRepository,
     private val keyRepository: KeyRepository,
     private val locationRepository: LocationRepository,
     private val missileRepository: MissileRepository,
@@ -59,23 +55,22 @@ class NullEditWikiObjects(
     private val questRepository: QuestRepository,
     private val spellRepository: SpellRepository,
     private val streetRepository: StreetRepository,
-    private var achievements: List<Achievement> = ArrayList<Achievement>(),
-    private var books: List<Book> = ArrayList<Book>(),
-    private var buildings: List<Building> = ArrayList<Building>(),
-    private var corpses: List<Corpse> = ArrayList<Corpse>(),
-    private var creatures: List<Creature> = ArrayList<Creature>(),
-    private var effects: List<Effect> = ArrayList<Effect>(),
-    private var huntingPlaces: List<HuntingPlace> = ArrayList<HuntingPlace>(),
-    private var items: List<Item> = ArrayList<Item>(),
-    private var keys: List<Key> = ArrayList<Key>(),
-    private var locations: List<Location> = ArrayList<Location>(),
-    private var missiles: List<Missile> = ArrayList<Missile>(),
-    private var mounts: List<Mount> = ArrayList<Mount>(),
-    private var npcs: List<NPC> = ArrayList<NPC>(),
-    private var objects: List<TibiaObject> = ArrayList<TibiaObject>(),
-    private var outfits: List<Outfit> = ArrayList<Outfit>(),
-    private var quests: List<Quest> = ArrayList<Quest>(),
-    private var spells: List<Spell> = ArrayList<Spell>(),
+    private var achievements: List<Achievement> = ArrayList(),
+    private var books: List<Book> = ArrayList(),
+    private var buildings: List<Building> = ArrayList(),
+    private var corpses: List<Corpse> = ArrayList(),
+    private var creatures: List<Creature> = ArrayList(),
+    private var effects: List<Effect> = ArrayList(),
+    private var huntingPlaces: List<HuntingPlace> = ArrayList(),
+    private var keys: List<Key> = ArrayList(),
+    private var locations: List<Location> = ArrayList(),
+    private var missiles: List<Missile> = ArrayList(),
+    private var mounts: List<Mount> = ArrayList(),
+    private var npcs: List<NPC> = ArrayList(),
+    private var objects: List<TibiaObject> = ArrayList(),
+    private var outfits: List<Outfit> = ArrayList(),
+    private var quests: List<Quest> = ArrayList(),
+    private var spells: List<Spell> = ArrayList(),
     private var streets: List<Street> = ArrayList()
 ) {
 
@@ -144,16 +139,6 @@ class NullEditWikiObjects(
             .forEach {
                 logger.info(LOG_SAVE_ARTICLE, it.name)
                 huntingPlaceRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
-                pauseForABit()
-            }
-    }
-
-    fun checkItems() {
-        getItems()
-            .forEach {
-                it.setDefaultValues()
-                logger.info(LOG_SAVE_ARTICLE, it.name)
-                itemRepository.saveWikiObject(it, EDIT_SUMMARY, DEBUG_MODE)
                 pauseForABit()
             }
     }
@@ -349,19 +334,6 @@ class NullEditWikiObjects(
         return huntingPlaces
     }
 
-    private fun getItems(): List<Item> {
-        if (items.isEmpty()) {
-            val tryList = itemRepository.getWikiObjects()
-            items = if (tryList.isSuccess) {
-                tryList.get() as List<Item>
-            } else {
-                logger.error("Failed to get a list of items: ${tryList.cause}")
-                emptyList()
-            }
-        }
-        return items
-    }
-
     private fun getKeys(): List<Key> {
         if (keys.isEmpty()) {
             val tryList = keyRepository.getWikiObjects()
@@ -391,11 +363,11 @@ class NullEditWikiObjects(
     private fun getMissiles(): List<Missile> {
         if (missiles.isEmpty()) {
             val tryList = missileRepository.getWikiObjects()
-            if (tryList.isSuccess) {
-                missiles = tryList.get() as List<Missile>
+            missiles = if (tryList.isSuccess) {
+                tryList.get() as List<Missile>
             } else {
                 logger.error("Failed to get a list of missiles: ${tryList.cause}")
-                missiles = emptyList()
+                emptyList()
             }
         }
         return missiles

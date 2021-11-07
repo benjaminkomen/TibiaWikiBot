@@ -1,8 +1,8 @@
 package com.wikia.tibia.usecases
 
 import com.wikia.tibia.objects.Creature
-import com.wikia.tibia.objects.Item
 import com.wikia.tibia.objects.LootItem
+import com.wikia.tibia.objects.TibiaObject
 import com.wikia.tibia.repositories.CreatureRepository
 import com.wikia.tibia.repositories.ItemRepository
 import com.wikia.tibia.utils.pauseForABit
@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap
 class FixItems(
     private val creatureRepository: CreatureRepository,
     private val itemRepository: ItemRepository,
-    private var items: List<Item> = ArrayList(),
+    private var items: List<TibiaObject> = ArrayList(),
     private var creatures: List<Creature> = ArrayList(),
     private val creaturePagesToUpdate: MutableMap<String, Creature> = ConcurrentHashMap() // creature name, actual creature
 ) {
@@ -37,7 +37,7 @@ class FixItems(
             .filter { it.isActive(it.status) }
             .filter { it.droppedby?.isNotEmpty() ?: false }
             .onEach { logger.debug("Processing item: ${it.name}") }
-            .forEach { item: Item ->
+            .forEach { item: TibiaObject ->
                 item.droppedby
                     ?.mapNotNull { creatureName ->
                         val creature = getCreature(creatureName)
@@ -69,11 +69,11 @@ class FixItems(
         return getCreatures().firstOrNull { it.name == creatureName }
     }
 
-    private fun getItems(): List<Item> {
+    private fun getItems(): List<TibiaObject> {
         if (items.isEmpty()) {
             val tryList = itemRepository.getWikiObjects()
             items = if (tryList.isSuccess) {
-                tryList.get() as List<Item>
+                tryList.get() as List<TibiaObject>
             } else {
                 logger.error("Failed to get a list of items: ${tryList.cause}")
                 emptyList()
@@ -85,7 +85,7 @@ class FixItems(
     /**
      * If the item is not already in the loot table of the creature and the creature is eligible for adding, add it.
      */
-    private fun addItemToLootTableOfCreature(item: Item, creature: Creature) {
+    private fun addItemToLootTableOfCreature(item: TibiaObject, creature: Creature) {
         if (creature.loot != null && !creature.loot.contains(LootItem.fromName(item.name)) && itemShouldBeAdded(creature.name, item.name)) {
             logger.info("Adding item '${item.name}' to loot table of creature '${creature.name}'.")
             if (!creaturePagesToUpdate.containsKey(creature.name)) {

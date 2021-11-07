@@ -7,7 +7,6 @@ import com.wikia.tibia.repositories.CorpseRepository
 import com.wikia.tibia.repositories.CreatureRepository
 import com.wikia.tibia.repositories.EffectRepository
 import com.wikia.tibia.repositories.HuntingPlaceRepository
-import com.wikia.tibia.repositories.ItemRepository
 import com.wikia.tibia.repositories.KeyRepository
 import com.wikia.tibia.repositories.LocationRepository
 import com.wikia.tibia.repositories.MissileRepository
@@ -36,7 +35,6 @@ class NullEditWikiObjectsTest {
             creatureRepository = CreatureRepository(),
             effectRepository = EffectRepository(),
             huntingPlaceRepository = HuntingPlaceRepository(),
-            itemRepository = ItemRepository(),
             keyRepository = KeyRepository(),
             locationRepository = LocationRepository(),
             missileRepository = MissileRepository(),
@@ -104,14 +102,6 @@ class NullEditWikiObjectsTest {
     @Test
     fun testCheckHuntingPlaces() {
         target.checkHuntingPlaces()
-    }
-
-    /**
-     * Last successful run: February 29, 2020
-     */
-    @Test
-    fun testCheckItems() {
-        target.checkItems()
     }
 
     /**

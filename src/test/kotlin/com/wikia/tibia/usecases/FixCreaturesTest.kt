@@ -3,8 +3,8 @@ package com.wikia.tibia.usecases
 import com.wikia.tibia.enums.ObjectClass
 import com.wikia.tibia.enums.Rarity
 import com.wikia.tibia.objects.Creature
-import com.wikia.tibia.objects.Item
 import com.wikia.tibia.objects.LootItem
+import com.wikia.tibia.objects.TibiaObject
 import com.wikia.tibia.objects.WikiObject
 import com.wikia.tibia.repositories.CreatureRepository
 import com.wikia.tibia.repositories.ItemRepository
@@ -16,8 +16,8 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import testutils.any
 
 internal class FixCreaturesTest {
@@ -152,20 +152,20 @@ internal class FixCreaturesTest {
         )
     }
 
-    private fun makeCheese(): Item {
-        return Item(
+    private fun makeCheese(): TibiaObject {
+        return TibiaObject(
             actualname = "Cheese",
             name = "Cheese",
-            objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+            objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
             droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
         )
     }
 
-    private fun makeHoneycomb(): Item {
-        return Item(
+    private fun makeHoneycomb(): TibiaObject {
+        return TibiaObject(
             actualname = "Honeycomb",
             name = "Honeycomb",
-            objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+            objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
             droppedby = mutableListOf(
                 "Grynch Clan Goblin",
                 "Shadowpelt",
@@ -175,11 +175,11 @@ internal class FixCreaturesTest {
         )
     }
 
-    private fun makeOldRag(): Item {
-        return Item(
+    private fun makeOldRag(): TibiaObject {
+        return TibiaObject(
             actualname = "Old Rag",
             name = "Old Rag",
-            objectclass = ObjectClass.OTHER_ITEMS,
+            objectclass = ObjectClass.OTHER_ITEMS.description,
             droppedby = mutableListOf(
                 "Cyclops",
                 "Troll",
@@ -188,11 +188,11 @@ internal class FixCreaturesTest {
         )
     }
 
-    private fun makeMeat(): Item {
-        return Item(
+    private fun makeMeat(): TibiaObject {
+        return TibiaObject(
             actualname = "Meat",
             name = "Meat",
-            objectclass = ObjectClass.OTHER_ITEMS,
+            objectclass = ObjectClass.OTHER_ITEMS.description,
             droppedby = mutableListOf()
         )
     }

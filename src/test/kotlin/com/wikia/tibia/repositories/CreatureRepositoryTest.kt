@@ -8,8 +8,8 @@ import org.hamcrest.Matchers
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import java.lang.reflect.Field
 
 class CreatureRepositoryTest {

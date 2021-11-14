@@ -2,8 +2,8 @@ package com.wikia.tibia.usecases
 
 import com.wikia.tibia.enums.ObjectClass
 import com.wikia.tibia.objects.Creature
-import com.wikia.tibia.objects.Item
 import com.wikia.tibia.objects.LootItem
+import com.wikia.tibia.objects.TibiaObject
 import com.wikia.tibia.objects.WikiObject
 import com.wikia.tibia.repositories.CreatureRepository
 import com.wikia.tibia.repositories.ItemRepository
@@ -14,8 +14,8 @@ import org.junit.Before
 import org.junit.Test
 import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.anyString
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 import testutils.any
 
 class FixItemsTest {
@@ -138,29 +138,29 @@ class FixItemsTest {
             )
         }
 
-        private fun makeCheese(): Item {
-            return Item(
+        private fun makeCheese(): TibiaObject {
+            return TibiaObject(
                 actualname = "Cheese",
                 name = "Cheese",
-                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
                 droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
             )
         }
 
-        private fun makeHoneycomb(): Item {
-            return Item(
+        private fun makeHoneycomb(): TibiaObject {
+            return TibiaObject(
                 actualname = "Honeycomb",
                 name = "Honeycomb",
-                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
                 droppedby = mutableListOf("Bear", "Grynch Clan Goblin", "Shadowpelt", "Wasp", "Werebear", "Willi Wasp")
             )
         }
 
-        private fun makeBearPaw(): Item {
-            return Item(
+        private fun makeBearPaw(): TibiaObject {
+            return TibiaObject(
                 actualname = "Bear Paw",
                 name = "Bear Paw",
-                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK,
+                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
                 droppedby = mutableListOf("Bear", "Shadowpelt", "Werebear")
             )
         }

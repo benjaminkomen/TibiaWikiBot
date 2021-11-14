@@ -7,14 +7,14 @@ import com.wikia.tibia.objects.LootStatisticsItem
 import com.wikia.tibia.objects.LootWrapper
 import io.vavr.control.Try
 import org.hamcrest.MatcherAssert.assertThat
-import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.instanceOf
+import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.nullValue
 import org.junit.Before
 import org.junit.Test
 import org.mockito.Mock
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.mock
+import org.mockito.Mockito.`when`
 
 internal class LootRepositoryTest {
 

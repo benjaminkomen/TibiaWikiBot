@@ -14,10 +14,14 @@ import java.math.BigDecimal
 data class TibiaObject(
     val name: String,
     val article: Article? = null,
-    val actualname: String,
+    val actualname: String? = null,
     val plural: String? = null,
     val itemid: List<Int>? = emptyList(),
-    val objectclass: String,
+    @Deprecated(message = "replaced with objectclass")
+    val primarytype: String? = null,
+    @Deprecated(message = "never used")
+    val sprites: String? = null,
+    val objectclass: String? = null, // some old items only have a primarytype and no objectclass yet
     val secondarytype: String? = null,
     val tertiarytype: String? = null,
     val flavortext: String? = null,

@@ -25,75 +25,75 @@ import testutils.eq
 
 class BuildingRentsTest {
 
-    @Mock
-    private lateinit var inputRepository: InputRepository
+  @Mock
+  private lateinit var inputRepository: InputRepository
 
-    @Mock
-    private lateinit var buildingRepository: BuildingRepository
-    private lateinit var target: BuildingRents
+  @Mock
+  private lateinit var buildingRepository: BuildingRepository
+  private lateinit var target: BuildingRents
 
-    @Before
-    fun setup() {
-        inputRepository = mock(InputRepository::class.java)
-        buildingRepository = mock(BuildingRepository::class.java)
-    }
+  @Before
+  fun setup() {
+    inputRepository = mock(InputRepository::class.java)
+    buildingRepository = mock(BuildingRepository::class.java)
+  }
 
-    @Ignore
-    @Test
-    fun `should update rent to buildings - production`() {
-        // given
-        target = BuildingRents(buildingRepository)
-        // when
-        target.updateRentToBuildings()
-        // then
-        assertThat("Done", `is`("Done"))
-    }
+  @Ignore
+  @Test
+  fun `should update rent to buildings - production`() {
+    // given
+    target = BuildingRents(buildingRepository)
+    // when
+    target.updateRentToBuildings()
+    // then
+    assertThat("Done", `is`("Done"))
+  }
 
-    @Test
-    fun `should update rent to buildings`() {
-        val someHouseRents = listOf(
-            HouseRent(
-                houseId = "40501",
-                houseName = "Coastwood 1",
-                newRentInKk = "50",
-                newRentInGps = "50000"
-            )
-        )
+  @Test
+  fun `should update rent to buildings`() {
+    val someHouseRents = listOf(
+      HouseRent(
+        houseId = "40501",
+        houseName = "Coastwood 1",
+        newRentInKk = "50",
+        newRentInGps = "50000"
+      )
+    )
 
-        val someBuildings = listOf(
-            Building(
-                image = "<gallery>Coastwood1.jpg</gallery>",
-                openwindows = 4,
-                rooms = 1,
-                houseid = 40501,
-                notes = "It's located in the Northwestern part of [[Ab'Dendriel]] on the second floor, the southern house.",
-                city = City.AB_DENDRIEL,
-                furnishings = "1 [[Wall Lamp]].",
-                history = "Before {{OfficialNewsArchive|4984|April 15, 2019}}, this house's rent was 980 gold per month.",
-                type = BuildingType.House,
-                rent = 980,
-                posx = "127.135",
-                posy = "123.115",
-                posz = "6",
-                floors = 1,
-                size = 16,
-                street = "Coastwood",
-                name = "Coastwood 1",
-                implemented = "6.2",
-                location = "[[Ab'Dendriel]]",
-                beds = 2,
-                ownable = YesNo.YES_LOWERCASE,
-                status = Status.ACTIVE
-            )
-        )
+    val someBuildings = listOf(
+      Building(
+        image = "<gallery>Coastwood1.jpg</gallery>",
+        openwindows = 4,
+        rooms = 1,
+        houseid = 40501,
+        notes = "It's located in the Northwestern part of [[Ab'Dendriel]] on the second floor, the southern house.",
+        city = City.AB_DENDRIEL,
+        furnishings = "1 [[Wall Lamp]].",
+        history = "Before {{OfficialNewsArchive|4984|April 15, 2019}}, this house's rent was 980 gold per month.",
+        type = BuildingType.House,
+        rent = 980,
+        posx = "127.135",
+        posy = "123.115",
+        posz = "6",
+        floors = 1,
+        size = 16,
+        street = "Coastwood",
+        name = "Coastwood 1",
+        implemented = "6.2",
+        location = "[[Ab'Dendriel]]",
+        beds = 2,
+        ownable = YesNo.YES_LOWERCASE,
+        status = Status.ACTIVE
+      )
+    )
 
-        `when`(inputRepository.getCSVFile(anyString(), eq(HouseRent::class.java))).thenReturn(someHouseRents)
-        `when`(buildingRepository.getWikiObjects()).thenReturn(Try.success(someBuildings))
-        `when`(buildingRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean())).thenReturn(Try.success("saved!"))
-        target = BuildingRents(buildingRepository)
+    `when`(inputRepository.getCSVFile(anyString(), eq(HouseRent::class.java))).thenReturn(someHouseRents)
+    `when`(buildingRepository.getWikiObjects()).thenReturn(Try.success(someBuildings))
+    `when`(buildingRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean())).thenReturn(Try.success("saved!"))
+    target = BuildingRents(buildingRepository)
 
-        target.updateRentToBuildings()
+    target.updateRentToBuildings()
 
-        assertThat("Done", `is`("Done"))
-    }
+    assertThat("Done", `is`("Done"))
+  }
 }

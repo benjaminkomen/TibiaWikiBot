@@ -11,29 +11,29 @@ import org.slf4j.LoggerFactory
 
 object Main {
 
-    private val logger = LoggerFactory.getLogger(Main::class.java)
+  private val logger = LoggerFactory.getLogger(Main::class.java)
 
-    @JvmStatic
-    fun main(args: Array<String>) {
-        val fixLootStatistics = FixLootStatistics(
-            creatureRepository = CreatureRepository(),
-            lootRepository = LootRepository(lootGateway = LootGateway())
-        )
-        logger.debug("Starting usecase FixLootStatistics")
-        fixLootStatistics.checkLootStatistics()
+  @JvmStatic
+  fun main(args: Array<String>) {
+    val fixLootStatistics = FixLootStatistics(
+      creatureRepository = CreatureRepository(),
+      lootRepository = LootRepository(lootGateway = LootGateway())
+    )
+    logger.debug("Starting usecase FixLootStatistics")
+    fixLootStatistics.checkLootStatistics()
 
-        val fixCreatures = FixCreatures(
-            creatureRepository = CreatureRepository(),
-            itemRepository = ItemRepository()
-        )
-        logger.debug("Starting usecase FixCreatures")
-        fixCreatures.checkCreatures()
+    val fixCreatures = FixCreatures(
+      creatureRepository = CreatureRepository(),
+      itemRepository = ItemRepository()
+    )
+    logger.debug("Starting usecase FixCreatures")
+    fixCreatures.checkCreatures()
 
-        val fixItems = FixItems(
-            creatureRepository = CreatureRepository(),
-            itemRepository = ItemRepository()
-        )
-        logger.debug("Starting usecase FixItems")
-        fixItems.checkItems()
-    }
+    val fixItems = FixItems(
+      creatureRepository = CreatureRepository(),
+      itemRepository = ItemRepository()
+    )
+    logger.debug("Starting usecase FixItems")
+    fixItems.checkItems()
+  }
 }

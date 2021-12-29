@@ -5,6 +5,6 @@ import com.wikia.tibia.gateways.WikiObjectGateway
 import com.wikia.tibia.objects.Mount
 
 class MountRepository : WikiObjectRepository<Mount>(
-    wikiObjectClass = Mount::class.java,
-    wikiObjectGateway = WikiObjectGateway(Contract.MOUNTS)
+  wikiObjectClass = Mount::class.java,
+  wikiObjectGateway = WikiObjectGateway(Contract.MOUNTS)
 )

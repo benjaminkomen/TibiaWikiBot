@@ -38,7 +38,7 @@ class LootStatisticsService(
   private fun addLootItemsToLootList(creature: Creature, lootStatisticsItem: LootStatisticsItem): Creature? {
     return creature.loot
       ?.any { it.itemName == replaceSomeNames(lootStatisticsItem.itemName) }
-      ?.takeIf { it && shouldAddLootItemToCreature(lootStatisticsItem, creature) }
+      ?.takeIf { lootStatisticsItemExistsInCreatureLootList -> lootStatisticsItemExistsInCreatureLootList.not() && shouldAddLootItemToCreature(lootStatisticsItem, creature) }
       ?.let {
         logger.info("Adding item '${lootStatisticsItem.itemName}' to loot list of creature '${creature.name}'.")
         val newLootItem = LootItem(
@@ -98,16 +98,7 @@ class LootStatisticsService(
   }
 
   private fun getCreature(creatureName: String): Creature? {
-    return getCreatures().firstOrNull { it.name.equals(creatureName, ignoreCase = true) }
-  }
-
-  private fun getCreatures(): List<Creature> {
-    return try {
-      creatureRepository.getCreatures()
-    } catch (e: Exception) {
-      logger.error("Failed to get a list of creatures")
-      emptyList()
-    }
+    return creatureRepository.getCreature(creatureName)
   }
 
   companion object {

@@ -8,7 +8,7 @@ interface CreatureRepository {
 
   fun getCreatureNames(): List<String>
 
-  fun getCreature(name: String): Creature
+  fun getCreature(name: String): Creature?
 
   fun updateCreature(creature: Creature, editSummary: String? = ""): Creature
 }

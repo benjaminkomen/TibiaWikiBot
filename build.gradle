@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = '1.6.0'
+        kotlinVersion = '1.6.10'
     }
 }
 
@@ -8,7 +8,7 @@ plugins {
     id "jacoco"
     id "org.sonarqube" version "3.3"
     id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
-    id "org.jlleitschuh.gradle.ktlint" version "10.2.0"
+    id "org.jlleitschuh.gradle.ktlint" version "10.2.1"
 }
 
 group = 'com.wikia.tibia'
@@ -22,8 +22,8 @@ repositories {
 
 ext {
     slf4jVersion = '2.0.0-alpha5'
-    jacksonVersion = '2.13.0'
-    junitVersion = '5.8.1'
+    jacksonVersion = '2.13.1'
+    junitVersion = '5.8.2'
     jacocoVersion = "0.8.7"
 }
 
@@ -40,14 +40,14 @@ dependencies {
     implementation "io.vavr:vavr:0.10.4"
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
-    testImplementation "org.mockito:mockito-core:4.0.0"
+    testImplementation 'org.mockito:mockito-core:4.2.0'
     testImplementation "org.hamcrest:hamcrest-core:2.2"
 }
 
 compileKotlin {
     kotlinOptions.jvmTarget = "17"
-    kotlinOptions.useIR = true
 }
+
 compileTestKotlin {
     kotlinOptions.jvmTarget = "17"
 }

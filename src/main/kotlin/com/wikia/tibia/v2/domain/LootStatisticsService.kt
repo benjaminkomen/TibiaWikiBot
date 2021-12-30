@@ -15,15 +15,15 @@ class LootStatisticsService(
   private val lootRepository: LootRepository = LootRepositoryImpl(),
 ) {
 
-  fun getCreaturesWithUpdatedLootFromLootStatisticsPage(): List<Creature> {
+  fun getCreaturesWithUpdatedLootFromLootStatisticsPage(): Map<String, Creature> {
     logger.info("Starting to check all loot statistics pages for new loot information and adding to creature's loot lists.")
 
-    return getLootList()
+    val creatures = getLootList()
       .asSequence()
       .mapNotNull { it.getMergedLoot() }
       .filter { !it.isEmpty() }
       .sortedBy { it.name }
-      .onEach { logger.info("Processing loot statistics page of creature: ${it.name}") }
+      .onEach { logger.debug("Processing loot statistics page of creature: ${it.name}") }
       .flatMap { loot ->
         getCreature(loot.name)
           ?.let { creature -> loot.loot?.mapNotNull { addLootItemsToLootList(creature, it) } }
@@ -33,6 +33,23 @@ class LootStatisticsService(
           }
       }
       .toList()
+
+    return mergeCreatures(creatures)
+  }
+
+  private fun mergeCreatures(creaturesToUpdate: List<Creature>): Map<String, Creature> {
+    val result = HashMap<String, Creature>()
+
+    creaturesToUpdate.forEach { creature ->
+      if (result.containsKey(creature.name).not()) {
+        // creature not already in creaturePages cache, add it
+        result[creature.name] = creature
+      } else {
+        // creature already present in creaturePages cache, get the existing creature and add the new loot item
+        result[creature.name] = result[creature.name] + creature
+      }
+    }
+    return result
   }
 
   private fun addLootItemsToLootList(creature: Creature, lootStatisticsItem: LootStatisticsItem): Creature? {
@@ -98,7 +115,20 @@ class LootStatisticsService(
   }
 
   private fun getCreature(creatureName: String): Creature? {
+    return getCreatures().firstOrNull { it.name.equals(creatureName, ignoreCase = true) }
+  }
+
+  private fun getSingleCreature(creatureName: String): Creature? {
     return creatureRepository.getCreature(creatureName)
+  }
+
+  private fun getCreatures(): List<Creature> {
+    return try {
+      creatureRepository.getCreatures()
+    } catch (e: Exception) {
+      logger.error("Failed to get a list of creatures")
+      emptyList()
+    }
   }
 
   companion object {
@@ -135,4 +165,9 @@ class LootStatisticsService(
       "Secret Instruction",
     )
   }
+}
+
+private operator fun Creature?.plus(newCreature: Creature): Creature {
+  val newLootList = (this?.loot?.toSet()?.plus(newCreature.loot?.toSet() ?: emptySet()))?.toList() ?: emptyList()
+  return this?.copy(loot = newLootList.toMutableList()) ?: newCreature
 }

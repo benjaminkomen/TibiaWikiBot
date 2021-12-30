@@ -22,12 +22,12 @@ object Main {
     saveCreatureArticles(creaturesToUpdate)
   }
 
-  private fun saveCreatureArticles(creatures: List<Creature>) {
+  private fun saveCreatureArticles(creatures: Map<String, Creature>) {
     logger.info("If debug mode is disabled, ${creatures.size} creature articles are being edited NOW.")
     creatures
       .takeIf { DEBUG_MODE.not() }
       ?.forEach {
-        creatureRepository.updateCreature(it, "[bot] adding missing item(s) to loot list.")
+        creatureRepository.updateCreature(it.value, "[bot] adding missing item(s) to loot list.")
         pauseForABit()
       }
   }

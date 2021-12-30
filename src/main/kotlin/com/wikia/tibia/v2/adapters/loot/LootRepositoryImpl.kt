@@ -36,7 +36,7 @@ class LootRepositoryImpl : LootRepository {
   }
 
   override fun getLoot(name: String): LootWrapper {
-    logger.info("Getting loot page ${name}..")
+    logger.info("Getting loot page $name..")
     return client.getLoot(name).execute()
       .takeIf { it.isSuccessful }?.body()
       ?: run {

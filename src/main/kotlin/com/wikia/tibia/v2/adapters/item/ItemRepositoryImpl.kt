@@ -72,7 +72,7 @@ class ItemRepositoryImpl : ItemRepository {
 
   private fun getItemInternal(name: String): TibiaObject? {
     return try {
-      logger.info("Getting item ${name}..")
+      logger.info("Getting item $name..")
       val response = client.getItem(name).execute()
       if (response.isSuccessful) {
         response.body()

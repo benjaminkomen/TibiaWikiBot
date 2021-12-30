@@ -14,9 +14,9 @@ class CreaturesService(
 ) {
 
   fun getItemsWithUpdatedLootFromCreaturesPage(): Map<String, TibiaObject> {
-    logger.info("Starting to check all loot statistics pages for new loot information and adding to creature's loot lists.")
+    logger.info("Starting to check all creature pages for new loot information and adding to item's droppedBy lists.")
 
-    val items: List<TibiaObject> = getCreatures()
+    val items = getCreatures()
       .asSequence()
       .sortedBy { it.name }
       .filter { it.isActive(it.status) }
@@ -89,7 +89,7 @@ class CreaturesService(
   private fun getItem(itemName: String): TibiaObject? {
     return getItems().firstOrNull { it.name.equals(itemName, ignoreCase = true) }
       ?: run {
-        logger.error("Could not find item with name '${itemName}' in collection of items.")
+        logger.error("Could not find item with name '$itemName' in collection of items.")
         null
       }
   }
@@ -97,7 +97,7 @@ class CreaturesService(
   private fun getSingleItem(itemName: String): TibiaObject? {
     return itemRepository.getItem(itemName)
       ?: run {
-        logger.error("Could not find item with name '${itemName}' in collection of items.")
+        logger.error("Could not find item with name '$itemName' in collection of items.")
         null
       }
   }

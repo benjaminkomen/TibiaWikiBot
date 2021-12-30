@@ -2,10 +2,12 @@ package com.wikia.tibia.v2
 
 import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.objects.TibiaObject
+import com.wikia.tibia.objects.plus
 import com.wikia.tibia.utils.pauseForABit
 import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
 import com.wikia.tibia.v2.adapters.item.ItemRepositoryImpl
 import com.wikia.tibia.v2.domain.CreaturesService
+import com.wikia.tibia.v2.domain.ItemsService
 import com.wikia.tibia.v2.domain.LootStatisticsService
 import org.slf4j.LoggerFactory
 
@@ -25,7 +27,10 @@ object Main {
     val creaturesService = CreaturesService(creatureRepository = creatureRepository, itemRepository = itemRepository)
     val itemsToUpdate = creaturesService.getItemsWithUpdatedLootFromCreaturesPage()
 
-    saveCreatureArticles(creaturesToUpdate)
+    val itemsService = ItemsService(creatureRepository = creatureRepository, itemRepository = itemRepository)
+    val creaturesToUpdate2 = itemsService.getCreaturesWithUpdatedDroppedByFromItemPage()
+
+    saveCreatureArticles(creaturesToUpdate + creaturesToUpdate2)
     saveItemArticles(itemsToUpdate)
   }
 
@@ -48,4 +53,22 @@ object Main {
         pauseForABit()
       }
   }
+}
+
+private operator fun Map<String, Creature>.plus(other: Map<String, Creature>): Map<String, Creature> {
+  val result = LinkedHashMap<String, Creature>(this.size + other.size)
+  result.putAll(this)
+  other.forEach { (creatureName, creature) ->
+    val existing = result[creatureName]
+
+    if (existing == null) {
+      // map entry does not exist yet, simply add the other map entry
+      result[creatureName] = creature
+    } else {
+      // map entry already exists, merge current and other map entry
+      result[creatureName] = existing + creature
+    }
+  }
+
+  return result
 }

@@ -4,6 +4,7 @@ import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.objects.LootItem
 import com.wikia.tibia.objects.LootStatisticsItem
 import com.wikia.tibia.objects.LootWrapper
+import com.wikia.tibia.objects.plus
 import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
 import com.wikia.tibia.v2.adapters.loot.LootRepositoryImpl
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
@@ -165,9 +166,4 @@ class LootStatisticsService(
       "Secret Instruction",
     )
   }
-}
-
-private operator fun Creature?.plus(newCreature: Creature): Creature {
-  val newLootList = (this?.loot?.toSet()?.plus(newCreature.loot?.toSet() ?: emptySet()))?.toList() ?: emptyList()
-  return this?.copy(loot = newLootList.toMutableList()) ?: newCreature
 }

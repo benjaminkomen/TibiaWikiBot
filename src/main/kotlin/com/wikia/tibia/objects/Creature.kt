@@ -187,3 +187,8 @@ data class Creature(
     private val logger = LoggerFactory.getLogger(Creature::class.java)
   }
 }
+
+operator fun Creature?.plus(newCreature: Creature): Creature {
+  val newLootList = (this?.loot?.toSet()?.plus(newCreature.loot?.toSet() ?: emptySet()))?.toList() ?: emptyList()
+  return this?.copy(loot = newLootList.toMutableList()) ?: newCreature
+}

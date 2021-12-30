@@ -72,7 +72,7 @@ class CreatureRepositoryImpl : CreatureRepository {
 
   private fun getCreatureInternal(name: String): Creature? {
     return try {
-      logger.info("Getting creature ${name}..")
+      logger.info("Getting creature $name..")
       val response = client.getCreature(name).execute()
       if (response.isSuccessful) {
         response.body()

@@ -3,6 +3,7 @@ package com.wikia.tibia.v2
 import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.utils.pauseForABit
 import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
+import com.wikia.tibia.v2.adapters.item.ItemRepositoryImpl
 import com.wikia.tibia.v2.domain.LootStatisticsService
 import org.slf4j.LoggerFactory
 
@@ -11,12 +12,12 @@ object Main {
   private val logger = LoggerFactory.getLogger("Main")
   private const val DEBUG_MODE = true
   private val creatureRepository by lazy { CreatureRepositoryImpl() } // define once for reuse
+  private val itemRepository by lazy { ItemRepositoryImpl() } // define once for reuse
 
   @JvmStatic
   fun main(args: Array<String>) {
     logger.info("Starting application")
     val lootStatisticsService = LootStatisticsService(creatureRepository = creatureRepository)
-
     val creaturesToUpdate = lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()
 
     saveCreatureArticles(creaturesToUpdate)

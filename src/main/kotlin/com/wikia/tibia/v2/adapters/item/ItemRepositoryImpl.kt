@@ -11,16 +11,16 @@ import java.util.concurrent.TimeUnit
 class ItemRepositoryImpl : ItemRepository {
 
   private val client by lazy { TibiaWikiApiClientFactory.createClient() }
+  private val itemsCache: LoadingCache<String, List<TibiaObject>?>
+  private val itemCache: LoadingCache<String, TibiaObject?>
 
-  private val itemsCache: LoadingCache<String, List<TibiaObject>?> by lazy {
-    Caffeine.newBuilder()
+  init {
+    itemsCache = Caffeine.newBuilder()
       .expireAfterWrite(15, TimeUnit.MINUTES)
       .maximumSize(1)
       .build(this::getItemsInternal)
-  }
 
-  private val itemCache: LoadingCache<String, TibiaObject?> by lazy {
-    Caffeine.newBuilder()
+    itemCache = Caffeine.newBuilder()
       .expireAfterWrite(15, TimeUnit.MINUTES)
       .maximumSize(10_000)
       .build(this::getItemInternal)
@@ -31,6 +31,7 @@ class ItemRepositoryImpl : ItemRepository {
   }
 
   override fun getItemNames(): List<String> {
+    logger.info("Getting all item names..")
     return client.getItemNames().execute()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
@@ -55,6 +56,7 @@ class ItemRepositoryImpl : ItemRepository {
 
   private fun getItemsInternal(key: String): List<TibiaObject> {
     return try {
+      logger.info("Getting all items..")
       val response = client.getItems().execute()
       if (response.isSuccessful) {
         response.body() ?: emptyList()
@@ -70,6 +72,7 @@ class ItemRepositoryImpl : ItemRepository {
 
   private fun getItemInternal(name: String): TibiaObject? {
     return try {
+      logger.info("Getting item ${name}..")
       val response = client.getItem(name).execute()
       if (response.isSuccessful) {
         response.body()

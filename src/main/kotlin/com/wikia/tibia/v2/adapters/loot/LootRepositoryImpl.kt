@@ -11,9 +11,10 @@ import java.util.concurrent.TimeUnit
 class LootRepositoryImpl : LootRepository {
 
   private val client by lazy { TibiaWikiApiClientFactory.createClient() }
+  private val lootPagesCache: LoadingCache<String, List<LootWrapper>?>
 
-  private val lootPagesCache: LoadingCache<String, List<LootWrapper>?> by lazy {
-    Caffeine.newBuilder()
+  init {
+    lootPagesCache = Caffeine.newBuilder()
       .expireAfterWrite(15, TimeUnit.MINUTES)
       .maximumSize(1)
       .build(this::getLootPagesInternal)
@@ -24,6 +25,7 @@ class LootRepositoryImpl : LootRepository {
   }
 
   override fun getLootNames(): List<String> {
+    logger.info("Getting all loot page names..")
     return client.getLootListNames().execute()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
@@ -34,6 +36,7 @@ class LootRepositoryImpl : LootRepository {
   }
 
   override fun getLoot(name: String): LootWrapper {
+    logger.info("Getting loot page ${name}..")
     return client.getLoot(name).execute()
       .takeIf { it.isSuccessful }?.body()
       ?: run {
@@ -43,6 +46,7 @@ class LootRepositoryImpl : LootRepository {
   }
 
   private fun getLootPagesInternal(key: String): List<LootWrapper> {
+    logger.info("Getting all loot pages..")
     return client.getLootList().execute()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }

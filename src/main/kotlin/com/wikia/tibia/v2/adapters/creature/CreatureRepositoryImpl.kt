@@ -11,16 +11,16 @@ import java.util.concurrent.TimeUnit
 class CreatureRepositoryImpl : CreatureRepository {
 
   private val client by lazy { TibiaWikiApiClientFactory.createClient() }
+  private val creaturesCache: LoadingCache<String, List<Creature>?>
+  private val creatureCache: LoadingCache<String, Creature?>
 
-  private val creaturesCache: LoadingCache<String, List<Creature>?> by lazy {
-    Caffeine.newBuilder()
+  init {
+    creaturesCache = Caffeine.newBuilder()
       .expireAfterWrite(15, TimeUnit.MINUTES)
       .maximumSize(1)
       .build(this::getCreaturesInternal)
-  }
 
-  private val creatureCache: LoadingCache<String, Creature?> by lazy {
-    Caffeine.newBuilder()
+    creatureCache = Caffeine.newBuilder()
       .expireAfterWrite(15, TimeUnit.MINUTES)
       .maximumSize(10_000)
       .build(this::getCreatureInternal)
@@ -31,6 +31,7 @@ class CreatureRepositoryImpl : CreatureRepository {
   }
 
   override fun getCreatureNames(): List<String> {
+    logger.info("Getting all creature names..")
     return client.getCreatureNames().execute()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
@@ -55,6 +56,7 @@ class CreatureRepositoryImpl : CreatureRepository {
 
   private fun getCreaturesInternal(key: String): List<Creature> {
     return try {
+      logger.info("Getting all creatures..")
       val response = client.getCreatures().execute()
       if (response.isSuccessful) {
         response.body() ?: emptyList()
@@ -70,6 +72,7 @@ class CreatureRepositoryImpl : CreatureRepository {
 
   private fun getCreatureInternal(name: String): Creature? {
     return try {
+      logger.info("Getting creature ${name}..")
       val response = client.getCreature(name).execute()
       if (response.isSuccessful) {
         response.body()

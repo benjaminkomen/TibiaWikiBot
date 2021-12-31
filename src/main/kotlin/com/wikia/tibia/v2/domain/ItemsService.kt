@@ -8,9 +8,11 @@ import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
 import com.wikia.tibia.v2.adapters.item.ItemRepositoryImpl
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
 import com.wikia.tibia.v2.domain.item.ItemRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 
 class ItemsService(
@@ -19,7 +21,7 @@ class ItemsService(
 ) {
 
   suspend fun getCreaturesWithUpdatedDroppedByFromItemPage(): Map<String, Creature> {
-    logger.info("Starting to check all item pages for new loot information and adding to creature's loot lists in thread: ${Thread.currentThread().name}.")
+    logger.info("Starting to check all item pages for new loot information and adding to creature's loot lists.")
 
     return coroutineScope {
       val creatures = getItems()
@@ -32,7 +34,9 @@ class ItemsService(
           item.droppedby
             ?.map { creatureName ->
               async {
-                getCreature(creatureName)?.let { addItemToLootTableOfCreature(item, it) }
+                withContext(Dispatchers.IO) {
+                  getCreature(creatureName)?.let { addItemToLootTableOfCreature(item, it) }
+                }
               }
             }
             ?: emptyList()
@@ -47,7 +51,7 @@ class ItemsService(
     return creature.loot
       ?.takeIf { it.contains(LootItem.fromName(item.name)).not() && itemShouldBeAdded(creature.name, item.name) }
       ?.let {
-        logger.info("Adding item '${item.name}' to loot table of creature '${creature.name}' in thread: ${Thread.currentThread().name}.")
+        logger.info("Adding item '${item.name}' to loot table of creature '${creature.name}'.")
         creature.copy(loot = (creature.loot + listOf(LootItem.fromName(item.name))).toMutableList())
       }
   }
@@ -102,7 +106,7 @@ class ItemsService(
     return try {
       itemRepository.getItems()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of items in thread: ${Thread.currentThread().name}")
+      logger.error("Failed to get a list of items")
       emptyList()
     }
   }
@@ -115,7 +119,7 @@ class ItemsService(
     return try {
       creatureRepository.getCreatures()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of creatures in thread: ${Thread.currentThread().name}")
+      logger.error("Failed to get a list of creatures")
       emptyList()
     }
   }

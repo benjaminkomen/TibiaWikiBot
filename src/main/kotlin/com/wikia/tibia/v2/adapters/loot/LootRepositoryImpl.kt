@@ -32,7 +32,7 @@ class LootRepositoryImpl : LootRepository {
   }
 
   override suspend fun getLootNames(): List<String> {
-    logger.info("Getting all loot page names in thread: ${Thread.currentThread().name}")
+    logger.info("Getting all loot page names")
     return client.getLootListNames()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
@@ -43,7 +43,7 @@ class LootRepositoryImpl : LootRepository {
   }
 
   override suspend fun getLoot(name: String): LootWrapper {
-    logger.info("Getting loot page $name in thread: ${Thread.currentThread().name}")
+    logger.info("Getting loot page $name")
     return client.getLoot(name)
       .takeIf { it.isSuccessful }?.body()
       ?: run {
@@ -53,7 +53,7 @@ class LootRepositoryImpl : LootRepository {
   }
 
   private suspend fun getLootPagesInternal(key: String): List<LootWrapper> {
-    logger.info("Getting all loot pages in thread: ${Thread.currentThread().name}")
+    logger.info("Getting all loot pages")
     return client.getLootList()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }

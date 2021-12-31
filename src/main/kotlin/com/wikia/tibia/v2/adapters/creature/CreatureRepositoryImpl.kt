@@ -42,7 +42,7 @@ class CreatureRepositoryImpl : CreatureRepository {
   }
 
   override suspend fun getCreatureNames(): List<String> {
-    logger.info("Getting all creature names in thread: ${Thread.currentThread().name}")
+    logger.info("Getting all creature names")
     return client.getCreatureNames()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
@@ -67,7 +67,7 @@ class CreatureRepositoryImpl : CreatureRepository {
 
   private suspend fun getCreaturesInternal(key: String): List<Creature> {
     return try {
-      logger.info("Getting all creatures in thread: ${Thread.currentThread().name}")
+      logger.info("Getting all creatures")
       val response = client.getCreatures()
       if (response.isSuccessful) {
         response.body() ?: emptyList()
@@ -83,7 +83,7 @@ class CreatureRepositoryImpl : CreatureRepository {
 
   private suspend fun getCreatureInternal(name: String): Creature? {
     return try {
-      logger.info("Getting creature $name in thread: ${Thread.currentThread().name}")
+      logger.info("Getting creature $name")
       val response = client.getCreature(name)
       if (response.isSuccessful) {
         response.body()

@@ -9,9 +9,11 @@ import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
 import com.wikia.tibia.v2.adapters.loot.LootRepositoryImpl
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
 import com.wikia.tibia.v2.domain.loot.LootRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 
 class LootStatisticsService(
@@ -20,7 +22,7 @@ class LootStatisticsService(
 ) {
 
   suspend fun getCreaturesWithUpdatedLootFromLootStatisticsPage(): Map<String, Creature> {
-    logger.info("Starting to check all loot statistics pages for new loot information and adding to creature's loot lists in thread: ${Thread.currentThread().name}.")
+    logger.info("Starting to check all loot statistics pages for new loot information and adding to creature's loot lists.")
 
     return coroutineScope {
       val creatures = getLootList()
@@ -31,14 +33,16 @@ class LootStatisticsService(
         .onEach { logger.debug("Processing loot statistics page of creature: ${it.name}") }
         .map { loot ->
           async {
-            getCreature(loot.name)
-              ?.let { creature ->
-                loot.loot?.mapNotNull { addLootItemsToLootList(creature, it) }
-              }
-              ?: run {
-                logger.error("Could not find creature with pageName '${loot.pageName}' and name '${loot.name}' in collection of creatures in thread: ${Thread.currentThread().name}.")
-                emptyList()
-              }
+            withContext(Dispatchers.IO) {
+              getCreature(loot.name)
+                ?.let { creature ->
+                  loot.loot?.mapNotNull { addLootItemsToLootList(creature, it) }
+                }
+                ?: run {
+                  logger.error("Could not find creature with pageName '${loot.pageName}' and name '${loot.name}' in collection of creatures.")
+                  emptyList()
+                }
+            }
           }
         }
         .toList()
@@ -67,7 +71,7 @@ class LootStatisticsService(
       ?.any { it.itemName == replaceSomeNames(lootStatisticsItem.itemName) }
       ?.takeIf { lootStatisticsItemExistsInCreatureLootList -> lootStatisticsItemExistsInCreatureLootList.not() && shouldAddLootItemToCreature(lootStatisticsItem, creature) }
       ?.let {
-        logger.info("Adding item '${lootStatisticsItem.itemName}' to loot list of creature '${creature.name}' in thread: ${Thread.currentThread().name}.")
+        logger.info("Adding item '${lootStatisticsItem.itemName}' to loot list of creature '${creature.name}'.")
         val newLootItem = LootItem(
           itemName = lootStatisticsItem.itemName,
           amount = null,
@@ -119,7 +123,7 @@ class LootStatisticsService(
     return try {
       lootRepository.getLootList()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of lootPages in thread: ${Thread.currentThread().name}")
+      logger.error("Failed to get a list of lootPages")
       emptyList()
     }
   }
@@ -136,7 +140,7 @@ class LootStatisticsService(
     return try {
       creatureRepository.getCreatures()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of creatures in thread: ${Thread.currentThread().name}")
+      logger.error("Failed to get a list of creatures")
       emptyList()
     }
   }

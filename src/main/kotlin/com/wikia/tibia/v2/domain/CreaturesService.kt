@@ -7,9 +7,11 @@ import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
 import com.wikia.tibia.v2.adapters.item.ItemRepositoryImpl
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
 import com.wikia.tibia.v2.domain.item.ItemRepository
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.withContext
 import org.slf4j.LoggerFactory
 
 class CreaturesService(
@@ -18,7 +20,7 @@ class CreaturesService(
 ) {
 
   suspend fun getItemsWithUpdatedLootFromCreaturesPage(): Map<String, TibiaObject> {
-    logger.info("Starting to check all creature pages for new loot information and adding to item's droppedBy lists in thread: ${Thread.currentThread().name}.")
+    logger.info("Starting to check all creature pages for new loot information and adding to item's droppedBy lists.")
 
     return coroutineScope {
       val items = getCreatures()
@@ -31,7 +33,9 @@ class CreaturesService(
           creature.loot
             ?.map { lootItem ->
               async {
-                getItem(lootItem.itemName)?.let { addCreatureToDroppedByListOfItem(creature, it) }
+                withContext(Dispatchers.IO) {
+                  getItem(lootItem.itemName)?.let { addCreatureToDroppedByListOfItem(creature, it) }
+                }
               }
             }
             ?: emptyList()
@@ -65,7 +69,7 @@ class CreaturesService(
     return item.droppedby
       ?.takeIf { it.contains(creature.name).not() && itemShouldBeAdded(creature.name, item.name) }
       ?.let {
-        logger.info("Adding creature '${creature.name}' to droppedby list of item '${item.name}' in thread: ${Thread.currentThread().name}.")
+        logger.info("Adding creature '${creature.name}' to droppedby list of item '${item.name}'.")
 
         val newDroppedByList = (it + listOf(creature.name)).sorted().toMutableList()
         item.copy(droppedby = newDroppedByList)
@@ -97,7 +101,7 @@ class CreaturesService(
   private suspend fun getItem(itemName: String): TibiaObject? {
     return getItems().firstOrNull { it.name.equals(itemName, ignoreCase = true) }
       ?: run {
-        logger.error("Could not find item with name '$itemName' in collection of items in thread: ${Thread.currentThread().name}.")
+        logger.error("Could not find item with name '$itemName' in collection of items.")
         null
       }
   }
@@ -114,7 +118,7 @@ class CreaturesService(
     return try {
       itemRepository.getItems()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of items in thread: ${Thread.currentThread().name}")
+      logger.error("Failed to get a list of items")
       emptyList()
     }
   }

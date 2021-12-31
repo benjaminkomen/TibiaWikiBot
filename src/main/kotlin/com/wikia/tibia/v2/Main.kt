@@ -24,7 +24,7 @@ object Main {
   @JvmStatic
   fun main(args: Array<String>) {
     runBlocking {
-      logger.info("Starting application in thread: ${Thread.currentThread().name}")
+      logger.info("Starting application")
       coroutineScope {
         val lootStatisticsResult = async {
           val lootStatisticsService = LootStatisticsService(creatureRepository = creatureRepository)
@@ -48,7 +48,7 @@ object Main {
   }
 
   private suspend fun saveCreatureArticles(creatures: Map<String, Creature>) {
-    logger.info("If debug mode is disabled, ${creatures.size} creature articles are being edited NOW in thread: ${Thread.currentThread().name}.")
+    logger.info("If debug mode is disabled, ${creatures.size} creature articles are being edited NOW.")
     creatures
       .takeIf { DEBUG_MODE.not() }
       ?.forEach {
@@ -58,7 +58,7 @@ object Main {
   }
 
   private suspend fun saveItemArticles(items: Map<String, TibiaObject>) {
-    logger.info("If debug mode is disabled, ${items.size} item articles are being edited NOW in thread: ${Thread.currentThread().name}.")
+    logger.info("If debug mode is disabled, ${items.size} item articles are being edited NOW.")
     items
       .takeIf { DEBUG_MODE.not() }
       ?.forEach {

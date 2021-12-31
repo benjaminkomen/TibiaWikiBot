@@ -42,7 +42,7 @@ class ItemRepositoryImpl : ItemRepository {
   }
 
   override suspend fun getItemNames(): List<String> {
-    logger.info("Getting all item names in thread: ${Thread.currentThread().name}")
+    logger.info("Getting all item names")
     return client.getItemNames()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
@@ -67,7 +67,7 @@ class ItemRepositoryImpl : ItemRepository {
 
   private suspend fun getItemsInternal(key: String): List<TibiaObject> {
     return try {
-      logger.info("Getting all items in thread: ${Thread.currentThread().name}")
+      logger.info("Getting all items")
       val response = client.getItems()
       if (response.isSuccessful) {
         response.body() ?: emptyList()
@@ -83,7 +83,7 @@ class ItemRepositoryImpl : ItemRepository {
 
   private suspend fun getItemInternal(name: String): TibiaObject? {
     return try {
-      logger.info("Getting item $name in thread: ${Thread.currentThread().name}")
+      logger.info("Getting item $name")
       val response = client.getItem(name)
       if (response.isSuccessful) {
         response.body()

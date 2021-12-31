@@ -18,8 +18,8 @@ object TibiaWikiApiClientFactory {
 
   fun createClient(): TibiaWikiApiClient {
     return Retrofit.Builder()
-//      .baseUrl("http://localhost:8080")
-      .baseUrl("https://tibiawiki.dev")
+      .baseUrl("http://localhost:8080")
+//      .baseUrl("https://tibiawiki.dev")
       .client(defaultOkHttpClient)
       .addConverterFactory(JacksonConverterFactory.create(defaultObjectMapper))
       .build()

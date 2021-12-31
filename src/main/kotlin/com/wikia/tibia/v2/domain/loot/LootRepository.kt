@@ -4,9 +4,9 @@ import com.wikia.tibia.objects.LootWrapper
 
 interface LootRepository {
 
-  fun getLootList(): List<LootWrapper>
+  suspend fun getLootList(): List<LootWrapper>
 
-  fun getLootNames(): List<String>
+  suspend fun getLootNames(): List<String>
 
-  fun getLoot(name: String): LootWrapper
+  suspend fun getLoot(name: String): LootWrapper
 }

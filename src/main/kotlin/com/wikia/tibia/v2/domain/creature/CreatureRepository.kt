@@ -4,11 +4,11 @@ import com.wikia.tibia.objects.Creature
 
 interface CreatureRepository {
 
-  fun getCreatures(): List<Creature>
+  suspend fun getCreatures(): List<Creature>
 
-  fun getCreatureNames(): List<String>
+  suspend fun getCreatureNames(): List<String>
 
-  fun getCreature(name: String): Creature?
+  suspend fun getCreature(name: String): Creature?
 
-  fun updateCreature(creature: Creature, editSummary: String? = ""): Creature
+  suspend fun updateCreature(creature: Creature, editSummary: String? = ""): Creature
 }

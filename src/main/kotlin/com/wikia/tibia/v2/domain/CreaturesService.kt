@@ -2,10 +2,14 @@ package com.wikia.tibia.v2.domain
 
 import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.objects.TibiaObject
+import com.wikia.tibia.objects.plus
 import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
 import com.wikia.tibia.v2.adapters.item.ItemRepositoryImpl
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
 import com.wikia.tibia.v2.domain.item.ItemRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import org.slf4j.LoggerFactory
 
 class CreaturesService(
@@ -13,31 +17,35 @@ class CreaturesService(
   val itemRepository: ItemRepository = ItemRepositoryImpl(),
 ) {
 
-  fun getItemsWithUpdatedLootFromCreaturesPage(): Map<String, TibiaObject> {
-    logger.info("Starting to check all creature pages for new loot information and adding to item's droppedBy lists.")
+  suspend fun getItemsWithUpdatedLootFromCreaturesPage(): Map<String, TibiaObject> {
+    logger.info("Starting to check all creature pages for new loot information and adding to item's droppedBy lists in thread: ${Thread.currentThread().name}.")
 
-    val items = getCreatures()
-      .asSequence()
-      .sortedBy { it.name }
-      .filter { it.isActive(it.status) }
-      .filter { it.loot != null && it.loot.isNotEmpty() }
-      .onEach { logger.debug("Processing creature: ${it.name}") }
-      .flatMap { creature ->
-        creature.loot
-          ?.mapNotNull { lootItem ->
-            getItem(lootItem.itemName)?.let { addCreatureToDroppedByListOfItem(creature, it) }
-          }
-          ?: emptyList()
-      }
-      .toList()
+    return coroutineScope {
+      val items = getCreatures()
+        .asSequence()
+        .sortedBy { it.name }
+        .filter { it.isActive(it.status) }
+        .filter { it.loot != null && it.loot.isNotEmpty() }
+        .onEach { logger.debug("Processing creature: ${it.name}") }
+        .flatMap { creature ->
+          creature.loot
+            ?.map { lootItem ->
+              async {
+                getItem(lootItem.itemName)?.let { addCreatureToDroppedByListOfItem(creature, it) }
+              }
+            }
+            ?: emptyList()
+        }
+        .toList()
 
-    return mergeItems(items)
+      mergeItems(items.awaitAll())
+    }
   }
 
-  private fun mergeItems(items: List<TibiaObject>): Map<String, TibiaObject> {
+  private fun mergeItems(items: List<TibiaObject?>): Map<String, TibiaObject> {
     val result = HashMap<String, TibiaObject>()
 
-    items.forEach { item ->
+    items.filterNotNull().forEach { item ->
       if (result.containsKey(item.name).not()) {
         // item not already in result set, add it
         result[item.name] = item
@@ -57,7 +65,7 @@ class CreaturesService(
     return item.droppedby
       ?.takeIf { it.contains(creature.name).not() && itemShouldBeAdded(creature.name, item.name) }
       ?.let {
-        logger.info("Adding creature '${creature.name}' to droppedby list of item '${item.name}'.")
+        logger.info("Adding creature '${creature.name}' to droppedby list of item '${item.name}' in thread: ${Thread.currentThread().name}.")
 
         val newDroppedByList = (it + listOf(creature.name)).sorted().toMutableList()
         item.copy(droppedby = newDroppedByList)
@@ -76,7 +84,7 @@ class CreaturesService(
     }
   }
 
-  private fun getCreatures(): List<Creature> {
+  private suspend fun getCreatures(): List<Creature> {
     return try {
       creatureRepository.getCreatures()
     } catch (e: Exception) {
@@ -86,27 +94,27 @@ class CreaturesService(
   }
 
   // TODO check WikiObject pagename or Item.Actualname, not Item.Name
-  private fun getItem(itemName: String): TibiaObject? {
+  private suspend fun getItem(itemName: String): TibiaObject? {
     return getItems().firstOrNull { it.name.equals(itemName, ignoreCase = true) }
       ?: run {
-        logger.error("Could not find item with name '$itemName' in collection of items.")
+        logger.error("Could not find item with name '$itemName' in collection of items in thread: ${Thread.currentThread().name}.")
         null
       }
   }
 
-  private fun getSingleItem(itemName: String): TibiaObject? {
-    return itemRepository.getItem(itemName)
-      ?: run {
-        logger.error("Could not find item with name '$itemName' in collection of items.")
-        null
-      }
-  }
+//  private suspend fun getSingleItem(itemName: String): TibiaObject? {
+//    return itemRepository.getItem(itemName)
+//      ?: run {
+//        logger.error("Could not find item with name '$itemName' in collection of items.")
+//        null
+//      }
+//  }
 
-  private fun getItems(): List<TibiaObject> {
+  private suspend fun getItems(): List<TibiaObject> {
     return try {
       itemRepository.getItems()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of items")
+      logger.error("Failed to get a list of items in thread: ${Thread.currentThread().name}")
       emptyList()
     }
   }
@@ -126,9 +134,4 @@ class CreaturesService(
     )
     private val NON_EVENT_CREATURES_DROPPING_SNOWBALLS = listOf("Yeti", "Grynch Clan Goblin")
   }
-}
-
-private operator fun TibiaObject?.plus(item: TibiaObject): TibiaObject {
-  val newDroppedByList = (this?.droppedby?.toSet()?.plus(item.droppedby?.toSet() ?: emptySet()))?.toList() ?: emptyList()
-  return this?.copy(droppedby = newDroppedByList.toMutableList()) ?: item
 }

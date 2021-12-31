@@ -1,32 +1,39 @@
 package com.wikia.tibia.v2.adapters.loot
 
+import com.github.benmanes.caffeine.cache.AsyncLoadingCache
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.github.benmanes.caffeine.cache.LoadingCache
 import com.wikia.tibia.objects.LootWrapper
 import com.wikia.tibia.v2.adapters.tibiawiki.TibiaWikiApiClientFactory
 import com.wikia.tibia.v2.domain.loot.LootRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.future.future
 import org.slf4j.LoggerFactory
 import java.util.concurrent.TimeUnit
 
 class LootRepositoryImpl : LootRepository {
 
   private val client by lazy { TibiaWikiApiClientFactory.createClient() }
-  private val lootPagesCache: LoadingCache<String, List<LootWrapper>?>
+  private val lootPagesCache: AsyncLoadingCache<String, List<LootWrapper>?>
 
   init {
     lootPagesCache = Caffeine.newBuilder()
       .expireAfterWrite(15, TimeUnit.MINUTES)
       .maximumSize(1)
-      .build(this::getLootPagesInternal)
+      .buildAsync { key, executor ->
+        CoroutineScope(executor.asCoroutineDispatcher()).future {
+          getLootPagesInternal(key)
+        }
+      }
   }
 
-  override fun getLootList(): List<LootWrapper> {
-    return lootPagesCache.get("any") ?: emptyList()
+  override suspend fun getLootList(): List<LootWrapper> {
+    return lootPagesCache.get("any").join() ?: emptyList()
   }
 
-  override fun getLootNames(): List<String> {
-    logger.info("Getting all loot page names..")
-    return client.getLootListNames().execute()
+  override suspend fun getLootNames(): List<String> {
+    logger.info("Getting all loot page names in thread: ${Thread.currentThread().name}")
+    return client.getLootListNames()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
       ?: run {
@@ -35,9 +42,9 @@ class LootRepositoryImpl : LootRepository {
       }
   }
 
-  override fun getLoot(name: String): LootWrapper {
-    logger.info("Getting loot page $name..")
-    return client.getLoot(name).execute()
+  override suspend fun getLoot(name: String): LootWrapper {
+    logger.info("Getting loot page $name in thread: ${Thread.currentThread().name}")
+    return client.getLoot(name)
       .takeIf { it.isSuccessful }?.body()
       ?: run {
         logger.error("Could not get loot $name")
@@ -45,9 +52,9 @@ class LootRepositoryImpl : LootRepository {
       }
   }
 
-  private fun getLootPagesInternal(key: String): List<LootWrapper> {
-    logger.info("Getting all loot pages..")
-    return client.getLootList().execute()
+  private suspend fun getLootPagesInternal(key: String): List<LootWrapper> {
+    logger.info("Getting all loot pages in thread: ${Thread.currentThread().name}")
+    return client.getLootList()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
       ?: run {

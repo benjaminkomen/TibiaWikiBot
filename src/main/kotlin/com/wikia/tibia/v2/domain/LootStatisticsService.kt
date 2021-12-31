@@ -9,6 +9,9 @@ import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
 import com.wikia.tibia.v2.adapters.loot.LootRepositoryImpl
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
 import com.wikia.tibia.v2.domain.loot.LootRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import org.slf4j.LoggerFactory
 
 class LootStatisticsService(
@@ -16,26 +19,32 @@ class LootStatisticsService(
   private val lootRepository: LootRepository = LootRepositoryImpl(),
 ) {
 
-  fun getCreaturesWithUpdatedLootFromLootStatisticsPage(): Map<String, Creature> {
-    logger.info("Starting to check all loot statistics pages for new loot information and adding to creature's loot lists.")
+  suspend fun getCreaturesWithUpdatedLootFromLootStatisticsPage(): Map<String, Creature> {
+    logger.info("Starting to check all loot statistics pages for new loot information and adding to creature's loot lists in thread: ${Thread.currentThread().name}.")
 
-    val creatures = getLootList()
-      .asSequence()
-      .mapNotNull { it.getMergedLoot() }
-      .filter { !it.isEmpty() }
-      .sortedBy { it.name }
-      .onEach { logger.debug("Processing loot statistics page of creature: ${it.name}") }
-      .flatMap { loot ->
-        getCreature(loot.name)
-          ?.let { creature -> loot.loot?.mapNotNull { addLootItemsToLootList(creature, it) } }
-          ?: run {
-            logger.error("Could not find creature with pageName '${loot.pageName}' and name '${loot.name}' in collection of creatures.")
-            emptyList()
+    return coroutineScope {
+      val creatures = getLootList()
+        .asSequence()
+        .mapNotNull { it.getMergedLoot() }
+        .filter { !it.isEmpty() }
+        .sortedBy { it.name }
+        .onEach { logger.debug("Processing loot statistics page of creature: ${it.name}") }
+        .map { loot ->
+          async {
+            getCreature(loot.name)
+              ?.let { creature ->
+                loot.loot?.mapNotNull { addLootItemsToLootList(creature, it) }
+              }
+              ?: run {
+                logger.error("Could not find creature with pageName '${loot.pageName}' and name '${loot.name}' in collection of creatures in thread: ${Thread.currentThread().name}.")
+                emptyList()
+              }
           }
-      }
-      .toList()
+        }
+        .toList()
 
-    return mergeCreatures(creatures)
+      mergeCreatures(creatures.awaitAll().flatten())
+    }
   }
 
   private fun mergeCreatures(creaturesToUpdate: List<Creature>): Map<String, Creature> {
@@ -58,7 +67,7 @@ class LootStatisticsService(
       ?.any { it.itemName == replaceSomeNames(lootStatisticsItem.itemName) }
       ?.takeIf { lootStatisticsItemExistsInCreatureLootList -> lootStatisticsItemExistsInCreatureLootList.not() && shouldAddLootItemToCreature(lootStatisticsItem, creature) }
       ?.let {
-        logger.info("Adding item '${lootStatisticsItem.itemName}' to loot list of creature '${creature.name}'.")
+        logger.info("Adding item '${lootStatisticsItem.itemName}' to loot list of creature '${creature.name}' in thread: ${Thread.currentThread().name}.")
         val newLootItem = LootItem(
           itemName = lootStatisticsItem.itemName,
           amount = null,
@@ -106,28 +115,28 @@ class LootStatisticsService(
       }
   }
 
-  private fun getLootList(): List<LootWrapper> {
+  private suspend fun getLootList(): List<LootWrapper> {
     return try {
       lootRepository.getLootList()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of lootPages")
+      logger.error("Failed to get a list of lootPages in thread: ${Thread.currentThread().name}")
       emptyList()
     }
   }
 
-  private fun getCreature(creatureName: String): Creature? {
+  private suspend fun getCreature(creatureName: String): Creature? {
     return getCreatures().firstOrNull { it.name.equals(creatureName, ignoreCase = true) }
   }
 
-  private fun getSingleCreature(creatureName: String): Creature? {
-    return creatureRepository.getCreature(creatureName)
-  }
+//  private suspend fun getSingleCreature(creatureName: String): Creature? {
+//    return creatureRepository.getCreature(creatureName)
+//  }
 
-  private fun getCreatures(): List<Creature> {
+  private suspend fun getCreatures(): List<Creature> {
     return try {
       creatureRepository.getCreatures()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of creatures")
+      logger.error("Failed to get a list of creatures in thread: ${Thread.currentThread().name}")
       emptyList()
     }
   }

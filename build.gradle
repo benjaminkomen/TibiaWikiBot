@@ -26,12 +26,15 @@ ext {
     junitVersion = '5.8.2'
     jacocoVersion = "0.8.7"
     retrofitVersion = "2.9.0"
+    coroutinesVersion = "1.6.0"
 }
 
 dependencies {
     // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}" // unused, but otherwise gives warning
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutinesVersion}"
 
     // Logging
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"

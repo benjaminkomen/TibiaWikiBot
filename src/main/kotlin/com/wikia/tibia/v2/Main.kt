@@ -9,33 +9,46 @@ import com.wikia.tibia.v2.adapters.item.ItemRepositoryImpl
 import com.wikia.tibia.v2.domain.CreaturesService
 import com.wikia.tibia.v2.domain.ItemsService
 import com.wikia.tibia.v2.domain.LootStatisticsService
+import kotlinx.coroutines.async
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.runBlocking
 import org.slf4j.LoggerFactory
 
 object Main {
 
   private val logger = LoggerFactory.getLogger("Main")
-  private const val DEBUG_MODE = true
+  private const val DEBUG_MODE = false
   private val creatureRepository = CreatureRepositoryImpl() // define once for reuse
   private val itemRepository = ItemRepositoryImpl() // define once for reuse
 
   @JvmStatic
   fun main(args: Array<String>) {
-    logger.info("Starting application")
-    val lootStatisticsService = LootStatisticsService(creatureRepository = creatureRepository)
-    val creaturesToUpdate = lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()
+    runBlocking {
+      logger.info("Starting application in thread: ${Thread.currentThread().name}")
+      coroutineScope {
+        val lootStatisticsResult = async {
+          val lootStatisticsService = LootStatisticsService(creatureRepository = creatureRepository)
+          lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()
+        }
 
-    val creaturesService = CreaturesService(creatureRepository = creatureRepository, itemRepository = itemRepository)
-    val itemsToUpdate = creaturesService.getItemsWithUpdatedLootFromCreaturesPage()
+        val creaturesResult = async {
+          val creaturesService = CreaturesService(creatureRepository = creatureRepository, itemRepository = itemRepository)
+          creaturesService.getItemsWithUpdatedLootFromCreaturesPage()
+        }
 
-    val itemsService = ItemsService(creatureRepository = creatureRepository, itemRepository = itemRepository)
-    val creaturesToUpdate2 = itemsService.getCreaturesWithUpdatedDroppedByFromItemPage()
+        val itemsResult = async {
+          val itemsService = ItemsService(creatureRepository = creatureRepository, itemRepository = itemRepository)
+          itemsService.getCreaturesWithUpdatedDroppedByFromItemPage()
+        }
 
-    saveCreatureArticles(creaturesToUpdate + creaturesToUpdate2)
-    saveItemArticles(itemsToUpdate)
+        saveCreatureArticles(lootStatisticsResult.await() + itemsResult.await())
+        saveItemArticles(creaturesResult.await())
+      }
+    }
   }
 
-  private fun saveCreatureArticles(creatures: Map<String, Creature>) {
-    logger.info("If debug mode is disabled, ${creatures.size} creature articles are being edited NOW.")
+  private suspend fun saveCreatureArticles(creatures: Map<String, Creature>) {
+    logger.info("If debug mode is disabled, ${creatures.size} creature articles are being edited NOW in thread: ${Thread.currentThread().name}.")
     creatures
       .takeIf { DEBUG_MODE.not() }
       ?.forEach {
@@ -44,8 +57,8 @@ object Main {
       }
   }
 
-  private fun saveItemArticles(items: Map<String, TibiaObject>) {
-    logger.info("If debug mode is disabled, ${items.size} item articles are being edited NOW.")
+  private suspend fun saveItemArticles(items: Map<String, TibiaObject>) {
+    logger.info("If debug mode is disabled, ${items.size} item articles are being edited NOW in thread: ${Thread.currentThread().name}.")
     items
       .takeIf { DEBUG_MODE.not() }
       ?.forEach {

@@ -3,7 +3,7 @@ package com.wikia.tibia.v2.adapters.tibiawiki
 import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.objects.LootWrapper
 import com.wikia.tibia.objects.TibiaObject
-import retrofit2.Call
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
@@ -14,35 +14,35 @@ import retrofit2.http.Query
 interface TibiaWikiApiClient {
 
   @GET("/api/creatures")
-  fun getCreatures(@Query("expand") expand: Boolean? = true): Call<List<Creature>>
+  suspend fun getCreatures(@Query("expand") expand: Boolean? = true): Response<List<Creature>>
 
   @GET("/api/creatures")
-  fun getCreatureNames(@Query("expand") expand: Boolean? = false): Call<List<String>>
+  suspend fun getCreatureNames(@Query("expand") expand: Boolean? = false): Response<List<String>>
 
   @GET("/api/creatures/{name}")
-  fun getCreature(@Path("name") name: String): Call<Creature?>
+  suspend fun getCreature(@Path("name") name: String): Response<Creature?>
 
   @PUT("/api/creatures")
-  fun updateCreature(@Header("X-WIKI-Edit-Summary") editSummary: String?, @Body newCreature: Creature): Call<Creature?>
+  suspend fun updateCreature(@Header("X-WIKI-Edit-Summary") editSummary: String?, @Body newCreature: Creature): Response<Creature?>
 
   @GET("/api/items")
-  fun getItems(@Query("expand") expand: Boolean? = true): Call<List<TibiaObject>>
+  suspend fun getItems(@Query("expand") expand: Boolean? = true): Response<List<TibiaObject>>
 
   @GET("/api/items")
-  fun getItemNames(@Query("expand") expand: Boolean? = false): Call<List<String>>
+  suspend fun getItemNames(@Query("expand") expand: Boolean? = false): Response<List<String>>
 
   @GET("/api/items/{name}")
-  fun getItem(@Path("name") name: String): Call<TibiaObject?>
+  suspend fun getItem(@Path("name") name: String): Response<TibiaObject?>
 
   @PUT("/api/items")
-  fun updateItems(@Header("X-WIKI-Edit-Summary") editSummary: String?, @Body newItem: TibiaObject): Call<TibiaObject?>
+  suspend fun updateItems(@Header("X-WIKI-Edit-Summary") editSummary: String?, @Body newItem: TibiaObject): Response<TibiaObject?>
 
   @GET("/api/v2/loot")
-  fun getLootList(@Query("expand") expand: Boolean? = true): Call<List<LootWrapper>>
+  suspend fun getLootList(@Query("expand") expand: Boolean? = true): Response<List<LootWrapper>>
 
   @GET("/api/v2/loot")
-  fun getLootListNames(@Query("expand") expand: Boolean? = false): Call<List<String>>
+  suspend fun getLootListNames(@Query("expand") expand: Boolean? = false): Response<List<String>>
 
   @GET("/api/v2/loot/{name}")
-  fun getLoot(@Path("name") name: String): Call<LootWrapper?>
+  suspend fun getLoot(@Path("name") name: String): Response<LootWrapper?>
 }

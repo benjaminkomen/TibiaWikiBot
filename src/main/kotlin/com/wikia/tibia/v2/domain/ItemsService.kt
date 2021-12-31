@@ -8,6 +8,9 @@ import com.wikia.tibia.v2.adapters.creature.CreatureRepositoryImpl
 import com.wikia.tibia.v2.adapters.item.ItemRepositoryImpl
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
 import com.wikia.tibia.v2.domain.item.ItemRepository
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
+import kotlinx.coroutines.coroutineScope
 import org.slf4j.LoggerFactory
 
 class ItemsService(
@@ -15,32 +18,36 @@ class ItemsService(
   val itemRepository: ItemRepository = ItemRepositoryImpl(),
 ) {
 
-  fun getCreaturesWithUpdatedDroppedByFromItemPage(): Map<String, Creature> {
-    logger.info("Starting to check all item pages for new loot information and adding to creature's loot lists.")
+  suspend fun getCreaturesWithUpdatedDroppedByFromItemPage(): Map<String, Creature> {
+    logger.info("Starting to check all item pages for new loot information and adding to creature's loot lists in thread: ${Thread.currentThread().name}.")
 
-    val creatures = getItems()
-      .asSequence()
-      .sortedBy { it.name }
-      .filter { it.isActive(it.status) }
-      .filter { it.droppedby?.isNotEmpty() ?: false }
-      .onEach { logger.debug("Processing item: ${it.name}") }
-      .flatMap { item: TibiaObject ->
-        item.droppedby
-          ?.mapNotNull { creatureName ->
-            getCreature(creatureName)?.let { addItemToLootTableOfCreature(item, it) }
-          }
-          ?: emptyList()
-      }
-      .toList()
+    return coroutineScope {
+      val creatures = getItems()
+        .asSequence()
+        .sortedBy { it.name }
+        .filter { it.isActive(it.status) }
+        .filter { it.droppedby?.isNotEmpty() ?: false }
+        .onEach { logger.debug("Processing item: ${it.name}") }
+        .flatMap { item: TibiaObject ->
+          item.droppedby
+            ?.map { creatureName ->
+              async {
+                getCreature(creatureName)?.let { addItemToLootTableOfCreature(item, it) }
+              }
+            }
+            ?: emptyList()
+        }
+        .toList()
 
-    return mergeCreatures(creatures)
+      mergeCreatures(creatures.awaitAll())
+    }
   }
 
   private fun addItemToLootTableOfCreature(item: TibiaObject, creature: Creature): Creature? {
     return creature.loot
       ?.takeIf { it.contains(LootItem.fromName(item.name)).not() && itemShouldBeAdded(creature.name, item.name) }
       ?.let {
-        logger.info("Adding item '${item.name}' to loot table of creature '${creature.name}'.")
+        logger.info("Adding item '${item.name}' to loot table of creature '${creature.name}' in thread: ${Thread.currentThread().name}.")
         creature.copy(loot = (creature.loot + listOf(LootItem.fromName(item.name))).toMutableList())
       }
   }
@@ -76,10 +83,10 @@ class ItemsService(
     } else true
   }
 
-  private fun mergeCreatures(creaturesToUpdate: List<Creature>): Map<String, Creature> {
+  private fun mergeCreatures(creaturesToUpdate: List<Creature?>): Map<String, Creature> {
     val result = HashMap<String, Creature>()
 
-    creaturesToUpdate.forEach { creature ->
+    creaturesToUpdate.filterNotNull().forEach { creature ->
       if (result.containsKey(creature.name).not()) {
         // creature not already in creaturePages cache, add it
         result[creature.name] = creature
@@ -91,24 +98,24 @@ class ItemsService(
     return result
   }
 
-  private fun getItems(): List<TibiaObject> {
+  private suspend fun getItems(): List<TibiaObject> {
     return try {
       itemRepository.getItems()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of items")
+      logger.error("Failed to get a list of items in thread: ${Thread.currentThread().name}")
       emptyList()
     }
   }
 
-  private fun getCreature(creatureName: String): Creature? {
+  private suspend fun getCreature(creatureName: String): Creature? {
     return getCreatures().firstOrNull { it.name.equals(creatureName, ignoreCase = true) }
   }
 
-  private fun getCreatures(): List<Creature> {
+  private suspend fun getCreatures(): List<Creature> {
     return try {
       creatureRepository.getCreatures()
     } catch (e: Exception) {
-      logger.error("Failed to get a list of creatures")
+      logger.error("Failed to get a list of creatures in thread: ${Thread.currentThread().name}")
       emptyList()
     }
   }

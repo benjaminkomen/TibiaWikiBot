@@ -4,11 +4,11 @@ import com.wikia.tibia.objects.TibiaObject
 
 interface ItemRepository {
 
-  fun getItems(): List<TibiaObject>
+  suspend fun getItems(): List<TibiaObject>
 
-  fun getItemNames(): List<String>
+  suspend fun getItemNames(): List<String>
 
-  fun getItem(name: String): TibiaObject?
+  suspend fun getItem(name: String): TibiaObject?
 
-  fun updateItem(item: TibiaObject, editSummary: String? = ""): TibiaObject
+  suspend fun updateItem(item: TibiaObject, editSummary: String? = ""): TibiaObject
 }

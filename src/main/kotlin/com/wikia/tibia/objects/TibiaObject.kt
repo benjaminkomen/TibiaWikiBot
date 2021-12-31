@@ -124,3 +124,8 @@ data class TibiaObject(
     private val logger = LoggerFactory.getLogger(TibiaObject::class.java)
   }
 }
+
+operator fun TibiaObject?.plus(item: TibiaObject): TibiaObject {
+  val newDroppedByList = (this?.droppedby?.toSet()?.plus(item.droppedby?.toSet() ?: emptySet()))?.toList() ?: emptyList()
+  return this?.copy(droppedby = newDroppedByList.toMutableList()) ?: item
+}

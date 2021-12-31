@@ -1,38 +1,49 @@
 package com.wikia.tibia.v2.adapters.item
 
+import com.github.benmanes.caffeine.cache.AsyncLoadingCache
 import com.github.benmanes.caffeine.cache.Caffeine
-import com.github.benmanes.caffeine.cache.LoadingCache
 import com.wikia.tibia.objects.TibiaObject
 import com.wikia.tibia.v2.adapters.tibiawiki.TibiaWikiApiClientFactory
 import com.wikia.tibia.v2.domain.item.ItemRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.asCoroutineDispatcher
+import kotlinx.coroutines.future.future
 import org.slf4j.LoggerFactory
 import java.util.concurrent.TimeUnit
 
 class ItemRepositoryImpl : ItemRepository {
 
   private val client by lazy { TibiaWikiApiClientFactory.createClient() }
-  private val itemsCache: LoadingCache<String, List<TibiaObject>?>
-  private val itemCache: LoadingCache<String, TibiaObject?>
+  private val itemsCache: AsyncLoadingCache<String, List<TibiaObject>?>
+  private val itemCache: AsyncLoadingCache<String, TibiaObject?>
 
   init {
     itemsCache = Caffeine.newBuilder()
       .expireAfterWrite(15, TimeUnit.MINUTES)
       .maximumSize(1)
-      .build(this::getItemsInternal)
+      .buildAsync { key, executor ->
+        CoroutineScope(executor.asCoroutineDispatcher()).future {
+          getItemsInternal(key)
+        }
+      }
 
     itemCache = Caffeine.newBuilder()
       .expireAfterWrite(15, TimeUnit.MINUTES)
       .maximumSize(10_000)
-      .build(this::getItemInternal)
+      .buildAsync { key, executor ->
+        CoroutineScope(executor.asCoroutineDispatcher()).future {
+          getItemInternal(key)
+        }
+      }
   }
 
-  override fun getItems(): List<TibiaObject> {
-    return itemsCache.get("all") ?: emptyList()
+  override suspend fun getItems(): List<TibiaObject> {
+    return itemsCache.get("all").join() ?: emptyList()
   }
 
-  override fun getItemNames(): List<String> {
-    logger.info("Getting all item names..")
-    return client.getItemNames().execute()
+  override suspend fun getItemNames(): List<String> {
+    logger.info("Getting all item names in thread: ${Thread.currentThread().name}")
+    return client.getItemNames()
       .takeIf { it.isSuccessful }
       ?.let { it.body() ?: emptyList() }
       ?: run {
@@ -41,12 +52,12 @@ class ItemRepositoryImpl : ItemRepository {
       }
   }
 
-  override fun getItem(name: String): TibiaObject? {
-    return itemCache.get(name)
+  override suspend fun getItem(name: String): TibiaObject? {
+    return itemCache.get(name).join()
   }
 
-  override fun updateItem(item: TibiaObject, editSummary: String?): TibiaObject {
-    return client.updateItems(editSummary, item).execute()
+  override suspend fun updateItem(item: TibiaObject, editSummary: String?): TibiaObject {
+    return client.updateItems(editSummary, item)
       .takeIf { it.isSuccessful }?.body()
       ?: run {
         logger.error("Could not update item ${item.name}")
@@ -54,10 +65,10 @@ class ItemRepositoryImpl : ItemRepository {
       }
   }
 
-  private fun getItemsInternal(key: String): List<TibiaObject> {
+  private suspend fun getItemsInternal(key: String): List<TibiaObject> {
     return try {
-      logger.info("Getting all items..")
-      val response = client.getItems().execute()
+      logger.info("Getting all items in thread: ${Thread.currentThread().name}")
+      val response = client.getItems()
       if (response.isSuccessful) {
         response.body() ?: emptyList()
       } else {
@@ -70,10 +81,10 @@ class ItemRepositoryImpl : ItemRepository {
     }
   }
 
-  private fun getItemInternal(name: String): TibiaObject? {
+  private suspend fun getItemInternal(name: String): TibiaObject? {
     return try {
-      logger.info("Getting item $name..")
-      val response = client.getItem(name).execute()
+      logger.info("Getting item $name in thread: ${Thread.currentThread().name}")
+      val response = client.getItem(name)
       if (response.isSuccessful) {
         response.body()
       } else {

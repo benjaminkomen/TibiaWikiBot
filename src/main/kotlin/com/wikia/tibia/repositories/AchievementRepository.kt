@@ -5,6 +5,6 @@ import com.wikia.tibia.gateways.WikiObjectGateway
 import com.wikia.tibia.objects.Achievement
 
 class AchievementRepository : WikiObjectRepository<Achievement>(
-    wikiObjectClass = Achievement::class.java,
-    wikiObjectGateway = WikiObjectGateway(Contract.ACHIEVEMENTS)
+  wikiObjectClass = Achievement::class.java,
+  wikiObjectGateway = WikiObjectGateway(Contract.ACHIEVEMENTS)
 )

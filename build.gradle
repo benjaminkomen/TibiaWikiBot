@@ -1,6 +1,6 @@
 buildscript {
     ext {
-        kotlinVersion = '1.6.0'
+        kotlinVersion = '1.6.10'
     }
 }
 
@@ -8,7 +8,7 @@ plugins {
     id "jacoco"
     id "org.sonarqube" version "3.3"
     id "org.jetbrains.kotlin.jvm" version "${kotlinVersion}"
-    id "org.jlleitschuh.gradle.ktlint" version "10.2.0"
+    id "org.jlleitschuh.gradle.ktlint" version "10.2.1"
 }
 
 group = 'com.wikia.tibia'
@@ -22,32 +22,50 @@ repositories {
 
 ext {
     slf4jVersion = '2.0.0-alpha5'
-    jacksonVersion = '2.13.0'
-    junitVersion = '5.8.1'
+    jacksonVersion = '2.13.1'
+    junitVersion = '5.8.2'
     jacocoVersion = "0.8.7"
+    retrofitVersion = "2.9.0"
+    coroutinesVersion = "1.6.0"
 }
 
 dependencies {
+    // Kotlin
     implementation "org.jetbrains.kotlin:kotlin-stdlib:${kotlinVersion}"
     implementation "org.jetbrains.kotlin:kotlin-reflect:${kotlinVersion}" // unused, but otherwise gives warning
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${coroutinesVersion}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-jdk8:${coroutinesVersion}"
+
+    // Logging
     implementation "org.slf4j:slf4j-api:${slf4jVersion}"
     implementation "org.slf4j:slf4j-simple:${slf4jVersion}"
+
+    // Jackson
     implementation "com.fasterxml.jackson.core:jackson-core:${jacksonVersion}"
     implementation "com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}"
     implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-csv:${jacksonVersion}"
     implementation "com.fasterxml.jackson.module:jackson-module-kotlin:${jacksonVersion}"
+
+    // Retrofit
+    implementation "com.squareup.retrofit2:retrofit:${retrofitVersion}"
+    implementation "com.squareup.retrofit2:converter-jackson:${retrofitVersion}"
+
+    // Various
+    implementation "com.github.ben-manes.caffeine:caffeine:3.0.5"
     implementation "com.google.guava:guava:31.0.1-jre"
     implementation "io.vavr:vavr:0.10.4"
+
+    // Testing
     testImplementation "org.junit.jupiter:junit-jupiter-api:${junitVersion}"
     testImplementation "org.junit.vintage:junit-vintage-engine:${junitVersion}"
-    testImplementation "org.mockito:mockito-core:4.0.0"
+    testImplementation 'org.mockito:mockito-core:4.2.0'
     testImplementation "org.hamcrest:hamcrest-core:2.2"
 }
 
 compileKotlin {
     kotlinOptions.jvmTarget = "17"
-    kotlinOptions.useIR = true
 }
+
 compileTestKotlin {
     kotlinOptions.jvmTarget = "17"
 }

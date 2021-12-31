@@ -5,6 +5,6 @@ import com.wikia.tibia.gateways.WikiObjectGateway
 import com.wikia.tibia.objects.Corpse
 
 class CorpseRepository : WikiObjectRepository<Corpse>(
-    wikiObjectClass = Corpse::class.java,
-    wikiObjectGateway = WikiObjectGateway(Contract.CORPSES)
+  wikiObjectClass = Corpse::class.java,
+  wikiObjectGateway = WikiObjectGateway(Contract.CORPSES)
 )

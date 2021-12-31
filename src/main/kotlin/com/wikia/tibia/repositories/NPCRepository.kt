@@ -5,6 +5,6 @@ import com.wikia.tibia.gateways.WikiObjectGateway
 import com.wikia.tibia.objects.NPC
 
 class NPCRepository : WikiObjectRepository<NPC>(
-    wikiObjectClass = NPC::class.java,
-    wikiObjectGateway = WikiObjectGateway(Contract.NPCS)
+  wikiObjectClass = NPC::class.java,
+  wikiObjectGateway = WikiObjectGateway(Contract.NPCS)
 )

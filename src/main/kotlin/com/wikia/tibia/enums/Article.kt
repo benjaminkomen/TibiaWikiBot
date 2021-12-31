@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonValue
 import com.wikia.tibia.interfaces.Description
 
 enum class Article(@JsonValue override val description: String) : Description {
-    A("a"),
-    AN("an"),
-    EMPTY("");
+  A("a"),
+  AN("an"),
+  EMPTY("");
 }

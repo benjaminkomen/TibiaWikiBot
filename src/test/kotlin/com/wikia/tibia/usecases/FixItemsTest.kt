@@ -19,150 +19,150 @@ import org.mockito.Mockito.`when`
 import testutils.any
 
 class FixItemsTest {
-    private lateinit var target: FixItems
-    private val Rat = makeRat()
-    private val Bear = makeBear()
-    private val Wasp = makeWasp()
-    private val Cheese = makeCheese()
-    private val Honeycomb = makeHoneycomb()
-    private val BearPaw = makeBearPaw()
-    private lateinit var mockCreatureRepository: CreatureRepository
-    private lateinit var mockItemRepository: ItemRepository
+  private lateinit var target: FixItems
+  private val Rat = makeRat()
+  private val Bear = makeBear()
+  private val Wasp = makeWasp()
+  private val Cheese = makeCheese()
+  private val Honeycomb = makeHoneycomb()
+  private val BearPaw = makeBearPaw()
+  private lateinit var mockCreatureRepository: CreatureRepository
+  private lateinit var mockItemRepository: ItemRepository
 
-    @Before
-    fun setup() {
-        mockCreatureRepository = mock(CreatureRepository::class.java)
-        mockItemRepository = mock(ItemRepository::class.java)
-        target = FixItems(mockCreatureRepository, mockItemRepository)
+  @Before
+  fun setup() {
+    mockCreatureRepository = mock(CreatureRepository::class.java)
+    mockItemRepository = mock(ItemRepository::class.java)
+    target = FixItems(mockCreatureRepository, mockItemRepository)
+  }
+
+  @Test
+  fun `should fix items - do nothing`() {
+    // given
+    `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Rat)))
+    `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Cheese)))
+
+    // when
+    val result = target.checkItems()
+
+    // then
+    assertThat(result.size, `is`(0))
+  }
+
+  @Test
+  fun `should fix items - add honeycomb to loot of bear`() {
+    // given
+    `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
+    `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
+    `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
+      .thenReturn(Try.success("success"))
+
+    // when
+    val result = target.checkItems()
+
+    // then
+    assertThat(result.size, `is`(1))
+    assertThat(result.containsKey("Bear"), `is`(true))
+    assertThat((result["Bear"] ?: error("")).loot?.size, `is`(3))
+    assertThat((result["Bear"] ?: error("")).loot?.contains(LootItem(itemName = "Honeycomb")), `is`(true))
+  }
+
+  @Test
+  fun `should fix items - add honeycomb to loot of bear and wasp`() {
+    // given
+    `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear, Wasp)))
+    `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
+    `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
+      .thenReturn(Try.success("success"))
+
+    // when
+    val result = target.checkItems()
+
+    // then
+    assertThat(result.size, `is`(2))
+    assertThat(result.containsKey("Bear"), `is`(true))
+    assertThat(result.containsKey("Wasp"), `is`(true))
+    assertThat((result["Bear"] ?: error("")).loot?.size, `is`(3))
+    assertThat((result["Bear"] ?: error("")).loot?.contains(LootItem(itemName = "Honeycomb")), `is`(true))
+    assertThat((result["Wasp"] ?: error("")).loot?.size, `is`(1))
+    assertThat((result["Wasp"] ?: error("")).loot?.contains(LootItem(itemName = "Honeycomb")), `is`(true))
+  }
+
+  @Test
+  fun `should fix items - add honeycomb and bear paw to loot of bear`() {
+    // given
+    `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
+    `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb, BearPaw)))
+    `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
+      .thenReturn(Try.success("success"))
+
+    // when
+    val result = target.checkItems()
+
+    // then
+    assertThat(result.size, `is`(1))
+    assertThat(result.containsKey("Bear"), `is`(true))
+    assertThat((result["Bear"] ?: error("")).loot?.size, `is`(4))
+    assertThat((result["Bear"] ?: error("")).loot?.contains(LootItem(itemName = "Honeycomb")), `is`(true))
+    assertThat((result["Bear"] ?: error("")).loot?.contains(LootItem(itemName = "Bear Paw")), `is`(true))
+  }
+
+  companion object {
+    private fun makeRat(): Creature {
+      return Creature(
+        actualname = "Rat",
+        name = "Rat",
+        loot = mutableListOf(
+          LootItem(itemName = "Gold Coin", amount = "0-4"),
+          LootItem(itemName = "Cheese")
+        )
+      )
     }
 
-    @Test
-    fun `should fix items - do nothing`() {
-        // given
-        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Rat)))
-        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Cheese)))
-
-        // when
-        val result = target.checkItems()
-
-        // then
-        assertThat(result.size, `is`(0))
+    private fun makeBear(): Creature {
+      return Creature(
+        actualname = "Bear",
+        name = "Bear",
+        loot = mutableListOf(
+          LootItem(itemName = "Meat", amount = "0-4"),
+          LootItem(itemName = "Ham", amount = "0-3")
+        )
+      )
     }
 
-    @Test
-    fun `should fix items - add honeycomb to loot of bear`() {
-        // given
-        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
-        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
-        `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
-            .thenReturn(Try.success("success"))
-
-        // when
-        val result = target.checkItems()
-
-        // then
-        assertThat(result.size, `is`(1))
-        assertThat(result.containsKey("Bear"), `is`(true))
-        assertThat((result["Bear"] ?: error("")).loot?.size, `is`(3))
-        assertThat((result["Bear"] ?: error("")).loot?.contains(LootItem(itemName = "Honeycomb")), `is`(true))
+    private fun makeWasp(): Creature {
+      return Creature(
+        actualname = "Wasp",
+        name = "Wasp",
+        loot = mutableListOf()
+      )
     }
 
-    @Test
-    fun `should fix items - add honeycomb to loot of bear and wasp`() {
-        // given
-        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear, Wasp)))
-        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb)))
-        `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
-            .thenReturn(Try.success("success"))
-
-        // when
-        val result = target.checkItems()
-
-        // then
-        assertThat(result.size, `is`(2))
-        assertThat(result.containsKey("Bear"), `is`(true))
-        assertThat(result.containsKey("Wasp"), `is`(true))
-        assertThat((result["Bear"] ?: error("")).loot?.size, `is`(3))
-        assertThat((result["Bear"] ?: error("")).loot?.contains(LootItem(itemName = "Honeycomb")), `is`(true))
-        assertThat((result["Wasp"] ?: error("")).loot?.size, `is`(1))
-        assertThat((result["Wasp"] ?: error("")).loot?.contains(LootItem(itemName = "Honeycomb")), `is`(true))
+    private fun makeCheese(): TibiaObject {
+      return TibiaObject(
+        actualname = "Cheese",
+        name = "Cheese",
+        objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
+        droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
+      )
     }
 
-    @Test
-    fun `should fix items - add honeycomb and bear paw to loot of bear`() {
-        // given
-        `when`(mockCreatureRepository.getWikiObjects()).thenReturn(Try.success(listOf(Bear)))
-        `when`(mockItemRepository.getWikiObjects()).thenReturn(Try.success(listOf(Honeycomb, BearPaw)))
-        `when`(mockCreatureRepository.saveWikiObject(any(WikiObject::class.java), anyString(), anyBoolean()))
-            .thenReturn(Try.success("success"))
-
-        // when
-        val result = target.checkItems()
-
-        // then
-        assertThat(result.size, `is`(1))
-        assertThat(result.containsKey("Bear"), `is`(true))
-        assertThat((result["Bear"] ?: error("")).loot?.size, `is`(4))
-        assertThat((result["Bear"] ?: error("")).loot?.contains(LootItem(itemName = "Honeycomb")), `is`(true))
-        assertThat((result["Bear"] ?: error("")).loot?.contains(LootItem(itemName = "Bear Paw")), `is`(true))
+    private fun makeHoneycomb(): TibiaObject {
+      return TibiaObject(
+        actualname = "Honeycomb",
+        name = "Honeycomb",
+        objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
+        droppedby = mutableListOf("Bear", "Grynch Clan Goblin", "Shadowpelt", "Wasp", "Werebear", "Willi Wasp")
+      )
     }
 
-    companion object {
-        private fun makeRat(): Creature {
-            return Creature(
-                actualname = "Rat",
-                name = "Rat",
-                loot = mutableListOf(
-                    LootItem(itemName = "Gold Coin", amount = "0-4"),
-                    LootItem(itemName = "Cheese")
-                )
-            )
-        }
-
-        private fun makeBear(): Creature {
-            return Creature(
-                actualname = "Bear",
-                name = "Bear",
-                loot = mutableListOf(
-                    LootItem(itemName = "Meat", amount = "0-4"),
-                    LootItem(itemName = "Ham", amount = "0-3")
-                )
-            )
-        }
-
-        private fun makeWasp(): Creature {
-            return Creature(
-                actualname = "Wasp",
-                name = "Wasp",
-                loot = mutableListOf()
-            )
-        }
-
-        private fun makeCheese(): TibiaObject {
-            return TibiaObject(
-                actualname = "Cheese",
-                name = "Cheese",
-                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
-                droppedby = mutableListOf("Cave Rat", "Corym Charlatan", "Green Djinn", "Mutated Human", "Rat")
-            )
-        }
-
-        private fun makeHoneycomb(): TibiaObject {
-            return TibiaObject(
-                actualname = "Honeycomb",
-                name = "Honeycomb",
-                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
-                droppedby = mutableListOf("Bear", "Grynch Clan Goblin", "Shadowpelt", "Wasp", "Werebear", "Willi Wasp")
-            )
-        }
-
-        private fun makeBearPaw(): TibiaObject {
-            return TibiaObject(
-                actualname = "Bear Paw",
-                name = "Bear Paw",
-                objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
-                droppedby = mutableListOf("Bear", "Shadowpelt", "Werebear")
-            )
-        }
+    private fun makeBearPaw(): TibiaObject {
+      return TibiaObject(
+        actualname = "Bear Paw",
+        name = "Bear Paw",
+        objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
+        droppedby = mutableListOf("Bear", "Shadowpelt", "Werebear")
+      )
     }
+  }
 }

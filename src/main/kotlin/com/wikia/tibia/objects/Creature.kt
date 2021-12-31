@@ -159,9 +159,6 @@ data class Creature(
     if (isEmpty(drownDmgMod)) {
       this.copy(drownDmgMod = Percentage.UNKNOWN)
     }
-    if (sounds == null) {
-      this.copy(sounds = emptyList())
-    }
 
     // if runsat is filled you would get something like this printed "Unknown A stalker never retreats.", which is ugly.
     if (isEmpty(behaviour) && isEmpty(runsat)) {

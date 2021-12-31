@@ -72,6 +72,7 @@ data class TibiaObject(
   val manacost: Int? = null,
   val damagetype: DamageElement? = null,
   val damagerange: String? = null,
+  val upgradeclass: Int? = null,
   val attrib: String? = null,
   val charges: Int? = null,
   val armor: Int? = null,

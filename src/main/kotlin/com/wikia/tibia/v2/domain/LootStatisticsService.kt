@@ -132,10 +132,6 @@ class LootStatisticsService(
     return getCreatures().firstOrNull { it.name.equals(creatureName, ignoreCase = true) }
   }
 
-//  private suspend fun getSingleCreature(creatureName: String): Creature? {
-//    return creatureRepository.getCreature(creatureName)
-//  }
-
   private suspend fun getCreatures(): List<Creature> {
     return try {
       creatureRepository.getCreatures()
@@ -171,6 +167,7 @@ class LootStatisticsService(
       "Minotaur Occultist" to listOf("Minotaur Horn", "Purple Robe"),
       "Lesser Fire Devil" to listOf("Small Pitchfork"),
       "Troll Marauder" to listOf("Bunch of Troll Hair", "Trollroot"),
+      "The Percht Queen" to listOf("The Crown of the Percht Queen", "Giant Shimmering Pearl"),
     )
     private val lootStatisticsTableEntriesNotToBeUsedOnCreaturePage = listOf(
       "Empty",

@@ -5,8 +5,8 @@ import com.wikia.tibia.objects.Creature
 import io.vavr.control.Try
 import org.hamcrest.MatcherAssert
 import org.hamcrest.Matchers
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
@@ -19,7 +19,7 @@ class CreatureRepositoryTest {
   private lateinit var creatureRepository: CreatureRepository
 
   @Suppress("UNCHECKED_CAST")
-  @Before
+  @BeforeEach
   fun setup() {
     creatureGateway = mock(WikiObjectGateway::class.java) as WikiObjectGateway<Creature>
     creatureRepository = CreatureRepository()

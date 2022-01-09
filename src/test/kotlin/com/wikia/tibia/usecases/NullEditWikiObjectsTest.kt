@@ -17,15 +17,15 @@ import com.wikia.tibia.repositories.OutfitRepository
 import com.wikia.tibia.repositories.QuestRepository
 import com.wikia.tibia.repositories.SpellRepository
 import com.wikia.tibia.repositories.StreetRepository
-import org.junit.Before
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 
-@Ignore
+@Disabled
 class NullEditWikiObjectsTest {
   private lateinit var target: NullEditWikiObjects
 
-  @Before
+  @BeforeEach
   fun setup() {
     target = NullEditWikiObjects(
       achievementRepository = AchievementRepository(),

@@ -12,9 +12,9 @@ import com.wikia.tibia.repositories.InputRepository
 import io.vavr.control.Try
 import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.`is`
-import org.junit.Before
-import org.junit.Ignore
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Disabled
+import org.junit.jupiter.api.Test
 import org.mockito.ArgumentMatchers.anyBoolean
 import org.mockito.ArgumentMatchers.anyString
 import org.mockito.Mock
@@ -32,13 +32,13 @@ class BuildingRentsTest {
   private lateinit var buildingRepository: BuildingRepository
   private lateinit var target: BuildingRents
 
-  @Before
+  @BeforeEach
   fun setup() {
     inputRepository = mock(InputRepository::class.java)
     buildingRepository = mock(BuildingRepository::class.java)
   }
 
-  @Ignore
+  @Disabled
   @Test
   fun `should update rent to buildings - production`() {
     // given

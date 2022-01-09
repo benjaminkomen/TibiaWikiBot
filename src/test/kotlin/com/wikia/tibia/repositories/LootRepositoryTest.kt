@@ -10,8 +10,8 @@ import org.hamcrest.MatcherAssert.assertThat
 import org.hamcrest.Matchers.instanceOf
 import org.hamcrest.Matchers.`is`
 import org.hamcrest.Matchers.nullValue
-import org.junit.Before
-import org.junit.Test
+import org.junit.jupiter.api.BeforeEach
+import org.junit.jupiter.api.Test
 import org.mockito.Mock
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.`when`
@@ -22,7 +22,7 @@ internal class LootRepositoryTest {
   private lateinit var lootGateway: LootGateway
   private lateinit var lootRepository: LootRepository
 
-  @Before
+  @BeforeEach
   fun setup() {
     lootGateway = mock(LootGateway::class.java)
     lootRepository = LootRepository(lootGateway)

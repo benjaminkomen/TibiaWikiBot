@@ -88,7 +88,7 @@ sonarqube {
         property "sonar.sources", "src/main/kotlin"
         property "sonar.tests", "src/test/kotlin"
         property "sonar.java.coveragePlugin", "jacoco"
-        property "sonar.coverage.jacoco.xmlReportPaths", "./build/reports/test/jacocoTestReport.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "./build/reports/jacoco/test/jacocoTestReport.xml"
     }
 }
 
@@ -116,6 +116,7 @@ plugins.withType(JacocoPlugin) {
 
 jacocoTestReport {
     reports {
+        xml.enabled = true
         xml.required = true
     }
 }

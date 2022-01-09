@@ -2,6 +2,7 @@ package com.wikia.tibia
 
 import com.wikia.tibia.enums.ObjectClass
 import com.wikia.tibia.enums.Rarity
+import com.wikia.tibia.enums.Status
 import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.objects.Loot
 import com.wikia.tibia.objects.LootItem
@@ -55,6 +56,7 @@ fun createCyclops(): Creature {
 
 fun createCheese(): TibiaObject {
   return TibiaObject(
+    status = Status.ACTIVE,
     actualname = "Cheese",
     name = "Cheese",
     objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
@@ -64,6 +66,7 @@ fun createCheese(): TibiaObject {
 
 fun createHoneycomb(): TibiaObject {
   return TibiaObject(
+    status = Status.ACTIVE,
     actualname = "Honeycomb",
     name = "Honeycomb",
     objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
@@ -78,6 +81,7 @@ fun createHoneycomb(): TibiaObject {
 
 fun createOldRag(): TibiaObject {
   return TibiaObject(
+    status = Status.ACTIVE,
     actualname = "Old Rag",
     name = "Old Rag",
     objectclass = ObjectClass.OTHER_ITEMS.description,
@@ -91,6 +95,7 @@ fun createOldRag(): TibiaObject {
 
 fun createMeat(): TibiaObject {
   return TibiaObject(
+    status = Status.ACTIVE,
     actualname = "Meat",
     name = "Meat",
     objectclass = ObjectClass.OTHER_ITEMS.description,
@@ -98,14 +103,13 @@ fun createMeat(): TibiaObject {
   )
 }
 
-fun createCreatureRat(): Creature {
-  return Creature(
-    actualname = "Rat",
-    name = "Rat",
-    loot = mutableListOf(
-      LootItem(itemName = "Gold Coin", amount = "0-4"),
-      LootItem(itemName = "Cheese")
-    )
+fun createBearPaw(): TibiaObject {
+  return TibiaObject(
+    status = Status.ACTIVE,
+    actualname = "Bear Paw",
+    name = "Bear Paw",
+    objectclass = ObjectClass.PLANTS_ANIMAL_PRODUCTS_FOOD_AND_DRINK.description,
+    droppedby = mutableListOf("Bear", "Shadowpelt", "Werebear")
   )
 }
 
@@ -166,7 +170,7 @@ fun createLootAmazon(): LootWrapper {
   )
 }
 
-fun createCreatureAmazon(): Creature {
+fun createAmazon(): Creature {
   return Creature(
     actualname = "Amazon",
     name = "Amazon",
@@ -185,7 +189,7 @@ fun createCreatureAmazon(): Creature {
   )
 }
 
-fun createCreatureDemon(): Creature {
+fun createDemon(): Creature {
   return Creature(
     actualname = "Demon",
     name = "Demon",
@@ -211,7 +215,7 @@ fun createLootDemon(): LootWrapper {
   )
 }
 
-fun createCreaturePriestessOfTheWildSun(): Creature {
+fun createPriestessOfTheWildSun(): Creature {
   return Creature(
     actualname = "Priestess of the Wild Sun",
     name = "Priestess of the Wild Sun",
@@ -239,7 +243,7 @@ fun createLootPriestessOfTheWildSun(): LootWrapper {
   )
 }
 
-fun createCreatureThePerchtQueen(): Creature {
+fun createThePerchtQueen(): Creature {
   return Creature(
     actualname = "The Percht Queen",
     name = "The Percht Queen",

@@ -1,16 +1,16 @@
 package com.wikia.tibia.v2.domain
 
-import com.wikia.tibia.createCreatureAmazon
-import com.wikia.tibia.createCreatureDemon
-import com.wikia.tibia.createCreaturePriestessOfTheWildSun
-import com.wikia.tibia.createCreatureRat
-import com.wikia.tibia.createCreatureThePerchtQueen
+import com.wikia.tibia.createAmazon
+import com.wikia.tibia.createDemon
 import com.wikia.tibia.createLootAmazon
 import com.wikia.tibia.createLootDemon
 import com.wikia.tibia.createLootPriestessOfTheWildSun
 import com.wikia.tibia.createLootRat
 import com.wikia.tibia.createLootRatWithSword
 import com.wikia.tibia.createLootThePerchtQueen
+import com.wikia.tibia.createPriestessOfTheWildSun
+import com.wikia.tibia.createRat
+import com.wikia.tibia.createThePerchtQueen
 import com.wikia.tibia.shouldBe
 import com.wikia.tibia.shouldNotBe
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
@@ -31,7 +31,7 @@ internal class LootStatisticsServiceTest {
   @Test
   fun `should do nothing`() {
     coEvery { lootRepository.getLootList() } coAnswers { listOf(createLootRat()) }
-    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createCreatureRat()) }
+    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createRat()) }
 
     runTest {
       val result = lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()
@@ -43,7 +43,7 @@ internal class LootStatisticsServiceTest {
   @Test
   fun `should add Sword to loot of Rat`() {
     coEvery { lootRepository.getLootList() } coAnswers { listOf(createLootRatWithSword()) }
-    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createCreatureRat()) }
+    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createRat()) }
 
     runTest {
       val result = lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()
@@ -58,7 +58,7 @@ internal class LootStatisticsServiceTest {
   @Test
   fun `should not add skull to loot list of amazon`() {
     coEvery { lootRepository.getLootList() } coAnswers { listOf(createLootAmazon()) }
-    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createCreatureAmazon()) }
+    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createAmazon()) }
 
     runTest {
       val result = lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()
@@ -69,7 +69,7 @@ internal class LootStatisticsServiceTest {
   @Test
   fun `should not add demon goblin loot to demon`() {
     coEvery { lootRepository.getLootList() } coAnswers { listOf(createLootDemon()) }
-    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createCreatureDemon()) }
+    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createDemon()) }
 
     runTest {
       val result = lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()
@@ -82,7 +82,7 @@ internal class LootStatisticsServiceTest {
   @Test
   fun `should not add Secret Instruction item to any creature page`() {
     coEvery { lootRepository.getLootList() } coAnswers { listOf(createLootPriestessOfTheWildSun()) }
-    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createCreaturePriestessOfTheWildSun()) }
+    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createPriestessOfTheWildSun()) }
 
     runTest {
       val result = lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()
@@ -95,7 +95,7 @@ internal class LootStatisticsServiceTest {
   @Test
   fun `should not add certain items to The Percht Queen creature page`() {
     coEvery { lootRepository.getLootList() } coAnswers { listOf(createLootThePerchtQueen()) }
-    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createCreatureThePerchtQueen()) }
+    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createThePerchtQueen()) }
 
     runTest {
       val result = lootStatisticsService.getCreaturesWithUpdatedLootFromLootStatisticsPage()

@@ -2,11 +2,11 @@ package com.wikia.tibia.v2.domain
 
 import com.wikia.tibia.createBear
 import com.wikia.tibia.createCheese
-import com.wikia.tibia.createCreatureRat
 import com.wikia.tibia.createCyclops
 import com.wikia.tibia.createHoneycomb
 import com.wikia.tibia.createMeat
 import com.wikia.tibia.createOldRag
+import com.wikia.tibia.createRat
 import com.wikia.tibia.createWasp
 import com.wikia.tibia.shouldBe
 import com.wikia.tibia.shouldNotBe
@@ -28,7 +28,7 @@ internal class CreaturesServiceTest {
   @Test
   fun `should do nothing`() {
     coEvery { itemRepository.getItems() } coAnswers { listOf(createCheese()) }
-    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createCreatureRat()) }
+    coEvery { creatureRepository.getCreatures() } coAnswers { listOf(createRat()) }
 
     runTest {
       val result = creaturesService.getItemsWithUpdatedLootFromCreaturesPage()

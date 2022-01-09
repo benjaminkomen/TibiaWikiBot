@@ -88,9 +88,11 @@ sonarqube {
         property "sonar.sources", "src/main/kotlin"
         property "sonar.tests", "src/test/kotlin"
         property "sonar.java.coveragePlugin", "jacoco"
-        property "sonar.coverage.jacoco.xmlReportPaths", "./build/reports/jacocoTestReport.xml"
+        property "sonar.coverage.jacoco.xmlReportPaths", "./build/reports/test/jacocoTestReport.xml"
     }
 }
+
+project.tasks["sonarqube"].dependsOn "jacocoTestReport"
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
@@ -108,11 +110,12 @@ jacoco {
     toolVersion = "${jacocoVersion}"
 }
 
-jacocoTestReport {
-    dependsOn test
+plugins.withType(JacocoPlugin) {
+    tasks["test"].finalizedBy 'jacocoTestReport'
+}
 
+jacocoTestReport {
     reports {
-        xml.enabled = true
-        xml.destination = file("${buildDir}/reports/jacocoTestReport.xml")
+        xml.required = true
     }
 }

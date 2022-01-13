@@ -106,14 +106,6 @@ class CreaturesService(
       }
   }
 
-//  private suspend fun getSingleItem(itemName: String): TibiaObject? {
-//    return itemRepository.getItem(itemName)
-//      ?: run {
-//        logger.error("Could not find item with name '$itemName' in collection of items.")
-//        null
-//      }
-//  }
-
   private suspend fun getItems(): List<TibiaObject> {
     return try {
       itemRepository.getItems()

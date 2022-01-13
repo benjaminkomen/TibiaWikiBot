@@ -26,7 +26,7 @@ interface TibiaWikiApiClient {
   suspend fun updateCreature(@Header("X-WIKI-Edit-Summary") editSummary: String?, @Body newCreature: Creature): Response<Creature?>
 
   @GET("/api/items")
-  suspend fun getItems(@Query("expand") expand: Boolean? = true): Response<List<TibiaObject>>
+  suspend fun getItems(@Query("expand") expand: Boolean? = true): Response<List<Any>>
 
   @GET("/api/items")
   suspend fun getItemNames(@Query("expand") expand: Boolean? = false): Response<List<String>>

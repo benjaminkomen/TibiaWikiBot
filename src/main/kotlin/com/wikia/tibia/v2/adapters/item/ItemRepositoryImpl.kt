@@ -2,6 +2,7 @@ package com.wikia.tibia.v2.adapters.item
 
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache
 import com.github.benmanes.caffeine.cache.Caffeine
+import com.wikia.tibia.jackson.Parser
 import com.wikia.tibia.objects.TibiaObject
 import com.wikia.tibia.v2.adapters.tibiawiki.TibiaWikiApiClientFactory
 import com.wikia.tibia.v2.domain.item.ItemRepository
@@ -70,7 +71,9 @@ class ItemRepositoryImpl : ItemRepository {
       logger.info("Getting all items")
       val response = client.getItems()
       if (response.isSuccessful) {
-        response.body() ?: emptyList()
+        response.body()
+          ?.mapNotNull { Parser.mapToType(type = TibiaObject::class.java, json = it) }
+          ?: emptyList()
       } else {
         logger.error("Could not get list of items for key $key because: ${response.errorBody() ?: response.message()}")
         emptyList()

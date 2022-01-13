@@ -94,4 +94,13 @@ object Parser {
       ""
     }
   }
+
+  fun <T> mapToType(type: Class<T>, json: Any, mapper: ObjectMapper = defaultObjectMapper): T? {
+    return try {
+      mapper.convertValue(json, type)
+    } catch (e: Exception) {
+      logger.error("Unable to construct object of type '$type' from the following json: '$json' because of error: $e")
+      null
+    }
+  }
 }

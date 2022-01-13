@@ -2,6 +2,7 @@ package com.wikia.tibia.objects
 
 import com.fasterxml.jackson.annotation.JsonGetter
 import com.wikia.tibia.enums.Article
+import com.wikia.tibia.enums.AttackType
 import com.wikia.tibia.enums.BestiaryClass
 import com.wikia.tibia.enums.BestiaryLevel
 import com.wikia.tibia.enums.BestiaryOccurrence
@@ -33,6 +34,8 @@ data class Creature(
   val bestiaryclass: BestiaryClass? = null,
   val bestiarylevel: BestiaryLevel? = null,
   val occurrence: BestiaryOccurrence? = null,
+  val attacktype: AttackType? = null,
+  val usespells: YesNo? = null,
   val spawntype: List<Spawntype>? = emptyList(),
   val isboss: YesNo? = null,
   val isarenaboss: YesNo? = null,

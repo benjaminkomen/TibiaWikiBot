@@ -2,6 +2,7 @@ package com.wikia.tibia.v2.adapters.creature
 
 import com.github.benmanes.caffeine.cache.AsyncLoadingCache
 import com.github.benmanes.caffeine.cache.Caffeine
+import com.wikia.tibia.jackson.Parser
 import com.wikia.tibia.objects.Creature
 import com.wikia.tibia.v2.adapters.tibiawiki.TibiaWikiApiClientFactory
 import com.wikia.tibia.v2.domain.creature.CreatureRepository
@@ -70,7 +71,9 @@ class CreatureRepositoryImpl : CreatureRepository {
       logger.info("Getting all creatures")
       val response = client.getCreatures()
       if (response.isSuccessful) {
-        response.body() ?: emptyList()
+        response.body()
+          ?.mapNotNull { Parser.mapToType(type = Creature::class.java, json = it) }
+          ?: emptyList()
       } else {
         logger.error("Could not get list of creatures for key $key because: ${response.errorBody() ?: response.message()}")
         emptyList()

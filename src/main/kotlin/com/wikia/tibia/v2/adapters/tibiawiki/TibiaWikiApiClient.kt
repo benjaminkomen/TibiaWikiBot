@@ -14,7 +14,7 @@ import retrofit2.http.Query
 interface TibiaWikiApiClient {
 
   @GET("/api/creatures")
-  suspend fun getCreatures(@Query("expand") expand: Boolean? = true): Response<List<Creature>>
+  suspend fun getCreatures(@Query("expand") expand: Boolean? = true): Response<List<Any>>
 
   @GET("/api/creatures")
   suspend fun getCreatureNames(@Query("expand") expand: Boolean? = false): Response<List<String>>

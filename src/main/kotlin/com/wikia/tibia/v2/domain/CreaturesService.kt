@@ -34,7 +34,7 @@ class CreaturesService(
             ?.map { lootItem ->
               async {
                 withContext(Dispatchers.IO) {
-                  getItem(lootItem.itemName)?.let { addCreatureToDroppedByListOfItem(creature, it) }
+                  getItem(lootItem.itemName, creature.name)?.let { addCreatureToDroppedByListOfItem(creature, it) }
                 }
               }
             }
@@ -98,10 +98,10 @@ class CreaturesService(
   }
 
   // TODO check WikiObject pagename or Item.Actualname, not Item.Name
-  private suspend fun getItem(itemName: String): TibiaObject? {
+  private suspend fun getItem(itemName: String, creatureName: String): TibiaObject? {
     return getItems().firstOrNull { it.name.equals(itemName, ignoreCase = true) }
       ?: run {
-        logger.error("Could not find item with name '$itemName' in collection of items.")
+        logger.error("Looking at loot list of creature $creatureName, but could not find item with name '$itemName' in collection of items.")
         null
       }
   }

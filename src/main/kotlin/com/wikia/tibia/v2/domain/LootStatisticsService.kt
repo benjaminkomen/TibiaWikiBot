@@ -168,12 +168,7 @@ class LootStatisticsService(
       "Lesser Fire Devil" to listOf("Small Pitchfork"),
       "Troll Marauder" to listOf("Bunch of Troll Hair", "Trollroot"),
       "The Percht Queen" to listOf("The Crown of the Percht Queen", "Giant Shimmering Pearl"),
-      "Lady Tenebris" to listOf("Part of a Rune"),
-      "Melting Frozen Horror" to listOf("Part of a Rune"),
-      "Soul of Dragonking Zyrtarch" to listOf("Part of a Rune"),
-      "The Time Guardian" to listOf("Part of a Rune"),
-      "The Blazing Time Guardian" to listOf("Part of a Rune"),
-      "The Freezing Time Guardian" to listOf("Part of a Rune"),
+      "The Last Lore Keeper" to listOf("Part of a Rune"),
     )
     private val lootStatisticsTableEntriesNotToBeUsedOnCreaturePage = listOf(
       "Empty",

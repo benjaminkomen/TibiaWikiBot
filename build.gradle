@@ -52,7 +52,7 @@ dependencies {
 
     // Various
     implementation "com.github.ben-manes.caffeine:caffeine:3.0.6"
-    implementation "com.google.guava:guava:31.0.1-jre"
+    implementation "com.google.guava:guava:31.1-jre"
     implementation "io.vavr:vavr:0.10.4"
 
     // Testing

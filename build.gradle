@@ -26,7 +26,7 @@ ext {
     junitVersion = "5.8.2"
     jacocoVersion = "0.8.7"
     retrofitVersion = "2.9.0"
-    coroutinesVersion = "1.6.1"
+    coroutinesVersion = "1.6.3"
 }
 
 dependencies {

@@ -1,12 +1,7 @@
 package com.wikia.tibia.objects
 
 import com.fasterxml.jackson.annotation.JsonGetter
-import com.wikia.tibia.enums.Article
-import com.wikia.tibia.enums.DamageElement
-import com.wikia.tibia.enums.Hands
-import com.wikia.tibia.enums.Status
-import com.wikia.tibia.enums.WeaponType
-import com.wikia.tibia.enums.YesNo
+import com.wikia.tibia.enums.*
 import com.wikia.tibia.utils.ObjectUtils.isEmpty
 import org.slf4j.LoggerFactory
 import java.math.BigDecimal
@@ -96,6 +91,7 @@ data class TibiaObject(
   val npcpricerook: String? = null,
   val buyfrom: String? = null,
   val sellto: String? = null,
+  val pricecurrency: String? = null,
   val fansite: String? = null,
   val location: String? = null,
   val notes: String? = null,
